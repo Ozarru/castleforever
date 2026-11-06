@@ -1,0 +1,48 @@
+{% extends "base/layout.html" %}
+{% load i18n %}
+{% block title %}{% trans "The collection" %} | CastleForever{% endblock %}
+{% block content %}
+<main class="max-w-7xl mx-auto px-6 py-12">
+  <a href="{% url 'base:home' %}" class="text-sm text-gray-500">← {% trans "Back to home" %}</a>
+  <div class="mt-10">
+    <p class="uppercase text-xs tracking-[.25em] text-[#b18c43]">{% trans "The private collection" %}</p>
+    <h1 class="font-display text-6xl mt-4">{% trans "Extraordinary estates" %}</h1>
+    <p class="text-gray-600 mt-4 max-w-2xl">{% trans "Discover our curated estates across France, Italy and Spain." %}</p>
+  </div>
+
+  <div class="flex gap-2 flex-wrap mt-10" id="filters">
+    <button class="filter border border-forest bg-forest text-white px-5 py-3 text-[10px] tracking-widest uppercase" data-filter="All">{% trans "All places" %}</button>
+    <button class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase" data-filter="France">France</button>
+    <button class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase" data-filter="Italy">Italy</button>
+    <button class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase" data-filter="Spain">Spain</button>
+  </div>
+
+  <div id="venueGrid" class="grid md:grid-cols-3 gap-7 mt-8">
+    {% for venue in venues %}
+    <a data-venue-country="{{ venue.get_country_display }}" href="{{ venue.get_absolute_url }}" class="block bg-white group">
+      <div class="overflow-hidden h-72">
+        {% if venue.cover_url %}<img class="h-full w-full object-cover" src="{{ venue.cover_url }}" alt="{{ venue.name }}" loading="lazy">{% endif %}
+      </div>
+      <div class="p-7">
+        <p class="text-xs uppercase tracking-[.2em] text-[#A58A5A] mb-3">{{ venue.region }} · {{ venue.get_country_display }}</p>
+        <h3 class="font-display text-3xl">{{ venue.name }}</h3>
+        <p class="mt-4 text-xs text-[#222822]/60">{% trans "Up to" %} {{ venue.capacity }} {% trans "guests" %} · {% trans "From" %} €{{ venue.price_from }}</p>
+        <p class="mt-6 text-xs tracking-widest uppercase">{% trans "Explore estate" %} →</p>
+      </div>
+    </a>
+    {% empty %}
+    <p class="col-span-3 text-ink/60">{% trans "Our collection is being curated. Please check back soon." %}</p>
+    {% endfor %}
+  </div>
+</main>
+<script>
+const buttons=document.querySelectorAll('[data-filter]');
+buttons.forEach(button=>button.addEventListener('click',()=>{
+  const value=button.dataset.filter;
+  document.querySelectorAll('[data-venue-country]').forEach(card=>card.hidden=value!=='All'&&card.dataset.venueCountry!==value);
+  buttons.forEach(b=>{b.classList.remove('bg-forest','text-white');b.classList.add('border-forest/20')});
+  button.classList.add('bg-forest','text-white');
+  button.classList.remove('border-forest/20');
+}));
+</script>
+{% endblock %}

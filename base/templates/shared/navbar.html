@@ -1,0 +1,84 @@
+{% load static i18n %}
+<header class="left-0 right-0 z-30 text-white">
+  <div class="bg-forest w-full px-6 lg:px-10 h-24 flex items-center justify-between">
+    <a href="{% url 'base:home' %}" class="font-display text-3xl md:text-4xl tracking-tight">
+      Castle<span class="text-[#dccba7]">Forever.</span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-9 text-[11px] tracking-[.14em] uppercase font-semibold">
+      <a href="{% url 'base:destinations' %}" class="hover:text-[#dccba7]">{% trans 'Destinations' %}</a>
+      <a href="{% url 'catalog:venues' %}" class="hover:text-[#dccba7]">{% trans 'Domaines' %}</a>
+      <a href="{% url 'base:approach' %}" class="hover:text-[#dccba7]">{% trans 'Financement' %}</a>
+      <a href="{% url 'core:contact' %}" class="hover:text-[#dccba7]">{% trans 'Contact' %}</a>
+
+      {% if user.is_authenticated %}
+        <details class="relative">
+          <summary class="list-none cursor-pointer flex items-center gap-2 hover:text-[#dccba7]">
+            <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#dccba7] text-forest">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+            </span>
+          </summary>
+          <div class="absolute right-0 mt-3 w-52 bg-white text-ink shadow-lg border p-2 z-50">
+            <a href="{% url 'accounts:profile' %}" class="block px-3 py-2 text-xs uppercase tracking-widest hover:bg-[#f8f6f0]">{% trans 'Profile' %}</a>
+            <a href="{% url 'accounts:notifications' %}" class="block px-3 py-2 text-xs uppercase tracking-widest hover:bg-[#f8f6f0]">{% trans 'Notifications' %}</a>
+            <a href="{% url 'accounts:activity' %}" class="block px-3 py-2 text-xs uppercase tracking-widest hover:bg-[#f8f6f0]">{% trans 'Activity' %}</a>
+            {% if user.is_staff %}
+              <a href="{% url 'core:dashboard' %}" class="block px-3 py-2 text-xs uppercase tracking-widest hover:bg-[#f8f6f0]">{% trans 'Dashboard' %}</a>
+            {% endif %}
+            <form method="post" action="{% url 'accounts:logout' %}" onsubmit="return confirm('{% trans "Log out?" %}');" class="mt-2 border-t pt-2">
+              {% csrf_token %}
+              <button type="submit" class="w-full text-left px-3 py-2 text-xs uppercase tracking-widest text-red-700 hover:bg-red-50">{% trans 'Log out' %}</button>
+            </form>
+          </div>
+        </details>
+      {% else %}
+        <a href="{% url 'accounts:login' %}" class="hover:text-[#dccba7]">{% trans 'Log in' %}</a>
+      {% endif %}
+    </nav>
+
+    <a href="{% url 'core:contact' %}?tab=request" class="hidden md:inline-flex border border-white/70 px-6 py-3 text-[10px] tracking-[.15em] uppercase hover:bg-white hover:text-forest transition">
+      {% trans 'Organisez votre mariage' %} ↗
+    </a>
+
+    <button id="menuButton" class="lg:hidden text-2xl" aria-label="Ouvrir le menu">☰</button>
+  </div>
+
+  <div id="mobileMenu" class="hidden bg-forest mx-6 p-6 space-y-5 text-xs uppercase tracking-widest">
+    <a class="block" href="{% url 'base:destinations' %}">{% trans 'Destinations' %}</a>
+    <a class="block" href="{% url 'catalog:venues' %}">{% trans 'Domaines' %}</a>
+    <a class="block" href="{% url 'core:contact' %}?tab=request">{% trans 'Your needs' %}</a>
+    <a class="block" href="{% url 'core:contact' %}">{% trans 'Contact' %}</a>
+    <a class="block" href="{% url 'base:approach' %}">{% trans 'Solutions de paiement' %}</a>
+    {% if user.is_authenticated %}
+      <a class="block" href="{% url 'accounts:profile' %}">{% trans 'Profile' %}</a>
+      <a class="block" href="{% url 'accounts:notifications' %}">{% trans 'Notifications' %}</a>
+      <a class="block" href="{% url 'accounts:activity' %}">{% trans 'Activity' %}</a>
+      {% if user.is_staff %}
+        <a class="block" href="{% url 'core:dashboard' %}">{% trans 'Dashboard' %}</a>
+      {% endif %}
+      <form method="post" action="{% url 'accounts:logout' %}" onsubmit="return confirm('{% trans "Log out?" %}');">
+        {% csrf_token %}
+        <button type="submit" class="block w-full text-left">{% trans 'Log out' %}</button>
+      </form>
+    {% else %}
+      <a class="block" href="{% url 'accounts:login' %}">{% trans 'Log in' %}</a>
+    {% endif %}
+  </div>
+</header>
+
+<script>
+  const menu = document.getElementById("menuButton");
+  const mobile = document.getElementById("mobileMenu");
+  if (menu && mobile) {
+    menu.addEventListener("click", () => mobile.classList.toggle("hidden"));
+  }
+  document.addEventListener("click", (event) => {
+    document.querySelectorAll("details[open]").forEach((details) => {
+      if (!details.contains(event.target)) {
+        details.removeAttribute("open");
+      }
+    });
+  });
+</script>

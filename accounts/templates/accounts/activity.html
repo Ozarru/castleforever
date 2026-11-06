@@ -1,0 +1,46 @@
+{% extends "base/layout.html" %}
+{% load i18n %}
+{% block title %}{% trans "Activity" %} | CastleForever{% endblock %}
+{% block content %}
+<main class="w-full max-w-4xl mx-auto px-6 py-16">
+  <p class="uppercase text-xs tracking-[.25em] text-[#b18c43]">{% trans "Activity" %}</p>
+  <h1 class="font-display text-5xl mt-4">{% trans "Your activity." %}</h1>
+
+  <div class="mt-8 flex gap-2">
+    <button type="button" data-tab="bookings" class="tab-btn px-5 py-3 text-[10px] tracking-widest uppercase border border-forest bg-forest text-white">{% trans "Bookings" %}</button>
+    <button type="button" data-tab="requests" class="tab-btn px-5 py-3 text-[10px] tracking-widest uppercase border border-forest/20">{% trans "Service requests" %}</button>
+    <button type="button" data-tab="inquiries" class="tab-btn px-5 py-3 text-[10px] tracking-widest uppercase border border-forest/20">{% trans "Inquiries" %}</button>
+  </div>
+
+  <section id="tab-bookings" class="tab-panel mt-8">
+    <ul class="space-y-3">
+      {% for b in bookings %}<li class="bg-white border p-4">{{ b }}</li>{% empty %}<li class="text-gray-500">{% trans "No bookings yet." %}</li>{% endfor %}
+    </ul>
+  </section>
+  <section id="tab-requests" class="tab-panel mt-8 hidden">
+    <ul class="space-y-3">
+      {% for r in service_requests %}<li class="bg-white border p-4">{{ r }}</li>{% empty %}<li class="text-gray-500">{% trans "No requests yet." %}</li>{% endfor %}
+    </ul>
+  </section>
+  <section id="tab-inquiries" class="tab-panel mt-8 hidden">
+    <ul class="space-y-3">
+      {% for i in inquiries %}<li class="bg-white border p-4">{{ i }}</li>{% empty %}<li class="text-gray-500">{% trans "No inquiries yet." %}</li>{% endfor %}
+    </ul>
+  </section>
+</main>
+
+<script>
+  const panels = document.querySelectorAll('.tab-panel');
+  const btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(btn => btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    panels.forEach(p => p.classList.toggle('hidden', p.id !== 'tab-' + tab));
+    btns.forEach(b => {
+      const active = b.dataset.tab === tab;
+      b.classList.toggle('bg-forest', active);
+      b.classList.toggle('text-white', active);
+      b.classList.toggle('border-forest/20', !active);
+    });
+  }));
+</script>
+{% endblock %}

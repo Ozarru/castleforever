@@ -1,0 +1,109 @@
+{% extends "core/dashboard_layout.html" %}
+{% load i18n %}
+{% block title %}{% trans "Statistics" %} | Dashboard{% endblock %}
+{% block content %}
+  <div class="mb-8">
+    <h1 class="text-2xl font-semibold">{% trans "Statistics" %}</h1>
+    <p class="text-gray-600 mt-2">{% trans "Overview of activity across the platform." %}</p>
+  </div>
+
+  <section class="mb-10">
+    <h2 class="text-lg font-semibold mb-4">{% trans "Bookings" %}</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-medium mb-2">{% trans "Bookings by venue" %}</h3>
+        <canvas id="bookingsByVenue"></canvas>
+      </div>
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-medium mb-2">{% trans "Inquiries over time" %}</h3>
+        <canvas id="inquiriesByMonth"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-lg font-semibold mb-4">{% trans "Service requests" %}</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-medium mb-2">{% trans "Requests by event type" %}</h3>
+        <canvas id="requestsByType"></canvas>
+      </div>
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-medium mb-2">{% trans "Requests by destination" %}</h3>
+        <canvas id="requestsByDestination"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-lg font-semibold mb-4">{% trans "Fleet" %}</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-medium mb-2">{% trans "Vehicles by category" %}</h3>
+        <canvas id="vehiclesByCategory"></canvas>
+      </div>
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-medium mb-2">{% trans "Rentals by vehicle" %}</h3>
+        <canvas id="rentalsByVehicle"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-lg font-semibold mb-4">{% trans "Venues" %}</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-medium mb-2">{% trans "Venues by country" %}</h3>
+        <canvas id="venuesByCountry"></canvas>
+      </div>
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-medium mb-2">{% trans "Payment schedules" %}</h3>
+        <canvas id="paymentsStatus"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    new Chart(document.getElementById('bookingsByVenue'), {
+      type: 'bar',
+      data: { labels: {{ bookings_by_venue_labels|safe }}, datasets: [{ label: '{% trans "Bookings" %}', data: {{ bookings_by_venue_data|safe }}, backgroundColor: '#243B32' }] },
+      options: { plugins: { title: { display: true, text: '{% trans "Bookings by venue" %}' } } }
+    });
+    new Chart(document.getElementById('requestsByType'), {
+      type: 'pie',
+      data: { labels: {{ requests_by_type_labels|safe }}, datasets: [{ data: {{ requests_by_type_data|safe }} }] },
+      options: { plugins: { title: { display: true, text: '{% trans "Requests by event type" %}' } } }
+    });
+    new Chart(document.getElementById('requestsByDestination'), {
+      type: 'doughnut',
+      data: { labels: {{ requests_by_destination_labels|safe }}, datasets: [{ data: {{ requests_by_destination_data|safe }} }] },
+      options: { plugins: { title: { display: true, text: '{% trans "Requests by destination" %}' } } }
+    });
+    new Chart(document.getElementById('inquiriesByMonth'), {
+      type: 'line',
+      data: { labels: {{ inquiries_month_labels|safe }}, datasets: [{ label: '{% trans "Inquiries" %}', data: {{ inquiries_month_data|safe }}, borderColor: '#A58A5A', fill: false }] },
+      options: { plugins: { title: { display: true, text: '{% trans "Inquiries over time" %}' } } }
+    });
+    new Chart(document.getElementById('vehiclesByCategory'), {
+      type: 'bar',
+      data: { labels: {{ vehicles_category_labels|safe }}, datasets: [{ label: '{% trans "Vehicles" %}', data: {{ vehicles_category_data|safe }}, backgroundColor: '#A58A5A' }] },
+      options: { plugins: { title: { display: true, text: '{% trans "Vehicles by category" %}' } } }
+    });
+    new Chart(document.getElementById('venuesByCountry'), {
+      type: 'pie',
+      data: { labels: {{ venues_country_labels|safe }}, datasets: [{ data: {{ venues_country_data|safe }} }] },
+      options: { plugins: { title: { display: true, text: '{% trans "Venues by country" %}' } } }
+    });
+    new Chart(document.getElementById('rentalsByVehicle'), {
+      type: 'bar',
+      data: { labels: {{ rentals_vehicle_labels|safe }}, datasets: [{ label: '{% trans "Rentals" %}', data: {{ rentals_vehicle_data|safe }}, backgroundColor: '#243B32' }] },
+      options: { plugins: { title: { display: true, text: '{% trans "Rentals by vehicle" %}' } } }
+    });
+    new Chart(document.getElementById('paymentsStatus'), {
+      type: 'doughnut',
+      data: { labels: ['{% trans "Approved" %}', '{% trans "Pending" %}'], datasets: [{ data: [{{ payments_approved }}, {{ payments_pending }}] }] },
+      options: { plugins: { title: { display: true, text: '{% trans "Payment schedules" %}' } } }
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base/layout.html" %}
+{% load i18n %}
+{% block title %}{% trans "Privacy policy" %} | CastleForever{% endblock %}
+{% block content %}
+<main class="w-full max-w-4xl mx-auto px-6 py-16">
+  <h1 class="font-display text-5xl mb-6">{% trans "Privacy policy" %}</h1>
+  <p class="text-gray-600 leading-7">{% trans "This prototype stores enquiry details you submit (name, email, wedding date, guest count, message) to manage your request. We do not process payments or run production analytics in this demo. Replace this text with your verified legal policy before launch." %}</p>
+</main>
+{% endblock %}

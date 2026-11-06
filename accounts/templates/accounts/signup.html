@@ -1,0 +1,40 @@
+{% extends "base/layout.html" %}
+{% load i18n %}
+{% block title %}{% trans "Sign up" %} | CastleForever{% endblock %}
+{% block content %}
+<section class="min-h-[85vh] flex items-center justify-center px-6 py-16 bg-gradient-to-br from-[#f8f6f0] via-[#f2eee4] to-[#e8e2d5]">
+  <div class="w-full max-w-md">
+    <div class="bg-white/90 backdrop-blur border border-[#e8e2d5] shadow-[0_30px_80px_-30px_rgba(36,59,50,0.25)] p-10 md:p-12">
+      <p class="uppercase text-xs tracking-[.3em] text-[#A58A5A] mb-3">{% trans "Join CastleForever" %}</p>
+      <h1 class="font-display text-5xl leading-tight mb-2">{% trans "Create account." %}</h1>
+      <p class="text-sm text-gray-500 mb-8">{% trans "Begin your journey to extraordinary estates." %}</p>
+
+      <form method="post" class="space-y-5">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
+            {{ form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        {% for field in form %}
+          <div>
+            <label class="block text-[10px] uppercase tracking-[.2em] text-[#243B32] mb-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<p class="text-red-600 text-xs mt-1">{{ field.errors|striptags }}</p>{% endif %}
+          </div>
+        {% endfor %}
+
+        <button class="w-full bg-[#243B32] text-white px-8 py-4 text-xs uppercase tracking-[.2em] hover:bg-[#1d2f28] transition">
+          {% trans "Create account" %}
+        </button>
+      </form>
+
+      <div class="mt-8 pt-6 border-t border-[#e8e2d5] text-center">
+        <p class="text-sm text-gray-500">{% trans "Already have an account?" %}</p>
+        <a href="{% url 'accounts:login' %}" class="inline-block mt-3 text-xs uppercase tracking-[.2em] text-[#A58A5A] hover:text-[#243B32] transition">{% trans "Sign in" %}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base/layout.html" %}
+{% load i18n %}
+{% block title %}{% trans "Contact" %} | CastleForever{% endblock %}
+{% block content %}
+<main class="w-full max-w-4xl mx-auto px-6 py-16">
+  <p class="uppercase text-xs tracking-[.25em] text-[#b18c43]">{% trans "Contact" %}</p>
+  <h1 class="font-display text-5xl mt-4">{% trans "Get in touch." %}</h1>
+  <p class="text-gray-600 mt-5">{% trans "Choose an enquiry or a service request." %}</p>
+
+  <div class="mt-8 flex gap-2">
+    <button type="button" id="tabEnquiryBtn" class="px-5 py-3 text-[10px] tracking-widest uppercase border border-forest" data-tab="enquiry">{% trans "Enquiry" %}</button>
+    <button type="button" id="tabRequestBtn" class="px-5 py-3 text-[10px] tracking-widest uppercase border border-forest/20" data-tab="request">{% trans "Request" %}</button>
+  </div>
+
+  <div id="tabEnquiry" class="mt-8">
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="enquiry">
+      {% for field in enquiry_form %}
+        <div>
+          <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">{{ field.label }}</label>
+          <div class="[&_input]:w-full [&_select]:w-full [&_textarea]:w-full [&_input]:p-3 [&_select]:p-3 [&_textarea]:p-3 [&_input]:border [&_select]:border [&_textarea]:border">
+            {{ field }}
+          </div>
+          {% for error in field.errors %}
+            <p class="text-red-700 text-xs mt-1">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans "Send enquiry" %} ↗</button>
+    </form>
+  </div>
+
+  <div id="tabRequest" class="mt-8 hidden">
+    <form method="post" class="space-y-5">
+      {% csrf_token %}
+      <input type="hidden" name="form_type" value="request">
+      {% for field in request_form %}
+        <div>
+          <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">{{ field.label }}</label>
+          <div class="[&_input]:w-full [&_select]:w-full [&_textarea]:w-full [&_input]:p-3 [&_select]:p-3 [&_textarea]:p-3 [&_input]:border [&_select]:border [&_textarea]:border">
+            {{ field }}
+          </div>
+          {% for error in field.errors %}
+            <p class="text-red-700 text-xs mt-1">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans "Submit request" %} ↗</button>
+    </form>
+  </div>
+</main>
+
+<script>
+  const activeTab = "{{ active_tab }}";
+  const enquiryPanel = document.getElementById('tabEnquiry');
+  const requestPanel = document.getElementById('tabRequest');
+  const enquiryBtn = document.getElementById('tabEnquiryBtn');
+  const requestBtn = document.getElementById('tabRequestBtn');
+
+  function showTab(tab) {
+    if (tab === 'request') {
+      enquiryPanel.classList.add('hidden');
+      requestPanel.classList.remove('hidden');
+      enquiryBtn.classList.remove('bg-forest', 'text-white');
+      enquiryBtn.classList.add('border-forest/20');
+      requestBtn.classList.add('bg-forest', 'text-white');
+      requestBtn.classList.remove('border-forest/20');
+    } else {
+      requestPanel.classList.add('hidden');
+      enquiryPanel.classList.remove('hidden');
+      requestBtn.classList.remove('bg-forest', 'text-white');
+      requestBtn.classList.add('border-forest/20');
+      enquiryBtn.classList.add('bg-forest', 'text-white');
+      enquiryBtn.classList.remove('border-forest/20');
+    }
+  }
+
+  enquiryBtn.addEventListener('click', () => showTab('enquiry'));
+  requestBtn.addEventListener('click', () => showTab('request'));
+  showTab(activeTab === 'request' ? 'request' : 'enquiry');
+</script>
+{% endblock %}

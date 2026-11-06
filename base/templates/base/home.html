@@ -1,0 +1,1113 @@
+{% extends "base/layout.html" %}
+
+{% load static i18n %}
+
+{% block title %}{% trans "Cookie policy" %} | CastleForever{% endblock %}
+
+{% block content %}
+
+<script>
+
+    tailwind.config={
+
+    darkMode:'class',
+
+    theme:{
+
+    extend:{
+
+    colors:{
+
+        cream:'#F8F6F0',
+
+        forest:'#243B32',
+
+        gold:'#A58A5A',
+
+        ink:'#222822'
+
+    },
+
+    fontFamily:{
+
+        display:['Italiana','serif'],
+
+        sans:['DM Sans','sans-serif']
+
+    }
+
+    }
+
+    }
+
+    }
+
+</script>
+
+
+
+<style>
+
+html.dark body{background:#0f172a;color:#e5e7eb}
+
+html.dark .bg-white{background-color:#1e293b !important}
+
+html.dark .text-ink{color:#e5e7eb !important}
+
+
+
+html{scroll-behavior:smooth}
+
+body{background:#F8F6F0;color:#222822}
+
+
+
+.hero{
+
+ background:linear-gradient(90deg,rgba(16,27,23,.65),rgba(16,27,23,.08)),
+
+ url("{% static 'images/hero-castle.jpg' %}") center/cover
+
+}
+
+
+
+.photo{transition:transform .7s}
+
+.photo-wrap:hover .photo{transform:scale(1.055)}
+
+.line{height:1px;background:#c9bda6}
+
+
+
+.eyebrow{
+
+ letter-spacing:.24em;
+
+ text-transform:uppercase;
+
+ font-size:10px;
+
+ font-weight:700
+
+}
+
+
+
+.btn{
+
+ display:inline-flex;
+
+ align-items:center;
+
+ justify-content:center;
+
+ gap:12px;
+
+ padding:16px 24px;
+
+ font-size:11px;
+
+ font-weight:700;
+
+ letter-spacing:.15em;
+
+ text-transform:uppercase;
+
+ transition:.2s
+
+}
+
+
+
+.btn:hover{transform:translateY(-2px)}
+
+input,select{outline:none}
+
+input:focus,select:focus{border-color:#A58A5A}
+
+</style>
+
+
+
+<script>
+
+(function(){
+
+ try{
+
+  if(localStorage.getItem('theme')==='dark'){
+
+   document.documentElement.classList.add('dark');
+
+  }
+
+ }catch(e){}
+
+})();
+
+</script>
+
+
+
+
+
+<main>
+
+
+
+<!-- HERO -->
+
+
+
+<section id="home" class="hero min-h-[740px] h-[95vh] max-h-[1000px] flex items-center relative text-white">
+
+
+
+<div class="max-w-7xl w-full mx-auto px-6 lg:px-10 pt-20">
+
+
+
+<div class="max-w-3xl">
+
+
+
+<p class="eyebrow text-[#e4d4b3] mb-7">
+
+{% trans "L'art de célébrer l'amour autrement" %}
+
+</p>
+
+
+
+<h1 class="font-display text-6xl sm:text-7xl lg:text-[106px] leading-[.98]">
+
+{% trans 'Votre histoire d’amour mérite un cadre d’exception.' %}
+
+</h1>
+
+
+
+<p class="mt-8 max-w-lg text-white/85 text-sm md:text-base font-light leading-8">
+
+{% trans 'Des châteaux de France aux domaines baignés de soleil en Italie et en Espagne, découvrez des lieux d’exception pour célébrer votre union à votre image.' %}
+
+</p>
+
+
+
+<div class="mt-10 flex flex-wrap gap-4">
+
+
+
+<a href="#venues" class="btn bg-[#d5c19b] text-forest">
+
+{% trans 'Découvrir nos domaines' %}
+
+<span>↗</span>
+
+</a>
+
+
+
+<a href="#approach" class="btn border border-white/70 text-white">
+
+{% trans 'Découvrir nos solutions de paiement' %}
+
+</a>
+
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="absolute bottom-9 left-6 lg:left-10 flex items-center gap-4 text-[10px] tracking-[.2em] uppercase text-white/80">
+
+<span class="w-10 h-px bg-white/60"></span>
+
+{% trans 'France · Italie · Espagne' %}
+
+</div>
+
+
+
+<div class="absolute bottom-9 right-10 text-xs hidden md:block">
+
+{% trans 'Faites défiler pour découvrir' %} ↓
+
+</div>
+
+
+
+</section>
+
+
+
+<!-- PROMISE -->
+
+
+
+<section class="bg-white border-b border-[#e8e4d9]">
+
+
+
+<div class="max-w-7xl mx-auto px-6 lg:px-10 py-7 flex flex-wrap items-center justify-between gap-6 text-[10px] uppercase tracking-[.2em] text-forest/75">
+
+
+
+<span>{% trans '01 / Domaines historiques sélectionnés' %}</span>
+
+<span>{% trans '02 / Expériences privées et exclusives' %}</span>
+
+<span>{% trans '03 / Solutions de paiement flexibles' %}</span>
+
+
+
+</div>
+
+</section>
+
+
+
+<!-- DESTINATIONS -->
+
+
+
+<section id="destinations" class="max-w-7xl mx-auto px-6 lg:px-10 py-16 md:py-20">
+
+
+
+<div class="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
+
+
+
+<div>
+
+<p class="eyebrow text-gold mb-4">{% trans 'Nos destinations' %}</p>
+
+<h2 class="font-display text-5xl md:text-7xl">{% trans 'Là où les rêves prennent vie.' %}</h2>
+
+</div>
+
+
+
+<p class="max-w-sm text-sm leading-7 text-ink/60">
+
+{% trans 'Trois destinations exceptionnelles, entre architecture intemporelle, paysages enchanteurs et célébrations inoubliables.' %}
+
+</p>
+
+
+
+</div>
+
+
+
+<div class="grid md:grid-cols-3 gap-5">
+
+
+
+<a href="#venues" data-country-link="France" class="photo-wrap group relative h-[450px] overflow-hidden">
+
+
+
+<img class="photo h-full w-full object-cover" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=85" alt="Domaine de prestige en France" loading="lazy">
+
+
+
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+
+
+<div class="absolute bottom-8 left-8 text-white">
+
+
+
+<p class="eyebrow mb-3 text-white/75">{% trans 'Châteaux et jardins' %}</p>
+
+<h3 class="font-display text-5xl">France</h3>
+
+<p class="text-xs mt-3 tracking-widest">{% trans 'Découvrir la destination' %} ↗</p>
+
+
+
+</div>
+
+</a>
+
+
+
+<a href="#venues" data-country-link="Italy" class="photo-wrap group relative h-[450px] overflow-hidden">
+
+
+
+<img class="photo h-full w-full object-cover" src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=85" alt="Architecture italienne" loading="lazy">
+
+
+
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+
+
+<div class="absolute bottom-8 left-8 text-white">
+
+
+
+<p class="eyebrow mb-3 text-white/75">{% trans 'Villas et romantisme' %}</p>
+
+<h3 class="font-display text-5xl">Italie</h3>
+
+<p class="text-xs mt-3 tracking-widest">{% trans 'Découvrir la destination' %} ↗</p>
+
+
+
+</div>
+
+</a>
+
+
+
+<a href="#venues" data-country-link="Spain" class="photo-wrap group relative h-[450px] overflow-hidden">
+
+
+
+<img class="photo h-full w-full object-cover" src="https://images.unsplash.com/photo-1509840841025-9088ba78a826?auto=format&fit=crop&w=900&q=85" alt="Architecture historique espagnole" loading="lazy">
+
+
+
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+
+
+<div class="absolute bottom-8 left-8 text-white">
+
+
+
+<p class="eyebrow mb-3 text-white/75">{% trans 'Palais et soleil' %}</p>
+
+<h3 class="font-display text-5xl">Espagne</h3>
+
+<p class="text-xs mt-3 tracking-widest">{% trans 'Découvrir la destination' %} ↗</p>
+
+
+
+</div>
+
+</a>
+
+
+
+</div>
+
+</section>
+
+
+
+<!-- VENUES -->
+
+
+
+<section id="venues" class="bg-[#F0EDE5] py-16 md:py-20">
+
+
+
+<div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+
+
+<div class="flex flex-wrap justify-between items-end gap-6 mb-10">
+
+
+
+<div>
+
+<p class="eyebrow text-gold mb-4">{% trans 'Notre collection privée' %}</p>
+
+<h2 class="font-display text-5xl md:text-7xl">{% trans 'Des domaines extraordinaires.' %}</h2>
+
+</div>
+
+
+
+<div class="flex gap-2 flex-wrap" id="filters">
+
+
+
+<button class="filter border border-forest bg-forest text-white px-5 py-3 text-[10px] tracking-widest uppercase" data-filter="All">
+
+{% trans 'Tous les domaines' %}
+
+</button>
+
+
+
+<button class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase" data-filter="France">France</button>
+
+
+
+<button class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase" data-filter="Italy">Italie</button>
+
+
+
+<button class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase" data-filter="Spain">Espagne</button>
+
+
+
+</div>
+
+</div>
+
+
+
+<div id="venueGrid" class="grid md:grid-cols-3 gap-7">
+
+
+
+{% for venue in venues %}
+
+
+
+<a data-venue-country="{{ venue.get_country_display }}" href="{{ venue.get_absolute_url }}" class="block bg-white group">
+
+
+
+<div class="photo-wrap overflow-hidden h-72">
+
+
+
+{% if venue.cover_url %}
+
+<img class="photo h-full w-full object-cover" src="{{ venue.cover_url }}" alt="{{ venue.name }}" loading="lazy">
+
+{% endif %}
+
+
+
+</div>
+
+
+
+<div class="p-7">
+
+
+
+<p class="eyebrow text-gold mb-3">
+
+{{ venue.region }} · {{ venue.get_country_display }}
+
+</p>
+
+
+
+<h3 class="font-display text-3xl">{{ venue.name }}</h3>
+
+
+
+<p class="mt-4 text-xs text-ink/60">
+
+{% trans 'Jusqu’à' %} {{ venue.capacity }} {% trans 'invités' %} · {% trans 'À partir de' %} {{ venue.price_from }} €
+
+</p>
+
+
+
+<p class="mt-6 text-xs tracking-widest uppercase">
+
+{% trans 'Découvrir le domaine' %} ↗
+
+</p>
+
+
+
+</div>
+
+</a>
+
+
+
+{% empty %}
+
+
+
+<p class="col-span-3 text-ink/60">
+
+{% trans 'Notre collection est actuellement en cours de sélection. Revenez bientôt découvrir nos domaines.' %}
+
+</p>
+
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+
+<p class="mt-8 text-xs text-ink/50">
+
+{% trans 'Les domaines présentés et les tarifs indiqués sont donnés à titre illustratif dans le cadre de cette version de démonstration. Les disponibilités et réservations ne sont pas confirmées.' %}
+
+</p>
+
+
+
+</div>
+
+</section>
+
+
+
+<!-- EXPERIENCES -->
+
+
+
+<section id="experiences" class="max-w-7xl mx-auto px-6 lg:px-10 py-16 md:py-20">
+
+
+
+<div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+
+
+
+<div class="grid grid-cols-2 gap-4">
+
+
+
+<img class="w-full h-[420px] object-cover mt-12" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Célébration de mariage haut de gamme" loading="lazy">
+
+
+
+<img class="w-full h-[420px] object-cover" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=85" alt="Véhicule de prestige avec chauffeur" loading="lazy">
+
+
+
+</div>
+
+
+
+<div>
+
+
+
+<p class="eyebrow text-gold mb-5">{% trans 'Bien plus qu’un lieu de réception' %}</p>
+
+
+
+<h2 class="font-display text-5xl md:text-7xl leading-[1.05]">
+
+{% trans 'Chaque détail mérite une attention particulière.' %}
+
+</h2>
+
+
+
+<p class="text-ink/60 leading-8 mt-7 text-sm">
+
+{% trans 'Un cadre prestigieux n’est que le début de l’expérience. Profitez de prestations exclusives pour sublimer votre journée et donner vie à votre vision du mariage parfait.' %}
+
+</p>
+
+
+
+<div class="mt-9 space-y-0 border-t border-ink/15">
+
+
+
+<div class="py-5 border-b border-ink/15 flex justify-between items-center">
+
+<span class="font-display text-2xl">{% trans 'Limousines et voitures de prestige' %}</span>
+
+<span class="text-gold">↗</span>
+
+</div>
+
+
+
+<div class="py-5 border-b border-ink/15 flex justify-between items-center">
+
+<span class="font-display text-2xl">{% trans 'Service de chauffeur privé' %}</span>
+
+<span class="text-gold">↗</span>
+
+</div>
+
+
+
+<div class="py-5 border-b border-ink/15 flex justify-between items-center">
+
+<span class="font-display text-2xl">{% trans 'Conciergerie événementielle' %}</span>
+
+<span class="text-gold">↗</span>
+
+</div>
+
+
+
+</div>
+
+
+
+<p class="mt-5 text-xs text-ink/55">
+
+{% trans 'La location de véhicules est payable intégralement au moment de la réservation. Les autres prestations font l’objet d’un devis distinct.' %}
+
+</p>
+
+
+
+<a href="#inquiry" class="btn bg-forest text-white mt-8">
+
+{% trans 'Personnaliser votre expérience' %} ↗
+
+</a>
+
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- approach -->
+
+
+
+<section id="approach" class="bg-forest text-white py-16 md:py-20">
+
+
+
+<div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
+
+
+
+<div>
+
+
+
+<p class="eyebrow text-[#d9c59d] mb-6">
+
+{% trans 'Une nouvelle façon de célébrer' %}
+
+</p>
+
+
+
+<h2 class="font-display text-5xl md:text-7xl leading-[1.07]">
+
+{% trans 'Votre mariage de rêve, à votre rythme.' %}
+
+</h2>
+
+
+
+<p class="mt-8 text-white/65 text-sm leading-8 max-w-lg">
+
+{% trans "Un mariage dans un château d'exception ne devrait pas nécessairement vous obliger à régler la totalité du coût de location en une seule fois. Notre approche de paiement envisagée vous permet de confirmer votre projet grâce à un acompte initial, puis d'échelonner le solde de la location selon un calendrier convenu ensemble." %}
+
+</p>
+
+
+
+<a href="#inquiry" class="btn bg-[#d5c19b] text-forest mt-9">
+
+{% trans 'Découvrir nos facilités de paiement' %} ↗
+
+</a>
+
+
+
+</div>
+
+
+
+<div class="bg-[#314a40] border border-white/10 p-8 md:p-12">
+
+
+
+<p class="eyebrow text-[#d9c59d]">
+
+{% trans 'Exemple de paiement pour la location d’un château' %}
+
+</p>
+
+
+
+<div class="font-display text-6xl md:text-7xl mt-5">3 000 €</div>
+
+
+
+<p class="text-white/60 text-sm mt-2">
+
+{% trans 'Acompte initial pour la location du château' %}
+
+</p>
+
+
+
+<div class="line opacity-30 my-9"></div>
+
+
+
+<label class="text-xs uppercase tracking-widest text-white/70" for="price">
+
+{% trans 'Coût indicatif de la location' %}
+
+</label>
+
+
+
+<select id="price" class="mt-3 w-full bg-[#243b32] border border-white/20 px-4 py-4 text-white">
+
+
+
+<option value="15000">15 000 €</option>
+
+<option value="25000" selected>25 000 €</option>
+
+<option value="40000">40 000 €</option>
+
+<option value="60000">60 000 €</option>
+
+
+
+</select>
+
+
+
+<label class="block text-xs uppercase tracking-widest text-white/70 mt-6" for="years">
+
+{% trans 'Durée indicative de remboursement' %}
+
+</label>
+
+
+
+<select id="years" class="mt-3 w-full bg-[#243b32] border border-white/20 px-4 py-4 text-white">
+
+
+
+<option value="12">12 mois</option>
+
+<option value="24">24 mois</option>
+
+<option value="36" selected>36 mois</option>
+
+<option value="48">48 mois</option>
+
+<option value="60">60 mois</option>
+
+
+
+</select>
+
+
+
+<div class="flex justify-between items-end gap-3 mt-8">
+
+
+
+<span class="text-white/65 text-sm">
+
+{% trans 'Mensualité estimée' %}
+
+</span>
+
+
+
+<span id="monthly" class="font-display text-4xl">611,11 €</span>
+
+
+
+</div>
+
+
+
+<p class="text-[11px] text-white/50 leading-6 mt-6">
+
+{% trans "Simulation donnée à titre indicatif, sans intérêts ni frais supplémentaires. Tout échelonnement du paiement au-delà de la date du mariage reste soumis à une étude d'éligibilité, à la signature d'un accord et au respect de la réglementation applicable. Aucune solution de financement n'est proposée ni accordée dans le cadre de cette démonstration. Les prestations de transport doivent être réglées intégralement." %}
+
+</p>
+
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- PHILOSOPHY -->
+
+
+
+<section class="py-16 md:py-20 max-w-7xl mx-auto px-6 lg:px-10 text-center">
+
+
+
+<p class="eyebrow text-gold mb-5">
+
+{% trans 'La philosophie CastleForever' %}
+
+</p>
+
+
+
+<h2 class="font-display text-5xl md:text-7xl max-w-4xl mx-auto leading-[1.15]">
+
+{% trans 'Bien plus qu’un lieu de réception. Un moment d’histoire.' %}
+
+</h2>
+
+
+
+<p class="text-ink/60 text-sm max-w-xl mx-auto leading-8 mt-8">
+
+{% trans 'Nous croyons aux célébrations profondément personnelles, empreintes d’élégance et de raffinement, qui restent gravées dans les mémoires. Des instants précieux qui deviennent des histoires à transmettre de génération en génération.' %}
+
+</p>
+
+
+
+<p class="text-ink/60 text-sm max-w-xl mx-auto leading-8 mt-4">
+
+{% trans "Ce qui distingue CastleForever des autres acteurs du marché, c'est avant tout notre approche : proposer des solutions pensées pour permettre aux futurs mariés et à leurs familles de vivre pleinement leur célébration, sans que celle-ci ne devienne une source de difficultés financières après le mariage." %}
+
+</p>
+
+
+
+<div class="mt-12 text-gold text-3xl">✳</div>
+
+
+
+</section>
+
+
+
+<!-- INQUIRY -->
+
+
+
+<section id="inquiry" class="bg-[#E8E2D5] py-16">
+
+
+
+<div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16">
+
+
+
+<div>
+
+
+
+<p class="eyebrow text-gold mb-5">
+
+{% trans 'Donnez vie à votre projet' %}
+
+</p>
+
+
+
+<h2 class="font-display text-5xl md:text-7xl">
+
+{% trans 'Et si nous imaginions ensemble une célébration inoubliable ?' %}
+
+</h2>
+
+
+
+<p class="mt-7 text-sm leading-8 text-ink/60 max-w-md">
+
+{% trans 'Parlez-nous de votre projet et de la célébration dont vous rêvez. Cette démonstration vous permettra de préparer votre demande de renseignements dans votre application de messagerie.' %}
+
+</p>
+
+
+
+</div>
+
+
+
+<div class="text-ink/80 text-sm leading-7">
+
+
+
+{% trans 'Parcourez notre collection et sélectionnez le domaine qui vous inspire afin de nous adresser une demande de renseignements personnalisée.' %}
+
+
+
+<a href="{% url 'catalog:venues' %}" class="btn bg-[#d5c19b] text-forest mt-7">
+
+{% trans 'Découvrir nos domaines' %} ↗
+
+</a>
+
+
+
+</div>
+
+
+
+</div>
+
+</section>
+
+
+
+</main>
+
+
+
+<script>
+
+
+
+const menu=document.getElementById('menuButton');
+
+const mobile=document.getElementById('mobileMenu');
+
+
+
+if(menu&&mobile){
+
+ menu.addEventListener('click',()=>{
+
+  mobile.classList.toggle('hidden');
+
+ });
+
+}
+
+
+
+const buttons=document.querySelectorAll('[data-filter]');
+
+
+
+buttons.forEach(button=>button.addEventListener('click',()=>{
+
+
+
+ const value=button.dataset.filter;
+
+
+
+ document.querySelectorAll('[data-venue-country]').forEach(card=>{
+
+  card.hidden=value!=='All'&&card.dataset.venueCountry!==value;
+
+ });
+
+
+
+ buttons.forEach(b=>{
+
+  b.classList.remove('bg-forest','text-white');
+
+  b.classList.add('border-forest/20');
+
+ });
+
+
+
+ button.classList.add('bg-forest','text-white');
+
+
+
+}));
+
+
+
+document.querySelectorAll('[data-country-link]').forEach(link=>{
+
+
+
+ link.addEventListener('click',()=>{
+
+
+
+  const country=link.dataset.countryLink;
+
+
+
+  document.querySelector(`[data-filter="${country}"]`)?.click();
+
+
+
+ });
+
+
+
+});
+
+
+
+const price=document.getElementById('price');
+
+const years=document.getElementById('years');
+
+const monthly=document.getElementById('monthly');
+
+
+
+if(price&&years&&monthly){
+
+
+
+ const calc=()=>{
+
+
+
+  const amount=Math.max(0,Number(price.value)-3000)/Number(years.value);
+
+
+
+  monthly.textContent=new Intl.NumberFormat('fr-FR',{
+
+   style:'currency',
+
+   currency:'EUR'
+
+  }).format(amount);
+
+
+
+ };
+
+
+
+ price.addEventListener('change',calc);
+
+ years.addEventListener('change',calc);
+
+
+
+ calc();
+
+
+
+}
+
+
+
+document.getElementById('year')&&
+
+(document.getElementById('year').textContent=new Date().getFullYear());
+
+
+
+</script>
+
+{% endblock %}

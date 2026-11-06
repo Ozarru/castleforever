@@ -1,0 +1,85 @@
+{% load i18n %}
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Dashboard | CastleForever{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: { cream: "#F8F6F0", forest: "#243B32", gold: "#A58A5A", ink: "#222822" },
+            fontFamily: { sans: ["DM Sans", "sans-serif"] },
+          },
+        },
+      };
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+      body { font-family: "DM Sans", sans-serif; }
+      input[type="checkbox"] { appearance: none; width: 44px !important; height: 24px; background: #d1d5db; border-radius: 9999px; position: relative; cursor: pointer; }
+      input[type="checkbox"]:checked { background: #243B32; }
+      input[type="checkbox"]::before { content: ''; position: absolute; width: 18px; height: 18px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: .2s; }
+      input[type="checkbox"]:checked::before { left: 23px; }
+      .dashboard-table th { background: #243B32; color: white; }
+      .dashboard-table td, .dashboard-table th { padding: 12px 16px; }
+      .dashboard-table tr:nth-child(even) { background: #f8f6f0; }
+      .active_page { background: rgba(255,255,255,0.18); font-weight: 600; }
+    </style>
+  </head>
+  <body class="bg-[#f1f5f9] text-[#1f2937]">
+    <div class="min-h-screen flex">
+      <!-- Mobile top bar -->
+      <div class="md:hidden fixed top-0 left-0 right-0 bg-forest text-white p-4 flex items-center justify-between z-40">
+        <span class="font-semibold">Dashboard</span>
+        <button id="sidebarToggle" class="text-2xl">☰</button>
+      </div>
+
+      <!-- Sidebar -->
+      <aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-forest text-white p-6 transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-50">
+        <div class="font-semibold text-xl mb-8">CastleForever</div>
+        <nav class="space-y-1 text-sm">
+          <a href="{% url 'core:dashboard' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'dashboard' %}active_page{% endif %}">{% trans "Dashboard" %}</a>
+          <a href="{% url 'core:statistics' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'statistics' %}active_page{% endif %}">{% trans "Statistics" %}</a>
+          <a href="{% url 'core:booking-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'booking-list' %}active_page{% endif %}">{% trans "Bookings" %}</a>
+          <a href="{% url 'core:service-request-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'service-request-list' %}active_page{% endif %}">{% trans "Service Requests" %}</a>
+          <a href="{% url 'core:contact-inquiry-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'contact-inquiry-list' %}active_page{% endif %}">{% trans "Contact Inquiries" %}</a>
+          <a href="{% url 'core:vehicle-rental-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'vehicle-rental-list' %}active_page{% endif %}">{% trans "Vehicle Rentals" %}</a>
+          <a href="{% url 'core:payment-schedule-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'payment-schedule-list' %}active_page{% endif %}">{% trans "Payment Schedules" %}</a>
+          <a href="{% url 'core:venue-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'venue-list' %}active_page{% endif %}">{% trans "Venues" %}</a>
+          <a href="{% url 'core:vehicle-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'vehicle-list' %}active_page{% endif %}">{% trans "Vehicles" %}</a>
+          <a href="{% url 'base:home' %}" class="block py-2 px-3 rounded mt-6 text-[#dccba7]">{% trans "Back to site" %}</a>
+        </nav>
+      </aside>
+
+      <!-- Overlay -->
+      <div id="sidebarOverlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40"></div>
+
+      <main class="flex-1 p-6 md:p-8 md:ml-0 mt-16 md:mt-0">
+        {% if messages %}
+          <div class="mb-6">
+            {% for message in messages %}<p class="text-sm">{{ message }}</p>{% endfor %}
+          </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+      $(function () { $('select').select2({ width: '100%' }); });
+      const toggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      function openSidebar() { sidebar.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); }
+      function closeSidebar() { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); }
+      if (toggle) toggle.addEventListener('click', openSidebar);
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+    </script>
+  </body>
+</html>

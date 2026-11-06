@@ -1,0 +1,36 @@
+{% extends "core/dashboard_layout.html" %}
+{% load i18n %}
+{% block title %}{{ model_name }} | Dashboard{% endblock %}
+{% block content %}
+<main class="max-w-7xl mx-auto px-6 py-16">
+  <a href="{% url 'core:dashboard' %}" class="text-sm text-gray-500">← {% trans "Dashboard" %}</a>
+  <div class="flex items-center justify-between mt-6">
+    <h1 class="font-display text-5xl">{{ model_name }}</h1>
+    <a href="{% url create_url_name %}" class="bg-forest text-white py-3 px-6 uppercase tracking-widest text-xs">{% trans "Create" %} ↗</a>
+  </div>
+
+  <div class="mt-6 overflow-x-auto bg-white rounded-lg shadow">
+    <table class="dashboard-table w-full text-sm">
+      <thead>
+        <tr class="text-left">
+          <th class="py-3 px-4">{% trans "Record" %}</th>
+          <th class="py-3 px-4">{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in objects %}
+          <tr class="border-b">
+            <td class="py-3 px-4">{{ obj }}</td>
+            <td class="py-3 px-4 flex gap-3">
+              <a href="{% url update_url_name obj.pk %}" class="text-[#b18c43] hover:underline">{% trans "Edit" %}</a>
+              <a href="{% url delete_url_name obj.pk %}" class="text-red-700 hover:underline">{% trans "Delete" %}</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="2" class="py-6 px-4 text-gray-500">{% trans "No records yet." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+{% endblock %}

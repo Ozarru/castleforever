@@ -1,0 +1,1330 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 15:12+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\accounts\forms.py:17 .\accounts\templates\accounts\login.html:21
+#: .\core\models.py:72 .\core\models.py:88
+msgid "Email"
+msgstr "E-mail"
+
+#: .\accounts\forms.py:28 .\accounts\templates\accounts\login.html:27
+msgid "Password"
+msgstr "Mot de passe"
+
+#: .\accounts\templates\accounts\activity.html:3
+#: .\accounts\templates\accounts\activity.html:6
+#: .\base\templates\shared\navbar.html:26
+#: .\base\templates\shared\navbar.html:57
+msgid "Activity"
+msgstr "Activité"
+
+#: .\accounts\templates\accounts\activity.html:7
+msgid "Your activity."
+msgstr "Votre activité."
+
+#: .\accounts\templates\accounts\activity.html:10
+#: .\core\templates\core\dashboard_layout.html:28
+msgid "Bookings"
+msgstr "Réservations"
+
+#: .\accounts\templates\accounts\activity.html:11
+#, fuzzy
+#| msgid "Submit your needs"
+msgid "Service requests"
+msgstr "Envoyer vos besoins"
+
+#: .\accounts\templates\accounts\activity.html:12
+#, fuzzy
+#| msgid "Enquire"
+msgid "Inquiries"
+msgstr "Se renseigner"
+
+#: .\accounts\templates\accounts\activity.html:17
+#, fuzzy
+#| msgid "No records yet."
+msgid "No bookings yet."
+msgstr "Aucun enregistrement pour le moment."
+
+#: .\accounts\templates\accounts\activity.html:22
+#, fuzzy
+#| msgid "No records yet."
+msgid "No requests yet."
+msgstr "Aucun enregistrement pour le moment."
+
+#: .\accounts\templates\accounts\activity.html:27
+#, fuzzy
+#| msgid "No records yet."
+msgid "No inquiries yet."
+msgstr "Aucun enregistrement pour le moment."
+
+#: .\accounts\templates\accounts\login.html:3
+#: .\accounts\templates\accounts\login.html:33
+#: .\accounts\templates\accounts\signup.html:35
+msgid "Sign in"
+msgstr "Se connecter"
+
+#: .\accounts\templates\accounts\login.html:8
+msgid "Welcome back"
+msgstr "Bon retour"
+
+#: .\accounts\templates\accounts\login.html:9
+msgid "Sign in."
+msgstr "Connexion."
+
+#: .\accounts\templates\accounts\login.html:10
+msgid "Access your CastleForever account."
+msgstr "Accédez à votre compte CastleForever."
+
+#: .\accounts\templates\accounts\login.html:38
+msgid "New to CastleForever?"
+msgstr "Nouveau sur CastleForever ?"
+
+#: .\accounts\templates\accounts\login.html:39
+msgid "Create an account"
+msgstr "Créer un compte"
+
+#: .\accounts\templates\accounts\notifications.html:3
+#: .\accounts\templates\accounts\notifications.html:6
+#: .\base\templates\shared\navbar.html:25
+#: .\base\templates\shared\navbar.html:56
+#, fuzzy
+#| msgid "The destinations"
+msgid "Notifications"
+msgstr "Les destinations"
+
+#: .\accounts\templates\accounts\notifications.html:7
+#, fuzzy
+#| msgid "The destinations"
+msgid "Your notifications."
+msgstr "Les destinations"
+
+#: .\accounts\templates\accounts\notifications.html:8
+#, fuzzy
+#| msgid "The destinations"
+msgid "No new notifications."
+msgstr "Les destinations"
+
+#: .\accounts\templates\accounts\profile.html:3
+#: .\accounts\templates\accounts\profile.html:6
+#: .\base\templates\shared\navbar.html:24
+#: .\base\templates\shared\navbar.html:55
+msgid "Profile"
+msgstr "Profil"
+
+#: .\accounts\templates\accounts\profile.html:7
+msgid "Your profile."
+msgstr "Votre profil."
+
+#: .\accounts\templates\accounts\profile.html:8
+msgid "Update your personal information."
+msgstr "Mettez à jour vos informations personnelles."
+
+#: .\accounts\templates\accounts\profile.html:23
+#, fuzzy
+#| msgid "Your profile."
+msgid "Save profile"
+msgstr "Votre profil."
+
+#: .\accounts\templates\accounts\signup.html:3
+msgid "Sign up"
+msgstr "S'inscrire"
+
+#: .\accounts\templates\accounts\signup.html:8
+msgid "Join CastleForever"
+msgstr "Rejoindre CastleForever"
+
+#: .\accounts\templates\accounts\signup.html:9
+msgid "Create account."
+msgstr "Créer un compte."
+
+#: .\accounts\templates\accounts\signup.html:10
+msgid "Begin your journey to extraordinary estates."
+msgstr "Commencez votre voyage vers des domaines extraordinaires."
+
+#: .\accounts\templates\accounts\signup.html:29
+msgid "Create account"
+msgstr "Créer un compte"
+
+#: .\accounts\templates\accounts\signup.html:34
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte ?"
+
+#: .\base\templates\base\approach.html:3 .\base\templates\base\approach.html:82
+msgid "Our approach"
+msgstr "Notre approche"
+
+#: .\base\templates\base\approach.html:83
+#: .\base\templates\base\approach.html:95
+msgid "Your dream day. Your own pace."
+msgstr "Votre jour de rêve. À votre rythme."
+
+#: .\base\templates\base\approach.html:85
+#: .\base\templates\base\approach.html:97
+msgid ""
+"An unforgettable castle wedding shouldn't require settling the entire venue "
+"cost at once. Our proposed payment approach lets you secure your celebration "
+"with an initial deposit, then spread the remaining venue balance across an "
+"agreed installment schedule."
+msgstr ""
+"Un mariage de château inoubliable ne devrait pas exiger de régler "
+"l'intégralité du coût du lieu d'un coup. Notre approche de paiement proposée "
+"vous permet de sécuriser votre célébration avec un acompte initial, puis "
+"d'étaler le solde restant sur un échéancier convenu.Un mariage de château "
+"inoubliable ne devrait pas exiger de régler l'intégralité du coût du lieu "
+"d'un coup. Notre approche de paiement proposée vous permet de sécuriser "
+"votre célébration avec un acompte initial, puis d'étaler le solde restant "
+"sur un échéancier convenu."
+
+#: .\base\templates\base\approach.html:94
+msgid "An exceptional way to celebrate"
+msgstr "Une façon exceptionnelle de célébrer"
+
+#: .\base\templates\base\approach.html:100
+#: .\base\templates\base\approach.html:147
+msgid ""
+"What sets CastleForever apart is our approach: solutions designed to let "
+"couples and their families fully enjoy their celebration without financial "
+"hardship afterwards."
+msgstr ""
+
+#: .\base\templates\base\approach.html:102
+msgid "Ask about a payment plan"
+msgstr "Demander un plan de paiement"
+
+#: .\base\templates\base\approach.html:106
+msgid "Castle rental payment example"
+msgstr "Exemple de paiement de location de château"
+
+#: .\base\templates\base\approach.html:108
+msgid "Initial deposit toward your castle rental"
+msgstr "Acompte initial pour la location de votre château"
+
+#: .\base\templates\base\approach.html:111
+msgid "Illustrative castle rental cost"
+msgstr "Coût indicatif de location de château"
+
+#: .\base\templates\base\approach.html:119
+msgid "Illustrative repayment period"
+msgstr "Période de remboursement indicative"
+
+#: .\base\templates\base\approach.html:129
+msgid "Estimated monthly installment"
+msgstr "Mensualité estimée"
+
+#: .\base\templates\base\approach.html:134
+msgid ""
+"Illustration only, assuming no interest or fees. Multi-year repayment after "
+"the wedding is subject to eligibility, a signed agreement, and applicable "
+"law. No approach is offered or approved through this demo. Transport must be "
+"paid in full."
+msgstr ""
+"Illustration uniquement, en supposant aucun intérêt ni frais. Le "
+"remboursement sur plusieurs années après le mariage est soumis à "
+"l'éligibilité, à un accord signé et au droit applicable. Aucun financement "
+"n'est offert ni approuvé via cette démo. Le transport doit être payé "
+"intégralement.Illustration uniquement, en supposant aucun intérêt ni frais. "
+"Le remboursement sur plusieurs années après le mariage est soumis à "
+"l'éligibilité, à un accord signé et au droit applicable. Aucun financement "
+"n'est offert ni approuvé via cette démo. Le transport doit être payé "
+"intégralement."
+
+#: .\base\templates\base\approach.html:141
+msgid "The CastleForever philosophy"
+msgstr "La philosophie CastleForever"
+
+#: .\base\templates\base\approach.html:142
+msgid "Not simply a venue. A moment in history."
+msgstr "Pas simplement un lieu. Un moment dans l'histoire."
+
+#: .\base\templates\base\approach.html:144
+msgid ""
+"We believe in celebrations that feel deeply personal, effortlessly elegant, "
+"and entirely unforgettable. The kind of day that becomes a story told for "
+"generations."
+msgstr ""
+"Nous croyons en des célébrations profondément personnelles, d'une élégance "
+"sans effort et totalement inoubliables. Le genre de jour qui devient une "
+"histoire racontée pendant des générations.Nous croyons en des célébrations "
+"profondément personnelles, d'une élégance sans effort et totalement "
+"inoubliables. Le genre de jour qui devient une histoire racontée pendant des "
+"générations."
+
+#: .\base\templates\base\approach.html:155
+msgid "Begin your story"
+msgstr "Commencez votre histoire"
+
+#: .\base\templates\base\approach.html:156
+msgid "Shall we create something timeless?"
+msgstr "Créons-nous quelque chose d'intemporel ?"
+
+#: .\base\templates\base\approach.html:158
+msgid ""
+"Tell us a little about your dream celebration. This demo will prepare your "
+"enquiry for your email application."
+msgstr ""
+"Parlez-nous un peu de la célébration de vos rêves. Cette démo préparera "
+"votre demande pour votre application e-mail.Parlez-nous un peu de la "
+"célébration de vos rêves. Cette démo préparera votre demande pour votre "
+"application e-mail."
+
+#: .\base\templates\base\approach.html:162
+msgid "Browse the collection and select an estate to submit a private enquiry."
+msgstr ""
+"Parcourez la collection et sélectionnez un domaine pour soumettre une "
+"demande privée.Parcourez la collection et sélectionnez un domaine pour "
+"soumettre une demande privée."
+
+#: .\base\templates\base\approach.html:163
+msgid "Explore estates"
+msgstr "Explorer les domaines"
+
+#: .\base\templates\base\destination.html:3
+#: .\base\templates\shared\footer.html:15 .\base\templates\shared\navbar.html:9
+#: .\base\templates\shared\navbar.html:49
+msgid "Destinations"
+msgstr "Destinations"
+
+#: .\base\templates\base\destination.html:82
+msgid "The destinations"
+msgstr "Les destinations"
+
+#: .\base\templates\base\destination.html:83
+msgid "Where dreams unfold."
+msgstr "Là où les rêves se réalisent."
+
+#: .\base\templates\base\destination.html:85
+msgid ""
+"Three extraordinary countries. A world of timeless architecture, captivating "
+"landscapes, and celebrations to remember."
+msgstr ""
+"Trois pays extraordinaires. Un monde d'architecture intemporelle, de "
+"paysages captivants et de célébrations mémorables.Trois pays "
+"extraordinaires. Un monde d'architecture intemporelle, de paysages "
+"captivants et de célébrations mémorables."
+
+#: .\base\templates\base\destination.html:88
+#, fuzzy
+#| msgid "Explore estate"
+msgid "Explore France"
+msgstr "Explorer le domaine"
+
+#: .\base\templates\base\destination.html:89
+#, fuzzy
+#| msgid "Explore estate"
+msgid "Explore Italy"
+msgstr "Explorer le domaine"
+
+#: .\base\templates\base\destination.html:98
+#, fuzzy
+#| msgid "The destinations"
+msgid "Our destinations"
+msgstr "Les destinations"
+
+#: .\base\templates\base\destination.html:99
+#: .\base\templates\base\home.html:293
+msgid "Là où les rêves prennent vie."
+msgstr ""
+
+#: .\base\templates\base\destination.html:102
+#: .\base\templates\base\home.html:301
+msgid ""
+"Trois destinations exceptionnelles, entre architecture intemporelle, "
+"paysages enchanteurs et célébrations inoubliables."
+msgstr ""
+
+#: .\base\templates\base\destination.html:111
+#: .\base\templates\base\destination.html:142
+msgid "Châteaux & gardens"
+msgstr "Châteaux et jardins"
+
+#: .\base\templates\base\destination.html:113
+#: .\base\templates\base\destination.html:123
+#: .\base\templates\base\destination.html:133
+msgid "Explore destination"
+msgstr "Explorer la destination"
+
+#: .\base\templates\base\destination.html:121
+#: .\base\templates\base\destination.html:166
+msgid "Villas & romance"
+msgstr "Villas et romance"
+
+#: .\base\templates\base\destination.html:131
+#: .\base\templates\base\destination.html:190
+msgid "Palaces & sunshine"
+msgstr "Palais et soleil"
+
+#: .\base\templates\base\destination.html:141 .\core\models.py:59
+msgid "France"
+msgstr "France"
+
+#: .\base\templates\base\destination.html:143
+msgid "Historic estates, manicured gardens, and timeless French elegance."
+msgstr ""
+
+#: .\base\templates\base\destination.html:154
+#: .\base\templates\base\destination.html:178
+#: .\base\templates\base\destination.html:202
+#: .\catalog\templates\catalog\venue_detail.html:17
+#: .\catalog\templates\catalog\venue_detail.html:106
+#: .\catalog\templates\catalog\venues.html:29
+msgid "Up to"
+msgstr "Jusqu'à"
+
+#: .\base\templates\base\destination.html:154
+#: .\base\templates\base\destination.html:178
+#: .\base\templates\base\destination.html:202
+#: .\catalog\templates\catalog\venue_detail.html:17
+#: .\catalog\templates\catalog\venue_detail.html:106
+#: .\catalog\templates\catalog\venues.html:29
+msgid "guests"
+msgstr "invités"
+
+#: .\base\templates\base\destination.html:154
+#: .\base\templates\base\destination.html:178
+#: .\base\templates\base\destination.html:202
+#: .\catalog\templates\catalog\car_rentals.html:26
+#: .\catalog\templates\catalog\venue_detail.html:106
+#: .\catalog\templates\catalog\venues.html:29
+msgid "From"
+msgstr "À partir de"
+
+#: .\base\templates\base\destination.html:165 .\core\models.py:60
+msgid "Italy"
+msgstr "Italie"
+
+#: .\base\templates\base\destination.html:167
+msgid "Sunlit villas, rolling hills, and Italian romance."
+msgstr ""
+
+#: .\base\templates\base\destination.html:189 .\core\models.py:61
+msgid "Spain"
+msgstr "Espagne"
+
+#: .\base\templates\base\destination.html:191
+msgid "Sun-drenched palaces and vibrant Spanish celebrations."
+msgstr ""
+
+#: .\base\templates\base\destination.html:212
+#, fuzzy
+#| msgid "The collection"
+msgid "View full collection"
+msgstr "La collection"
+
+#: .\base\templates\base\home.html:5 .\base\templates\legal\cookies.html:3
+#: .\base\templates\legal\cookies.html:6 .\base\templates\shared\footer.html:26
+msgid "Cookie policy"
+msgstr "Politique de cookies"
+
+#: .\base\templates\base\home.html:177
+msgid "L'art de célébrer l'amour autrement"
+msgstr ""
+
+#: .\base\templates\base\home.html:185
+msgid "Votre histoire d’amour mérite un cadre d’exception."
+msgstr ""
+
+#: .\base\templates\base\home.html:193
+msgid ""
+"Des châteaux de France aux domaines baignés de soleil en Italie et en "
+"Espagne, découvrez des lieux d’exception pour célébrer votre union à votre "
+"image."
+msgstr ""
+
+#: .\base\templates\base\home.html:205 .\base\templates\base\home.html:953
+msgid "Découvrir nos domaines"
+msgstr ""
+
+#: .\base\templates\base\home.html:215
+msgid "Découvrir nos solutions de paiement"
+msgstr ""
+
+#: .\base\templates\base\home.html:233
+#, fuzzy
+#| msgid "France · Italy · Spain"
+msgid "France · Italie · Espagne"
+msgstr "France · Italie · Espagne"
+
+#: .\base\templates\base\home.html:241
+msgid "Faites défiler pour découvrir"
+msgstr ""
+
+#: .\base\templates\base\home.html:263
+msgid "01 / Domaines historiques sélectionnés"
+msgstr ""
+
+#: .\base\templates\base\home.html:265
+msgid "02 / Expériences privées et exclusives"
+msgstr ""
+
+#: .\base\templates\base\home.html:267
+#, fuzzy
+#| msgid "03 / Thoughtful payment flexibility"
+msgid "03 / Solutions de paiement flexibles"
+msgstr "03 / Flexibilité de paiement réfléchie"
+
+#: .\base\templates\base\home.html:291
+#, fuzzy
+#| msgid "The destinations"
+msgid "Nos destinations"
+msgstr "Les destinations"
+
+#: .\base\templates\base\home.html:331
+#, fuzzy
+#| msgid "Châteaux & gardens"
+msgid "Châteaux et jardins"
+msgstr "Châteaux et jardins"
+
+#: .\base\templates\base\home.html:335 .\base\templates\base\home.html:365
+#: .\base\templates\base\home.html:395
+#, fuzzy
+#| msgid "Explore destination"
+msgid "Découvrir la destination"
+msgstr "Explorer la destination"
+
+#: .\base\templates\base\home.html:361
+#, fuzzy
+#| msgid "Villas & romance"
+msgid "Villas et romantisme"
+msgstr "Villas et romance"
+
+#: .\base\templates\base\home.html:391
+msgid "Palais et soleil"
+msgstr ""
+
+#: .\base\templates\base\home.html:429
+#, fuzzy
+#| msgid "The collection"
+msgid "Notre collection privée"
+msgstr "La collection"
+
+#: .\base\templates\base\home.html:431
+msgid "Des domaines extraordinaires."
+msgstr ""
+
+#: .\base\templates\base\home.html:443
+msgid "Tous les domaines"
+msgstr ""
+
+#: .\base\templates\base\home.html:513
+msgid "Jusqu’à"
+msgstr ""
+
+#: .\base\templates\base\home.html:513
+msgid "invités"
+msgstr ""
+
+#: .\base\templates\base\home.html:513
+msgid "À partir de"
+msgstr ""
+
+#: .\base\templates\base\home.html:521
+msgid "Découvrir le domaine"
+msgstr ""
+
+#: .\base\templates\base\home.html:539
+msgid ""
+"Notre collection est actuellement en cours de sélection. Revenez bientôt "
+"découvrir nos domaines."
+msgstr ""
+
+#: .\base\templates\base\home.html:555
+msgid ""
+"Les domaines présentés et les tarifs indiqués sont donnés à titre "
+"illustratif dans le cadre de cette version de démonstration. Les "
+"disponibilités et réservations ne sont pas confirmées."
+msgstr ""
+
+#: .\base\templates\base\home.html:599
+msgid "Bien plus qu’un lieu de réception"
+msgstr ""
+
+#: .\base\templates\base\home.html:605
+msgid "Chaque détail mérite une attention particulière."
+msgstr ""
+
+#: .\base\templates\base\home.html:613
+msgid ""
+"Un cadre prestigieux n’est que le début de l’expérience. Profitez de "
+"prestations exclusives pour sublimer votre journée et donner vie à votre "
+"vision du mariage parfait."
+msgstr ""
+
+#: .\base\templates\base\home.html:625
+msgid "Limousines et voitures de prestige"
+msgstr ""
+
+#: .\base\templates\base\home.html:635
+#, fuzzy
+#| msgid "Private chauffeur service"
+msgid "Service de chauffeur privé"
+msgstr "Service de chauffeur privé"
+
+#: .\base\templates\base\home.html:645
+msgid "Conciergerie événementielle"
+msgstr ""
+
+#: .\base\templates\base\home.html:659
+msgid ""
+"La location de véhicules est payable intégralement au moment de la "
+"réservation. Les autres prestations font l’objet d’un devis distinct."
+msgstr ""
+
+#: .\base\templates\base\home.html:667
+#, fuzzy
+#| msgid "Design your experience"
+msgid "Personnaliser votre expérience"
+msgstr "Concevez votre expérience"
+
+#: .\base\templates\base\home.html:699
+msgid "Une nouvelle façon de célébrer"
+msgstr ""
+
+#: .\base\templates\base\home.html:707
+msgid "Votre mariage de rêve, à votre rythme."
+msgstr ""
+
+#: .\base\templates\base\home.html:715
+msgid ""
+"Un mariage dans un château d'exception ne devrait pas nécessairement vous "
+"obliger à régler la totalité du coût de location en une seule fois. Notre "
+"approche de paiement envisagée vous permet de confirmer votre projet grâce à "
+"un acompte initial, puis d'échelonner le solde de la location selon un "
+"calendrier convenu ensemble."
+msgstr ""
+
+#: .\base\templates\base\home.html:723
+msgid "Découvrir nos facilités de paiement"
+msgstr ""
+
+#: .\base\templates\base\home.html:739
+msgid "Exemple de paiement pour la location d’un château"
+msgstr ""
+
+#: .\base\templates\base\home.html:751
+msgid "Acompte initial pour la location du château"
+msgstr ""
+
+#: .\base\templates\base\home.html:763
+msgid "Coût indicatif de la location"
+msgstr ""
+
+#: .\base\templates\base\home.html:789
+msgid "Durée indicative de remboursement"
+msgstr ""
+
+#: .\base\templates\base\home.html:821
+msgid "Mensualité estimée"
+msgstr ""
+
+#: .\base\templates\base\home.html:837
+msgid ""
+"Simulation donnée à titre indicatif, sans intérêts ni frais supplémentaires. "
+"Tout échelonnement du paiement au-delà de la date du mariage reste soumis à "
+"une étude d'éligibilité, à la signature d'un accord et au respect de la "
+"réglementation applicable. Aucune solution de financement n'est proposée ni "
+"accordée dans le cadre de cette démonstration. Les prestations de transport "
+"doivent être réglées intégralement."
+msgstr ""
+
+#: .\base\templates\base\home.html:861
+#, fuzzy
+#| msgid "Join CastleForever"
+msgid "La philosophie CastleForever"
+msgstr "Rejoindre CastleForever"
+
+#: .\base\templates\base\home.html:869
+msgid "Bien plus qu’un lieu de réception. Un moment d’histoire."
+msgstr ""
+
+#: .\base\templates\base\home.html:877
+msgid ""
+"Nous croyons aux célébrations profondément personnelles, empreintes "
+"d’élégance et de raffinement, qui restent gravées dans les mémoires. Des "
+"instants précieux qui deviennent des histoires à transmettre de génération "
+"en génération."
+msgstr ""
+
+#: .\base\templates\base\home.html:885
+msgid ""
+"Ce qui distingue CastleForever des autres acteurs du marché, c'est avant "
+"tout notre approche : proposer des solutions pensées pour permettre aux "
+"futurs mariés et à leurs familles de vivre pleinement leur célébration, sans "
+"que celle-ci ne devienne une source de difficultés financières après le "
+"mariage."
+msgstr ""
+
+#: .\base\templates\base\home.html:917
+msgid "Donnez vie à votre projet"
+msgstr ""
+
+#: .\base\templates\base\home.html:925
+msgid "Et si nous imaginions ensemble une célébration inoubliable ?"
+msgstr ""
+
+#: .\base\templates\base\home.html:933
+msgid ""
+"Parlez-nous de votre projet et de la célébration dont vous rêvez. Cette "
+"démonstration vous permettra de préparer votre demande de renseignements "
+"dans votre application de messagerie."
+msgstr ""
+
+#: .\base\templates\base\home.html:947
+msgid ""
+"Parcourez notre collection et sélectionnez le domaine qui vous inspire afin "
+"de nous adresser une demande de renseignements personnalisée."
+msgstr ""
+
+#: .\base\templates\legal\cookies.html:7
+msgid ""
+"This prototype uses only essential session cookies for authentication. "
+"Replace this text with your verified cookie policy before launch."
+msgstr ""
+"Ce prototype utilise uniquement des cookies de session essentiels pour "
+"l'authentification. Remplacez ce texte par votre politique de cookies "
+"vérifiée avant le lancement.Ce prototype utilise uniquement des cookies de "
+"session essentiels pour l'authentification. Remplacez ce texte par votre "
+"politique de cookies vérifiée avant le lancement."
+
+#: .\base\templates\legal\privacy.html:3 .\base\templates\legal\privacy.html:6
+#: .\base\templates\shared\footer.html:24
+msgid "Privacy policy"
+msgstr "Politique de confidentialité"
+
+#: .\base\templates\legal\privacy.html:7
+msgid ""
+"This prototype stores enquiry details you submit (name, email, wedding date, "
+"guest count, message) to manage your request. We do not process payments or "
+"run production analytics in this demo. Replace this text with your verified "
+"legal policy before launch."
+msgstr ""
+"Ce prototype stocke les détails de demande que vous soumettez (nom, e-mail, "
+"date de mariage, nombre d'invités, message) pour gérer votre demande. Nous "
+"ne traitons pas les paiements ni n'exécutons d'analyses de production dans "
+"cette démo. Remplacez ce texte par votre politique légale vérifiée avant le "
+"lancement.Ce prototype stocke les détails de demande que vous soumettez "
+"(nom, e-mail, date de mariage, nombre d'invités, message) pour gérer votre "
+"demande. Nous ne traitons pas les paiements ni n'exécutons d'analyses de "
+"production dans cette démo. Remplacez ce texte par votre politique légale "
+"vérifiée avant le lancement."
+
+#: .\base\templates\legal\terms.html:3 .\base\templates\legal\terms.html:6
+#: .\base\templates\shared\footer.html:25
+msgid "Terms of service"
+msgstr "Conditions d'utilisation"
+
+#: .\base\templates\legal\terms.html:7
+msgid ""
+"Use of this website is for demonstration purposes. Venue and vehicle "
+"listings are illustrative. Replace this text with your verified terms before "
+"launch."
+msgstr ""
+"L'utilisation de ce site est à des fins de démonstration. Les annonces de "
+"lieux et de véhicules sont illustratives. Remplacez ce texte par vos "
+"conditions vérifiées avant le lancement.L'utilisation de ce site est à des "
+"fins de démonstration. Les annonces de lieux et de véhicules sont "
+"illustratives. Remplacez ce texte par vos conditions vérifiées avant le "
+"lancement."
+
+#: .\base\templates\shared\footer.html:6
+msgid ""
+"Extraordinary estates, considered arrivals, and thoughtful payment "
+"approaches for celebrations to remember."
+msgstr ""
+"Domaines extraordinaires, arrivées réfléchies et approches de paiement "
+"pensées pour des célébrations mémorables.Domaines extraordinaires, arrivées "
+"réfléchies et approches de paiement pensées pour des célébrations mémorables."
+
+#: .\base\templates\shared\footer.html:11
+msgid "Explore"
+msgstr "Explorer"
+
+#: .\base\templates\shared\footer.html:13
+#: .\catalog\templates\catalog\venues.html:3
+msgid "The collection"
+msgstr "La collection"
+
+#: .\base\templates\shared\footer.html:14
+#: .\catalog\templates\catalog\car_rentals.html:3
+msgid "Car rentals"
+msgstr "Location de voitures"
+
+#: .\base\templates\shared\footer.html:16
+msgid "Experiences"
+msgstr "Expériences"
+
+#: .\base\templates\shared\footer.html:17
+msgid "Payment approach"
+msgstr "Approche de paiement"
+
+#: .\base\templates\shared\footer.html:22
+msgid "Legal"
+msgstr "Mentions légales"
+
+#: .\base\templates\shared\footer.html:27
+#: .\base\templates\shared\footer.html:34
+#: .\base\templates\shared\navbar.html:12
+#: .\base\templates\shared\navbar.html:52 .\core\templates\core\contact.html:3
+#: .\core\templates\core\contact.html:6
+msgid "Contact"
+msgstr "Contact"
+
+#: .\base\templates\shared\footer.html:28
+#: .\base\templates\shared\navbar.html:28
+#: .\base\templates\shared\navbar.html:59
+#: .\core\templates\core\dashboard.html:3
+#: .\core\templates\core\dashboard.html:6
+#: .\core\templates\core\dashboard_layout.html:27
+#: .\core\templates\core\dashboard_list.html:6
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: .\base\templates\shared\footer.html:29 .\core\templates\core\needs.html:3
+msgid "Tell us your needs"
+msgstr "Parlez-nous de vos besoins"
+
+#: .\base\templates\shared\footer.html:38
+msgid "Mon–Fri, 09:00–18:00 CET"
+msgstr "Lun–Ven, 09:00–18:00 CET"
+
+#: .\base\templates\shared\footer.html:41
+msgid "Instagram"
+msgstr "Instagram"
+
+#: .\base\templates\shared\footer.html:42
+msgid "Pinterest"
+msgstr "Pinterest"
+
+#: .\base\templates\shared\footer.html:49
+msgid "All rights reserved."
+msgstr "Tous droits réservés."
+
+#: .\base\templates\shared\footer.html:56
+msgid "Language"
+msgstr "Langue"
+
+#: .\base\templates\shared\footer.html:63
+msgid "Concept prototype"
+msgstr "Prototype conceptuel"
+
+#: .\base\templates\shared\navbar.html:10
+#: .\base\templates\shared\navbar.html:50
+msgid "Domaines"
+msgstr ""
+
+#: .\base\templates\shared\navbar.html:11
+#, fuzzy
+#| msgid "Engagement"
+msgid "Financement"
+msgstr "Fiançailles"
+
+#: .\base\templates\shared\navbar.html:30
+#: .\base\templates\shared\navbar.html:61
+#, fuzzy
+#| msgid "Log out"
+msgid "Log out?"
+msgstr "Se déconnecter"
+
+#: .\base\templates\shared\navbar.html:32
+#: .\base\templates\shared\navbar.html:63
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: .\base\templates\shared\navbar.html:37
+#: .\base\templates\shared\navbar.html:66
+msgid "Log in"
+msgstr "Se connecter"
+
+#: .\base\templates\shared\navbar.html:42
+msgid "Organisez votre mariage"
+msgstr ""
+
+#: .\base\templates\shared\navbar.html:51 .\core\models.py:79
+#: .\core\templates\core\needs.html:6
+msgid "Your needs"
+msgstr "Vos besoins"
+
+#: .\base\templates\shared\navbar.html:53
+msgid "Solutions de paiement"
+msgstr ""
+
+#: .\catalog\templates\catalog\car_rentals.html:9
+msgid "Exotic cars & limousines"
+msgstr "Voitures exotiques et limousines"
+
+#: .\catalog\templates\catalog\car_rentals.html:10
+msgid ""
+"Arrive in style. Choose from our curated fleet of exotic supercars and "
+"chauffeur-driven limousines. Vehicle rentals require full payment at booking."
+msgstr ""
+"La location de véhicules nécessite un paiement intégral lors de la "
+"réservation. Les autres services sont devisés séparément.Arrivez avec style. "
+"Choisissez parmi notre flotte sélectionnée de supercars exotiques et de "
+"limousines avec chauffeur. La location de véhicules nécessite un paiement "
+"intégral lors de la réservation."
+
+#: .\catalog\templates\catalog\car_rentals.html:26
+msgid "per day"
+msgstr "par jour"
+
+#: .\catalog\templates\catalog\car_rentals.html:27
+msgid "Available for rental"
+msgstr "Disponible à la location"
+
+#: .\catalog\templates\catalog\car_rentals.html:34
+msgid "Our rental fleet is being curated. Please check back soon."
+msgstr "Notre flotte de location est en cours de sélection. Revenez bientôt."
+
+#: .\catalog\templates\catalog\venue_detail.html:6
+msgid "Back to collection"
+msgstr "Retour à la collection"
+
+#: .\catalog\templates\catalog\venue_detail.html:12
+#, fuzzy
+#| msgid "A celebration to remember."
+msgid "An exclusive estate for a celebration to remember."
+msgstr "Une célébration à retenir."
+
+#: .\catalog\templates\catalog\venue_detail.html:15
+#: .\catalog\templates\catalog\venue_detail.html:74
+msgid "Guide price from"
+msgstr "Prix indicatif à partir de"
+
+#: .\catalog\templates\catalog\venue_detail.html:43
+msgid "The experience"
+msgstr "L'expérience"
+
+#: .\catalog\templates\catalog\venue_detail.html:44
+msgid "A celebration to remember."
+msgstr "Une célébration à retenir."
+
+#: .\catalog\templates\catalog\venue_detail.html:49
+msgid "Country"
+msgstr ""
+
+#: .\catalog\templates\catalog\venue_detail.html:53
+msgid "Region"
+msgstr ""
+
+#: .\catalog\templates\catalog\venue_detail.html:57
+#, fuzzy
+#| msgid "guests"
+msgid "Guests"
+msgstr "invités"
+
+#: .\catalog\templates\catalog\venue_detail.html:63
+msgid "What is included"
+msgstr ""
+
+#: .\catalog\templates\catalog\venue_detail.html:65
+msgid "Exclusive use of the estate for your celebration"
+msgstr ""
+
+#: .\catalog\templates\catalog\venue_detail.html:66
+msgid "On-site accommodation for the wedding party"
+msgstr ""
+
+#: .\catalog\templates\catalog\venue_detail.html:67
+msgid "Dedicated events team and planning support"
+msgstr ""
+
+#: .\catalog\templates\catalog\venue_detail.html:68
+msgid "Ceremony and reception spaces"
+msgstr ""
+
+#: .\catalog\templates\catalog\venue_detail.html:76
+msgid "A considered payment approach"
+msgstr "Une approche de paiement réfléchie"
+
+#: .\catalog\templates\catalog\venue_detail.html:78
+msgid "Illustrative installment term"
+msgstr "Durée indicative des versements"
+
+#: .\catalog\templates\catalog\venue_detail.html:86
+msgid "Example monthly amount"
+msgstr "Montant mensuel exemple"
+
+#: .\catalog\templates\catalog\venue_detail.html:88
+msgid ""
+"Illustrative only; excludes fees and interest. No approach approval or "
+"reservation is implied."
+msgstr ""
+"Illustration uniquement ; hors frais et intérêts. Aucune approbation de "
+"financement ni réservation n'est impliquée.Illustration uniquement ; hors "
+"frais et intérêts. Aucune approbation de financement ni réservation n'est "
+"impliquée."
+
+#: .\catalog\templates\catalog\venue_detail.html:89
+msgid "Request a private proposal"
+msgstr "Demander une proposition privée"
+
+#: .\catalog\templates\catalog\venue_detail.html:95
+#, fuzzy
+#| msgid "Explore estates"
+msgid "Similar estates"
+msgstr "Explorer les domaines"
+
+#: .\catalog\templates\catalog\venue_detail.html:96
+msgid "More places you may love."
+msgstr ""
+
+#: .\catalog\templates\catalog\venues.html:6
+msgid "Back to home"
+msgstr "Retour à l'accueil"
+
+#: .\catalog\templates\catalog\venues.html:8
+msgid "The private collection"
+msgstr "La collection privée"
+
+#: .\catalog\templates\catalog\venues.html:9
+msgid "Extraordinary estates"
+msgstr "Domaines extraordinaires"
+
+#: .\catalog\templates\catalog\venues.html:10
+msgid "Discover our curated estates across France, Italy and Spain."
+msgstr ""
+"Découvrez nos domaines sélectionnés en France, en Italie et en "
+"Espagne.Découvrez nos domaines sélectionnés en France, en Italie et en "
+"Espagne."
+
+#: .\catalog\templates\catalog\venues.html:14
+msgid "All places"
+msgstr "Tous les lieux"
+
+#: .\catalog\templates\catalog\venues.html:30
+msgid "Explore estate"
+msgstr "Explorer le domaine"
+
+#: .\catalog\templates\catalog\venues.html:34
+msgid "Our collection is being curated. Please check back soon."
+msgstr "Notre collection est en cours de sélection. Revenez bientôt."
+
+#: .\core\models.py:65
+msgid "Wedding"
+msgstr "Mariage"
+
+#: .\core\models.py:66
+msgid "Engagement"
+msgstr "Fiançailles"
+
+#: .\core\models.py:67
+msgid "Anniversary"
+msgstr "Anniversaire"
+
+#: .\core\models.py:68
+msgid "Corporate event"
+msgstr "Événement d’entreprise"
+
+#: .\core\models.py:71 .\core\models.py:87
+msgid "Full name"
+msgstr "Nom complet"
+
+#: .\core\models.py:73
+msgid "Phone"
+msgstr "Téléphone"
+
+#: .\core\models.py:74
+#, fuzzy
+#| msgid "Destinations"
+msgid "Destination"
+msgstr "Destinations"
+
+#: .\core\models.py:75
+msgid "Event type"
+msgstr "Type d’événement"
+
+#: .\core\models.py:76
+msgid "Event date"
+msgstr "Date de l’événement"
+
+#: .\core\models.py:77
+msgid "Guest count"
+msgstr "Nombre d’invités"
+
+#: .\core\models.py:78
+msgid "Budget"
+msgstr "Budget"
+
+#: .\core\models.py:79
+msgid "Describe your needs and expectations"
+msgstr "Décrivez vos besoins et attentes"
+
+#: .\core\models.py:89
+msgid "Subject"
+msgstr "Sujet"
+
+#: .\core\models.py:90
+msgid "Message"
+msgstr "Message"
+
+#: .\core\models.py:94
+#, fuzzy
+#| msgid "Enquire"
+msgid "Inquiry"
+msgstr "Se renseigner"
+
+#: .\core\templates\core\contact.html:7
+msgid "Get in touch."
+msgstr "Contactez-nous."
+
+#: .\core\templates\core\contact.html:8
+msgid "Choose an enquiry or a service request."
+msgstr "Choisissez une demande ou une requête de service."
+
+#: .\core\templates\core\contact.html:11
+#, fuzzy
+#| msgid "Enquire"
+msgid "Enquiry"
+msgstr "Se renseigner"
+
+#: .\core\templates\core\contact.html:12
+#, fuzzy
+#| msgid "guests"
+msgid "Request"
+msgstr "invités"
+
+#: .\core\templates\core\contact.html:30
+#, fuzzy
+#| msgid "Send inquiry"
+msgid "Send enquiry"
+msgstr "Envoyer la demande"
+
+#: .\core\templates\core\contact.html:49
+#, fuzzy
+#| msgid "Submit your needs"
+msgid "Submit request"
+msgstr "Envoyer vos besoins"
+
+#: .\core\templates\core\dashboard.html:7
+msgid "Manage models"
+msgstr "Gérer les modèles"
+
+#: .\core\templates\core\dashboard.html:14
+msgid "Open list"
+msgstr "Ouvrir la liste"
+
+#: .\core\templates\core\dashboard_confirm_delete.html:3
+#: .\core\templates\core\dashboard_confirm_delete.html:10
+#: .\core\templates\core\dashboard_list.html:26
+msgid "Delete"
+msgstr "Supprimer"
+
+#: .\core\templates\core\dashboard_confirm_delete.html:6
+msgid "Delete record?"
+msgstr "Supprimer l’enregistrement ?"
+
+#: .\core\templates\core\dashboard_confirm_delete.html:11
+#, fuzzy
+#| msgid "France"
+msgid "Cancel"
+msgstr "France"
+
+#: .\core\templates\core\dashboard_form.html:3
+msgid "Form"
+msgstr "Formulaire"
+
+#: .\core\templates\core\dashboard_form.html:6
+msgid "Back"
+msgstr "Retour"
+
+#: .\core\templates\core\dashboard_form.html:7
+msgid "Edit record"
+msgstr "Modifier l’enregistrement"
+
+#: .\core\templates\core\dashboard_form.html:22
+msgid "Save"
+msgstr "Enregistrer"
+
+#: .\core\templates\core\dashboard_layout.html:29
+#, fuzzy
+#| msgid "guests"
+msgid "Service Requests"
+msgstr "invités"
+
+#: .\core\templates\core\dashboard_layout.html:30
+msgid "Contact Inquiries"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:31
+msgid "Vehicle Rentals"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:32
+#, fuzzy
+#| msgid "Payment approach"
+msgid "Payment Schedules"
+msgstr "Approche de paiement"
+
+#: .\core\templates\core\dashboard_layout.html:33
+#, fuzzy
+#| msgid "Back to home"
+msgid "Back to site"
+msgstr "Retour à l'accueil"
+
+#: .\core\templates\core\dashboard_list.html:9
+#, fuzzy
+#| msgid "Create account"
+msgid "Create"
+msgstr "Créer un compte"
+
+#: .\core\templates\core\dashboard_list.html:16
+msgid "Record"
+msgstr "Enregistrement"
+
+#: .\core\templates\core\dashboard_list.html:17
+msgid "Actions"
+msgstr "Actions"
+
+#: .\core\templates\core\dashboard_list.html:25
+msgid "Edit"
+msgstr "Modifier"
+
+#: .\core\templates\core\dashboard_list.html:30
+msgid "No records yet."
+msgstr "Aucun enregistrement pour le moment."
+
+#: .\core\templates\core\needs.html:7
+msgid "Tell us about your celebration."
+msgstr "Parlez-nous de votre célébration."
+
+#: .\core\templates\core\needs.html:8
+msgid ""
+"Share your needs and preferences so we can help create your perfect day."
+msgstr ""
+"Partagez vos besoins et préférences pour que nous puissions vous aider à "
+"créer votre journée parfaite."
+
+#: .\core\templates\core\needs.html:23
+msgid "Submit your needs"
+msgstr "Envoyer vos besoins"
+
+#, fuzzy
+#~| msgid "Experiences"
+#~ msgid "Expériences"
+#~ msgstr "Expériences"
+
+#~ msgid "Username"
+#~ msgstr "Nom d’utilisateur"
+
+#~ msgid "Account"
+#~ msgstr "Compte"
+
+#~ msgid "Other"
+#~ msgstr "Autre"
+
+#, fuzzy
+#~| msgid "Our approach"
+#~ msgid "Notre approche"
+#~ msgstr "Notre approche"
+
+#~ msgid "Send us an inquiry."
+#~ msgstr "Envoyez-nous une demande."
+
+#~ msgid "We would love to hear about your plans."
+#~ msgstr "Nous serions ravis d’entendre parler de vos projets."
+
+#~ msgid "Extraordinary places. Unforgettable beginnings."
+#~ msgstr "Lieux extraordinaires. Débuts inoubliables."
+
+#~ msgid "Plan your wedding"
+#~ msgstr "Planifiez votre mariage"
+
+#~ msgid "Collection"
+#~ msgstr "Collection"
+
+#~ msgid "The art of a remarkable wedding"
+#~ msgstr "L'art d'un mariage remarquable"
+
+#~ msgid "A love story deserves a legendary setting."
+#~ msgstr "Une histoire d'amour mérite un cadre légendaire."
+
+#~ msgid ""
+#~ "From the châteaux of France to the sunlit estates of Italy and Spain. "
+#~ "Discover exceptional places for a celebration entirely your own."
+#~ msgstr ""
+#~ "Des châteaux de France aux domaines ensoleillés d'Italie et d'Espagne. "
+#~ "Découvrez des lieux exceptionnels pour une célébration qui vous "
+#~ "ressemble.Des châteaux de France aux domaines ensoleillés d'Italie et "
+#~ "d'Espagne. Découvrez des lieux exceptionnels pour une célébration qui "
+#~ "vous ressemble."
+
+#~ msgid "Discover our payment approach"
+#~ msgstr "Découvrez notre approche de paiement"
+
+#~ msgid "01 / Curated historic estates"
+#~ msgstr "01 / Domaines historiques sélectionnés"
+
+#~ msgid "02 / Private luxury experiences"
+#~ msgstr "02 / Expériences de luxe privées"
+
+#~ msgid "Extraordinary estates."
+#~ msgstr "Domaines extraordinaires."
+
+#~ msgid ""
+#~ "Illustrative estate concepts and guide prices for this website prototype. "
+#~ "Listings are not live or confirmed bookable."
+#~ msgstr ""
+#~ "Concepts de domaines illustratifs et prix indicatifs pour ce prototype de "
+#~ "site. Les annonces ne sont pas en ligne ni confirmées comme "
+#~ "réservables.Concepts de domaines illustratifs et prix indicatifs pour ce "
+#~ "prototype de site. Les annonces ne sont pas en ligne ni confirmées comme "
+#~ "réservables."
+
+#~ msgid "Beyond the venue"
+#~ msgstr "Au-delà du lieu"
+
+#~ msgid "Every detail, beautifully considered."
+#~ msgstr "Chaque détail, magnifiquement pensé."
+
+#~ msgid ""
+#~ "A grand setting is only the beginning. Arrive in style and bring your "
+#~ "vision to life with an exceptional collection of wedding-day enhancements."
+#~ msgstr ""
+#~ "Un cadre grandiose n'est qu'un début. Arrivez avec style et donnez vie à "
+#~ "votre vision avec une collection exceptionnelle d'embellissements pour le "
+#~ "jour J.Un cadre grandiose n'est qu'un début. Arrivez avec style et donnez "
+#~ "vie à votre vision avec une collection exceptionnelle d'embellissements "
+#~ "pour le jour J."
+
+#~ msgid "Limousines & luxury cars"
+#~ msgstr "Limousines et voitures de luxe"
+
+#~ msgid "Celebration concierge"
+#~ msgstr "Conciergerie de célébration"
+
+#~ msgid ""
+#~ "Vehicle rentals require full payment at booking. Other services are "
+#~ "quoted separately."
+#~ msgstr ""
+#~ "La location de véhicules nécessite un paiement intégral lors de la "
+#~ "réservation. Les autres services sont devisés séparément.La location de "
+#~ "véhicules nécessite un paiement intégral lors de la réservation. Les "
+#~ "autres services sont devisés séparément."
+
+#~ msgid ""
+#~ "Qu’est-ce qui différencie nos services de celles des autres sur le marché "
+#~ "c’est tout simplement nos offres conçus pour permettre aux mariés et "
+#~ "familles de ne avoir des répercussions financières après la cérémonie"
+#~ msgstr ""
+#~ "Qu'est-ce qui différencie nos services de celles des autres sur le marché "
+#~ "c'est tout simplement nos offres conçus pour permettre aux mariés et "
+#~ "familles de ne avoir des répercussions financières après la "
+#~ "cérémonieQu'est-ce qui différencie nos services de celles des autres sur "
+#~ "le marché c'est tout simplement nos offres conçus pour permettre aux "
+#~ "mariés et familles de ne avoir des répercussions financières après la "
+#~ "cérémonie"

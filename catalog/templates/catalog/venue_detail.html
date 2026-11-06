@@ -1,0 +1,202 @@
+{% extends "base/layout.html" %}
+{% load i18n %}
+{% block title %}{{ venue.name }} | CastleForever{% endblock %}
+{% block content %}
+<main class="max-w-7xl mx-auto px-6 py-12">
+  <a href="{% url 'catalog:venues' %}" class="text-sm text-gray-500">← {% trans 'Back to collection' %}</a>
+
+  <div class="mt-10 grid lg:grid-cols-[1.15fr_.85fr] gap-10 items-end">
+    <div>
+      <p class="uppercase text-xs tracking-[.25em] text-[#b18c43]">{{ venue.region }} · {{ venue.get_country_display }}</p>
+      <h1 class="font-display text-6xl mt-4">{{ venue.name }}</h1>
+      <p class="text-gray-600 mt-5 max-w-2xl">{% trans "An exclusive estate for a celebration to remember." %}</p>
+    </div>
+    <div class="bg-[#f0ece3] p-6">
+      <p class="uppercase text-xs tracking-widest text-[#b18c43]">{% trans 'Guide price from' %}</p>
+      <p class="font-display text-4xl mt-3">€{{ venue.price_from }}</p>
+      <p class="text-sm text-gray-600 mt-2">{% trans 'Up to' %} {{ venue.capacity }} {% trans 'guests' %}</p>
+    </div>
+  </div>
+
+  <div class="mt-10">
+    <div id="venueCarousel" class="relative overflow-hidden bg-black">
+      <div id="carouselTrack" class="flex transition-transform duration-500 ease-out">
+        {% if venue.cover_url %}
+          <img class="w-full h-[520px] object-cover flex-shrink-0" src="{{ venue.cover_url }}" alt="{{ venue.name }}">
+        {% endif %}
+        {% for photo in venue.images.all %}
+          {% if photo.url %}
+            <img class="w-full h-[520px] object-cover flex-shrink-0" src="{{ photo.url }}" alt="{{ photo.alt_text|default:venue.name }}">
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <button type="button" id="carouselPrev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-forest w-11 h-11 flex items-center justify-center text-xl" aria-label="Previous image">‹</button>
+      <button type="button" id="carouselNext" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-forest w-11 h-11 flex items-center justify-center text-xl" aria-label="Next image">›</button>
+
+      <div id="carouselDots" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2"></div>
+    </div>
+
+    <div id="carouselThumbs" class="flex gap-3 mt-4 overflow-x-auto pb-2">
+      {% if venue.cover_url %}
+        <button type="button" data-index="0" class="carousel-thumb flex-shrink-0 w-24 h-16 overflow-hidden border-2 border-transparent">
+          <img class="w-full h-full object-cover" src="{{ venue.cover_url }}" alt="{{ venue.name }}">
+        </button>
+      {% endif %}
+      {% for photo in venue.images.all %}
+        {% if photo.url %}
+          <button type="button" data-index="{% if venue.cover_url %}{{ forloop.counter }}{% else %}{{ forloop.counter0 }}{% endif %}" class="carousel-thumb flex-shrink-0 w-24 h-16 overflow-hidden border-2 border-transparent">
+            <img class="w-full h-full object-cover" src="{{ photo.url }}" alt="{{ photo.alt_text|default:venue.name }}">
+          </button>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <section class="mt-16 bg-[#f0ece3] p-8">
+    <p class="text-xs uppercase tracking-[.2em] text-[#b18c43]">{% trans 'Book directly' %}</p>
+    <h2 class="font-display text-3xl mt-3">{% trans 'Request a private proposal' %}</h2>
+    <form method="post" action="{% url 'core:booking-enquiry' venue.slug %}" class="mt-6 grid md:grid-cols-2 gap-4">
+      {% csrf_token %}
+      {% for field in booking_form %}
+        <div class="{% if field.name == 'message' %}md:col-span-2{% endif %}">
+          <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">{{ field.label }}</label>
+          <div class="[&_input]:w-full [&_textarea]:w-full [&_input]:p-3 [&_textarea]:p-3 [&_input]:border [&_textarea]:border">
+            {{ field }}
+          </div>
+          {% for error in field.errors %}<p class="text-red-700 text-xs mt-1">{{ error }}</p>{% endfor %}
+        </div>
+      {% endfor %}
+      <div class="md:col-span-2">
+        <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans 'Submit enquiry' %} ↗</button>
+      </div>
+    </form>
+  </section>
+
+  <div class="grid md:grid-cols-[1fr_380px] gap-14 mt-16 mb-24">
+    <div>
+      <p class="text-xs uppercase tracking-[.2em] text-[#b18c43]">{% trans 'The experience' %}</p>
+      <h2 class="font-display text-4xl mt-4">{% trans 'A celebration to remember.' %}</h2>
+      <p class="leading-8 text-gray-600 mt-6 whitespace-pre-line">{{ venue.description }}</p>
+
+      <div class="mt-10 grid sm:grid-cols-3 gap-4">
+        <div class="bg-[#f0ece3] p-5">
+          <p class="text-xs uppercase tracking-widest text-[#b18c43]">{% trans 'Country' %}</p>
+          <p class="font-display text-2xl mt-2">{{ venue.get_country_display }}</p>
+        </div>
+        <div class="bg-[#f0ece3] p-5">
+          <p class="text-xs uppercase tracking-widest text-[#b18c43]">{% trans 'Region' %}</p>
+          <p class="font-display text-2xl mt-2">{{ venue.region }}</p>
+        </div>
+        <div class="bg-[#f0ece3] p-5">
+          <p class="text-xs uppercase tracking-widest text-[#b18c43]">{% trans 'Guests' %}</p>
+          <p class="font-display text-2xl mt-2">{{ venue.capacity }}</p>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <p class="text-xs uppercase tracking-[.2em] text-[#b18c43]">{% trans 'What is included' %}</p>
+        <ul class="mt-5 space-y-3 text-gray-600 leading-7">
+          <li>• {% trans 'Exclusive use of the estate for your celebration' %}</li>
+          <li>• {% trans 'On-site accommodation for the wedding party' %}</li>
+          <li>• {% trans 'Dedicated events team and planning support' %}</li>
+          <li>• {% trans 'Ceremony and reception spaces' %}</li>
+        </ul>
+      </div>
+    </div>
+
+    <aside class="bg-[#f0ece3] p-8 h-fit">
+      <p class="uppercase text-xs tracking-widest text-[#b18c43]">{% trans 'Guide price from' %}</p>
+      <p class="font-display text-4xl mt-3">€{{ venue.price_from }}</p>
+      <h3 class="font-display text-3xl mt-8">{% trans 'A considered payment approach' %}</h3>
+      <p class="text-sm leading-7 text-gray-600 mt-4">Castle rental proposals may begin with a €3,000 deposit and an agreed installment schedule, subject to eligibility and contract terms. Vehicle rentals must be paid in full.</p>
+      <label class="block text-xs uppercase tracking-widest mt-7" for="term">{% trans 'Illustrative installment term' %}</label>
+      <select id="term" class="mt-2 w-full p-3 border bg-white">
+        <option value="12">12 months</option>
+        <option value="24">24 months</option>
+        <option value="36" selected>36 months</option>
+        <option value="48">48 months</option>
+        <option value="60">60 months</option>
+      </select>
+      <p class="text-sm text-gray-500 mt-6">{% trans 'Example monthly amount' %}</p>
+      <p id="estimate" class="font-display text-4xl mt-2">—</p>
+      <p class="text-xs text-gray-500 mt-4">{% trans 'Illustrative only; excludes fees and interest. No approach approval or reservation is implied.' %}</p>
+      <a href="{% url 'core:booking-enquiry' venue.slug %}" class="block bg-black text-white text-center py-4 mt-7 uppercase tracking-widest text-xs">{% trans 'Request a private proposal' %} ↗</a>
+    </aside>
+  </div>
+
+  {% if similar_venues %}
+  <section class="border-t border-gray-200 pt-16">
+    <p class="text-xs uppercase tracking-[.25em] text-[#b18c43]">{% trans 'Similar estates' %}</p>
+    <h2 class="font-display text-4xl mt-4">{% trans 'More places you may love.' %}</h2>
+    <div class="grid md:grid-cols-3 gap-7 mt-10">
+      {% for similar in similar_venues %}
+        <a href="{{ similar.get_absolute_url }}" class="block bg-white group">
+          <div class="overflow-hidden h-64">
+            {% if similar.cover_url %}<img class="h-full w-full object-cover" src="{{ similar.cover_url }}" alt="{{ similar.name }}" loading="lazy">{% endif %}
+          </div>
+          <div class="p-6">
+            <p class="text-xs uppercase tracking-[.2em] text-[#A58A5A] mb-3">{{ similar.region }} · {{ similar.get_country_display }}</p>
+            <h3 class="font-display text-2xl">{{ similar.name }}</h3>
+            <p class="mt-3 text-xs text-[#222822]/60">{% trans 'Up to' %} {{ similar.capacity }} {% trans 'guests' %} · {% trans 'From' %} €{{ similar.price_from }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</main>
+
+<script>
+  const total = Number('{{ venue.price_from }}');
+  const term = document.getElementById('term');
+  const estimate = document.getElementById('estimate');
+  function update() {
+    if (estimate) estimate.textContent = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR' }).format(Math.max(0, total - 3000) / Number(term.value));
+  }
+  if (term) { term.addEventListener('change', update); update(); }
+
+  const track = document.getElementById('carouselTrack');
+  const slides = track ? track.querySelectorAll('img') : [];
+  const prev = document.getElementById('carouselPrev');
+  const next = document.getElementById('carouselNext');
+  const dotsWrap = document.getElementById('carouselDots');
+  const thumbs = document.querySelectorAll('.carousel-thumb');
+  let index = 0;
+
+  function renderCarousel() {
+    if (!track || slides.length === 0) return;
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    if (dotsWrap) {
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'w-2.5 h-2.5 rounded-full ' + (i === index ? 'bg-white' : 'bg-white/50');
+        dot.addEventListener('click', () => { index = i; renderCarousel(); });
+        dotsWrap.appendChild(dot);
+      });
+    }
+    thumbs.forEach((thumb) => {
+      const i = Number(thumb.dataset.index);
+      thumb.classList.toggle('border-gold', i === index);
+      thumb.classList.toggle('border-transparent', i !== index);
+    });
+  }
+
+  thumbs.forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      index = Number(thumb.dataset.index);
+      renderCarousel();
+    });
+  });
+
+  if (prev) prev.addEventListener('click', () => { index = (index - 1 + slides.length) % slides.length; renderCarousel(); });
+  if (next) next.addEventListener('click', () => { index = (index + 1) % slides.length; renderCarousel(); });
+
+  // Ensure each slide takes full width
+  slides.forEach(slide => { slide.style.minWidth = '100%'; });
+  renderCarousel();
+
+  document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
+</script>
+{% endblock %}
