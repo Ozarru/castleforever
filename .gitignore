@@ -2,6 +2,6 @@ __pycache__/
 *.py[cod]
 .env
 .venv/
-# db.sqlite3
-# media/
-# staticfiles/
+db.sqlite3
+media/
+staticfiles/

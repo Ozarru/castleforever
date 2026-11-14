@@ -7,8 +7,8 @@
 
     <nav class="hidden lg:flex items-center gap-9 text-[11px] tracking-[.14em] uppercase font-semibold">
       <a href="{% url 'base:destinations' %}" class="hover:text-[#dccba7]">{% trans 'Destinations' %}</a>
-      <a href="{% url 'catalog:venues' %}" class="hover:text-[#dccba7]">{% trans 'Domaines' %}</a>
-      <a href="{% url 'base:approach' %}" class="hover:text-[#dccba7]">{% trans 'Financement' %}</a>
+      <a href="{% url 'catalog:venues' %}" class="hover:text-[#dccba7]">{% trans 'Estates' %}</a>
+      <a href="{% url 'base:approach' %}" class="hover:text-[#dccba7]">{% trans 'Financing' %}</a>
       <a href="{% url 'core:contact' %}" class="hover:text-[#dccba7]">{% trans 'Contact' %}</a>
 
       {% if user.is_authenticated %}
@@ -39,18 +39,18 @@
     </nav>
 
     <a href="{% url 'core:contact' %}?tab=request" class="hidden md:inline-flex border border-white/70 px-6 py-3 text-[10px] tracking-[.15em] uppercase hover:bg-white hover:text-forest transition">
-      {% trans 'Organisez votre mariage' %} ↗
+      {% trans 'Plan your wedding' %} ↗
     </a>
 
-    <button id="menuButton" class="lg:hidden text-2xl" aria-label="Ouvrir le menu">☰</button>
+    <button id="menuButton" class="lg:hidden text-2xl" aria-label="Open menu">☰</button>
   </div>
 
   <div id="mobileMenu" class="hidden bg-forest mx-6 p-6 space-y-5 text-xs uppercase tracking-widest">
     <a class="block" href="{% url 'base:destinations' %}">{% trans 'Destinations' %}</a>
-    <a class="block" href="{% url 'catalog:venues' %}">{% trans 'Domaines' %}</a>
+    <a class="block" href="{% url 'catalog:venues' %}">{% trans 'Estates' %}</a>
     <a class="block" href="{% url 'core:contact' %}?tab=request">{% trans 'Your needs' %}</a>
     <a class="block" href="{% url 'core:contact' %}">{% trans 'Contact' %}</a>
-    <a class="block" href="{% url 'base:approach' %}">{% trans 'Solutions de paiement' %}</a>
+    <a class="block" href="{% url 'base:approach' %}">{% trans 'Payment solutions' %}</a>
     {% if user.is_authenticated %}
       <a class="block" href="{% url 'accounts:profile' %}">{% trans 'Profile' %}</a>
       <a class="block" href="{% url 'accounts:notifications' %}">{% trans 'Notifications' %}</a>

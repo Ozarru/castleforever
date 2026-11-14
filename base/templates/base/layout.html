@@ -1,13 +1,13 @@
 {% load static i18n %}
 <!doctype html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>{% block title %}CastleForever{% endblock %}</title>
 
-    <meta name="description" content="CastleForever : découvrez des domaines d'exception, des prestations exclusives et des expériences uniques pour célébrer votre mariage." />
+    <meta name="description" content="CastleForever: discover exceptional estates, exclusive services and unique experiences to celebrate your wedding." />
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -82,11 +82,11 @@
 
   <body class="min-h-screen flex flex-col font-sans text-[#222] bg-[#f8f6f0]">
 
-    <!-- EN-TÊTE -->
+    <!-- HEADER -->
 
     {% include "shared/navbar.html" %}
     
-    <!-- MESSAGES DE NOTIFICATION -->
+    <!-- NOTIFICATION MESSAGES -->
 
     {% if messages %}
 
@@ -104,13 +104,13 @@
 
     {% endif %}
 
-    <!-- CONTENU PRINCIPAL -->
+    <!-- MAIN CONTENT -->
 
     <div class="flex-1">
       {% block content %}{% endblock %}
     </div>
 
-    <!-- PIED DE PAGE -->
+    <!-- FOOTER -->
 
     {% include "shared/footer.html" %}
 

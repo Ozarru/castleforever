@@ -116,16 +116,16 @@ input:focus,select:focus{border-color:#A58A5A}
 
     <div class="bg-[#314a40] border border-white/10 p-8 md:p-12">
       <p class="eyebrow text-[#d9c59d]">{% trans "Castle rental payment example" %}</p>
-      <div class="font-display text-6xl md:text-7xl mt-5">3 000 €</div>
+      <div class="font-display text-6xl md:text-7xl mt-5">€3,000</div>
       <p class="text-white/60 text-sm mt-2">{% trans "Initial deposit toward your castle rental" %}</p>
       <div class="line opacity-30 my-9"></div>
 
       <label class="text-xs uppercase tracking-widest text-white/70" for="price">{% trans "Illustrative castle rental cost" %}</label>
       <select id="price" class="mt-3 w-full bg-[#243b32] border border-white/20 px-4 py-4 text-white">
-        <option value="15000">15 000 €</option>
-        <option value="25000" selected>25 000 €</option>
-        <option value="40000">40 000 €</option>
-        <option value="60000">60 000 €</option>
+        <option value="15000">€15,000</option>
+        <option value="25000" selected>€25,000</option>
+        <option value="40000">€40,000</option>
+        <option value="60000">€60,000</option>
       </select>
 
       <label class="block text-xs uppercase tracking-widest text-white/70 mt-6" for="years">{% trans "Illustrative repayment period" %}</label>
@@ -139,7 +139,7 @@ input:focus,select:focus{border-color:#A58A5A}
 
       <div class="flex justify-between items-end gap-3 mt-8">
         <span class="text-white/65 text-sm">{% trans "Estimated monthly installment" %}</span>
-        <span id="monthly" class="font-display text-4xl">611,11 €</span>
+        <span id="monthly" class="font-display text-4xl">€611.11</span>
       </div>
 
       <p class="text-[11px] text-white/50 leading-6 mt-6">
@@ -175,7 +175,7 @@ const monthly=document.getElementById('monthly');
 if(price&&years&&monthly){
  const calc=()=>{
   const amount=Math.max(0,Number(price.value)-3000)/Number(years.value);
-  monthly.textContent=new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR'}).format(amount);
+  monthly.textContent=new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR'}).format(amount);
  };
  price.addEventListener('change',calc);
  years.addEventListener('change',calc);

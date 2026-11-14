@@ -2,8 +2,21 @@ from pathlib import Path
 import os
 
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def _env(name, default=""):
+    return os.environ.get(name, default).strip()
+
+
+def _env_bool(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
 
 # Load variables from a local .env file (if present) without extra dependencies.
 _env_path = BASE_DIR / ".env"
@@ -98,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
-LANGUAGE_CODE = "fr"
+LANGUAGE_CODE = "en"
 LANGUAGES = [("en", "English"), ("fr", "Français"), ("it", "Italiano"), ("es", "Español")]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = "UTC"
@@ -107,9 +120,70 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# --- Uploaded media storage -------------------------------------------------
+# Static assets stay on local disk (WhiteNoise/Nginx). Uploaded media is served
+# from an S3-compatible bucket when USE_S3_MEDIA=1, and from local disk
+# otherwise (development default).
+USE_S3_MEDIA = _env_bool("USE_S3_MEDIA", False)
+
+S3_BUCKET_NAME = _env("S3_BUCKET_NAME")
+S3_ACCESS_KEY_ID = _env("S3_ACCESS_KEY_ID")
+S3_SECRET_ACCESS_KEY = _env("S3_SECRET_ACCESS_KEY")
+S3_REGION_NAME = _env("S3_REGION_NAME")
+S3_ENDPOINT_URL = _env("S3_ENDPOINT_URL")
+S3_CUSTOM_DOMAIN = _env("S3_CUSTOM_DOMAIN")
+S3_LOCATION = _env("S3_LOCATION", "media")
+S3_QUERYSTRING_AUTH = _env_bool("S3_QUERYSTRING_AUTH", False)
+S3_DEFAULT_ACL = _env("S3_DEFAULT_ACL")
+
+if USE_S3_MEDIA:
+    if not S3_BUCKET_NAME:
+        raise ImproperlyConfigured("USE_S3_MEDIA=1 requires S3_BUCKET_NAME")
+    if bool(S3_ACCESS_KEY_ID) != bool(S3_SECRET_ACCESS_KEY):
+        raise ImproperlyConfigured(
+            "S3_ACCESS_KEY_ID and S3_SECRET_ACCESS_KEY must both be set, or neither "
+            "(rely on an IAM instance role)."
+        )
+
+    _s3_options = {
+        "bucket_name": S3_BUCKET_NAME,
+        "location": S3_LOCATION,
+        "default_acl": S3_DEFAULT_ACL or None,
+        "querystring_auth": S3_QUERYSTRING_AUTH,
+        "file_overwrite": _env_bool("S3_FILE_OVERWRITE", False),
+        "object_parameters": {"CacheControl": "public, max-age=86400"},
+    }
+    if S3_ACCESS_KEY_ID:
+        _s3_options["access_key"] = S3_ACCESS_KEY_ID
+        _s3_options["secret_key"] = S3_SECRET_ACCESS_KEY
+    if S3_REGION_NAME:
+        _s3_options["region_name"] = S3_REGION_NAME
+    if S3_ENDPOINT_URL:
+        _s3_options["endpoint_url"] = S3_ENDPOINT_URL
+    if S3_CUSTOM_DOMAIN:
+        _s3_options["custom_domain"] = S3_CUSTOM_DOMAIN
+
+    MEDIA_URL = f"https://{S3_CUSTOM_DOMAIN}/" if S3_CUSTOM_DOMAIN else "/media/"
+    _default_storage = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": _s3_options,
+    }
+else:
+    MEDIA_URL = "/media/"
+    _default_storage = {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {"location": str(MEDIA_ROOT), "base_url": MEDIA_URL},
+    }
+
+STORAGES = {
+    "default": _default_storage,
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "base:home"
@@ -122,8 +196,29 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = _env_bool("DJANGO_SECURE_SSL_REDIRECT", True)
     USE_X_FORWARDED_HOST = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_SECONDS = int(_env("DJANGO_HSTS_SECONDS", "31536000"))
+    if SECURE_HSTS_SECONDS:
+        SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+        SECURE_HSTS_PRELOAD = True
+
+# Log to stdout/stderr so systemd/journald (or the container runtime) can collect it.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {"format": "{levelname} {asctime} {name} {message}", "style": "{"},
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "standard"},
+    },
+    "root": {"handlers": ["console"], "level": _env("DJANGO_LOG_LEVEL", "INFO")},
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": _env("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+}

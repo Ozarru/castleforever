@@ -34,6 +34,13 @@ Open http://127.0.0.1:8000/admin/ and create published venues. The homepage disp
 - The prototype homepage uses Tailwind CDN and remote images. Compile Tailwind locally for production and review image licensing.
 - For production, set `DJANGO_DEBUG=0`, a strong `DJANGO_SECRET_KEY`, and `DJANGO_ALLOWED_HOSTS`. Use a production database, HTTPS and appropriate static/media hosting.
 
+## Deploying to a VPS
+
+See [`DEPLOYMENT.md`](DEPLOYMENT.md) for a full Ubuntu + Nginx + Gunicorn +
+PostgreSQL + Certbot setup. Uploaded media is stored in an S3-compatible bucket
+when `USE_S3_MEDIA=1`; `.env.example` documents the relevant variables.
+Helper files live in `deploy/`.
+
 ## Deploying to Render.com
 
 This project ships with a `render.yaml` blueprint and a `build.sh` script.
@@ -45,5 +52,5 @@ This project ships with a `render.yaml` blueprint and a `build.sh` script.
 5. The service starts with `gunicorn config.wsgi:application`.
 
 Notes:
-- Uploaded media is stored on the instance's ephemeral filesystem and will not persist across deploys/restarts. Use external object storage (e.g. S3/Cloudinary) for durable media.
+- Uploaded media is stored on the instance's ephemeral filesystem by default and will not persist across deploys/restarts. Set `USE_S3_MEDIA=1` plus the `S3_*` variables to use an S3-compatible bucket (see `.env.example`).
 - To create an admin user, open the Render shell and run `python manage.py createsuperuser`.

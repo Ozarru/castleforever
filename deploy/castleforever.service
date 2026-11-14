@@ -1,0 +1,25 @@
+[Unit]
+Description=CastleForever Django application (Gunicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=castleforever
+Group=www-data
+WorkingDirectory=/srv/castleforever
+EnvironmentFile=/srv/castleforever/.env
+ExecStart=/srv/castleforever/.venv/bin/gunicorn config.wsgi:application \
+    --name castleforever \
+    --workers 3 \
+    --bind unix:/run/castleforever/gunicorn.sock \
+    --umask 0007 \
+    --access-logfile - \
+    --error-logfile -
+RuntimeDirectory=castleforever
+RuntimeDirectoryMode=0755
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
