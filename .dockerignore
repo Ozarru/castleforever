@@ -1,0 +1,23 @@
+.git
+.gitignore
+.github
+.venv
+venv
+__pycache__
+*.py[cod]
+*.sqlite3
+db.sqlite3
+
+# Runtime data must not be baked into the image
+media
+staticfiles
+
+# Never bake secrets into the image; Compose injects them at runtime
+.env
+.env.*
+!.env.example
+
+# Deployment helpers are used on the host, not inside the image
+deploy
+
+*.md

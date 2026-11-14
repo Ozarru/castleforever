@@ -34,7 +34,18 @@ Open http://127.0.0.1:8000/admin/ and create published venues. The homepage disp
 - The prototype homepage uses Tailwind CDN and remote images. Compile Tailwind locally for production and review image licensing.
 - For production, set `DJANGO_DEBUG=0`, a strong `DJANGO_SECRET_KEY`, and `DJANGO_ALLOWED_HOSTS`. Use a production database, HTTPS and appropriate static/media hosting.
 
-## Deploying to a VPS
+## Deploying with Docker Compose
+
+See [`DEPLOYMENT_DOCKER.md`](DEPLOYMENT_DOCKER.md) for staging and production
+Docker Compose deployments. Each environment uses its own env file
+(`.env.stage` / `.env.prod`), Compose project, database volume and host port:
+
+```bash
+./deploy/compose.sh stage up -d --build
+./deploy/compose.sh prod up -d --build
+```
+
+## Deploying to a VPS (without Docker)
 
 See [`DEPLOYMENT.md`](DEPLOYMENT.md) for a full Ubuntu + Nginx + Gunicorn +
 PostgreSQL + Certbot setup. Uploaded media is stored in an S3-compatible bucket

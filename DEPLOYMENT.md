@@ -1,5 +1,9 @@
 # CastleForever VPS deployment
 
+> For the Docker Compose staging/production setup, see
+> [`DEPLOYMENT_DOCKER.md`](DEPLOYMENT_DOCKER.md). This guide covers a
+> non-containerised systemd + Nginx deployment.
+
 This guide deploys the project to a single Ubuntu 22.04/24.04 VPS with:
 
 - **Gunicorn** (systemd service) running the Django app
