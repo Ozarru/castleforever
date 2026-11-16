@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
 
 from catalog.models import Venue
-from .forms import BookingEnquiryForm, ContactInquiryForm, ServiceRequestForm
-from .models import ContactInquiry, ServiceRequest
+from .forms import AppointmentForm, BookingEnquiryForm, ContactInquiryForm, ServiceRequestForm
+from .marketing import RESULTS_YEAR, results_snapshot, testimonial_rating
+from .models import Appointment, ContactInquiry, ServiceRequest, Testimonial
 
 
 @require_http_methods(["GET", "POST"])
@@ -58,13 +59,60 @@ def contact(request):
     })
 
 
+def reviews(request):
+    """Public customer reviews with photos."""
+    testimonials = Testimonial.objects.filter(is_published=True).select_related("venue")
+    return render(request, "core/reviews.html", {
+        "testimonials": testimonials,
+        "rating_average": testimonial_rating(),
+        "testimonial_count": testimonials.count(),
+        "results": results_snapshot(),
+    })
+
+
+def results(request):
+    """Public 2025 results: weddings per month, guests and estates."""
+    year = RESULTS_YEAR
+    requested_year = request.GET.get("year", "")
+    if requested_year.isdigit():
+        year = int(requested_year)
+    return render(request, "core/results.html", {
+        "results": results_snapshot(year),
+        "testimonials": Testimonial.objects.filter(is_published=True)[:6],
+    })
+
+
+@require_http_methods(["GET", "POST"])
+def appointment(request):
+    """Public appointment request form with a consultation explanation."""
+    form = AppointmentForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(
+            request,
+            "Thank you. Your appointment request has been received  -  "
+            "our team will confirm the date and time by email within one business day.",
+        )
+        return redirect("core:appointment")
+    return render(request, "core/appointment.html", {"form": form})
+
+
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
 
 from catalog.models import Vehicle, Venue
-from .forms import BookingForm, ContactInquiryForm, ServiceRequestForm, VehicleRentalForm
-from .models import Booking, ContactInquiry, PaymentSchedule, ServiceRequest, VehicleRental
+from .forms import AppointmentForm, BookingForm, ContactInquiryForm, ServiceRequestForm, VehicleRentalForm
+from .models import (
+    Appointment,
+    Booking,
+    ContactInquiry,
+    PaymentSchedule,
+    ServiceRequest,
+    Testimonial,
+    VehicleRental,
+    WeddingRecord,
+)
 
 
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -231,6 +279,79 @@ class PaymentScheduleDeleteView(DashboardDeleteView):
     success_url_name = "core:payment-schedule-list"
 
 
+class AppointmentListView(DashboardListView):
+    model = Appointment
+    model_name = "Appointment"
+    create_url_name = "core:appointment-record-create"
+    update_url_name = "core:appointment-record-update"
+    delete_url_name = "core:appointment-record-delete"
+
+
+class AppointmentCreateView(DashboardCreateView):
+    model = Appointment
+    form_class = AppointmentForm
+    fields = None
+    success_url_name = "core:appointment-record-list"
+
+
+class AppointmentUpdateView(DashboardUpdateView):
+    model = Appointment
+    form_class = AppointmentForm
+    fields = None
+    success_url_name = "core:appointment-record-list"
+
+
+class AppointmentDeleteView(DashboardDeleteView):
+    model = Appointment
+    success_url_name = "core:appointment-record-list"
+
+
+class TestimonialListView(DashboardListView):
+    model = Testimonial
+    model_name = "Testimonial"
+    create_url_name = "core:testimonial-create"
+    update_url_name = "core:testimonial-update"
+    delete_url_name = "core:testimonial-delete"
+
+
+class TestimonialCreateView(DashboardCreateView):
+    model = Testimonial
+    success_url_name = "core:testimonial-list"
+
+
+class TestimonialUpdateView(DashboardUpdateView):
+    model = Testimonial
+    success_url_name = "core:testimonial-list"
+
+
+class TestimonialDeleteView(DashboardDeleteView):
+    model = Testimonial
+    success_url_name = "core:testimonial-list"
+
+
+class WeddingRecordListView(DashboardListView):
+    model = WeddingRecord
+    model_name = "Wedding Record"
+    create_url_name = "core:wedding-record-create"
+    update_url_name = "core:wedding-record-update"
+    delete_url_name = "core:wedding-record-delete"
+
+
+class WeddingRecordCreateView(DashboardCreateView):
+    model = WeddingRecord
+    success_url_name = "core:wedding-record-list"
+
+
+class WeddingRecordUpdateView(DashboardUpdateView):
+    model = WeddingRecord
+    success_url_name = "core:wedding-record-list"
+
+
+class WeddingRecordDeleteView(DashboardDeleteView):
+    model = WeddingRecord
+    success_url_name = "core:wedding-record-list"
+
+
 class VenueListView(DashboardListView):
     model = Venue
     model_name = "Venue"
@@ -287,6 +408,9 @@ def dashboard(request):
         {"name": "Booking", "url": "core:booking-list", "count": Booking.objects.count()},
         {"name": "Service Request", "url": "core:service-request-list", "count": ServiceRequest.objects.count()},
         {"name": "Contact Inquiry", "url": "core:contact-inquiry-list", "count": ContactInquiry.objects.count()},
+        {"name": "Appointment", "url": "core:appointment-record-list", "count": Appointment.objects.count()},
+        {"name": "Testimonial", "url": "core:testimonial-list", "count": Testimonial.objects.count()},
+        {"name": "Wedding Record", "url": "core:wedding-record-list", "count": WeddingRecord.objects.count()},
         {"name": "Vehicle Rental", "url": "core:vehicle-rental-list", "count": VehicleRental.objects.count()},
         {"name": "Payment Schedule", "url": "core:payment-schedule-list", "count": PaymentSchedule.objects.count()},
         {"name": "Venue", "url": "core:venue-list", "count": Venue.objects.count()},

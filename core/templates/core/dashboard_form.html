@@ -1,12 +1,12 @@
 {% extends "core/dashboard_layout.html" %}
-{% load i18n %}
+{% load static i18n %}
 {% block title %}{% trans "Form" %} | Dashboard{% endblock %}
 {% block content %}
 <main class="w-full max-w-4xl mx-auto px-6 py-16">
   <a href="javascript:history.back()" class="text-sm text-gray-500">← {% trans "Back" %}</a>
   <h1 class="font-display text-5xl mt-6">{% trans "Edit record" %}</h1>
 
-  <form method="post" class="mt-10 space-y-5">
+  <form method="post" enctype="multipart/form-data" class="mt-10 space-y-5">
     {% csrf_token %}
     {% for field in form %}
       <div>
@@ -19,7 +19,7 @@
         {% endfor %}
       </div>
     {% endfor %}
-    <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans "Save" %} ↗</button>
+    <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans "Save" %} <i class="fa-solid fa-arrow-right-long"></i></button>
   </form>
 </main>
 {% endblock %}

@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 
 class Venue(models.Model):
-    COUNTRY_CHOICES = [("FR", "France"), ("IT", "Italy"), ("ES", "Spain")]
+    COUNTRY_CHOICES = [("FR", "France"), ("IT", "Italy"), ("ES", "Spain"), ("DE", "Germany")]
     name = models.CharField(max_length=180)
     slug = models.SlugField(unique=True, max_length=200)
     country = models.CharField(max_length=2, choices=COUNTRY_CHOICES)

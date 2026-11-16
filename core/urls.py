@@ -8,6 +8,12 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("inquiry/", views.contact, name="inquiry"),
     path("enquire/", views.contact, name="enquire"),
+    path("reviews/", views.reviews, name="reviews"),
+    path("testimonials/", views.reviews, name="testimonials"),
+    path("results/", views.results, name="results"),
+    path("2025-results/", views.results, name="results-2025"),
+    path("appointment/", views.appointment, name="appointment"),
+    path("book-a-call/", views.appointment, name="book-a-call"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("dashboard/statistics/", views.StatisticsView.as_view(), name="statistics"),
 
@@ -35,6 +41,21 @@ urlpatterns = [
     path("dashboard/payment-schedules/create/", views.PaymentScheduleCreateView.as_view(), name="payment-schedule-create"),
     path("dashboard/payment-schedules/<int:pk>/edit/", views.PaymentScheduleUpdateView.as_view(), name="payment-schedule-update"),
     path("dashboard/payment-schedules/<int:pk>/delete/", views.PaymentScheduleDeleteView.as_view(), name="payment-schedule-delete"),
+
+    path("dashboard/appointments/", views.AppointmentListView.as_view(), name="appointment-record-list"),
+    path("dashboard/appointments/create/", views.AppointmentCreateView.as_view(), name="appointment-record-create"),
+    path("dashboard/appointments/<int:pk>/edit/", views.AppointmentUpdateView.as_view(), name="appointment-record-update"),
+    path("dashboard/appointments/<int:pk>/delete/", views.AppointmentDeleteView.as_view(), name="appointment-record-delete"),
+
+    path("dashboard/testimonials/", views.TestimonialListView.as_view(), name="testimonial-list"),
+    path("dashboard/testimonials/create/", views.TestimonialCreateView.as_view(), name="testimonial-create"),
+    path("dashboard/testimonials/<int:pk>/edit/", views.TestimonialUpdateView.as_view(), name="testimonial-update"),
+    path("dashboard/testimonials/<int:pk>/delete/", views.TestimonialDeleteView.as_view(), name="testimonial-delete"),
+
+    path("dashboard/wedding-records/", views.WeddingRecordListView.as_view(), name="wedding-record-list"),
+    path("dashboard/wedding-records/create/", views.WeddingRecordCreateView.as_view(), name="wedding-record-create"),
+    path("dashboard/wedding-records/<int:pk>/edit/", views.WeddingRecordUpdateView.as_view(), name="wedding-record-update"),
+    path("dashboard/wedding-records/<int:pk>/delete/", views.WeddingRecordDeleteView.as_view(), name="wedding-record-delete"),
 
     path("dashboard/venues/", views.VenueListView.as_view(), name="venue-list"),
     path("dashboard/venues/create/", views.VenueCreateView.as_view(), name="venue-create"),

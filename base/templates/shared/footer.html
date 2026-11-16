@@ -1,10 +1,13 @@
-{% load i18n %}
+{% load static i18n %}
 <footer class="bg-[#1d2f28] text-white/80">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
     <div>
-      <div class="font-display text-3xl text-white">Castle<span class="text-[#d5c19b]">Forever.</span></div>
+      <div class="flex items-base gap-">
+        <img class="h-8" src="{% static 'imgs/brand/icon.png' %}" alt="">
+        <h3 class="font-display text-3xl text-white">Castle<span class="text-[#d5c19b]">Forever.</span></h3>
+      </div>
       <p class="mt-4 text-sm leading-7 text-white/60">{% trans "Extraordinary estates, considered arrivals, and thoughtful payment approaches for celebrations to remember." %}</p>
-      <p class="mt-6 text-xs tracking-[.2em] uppercase text-white/40">France · Italy · Spain</p>
+      <p class="mt-6 text-xs tracking-[.2em] uppercase text-white/40">{% trans "France · Italy · Spain · Germany" %}</p>
     </div>
 
     <div>
@@ -13,6 +16,8 @@
         <li><a href="{% url 'catalog:venues' %}" class="hover:text-white transition">{% trans "The collection" %}</a></li>
         <li><a href="{% url 'catalog:car-rentals' %}" class="hover:text-white transition">{% trans "Car rentals" %}</a></li>
         <li><a href="{% url 'base:destinations' %}" class="hover:text-white transition">{% trans "Destinations" %}</a></li>
+        <li><a href="{% url 'core:results' %}" class="hover:text-white transition">{% trans "2025 results" %}</a></li>
+        <li><a href="{% url 'core:reviews' %}" class="hover:text-white transition">{% trans "Couple reviews" %}</a></li>
         <li><a href="{% url 'base:home' %}#experiences" class="hover:text-white transition">{% trans "Experiences" %}</a></li>
         <li><a href="{% url 'base:approach' %}" class="hover:text-white transition">{% trans "Payment approach" %}</a></li>
       </ul>
@@ -24,6 +29,7 @@
         <li><a href="{% url 'base:privacy' %}" class="hover:text-white transition">{% trans "Privacy policy" %}</a></li>
         <li><a href="{% url 'base:terms' %}" class="hover:text-white transition">{% trans "Terms of service" %}</a></li>
         <li><a href="{% url 'base:cookies' %}" class="hover:text-white transition">{% trans "Cookie policy" %}</a></li>
+        <li><a href="{% url 'core:appointment' %}" class="hover:text-white transition">{% trans "Book an appointment" %}</a></li>
         <li><a href="{% url 'core:contact' %}" class="hover:text-white transition">{% trans "Contact" %}</a></li>
         <li><a href="{% url 'core:dashboard' %}" class="hover:text-white transition">{% trans "Dashboard" %}</a></li>
         <li><a href="/contact/?tab=request" class="hover:text-white transition">{% trans "Tell us your needs" %}</a></li>
@@ -33,11 +39,12 @@
     <div>
       <h3 class="text-xs uppercase tracking-[.25em] text-[#d5c19b] mb-5">{% trans "Contact" %}</h3>
       <ul class="space-y-3 text-sm text-white/60">
-        <li>hello@castleforever.example</li>
-        <li>+33 1 23 45 67 89</li>
-        <li>{% trans "Mon–Fri, 09:00–18:00 CET" %}</li>
+        <li>hello@castleforever.com</li>
+        <li>+33 0 11 22 33 44</li>
+        <li>{% trans "Mon - Fri, 09:00 - 18:00 CET" %}</li>
       </ul>
       <div class="mt-6 flex gap-4 text-xs uppercase tracking-widest">
+        <a href="#" class="hover:text-white transition">{% trans "TikTok" %}</a>
         <a href="#" class="hover:text-white transition">{% trans "Instagram" %}</a>
         <a href="#" class="hover:text-white transition">{% trans "Pinterest" %}</a>
       </div>
@@ -47,20 +54,22 @@
   <div class="border-t border-white/10">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex flex-col md:flex-row justify-between gap-3 text-[11px] text-white/40">
       <span>© <span id="footer-year"></span> CastleForever. {% trans "All rights reserved." %}</span>
-      <button type="button" id="theme-toggle" class="border border-white/20 text-white/60 text-[11px] px-2 py-1 hover:text-white transition" aria-label="Toggle theme">🌙</button>
-      <form action="{% url 'set_language' %}" method="post" class="flex items-center gap-2">
-        {% csrf_token %}
-        <input name="next" type="hidden" value="{{ request.path }}">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        <label for="language-select" class="sr-only">{% trans "Language" %}</label>
-        <select id="language-select" name="language" onchange="this.form.submit()" class="bg-transparent border border-white/20 text-white/60 text-[11px] px-2 py-1">
-          {% for lang_code, lang_name in LANGUAGES %}
-            <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>{{ lang_name }}</option>
-          {% endfor %}
-        </select>
-      </form>
-      <span>{% trans "Concept prototype" %} · France · Italy · Spain</span>
+      <div class="flex justify-between items-center gap-4">
+        <form action="{% url 'set_language' %}" method="post" class="flex items-center gap-2">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ request.path }}">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          <label for="language-select" class="sr-only">{% trans "Language" %}</label>
+          <select id="language-select" name="language" onchange="this.form.submit()" class="bg-transparent border border-white/20 text-white/60 text-[11px] px-2 py-1">
+            {% for lang_code, lang_name in LANGUAGES %}
+              <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>{{ lang_name }}</option>
+            {% endfor %}
+          </select>
+        </form>
+        <button type="button" id="theme-toggle" class="border border-white/20 text-white/60 text-[11px] px-2 py-1 hover:text-white transition" aria-label="Toggle theme">🌙</button>
+      </div>
+      <span>{% trans "Concept prototype" %} · {% trans "France · Italy · Spain · Germany" %}</span>
     </div>
   </div>
 

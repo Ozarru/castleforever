@@ -1,8 +1,10 @@
 from decimal import Decimal
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from catalog.models import Venue
 
 class Booking(models.Model):
     class Status(models.TextChoices):
@@ -23,7 +25,7 @@ class Booking(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.venue} — {self.full_name} ({self.wedding_date})"
+        return f"{self.venue}  -  {self.full_name} ({self.wedding_date})"
 
 
 class VehicleRental(models.Model):
@@ -59,6 +61,7 @@ class ServiceRequest(models.Model):
         ("FR", _("France")),
         ("IT", _("Italy")),
         ("ES", _("Spain")),
+        ("DE", _("Germany")),
         # ("other", _("Other")),
     ]
     EVENT_CHOICES = [
@@ -80,7 +83,7 @@ class ServiceRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.full_name} — {self.get_event_type_display()}"
+        return f"{self.full_name}  -  {self.get_event_type_display()}"
 
 
 class ContactInquiry(models.Model):
@@ -91,4 +94,136 @@ class ContactInquiry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.full_name} — {self.subject or _('Inquiry')}"
+        return f"{self.full_name}  -  {self.subject or _('Inquiry')}"
+
+
+class Testimonial(models.Model):
+    """A published couple review, shown on the reviews and home pages."""
+
+    couple_names = models.CharField(_("Couple names"), max_length=180)
+    venue = models.ForeignKey(
+        "catalog.Venue",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="testimonials",
+        verbose_name=_("Estate"),
+    )
+    location = models.CharField(_("Location"), max_length=120, blank=True)
+    event_date = models.DateField(_("Event date"), null=True, blank=True)
+    rating = models.PositiveSmallIntegerField(
+        _("Rating"),
+        default=5,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+    )
+    quote = models.TextField(_("Testimonial"))
+    image = models.ImageField(_("Photo"), upload_to="testimonials/", blank=True)
+    image_url = models.URLField(_("Photo URL"), blank=True)
+    is_published = models.BooleanField(_("Published"), default=True)
+    position = models.PositiveSmallIntegerField(_("Display order"), default=0)
+
+    class Meta:
+        ordering = ["position", "-event_date", "pk"]
+        verbose_name = _("Testimonial")
+        verbose_name_plural = _("Testimonials")
+
+    @property
+    def image_src(self):
+        if self.image:
+            return self.image.url
+        return self.image_url
+
+    @property
+    def stars(self):
+        return range(self.rating)
+
+    @property
+    def empty_stars(self):
+        return range(5 - self.rating)
+
+    def __str__(self):
+        return f"{self.couple_names}  -  {self.rating}/5"
+
+
+class WeddingRecord(models.Model):
+    """A completed wedding, used to publish verified yearly results."""
+
+    reference = models.CharField(_("Reference"), max_length=40, unique=True, null=True, blank=True)
+    venue = models.ForeignKey(
+        "catalog.Venue",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="wedding_records",
+        verbose_name=_("Estate"),
+    )
+    country = models.CharField(_("Country"), max_length=2, choices=Venue.COUNTRY_CHOICES, blank=True)
+    wedding_date = models.DateField(_("Wedding date"))
+    couple_names = models.CharField(_("Couple names"), max_length=180, blank=True)
+    guest_count = models.PositiveIntegerField(_("Guest count"), null=True, blank=True)
+    notes = models.TextField(_("Notes"), blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-wedding_date"]
+        verbose_name = _("Wedding record")
+        verbose_name_plural = _("Wedding records")
+
+    def __str__(self):
+        label = self.couple_names or _("Wedding")
+        return f"{label}  -  {self.wedding_date}"
+
+
+class Appointment(models.Model):
+    """A consultation request submitted from the public appointment page."""
+
+    class Kind(models.TextChoices):
+        VIDEO = "video", _("Video call")
+        PHONE = "phone", _("Phone call")
+        VISIT = "visit", _("Estate visit")
+
+    class Status(models.TextChoices):
+        REQUESTED = "requested", _("Requested")
+        CONFIRMED = "confirmed", _("Confirmed")
+        COMPLETED = "completed", _("Completed")
+        CANCELLED = "cancelled", _("Cancelled")
+
+    full_name = models.CharField(_("Full name"), max_length=180)
+    email = models.EmailField(_("Email"))
+    phone = models.CharField(_("Phone"), max_length=40, blank=True)
+    appointment_type = models.CharField(
+        _("Appointment type"),
+        max_length=10,
+        choices=Kind.choices,
+        default=Kind.VIDEO,
+    )
+    preferred_date = models.DateField(_("Preferred date"))
+    preferred_time = models.TimeField(_("Preferred time"))
+    venue = models.ForeignKey(
+        "catalog.Venue",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="appointments",
+        verbose_name=_("Estate of interest"),
+    )
+    guest_count = models.PositiveIntegerField(_("Estimated guest count"), null=True, blank=True)
+    message = models.TextField(_("What would you like to discuss?"), blank=True)
+    status = models.CharField(
+        _("Status"),
+        max_length=12,
+        choices=Status.choices,
+        default=Status.REQUESTED,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = _("Appointment")
+        verbose_name_plural = _("Appointments")
+
+    def __str__(self):
+        return (
+            f"{self.full_name}  -  {self.get_appointment_type_display()}  -  "
+            f"{self.preferred_date} {self.preferred_time:%H:%M}"
+        )

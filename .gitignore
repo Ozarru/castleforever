@@ -4,6 +4,7 @@ __pycache__/
 .env.stage
 .env.prod
 .venv/
+*.txt
 db.sqlite3
 media/
 staticfiles/

@@ -13,4 +13,5 @@ from django.core.management import call_command
 
 if __name__ == "__main__":
     call_command("seed_catalog")
+    call_command("seed_marketing")
     print("Database populated.")

@@ -1,5 +1,5 @@
 {% extends "core/dashboard_layout.html" %}
-{% load i18n %}
+{% load static i18n %}
 {% block title %}{% trans "Dashboard" %} | CastleForever{% endblock %}
 {% block content %}
 <main class="max-w-7xl mx-auto px-6 py-16">
@@ -11,13 +11,13 @@
       <a href="{% url m.url %}" class="block bg-white p-6 border">
         <p class="text-xs uppercase tracking-widest text-[#b18c43]">{{ m.name }}</p>
         <p class="font-display text-4xl mt-3">{{ m.count }}</p>
-        <p class="text-sm text-gray-600 mt-2">{% trans "Open list" %} ↗</p>
+        <p class="text-sm text-gray-600 mt-2">{% trans "Open list" %} <i class="fa-solid fa-arrow-right-long"></i></p>
       </a>
     {% endfor %}
     <a href="{% url 'core:statistics' %}" class="block bg-white p-6 border">
       <p class="text-xs uppercase tracking-widest text-[#b18c43]">{% trans "Statistics" %}</p>
-      <p class="font-display text-4xl mt-3">↗</p>
-      <p class="text-sm text-gray-600 mt-2">{% trans "View charts" %} ↗</p>
+      <p class="font-display text-4xl mt-3"><i class="fa-solid fa-arrow-right-long"></i></p>
+      <p class="text-sm text-gray-600 mt-2">{% trans "View charts" %} <i class="fa-solid fa-arrow-right-long"></i></p>
     </a>
   </div>
 </main>

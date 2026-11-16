@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load static i18n %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -48,6 +48,9 @@
           <a href="{% url 'core:booking-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'booking-list' %}active_page{% endif %}">{% trans "Bookings" %}</a>
           <a href="{% url 'core:service-request-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'service-request-list' %}active_page{% endif %}">{% trans "Service Requests" %}</a>
           <a href="{% url 'core:contact-inquiry-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'contact-inquiry-list' %}active_page{% endif %}">{% trans "Contact Inquiries" %}</a>
+          <a href="{% url 'core:appointment-record-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'appointment-record-list' %}active_page{% endif %}">{% trans "Appointments" %}</a>
+          <a href="{% url 'core:testimonial-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'testimonial-list' %}active_page{% endif %}">{% trans "Testimonials" %}</a>
+          <a href="{% url 'core:wedding-record-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'wedding-record-list' %}active_page{% endif %}">{% trans "Wedding Records" %}</a>
           <a href="{% url 'core:vehicle-rental-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'vehicle-rental-list' %}active_page{% endif %}">{% trans "Vehicle Rentals" %}</a>
           <a href="{% url 'core:payment-schedule-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'payment-schedule-list' %}active_page{% endif %}">{% trans "Payment Schedules" %}</a>
           <a href="{% url 'core:venue-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'venue-list' %}active_page{% endif %}">{% trans "Venues" %}</a>

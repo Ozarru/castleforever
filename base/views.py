@@ -1,9 +1,15 @@
 from django.shortcuts import render
 from catalog.models import Venue
+from core.marketing import marketing_snapshot
+from core.models import Testimonial
 
 def home(request):
     venues = Venue.objects.filter(is_published=True).order_by("country", "name")
-    return render(request, "base/home.html", {"venues": venues})
+    return render(request, "base/home.html", {
+        "venues": venues,
+        "testimonials": Testimonial.objects.filter(is_published=True).select_related("venue")[:3],
+        "results": marketing_snapshot(),
+    })
 
 def privacy(request):
     return render(request, "legal/privacy.html")

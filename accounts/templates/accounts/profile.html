@@ -1,5 +1,5 @@
 {% extends "base/layout.html" %}
-{% load i18n %}
+{% load static i18n %}
 {% block title %}{% trans "Profile" %} | CastleForever{% endblock %}
 {% block content %}
 <main class="w-full max-w-4xl mx-auto px-6 py-16">
@@ -20,7 +20,7 @@
         {% endfor %}
       </div>
     {% endfor %}
-    <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans "Save profile" %} ↗</button>
+    <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans "Save profile" %} <i class="fa-solid fa-arrow-right-long"></i></button>
   </form>
 </main>
 {% endblock %}

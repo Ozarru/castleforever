@@ -106,7 +106,7 @@ sudo chmod 600 .env
 
 At minimum set:
 
-- `DJANGO_SECRET_KEY` — generate with
+- `DJANGO_SECRET_KEY`  -  generate with
   `python3 -c "from django.core.management.utils import get_random_secret_key as k; print(k())"`
 - `DJANGO_ALLOWED_HOSTS=example.com,www.example.com`
 - `CSRF_TRUSTED_ORIGINS=https://example.com,https://www.example.com`
@@ -125,7 +125,7 @@ Two common setups:
    - `S3_CUSTOM_DOMAIN=cdn.example.com` (or the provider's public hostname)
    - Expose the bucket publicly via bucket policy or the provider's public
      access setting. Do **not** set `S3_DEFAULT_ACL=public-read` on AWS buckets
-     where ACLs are disabled — use a bucket policy instead.
+     where ACLs are disabled  -  use a bucket policy instead.
 2. **Private bucket with signed URLs**
    - `S3_QUERYSTRING_AUTH=1`
    - Leave `S3_CUSTOM_DOMAIN` empty.
@@ -144,7 +144,7 @@ sudo -u castleforever .venv/bin/python manage.py collectstatic --noinput
 sudo -u castleforever .venv/bin/python manage.py createsuperuser
 ```
 
-Do **not** run `seed_catalog` on every production deploy — it is demo data.
+Do **not** run `seed_catalog` on every production deploy  -  it is demo data.
 `build.sh` is the Render build script and is not used on the VPS.
 
 ---
@@ -244,7 +244,7 @@ aws s3 sync /srv/castleforever/media/ s3://castleforever-media/media/ \
 ```
 
 For R2/MinIO, the AWS CLI works with `--endpoint-url`; `rclone` is a good
-alternative. Keep `S3_LOCATION=media` so database paths remain valid — the
+alternative. Keep `S3_LOCATION=media` so database paths remain valid  -  the
 stored values are relative (e.g. `venues/castle.jpg`).
 
 After copying, set `USE_S3_MEDIA=1`, restart the service, and verify that

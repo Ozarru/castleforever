@@ -1,6 +1,11 @@
-from django import forms
+from datetime import date
 
-from .models import Booking, ContactInquiry, ServiceRequest, VehicleRental
+from django import forms
+from django.core.exceptions import ValidationError
+from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
+
+from .models import Appointment, Booking, ContactInquiry, ServiceRequest, VehicleRental
 
 
 class BookingEnquiryForm(forms.ModelForm):
@@ -42,3 +47,38 @@ class VehicleRentalForm(forms.ModelForm):
             "start_date": forms.DateInput(attrs={"type": "date"}),
             "end_date": forms.DateInput(attrs={"type": "date"}),
         }
+
+
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = (
+            "full_name",
+            "email",
+            "phone",
+            "appointment_type",
+            "preferred_date",
+            "preferred_time",
+            "venue",
+            "guest_count",
+            "message",
+        )
+        widgets = {
+            "preferred_date": forms.DateInput(attrs={"type": "date"}),
+            "preferred_time": forms.TimeInput(attrs={"type": "time"}),
+            "message": forms.Textarea(attrs={"rows": 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["preferred_date"].widget.attrs.setdefault("min", date.today().isoformat())
+        venue_filter = Q(is_published=True)
+        if self.instance.pk and self.instance.venue_id:
+            venue_filter |= Q(pk=self.instance.venue_id)
+        self.fields["venue"].queryset = self.fields["venue"].queryset.filter(venue_filter)
+
+    def clean_preferred_date(self):
+        preferred = self.cleaned_data.get("preferred_date")
+        if preferred and not self.instance.pk and preferred < date.today():
+            raise ValidationError(_("Please choose a date in the future."))
+        return preferred

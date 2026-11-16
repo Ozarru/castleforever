@@ -1,0 +1,251 @@
+{% extends "base/layout.html" %}
+{% load static i18n %}
+{% block title %}{% trans "2025 results" %} | CastleForever{% endblock %}
+{% block meta_description %}{% trans "Explore CastleForever's 2025 season: weddings celebrated month by month, guests welcomed, estates booked and reviews from our couples." %}{% endblock %}
+{% block content %}
+<main>
+
+  <!-- HERO -->
+  <section class="bg-forest text-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 md:py-28">
+      <p class="text-[10px] font-bold uppercase tracking-[.24em] text-[#e4d4b3] mb-6">{% trans "Our season in numbers" %} · {{ results.year }}</p>
+      <h1 class="font-display text-6xl sm:text-7xl leading-[.98] max-w-4xl">{% trans "A year of celebrations, told in figures." %}</h1>
+      <p class="mt-8 max-w-2xl text-white/70 text-sm md:text-base font-light leading-8">
+        {% trans "Behind every wedding is a date, a place and a team. Explore the celebrations we accompanied through 2025  -  month by month, estate by estate." %}
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="{% url 'core:reviews' %}" class="inline-flex items-center gap-3 px-6 py-4 text-[11px] font-bold uppercase tracking-[.15em] bg-[#d5c19b] text-forest hover:-translate-y-0.5 transition">
+          {% trans "Read couple reviews" %} <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+        <a href="{% url 'core:appointment' %}" class="inline-flex items-center gap-3 px-6 py-4 text-[11px] font-bold uppercase tracking-[.15em] border border-white/70 hover:bg-white hover:text-forest transition">
+          {% trans "Book a private call" %}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HEADLINE FIGURES -->
+  <section class="bg-[#F0EDE5] border-b border-[#e8e4d9]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-12 grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#d8d1c2]">
+      <div class="bg-[#F0EDE5] p-7">
+        <p class="text-[10px] uppercase tracking-[.2em] text-ink/50">{% trans "Weddings celebrated" %}</p>
+        <p class="font-display text-5xl md:text-6xl mt-3">{{ results.total }}</p>
+      </div>
+      <div class="bg-[#F0EDE5] p-7">
+        <p class="text-[10px] uppercase tracking-[.2em] text-ink/50">{% trans "Guests welcomed" %}</p>
+        <p class="font-display text-5xl md:text-6xl mt-3">{{ results.guests }}</p>
+      </div>
+      <div class="bg-[#F0EDE5] p-7">
+        <p class="text-[10px] uppercase tracking-[.2em] text-ink/50">{% trans "Average guests per wedding" %}</p>
+        <p class="font-display text-5xl md:text-6xl mt-3">{{ results.average_guests }}</p>
+      </div>
+      <div class="bg-[#F0EDE5] p-7">
+        <p class="text-[10px] uppercase tracking-[.2em] text-ink/50">{% trans "Estates celebrated in" %}</p>
+        <p class="font-display text-5xl md:text-6xl mt-3">{{ results.estate_count }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MONTHLY CHART -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 md:py-24">
+    <div class="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Weddings per month" %}</p>
+        <h2 class="font-display text-5xl md:text-7xl">{% trans "The 2025 rhythm." %}</h2>
+      </div>
+      <p class="max-w-sm text-sm leading-7 text-ink/60">
+        {% if results.peak_month %}
+          {% trans "Our busiest month was" %} {{ results.peak_month.label }}, {% trans "with" %} {{ results.peak_month.count }} {% trans "celebrations." %}
+        {% else %}
+          {% trans "The first 2025 celebrations will appear here as they are confirmed." %}
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="bg-white p-6 md:p-10">
+      <div class="flex items-end gap-1.5 sm:gap-3 h-64 md:h-80" role="img" aria-label="{% trans 'Bar chart of weddings celebrated per month in 2025' %}">
+        {% for month in results.months %}
+          <div class="flex-1 h-full flex flex-col items-center gap-2">
+            <span class="text-[10px] md:text-xs font-semibold text-forest">{{ month.count }}</span>
+            <div class="w-full flex-1 flex items-end">
+              <div class="w-full bg-forest/85 hover:bg-gold transition-colors duration-300" style="height: {{ month.height }}%" title="{{ month.label }}: {{ month.count }}"></div>
+            </div>
+            <span class="text-[9px] md:text-[11px] uppercase tracking-wider text-ink/50">{{ month.label }}</span>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="mt-8 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-4 text-[11px] uppercase tracking-[.16em] text-ink/50">
+        <span>{% trans "Completed weddings · Jan - Dec" %} {{ results.year }}</span>
+        <span>{% trans "Total" %} · {{ results.total }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BREAKDOWNS -->
+  <section class="bg-[#F0EDE5] py-20 md:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-14">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Where couples celebrated" %}</p>
+        <h3 class="font-display text-4xl md:text-5xl">{% trans "Three countries, one standard." %}</h3>
+        <div class="mt-9 space-y-6">
+          {% for row in results.by_country %}
+            <div>
+              <div class="flex items-baseline justify-between gap-4 text-sm">
+                <span class="uppercase tracking-[.14em]">{{ row.label }}</span>
+                <span class="font-semibold">{{ row.total }} <span class="text-ink/40 font-normal">{% trans "weddings" %}</span></span>
+              </div>
+              <div class="mt-2 h-2 bg-ink/10">
+                <div class="h-full bg-forest" style="width: {% widthratio row.total results.total 100 %}%"></div>
+              </div>
+            </div>
+          {% empty %}
+            <p class="text-sm text-ink/60">{% trans "Country results will appear once the first 2025 records are published." %}</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Most requested estates" %}</p>
+        <h3 class="font-display text-4xl md:text-5xl">{% trans "Where the season happened." %}</h3>
+        <ol class="mt-9 border-t border-ink/15">
+          {% for row in results.by_venue %}
+            <li class="flex items-baseline justify-between gap-5 py-4 border-b border-ink/15">
+              <span class="flex items-baseline gap-4">
+                <span class="font-display text-2xl text-gold w-7">{{ forloop.counter|stringformat:"02d" }}</span>
+                <span class="font-display text-2xl">{{ row.venue__name }}</span>
+              </span>
+              <span class="text-sm text-ink/55 whitespace-nowrap">{{ row.total }} {% trans "weddings" %}</span>
+            </li>
+          {% empty %}
+            <li class="py-5 text-sm text-ink/60">{% trans "Estate results will appear once the first 2025 records are published." %}</li>
+          {% endfor %}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS PREVIEW -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 md:py-24">
+    <div class="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "In their words" %}</p>
+        <h2 class="font-display text-5xl md:text-7xl">{% trans "The faces behind the figures." %}</h2>
+      </div>
+      <a href="{% url 'core:reviews' %}" class="text-[11px] font-bold uppercase tracking-[.15em] border-b border-forest pb-1 hover:text-gold hover:border-gold transition">
+        {% trans "Read all reviews" %} <i class="fa-solid fa-arrow-right-long"></i>
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-7">
+      {% for testimonial in testimonials|slice:":3" %}
+        <article class="bg-white">
+          <div class="h-64 overflow-hidden bg-[#E8E2D5]">
+            {% if testimonial.image_src %}
+              <img class="h-full w-full object-cover" src="{{ testimonial.image_src }}" alt="{{ testimonial.couple_names }}" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="p-7">
+            <p class="text-gold text-sm tracking-[.2em]">{% for _ in testimonial.stars %}★{% endfor %}{% for _ in testimonial.empty_stars %}☆{% endfor %}</p>
+            <blockquote class="mt-4 text-sm leading-7 text-ink/70">“{{ testimonial.quote|truncatewords:30 }}”</blockquote>
+            <p class="mt-5 font-display text-2xl">{{ testimonial.couple_names }}</p>
+            {% if testimonial.venue %}<p class="text-[11px] uppercase tracking-[.16em] text-ink/50 mt-1">{{ testimonial.venue.name }}</p>{% endif %}
+          </div>
+        </article>
+      {% empty %}
+        <p class="md:col-span-3 text-sm text-ink/60">{% trans "Reviews will appear here as couples share their stories." %}</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="bg-forest text-white py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-14">
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-[.24em] text-[#d9c59d] mb-5">{% trans "The organisation behind the season" %}</p>
+          <h2 class="font-display text-5xl md:text-7xl leading-[1.05]">{% trans "A clear process, from first call to last dance." %}</h2>
+          <p class="mt-7 text-white/65 text-sm leading-8 max-w-md">
+            {% trans "Nothing is left to improvisation. Each celebration follows a documented timeline, with a dedicated coordinator and clear milestones for you and your family." %}
+          </p>
+          <a href="{% url 'core:appointment' %}" class="inline-flex mt-9 px-6 py-4 bg-[#d5c19b] text-forest text-[11px] font-bold uppercase tracking-[.15em] hover:-translate-y-0.5 transition">
+            {% trans "Start with a private call" %} <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+        </div>
+
+        <ol class="border-l border-white/20">
+          {% trans "Discovery call" as step1_title %}
+          {% trans "Venue shortlist" as step2_title %}
+          {% trans "Private visit" as step3_title %}
+          {% trans "Booking & payment plan" as step4_title %}
+          {% trans "Planning timeline" as step5_title %}
+          {% trans "The wedding day" as step6_title %}
+          {% trans "Understand your vision, your guest count, your budget and your preferred dates. No commitment, no pressure." as step1_text %}
+          {% trans "We select the estates that match your brief and share full proposals, availability and guide prices." as step2_text %}
+          {% trans "Visit your favourite estates with a dedicated advisor, in person or through a guided video tour." as step3_text %}
+          {% trans "Confirm the date, sign the venue agreement and agree a deposit and balance schedule in writing." as step4_text %}
+          {% trans "Receive a month-by-month checklist, supplier recommendations and a single point of contact." as step5_text %}
+          {% trans "Your coordinator runs the timeline on site so you and your family can simply be present." as step6_text %}
+
+          <li class="relative pl-8 pb-9">
+            <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[#d5c19b]"></span>
+            <p class="text-[10px] uppercase tracking-[.2em] text-[#d9c59d]">{% trans "Step" %} 01</p>
+            <h3 class="font-display text-2xl mt-2">{{ step1_title }}</h3>
+            <p class="text-sm text-white/60 leading-7 mt-2">{{ step1_text }}</p>
+          </li>
+          <li class="relative pl-8 pb-9">
+            <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-white/40"></span>
+            <p class="text-[10px] uppercase tracking-[.2em] text-[#d9c59d]">{% trans "Step" %} 02</p>
+            <h3 class="font-display text-2xl mt-2">{{ step2_title }}</h3>
+            <p class="text-sm text-white/60 leading-7 mt-2">{{ step2_text }}</p>
+          </li>
+          <li class="relative pl-8 pb-9">
+            <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-white/40"></span>
+            <p class="text-[10px] uppercase tracking-[.2em] text-[#d9c59d]">{% trans "Step" %} 03</p>
+            <h3 class="font-display text-2xl mt-2">{{ step3_title }}</h3>
+            <p class="text-sm text-white/60 leading-7 mt-2">{{ step3_text }}</p>
+          </li>
+          <li class="relative pl-8 pb-9">
+            <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-white/40"></span>
+            <p class="text-[10px] uppercase tracking-[.2em] text-[#d9c59d]">{% trans "Step" %} 04</p>
+            <h3 class="font-display text-2xl mt-2">{{ step4_title }}</h3>
+            <p class="text-sm text-white/60 leading-7 mt-2">{{ step4_text }}</p>
+          </li>
+          <li class="relative pl-8 pb-9">
+            <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-white/40"></span>
+            <p class="text-[10px] uppercase tracking-[.2em] text-[#d9c59d]">{% trans "Step" %} 05</p>
+            <h3 class="font-display text-2xl mt-2">{{ step5_title }}</h3>
+            <p class="text-sm text-white/60 leading-7 mt-2">{{ step5_text }}</p>
+          </li>
+          <li class="relative pl-8">
+            <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-white/40"></span>
+            <p class="text-[10px] uppercase tracking-[.2em] text-[#d9c59d]">{% trans "Step" %} 06</p>
+            <h3 class="font-display text-2xl mt-2">{{ step6_title }}</h3>
+            <p class="text-sm text-white/60 leading-7 mt-2">{{ step6_text }}</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-[#E8E2D5] py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-[1fr_auto] gap-10 items-center">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Your turn" %}</p>
+        <h2 class="font-display text-4xl md:text-6xl leading-[1.1]">{% trans "Let's add your celebration to the story." %}</h2>
+        <p class="mt-4 text-sm leading-7 text-ink/60 max-w-xl">
+          {% trans "Book a 30-minute call to talk through your dates, your guest list and the estates that could suit you." %}
+        </p>
+      </div>
+      <a href="{% url 'core:appointment' %}" class="inline-flex items-center gap-3 px-7 py-4 bg-forest text-white text-[11px] font-bold uppercase tracking-[.15em] hover:-translate-y-0.5 transition">
+        {% trans "Book an appointment" %} <i class="fa-solid fa-arrow-right-long"></i>
+      </a>
+    </div>
+  </section>
+
+  <p class="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-xs text-ink/45">
+    {% trans "Figures shown are illustrative demo data for this prototype. Replace them with verified wedding records before launch." %}
+  </p>
+
+</main>
+{% endblock %}

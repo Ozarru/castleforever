@@ -1,0 +1,184 @@
+{% extends "base/layout.html" %}
+{% load static i18n %}
+{% block title %}{% trans "Book an appointment" %} | CastleForever{% endblock %}
+{% block meta_description %}{% trans "Book a free 30-minute appointment with CastleForever to discuss your wedding dates, guest list, estates and payment options." %}{% endblock %}
+{% block content %}
+<main>
+
+  <!-- HERO -->
+  <section class="bg-forest text-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 md:py-28 grid lg:grid-cols-[1.15fr_.85fr] gap-14 items-end">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-[#e4d4b3] mb-6">{% trans "Book an appointment" %}</p>
+        <h1 class="font-display text-6xl sm:text-7xl leading-[.98]">{% trans "Let's talk about your day." %}</h1>
+        <p class="mt-8 max-w-xl text-white/70 text-sm md:text-base font-light leading-8">
+          {% trans "A free, 30-minute conversation with a CastleForever advisor. We listen to your plans, explain how we work and help you shortlist the estates that could suit you  -  with no commitment." %}
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+          <a href="#request" class="inline-flex items-center gap-3 px-6 py-4 text-[11px] font-bold uppercase tracking-[.15em] bg-[#d5c19b] text-forest hover:-translate-y-0.5 transition">
+            {% trans "Choose a date" %} <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+          <a href="{% url 'core:reviews' %}" class="inline-flex items-center gap-3 px-6 py-4 text-[11px] font-bold uppercase tracking-[.15em] border border-white/70 hover:bg-white hover:text-forest transition">
+            {% trans "Read couple reviews" %}
+          </a>
+        </div>
+      </div>
+
+      <dl class="grid grid-cols-2 gap-px bg-white/15 border border-white/15">
+        <div class="bg-forest p-7">
+          <dt class="text-[10px] uppercase tracking-[.2em] text-white/55">{% trans "Duration" %}</dt>
+          <dd class="font-display text-4xl mt-3">30 min</dd>
+        </div>
+        <div class="bg-forest p-7">
+          <dt class="text-[10px] uppercase tracking-[.2em] text-white/55">{% trans "Cost" %}</dt>
+          <dd class="font-display text-4xl mt-3">{% trans "Free" %}</dd>
+        </div>
+        <div class="bg-forest p-7">
+          <dt class="text-[10px] uppercase tracking-[.2em] text-white/55">{% trans "Formats" %}</dt>
+          <dd class="font-display text-4xl mt-3">3</dd>
+        </div>
+        <div class="bg-forest p-7">
+          <dt class="text-[10px] uppercase tracking-[.2em] text-white/55">{% trans "Reply within" %}</dt>
+          <dd class="font-display text-4xl mt-3">24h</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 md:py-24">
+    <div class="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "What to expect" %}</p>
+        <h2 class="font-display text-5xl md:text-7xl">{% trans "An hour that saves you months." %}</h2>
+      </div>
+      <p class="max-w-sm text-sm leading-7 text-ink/60">
+        {% trans "No sales script. A structured conversation with someone who knows the estates, the suppliers and the real costs." %}
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-7">
+      <article class="bg-white p-8">
+        <p class="font-display text-5xl text-gold">01</p>
+        <h3 class="font-display text-3xl mt-5">{% trans "We listen" %}</h3>
+        <p class="text-sm leading-7 text-ink/60 mt-4">
+          {% trans "Your story, your guest count, your preferred months and your budget. We take notes and ask the questions that matter." %}
+        </p>
+      </article>
+      <article class="bg-white p-8">
+        <p class="font-display text-5xl text-gold">02</p>
+        <h3 class="font-display text-3xl mt-5">{% trans "We explain" %}</h3>
+        <p class="text-sm leading-7 text-ink/60 mt-4">
+          {% trans "How our selection works, what is included in each estate, and how deposits and payment schedules are structured." %}
+        </p>
+      </article>
+      <article class="bg-white p-8">
+        <p class="font-display text-5xl text-gold">03</p>
+        <h3 class="font-display text-3xl mt-5">{% trans "We prepare your shortlist" %}</h3>
+        <p class="text-sm leading-7 text-ink/60 mt-4">
+          {% trans "You leave with a personalised selection of estates, next steps and a clear idea of the timeline ahead." %}
+        </p>
+      </article>
+    </div>
+
+    <div class="mt-10 bg-[#F0EDE5] p-7 md:p-9 grid md:grid-cols-3 gap-7 text-sm leading-7 text-ink/60">
+      <div>
+        <p class="text-[10px] uppercase tracking-[.2em] text-gold mb-2">{% trans "Video call" %}</p>
+        <p>{% trans "A face-to-face conversation from wherever you are, with the estates on screen." %}</p>
+      </div>
+      <div>
+        <p class="text-[10px] uppercase tracking-[.2em] text-gold mb-2">{% trans "Phone call" %}</p>
+        <p>{% trans "The simplest option if you prefer to talk first and receive documents by email." %}</p>
+      </div>
+      <div>
+        <p class="text-[10px] uppercase tracking-[.2em] text-gold mb-2">{% trans "Estate visit" %}</p>
+        <p>{% trans "Meet us on site to walk the ceremony and reception spaces with an advisor." %}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section id="request" class="bg-[#E8E2D5] py-20 md:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-[1.15fr_.85fr] gap-14">
+      <div>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Request your appointment" %}</p>
+        <h2 class="font-display text-4xl md:text-6xl leading-[1.1]">{% trans "Choose a preferred date and time." %}</h2>
+        <p class="mt-5 text-sm leading-7 text-ink/60 max-w-xl">
+          {% trans "We will confirm the exact time by email within one business day. If your preferred slot is unavailable, we will propose the closest alternative." %}
+        </p>
+
+        <form method="post" class="mt-9 grid md:grid-cols-2 gap-5">
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+            <div class="md:col-span-2 text-red-700 text-sm">{{ form.non_field_errors }}</div>
+          {% endif %}
+          {% for field in form %}
+            <div class="{% if field.name == 'message' or field.name == 'venue' %}md:col-span-2{% endif %}">
+              <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">{{ field.label }}</label>
+              <div class="[&_input]:w-full [&_select]:w-full [&_textarea]:w-full [&_input]:p-3 [&_select]:p-3 [&_textarea]:p-3 [&_input]:border [&_select]:border [&_textarea]:border [&_input]:bg-white [&_select]:bg-white [&_textarea]:bg-white">
+                {{ field }}
+              </div>
+              {% if field.help_text %}<p class="text-xs text-ink/50 mt-1">{{ field.help_text }}</p>{% endif %}
+              {% for error in field.errors %}
+                <p class="text-red-700 text-xs mt-1">{{ error }}</p>
+              {% endfor %}
+            </div>
+          {% endfor %}
+          <div class="md:col-span-2">
+            <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs hover:-translate-y-0.5 transition">
+              {% trans "Request my appointment" %} <i class="fa-solid fa-arrow-right-long"></i>
+            </button>
+            <p class="text-xs leading-6 text-ink/50 mt-4">
+              {% trans "By submitting this form you agree to be contacted about your appointment. See our" %}
+              <a href="{% url 'base:privacy' %}" class="underline hover:text-gold">{% trans "privacy policy" %}</a>.
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <aside class="bg-white p-8 h-fit">
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "How the first meeting works" %}</p>
+        <ol class="space-y-6">
+          <li class="flex gap-4">
+            <span class="font-display text-3xl text-gold leading-none">01</span>
+            <div>
+              <h3 class="font-display text-2xl">{% trans "Before the call" %}</h3>
+              <p class="text-sm leading-7 text-ink/60 mt-1">{% trans "We send a short questionnaire so the conversation starts with the essentials." %}</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="font-display text-3xl text-gold leading-none">02</span>
+            <div>
+              <h3 class="font-display text-2xl">{% trans "During the call" %}</h3>
+              <p class="text-sm leading-7 text-ink/60 mt-1">{% trans "30 minutes to explore your plans, the estates and the practical details." %}</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="font-display text-3xl text-gold leading-none">03</span>
+            <div>
+              <h3 class="font-display text-2xl">{% trans "After the call" %}</h3>
+              <p class="text-sm leading-7 text-ink/60 mt-1">{% trans "You receive your shortlist, guide prices and a written summary within 48 hours." %}</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="mt-9 pt-6 border-t border-ink/10">
+          <p class="text-sm leading-7 text-ink/60">{% trans "Prefer to write to us first?" %}</p>
+          <a href="{% url 'core:contact' %}" class="inline-flex mt-4 text-[11px] font-bold uppercase tracking-[.15em] border-b border-forest pb-1 hover:text-gold hover:border-gold transition">
+            {% trans "Send an enquiry" %} <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+        </div>
+
+        <div class="mt-8 bg-[#F0EDE5] p-5 text-sm leading-7 text-ink/60">
+          <p class="text-[10px] uppercase tracking-[.2em] text-gold mb-2">{% trans "Already planning?" %}</p>
+          <p>{% trans "Tell us your date and venue, and we will adapt the call to what you still need to decide." %}</p>
+          <a href="{% url 'core:contact' %}?tab=request" class="inline-flex mt-3 text-[11px] font-bold uppercase tracking-[.15em] underline hover:text-gold">
+            {% trans "Submit a service request" %}
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+</main>
+{% endblock %}
