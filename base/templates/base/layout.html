@@ -15,7 +15,8 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&display=swap"
       rel="stylesheet"
     />
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
 
     <link
       rel="shortcut icon"
@@ -32,7 +33,7 @@
               cream: "#F8F6F0",
               forest: "#243B32",
               gold: "#A58A5A",
-              ink: "#222822",
+              ink: "rgb(var(--cf-ink) / <alpha-value>)",
             },
             fontFamily: {
               display: ["Italiana", "serif"],
@@ -42,39 +43,6 @@
         },
       };
     </script>
-
-    <style>
-      html.dark body {
-        background: #0f172a;
-        color: #e5e7eb;
-      }
-
-      html.dark .bg-white {
-        background-color: #1e293b !important;
-      }
-
-      html.dark .bg-\[\#f8f6f0\] {
-        background-color: #0f172a !important;
-      }
-
-      html.dark .text-\[\#222\] {
-        color: #e5e7eb !important;
-      }
-
-      html.dark .text-gray-600,
-      html.dark .text-gray-500 {
-        color: #9ca3af !important;
-      }
-
-      html.dark header {
-        background-color: #111827;
-        border-color: #374151;
-      }
-
-      html.dark .border-gray-200 {
-        border-color: #374151 !important;
-      }
-    </style>
 
     <script>
       (function () {
@@ -87,7 +55,7 @@
     </script>
   </head>
 
-  <body class="min-h-screen flex flex-col font-sans text-[#222] bg-[#f8f6f0]">
+  <body class="min-h-screen flex flex-col font-sans text-ink">
 
     <!-- HEADER -->
 

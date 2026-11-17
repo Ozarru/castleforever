@@ -1,0 +1,244 @@
+/* ==========================================================================
+   CastleForever - consolidated styles
+   Loaded once from base/layout.html and core/dashboard_layout.html.
+
+   Tailwind handles layout/utilities. This file owns the small set of custom
+   components and the dark theme. Keep page-specific CSS out of templates.
+   ========================================================================== */
+
+/* Design tokens ---------------------------------------------------------- */
+:root {
+  --cf-cream: #f8f6f0;
+  --cf-forest: #243b32;
+  --cf-gold: #a58a5a;
+  --cf-line: #c9bda6;
+
+  /* Tailwind's `ink` color is driven by these channels so that every
+     text-ink / text-ink/NN utility flips to a legible light tone in dark mode. */
+  --cf-ink: 34 40 34;
+
+  /* Dark theme: only Tailwind stone-700 through stone-900. */
+  --cf-stone-bg: #292524;        /* stone-800 - page gradient midpoint */
+  --cf-stone-bg-alt: #44403c;    /* stone-700 - alternating sections */
+  --cf-stone-surface: #1c1917;   /* stone-900 - cards */
+  --cf-stone-surface-alt: #44403c; /* stone-700 - hover surfaces */
+  --cf-stone-border: #44403c;    /* stone-700 */
+  --cf-stone-text: #f5f5f4;      /* stone-100 */
+  --cf-stone-subtle: #e7e5e4;    /* stone-200 */
+  --cf-stone-muted: #d6d3d1;     /* stone-300 */
+}
+
+html.dark {
+  --cf-ink: 245 245 244;
+}
+
+/* Base ------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, #f8f6f0 0%, #f2eee4 50%, #e8e2d5 100%);
+  background-attachment: fixed;
+  color: rgb(var(--cf-ink));
+}
+
+/* Shared components ------------------------------------------------------ */
+.hero {
+  background:
+    linear-gradient(90deg, rgba(16, 27, 23, 0.72), rgba(16, 27, 23, 0.18)),
+    url("images/castle-hero.jpg") center / cover no-repeat;
+}
+
+.photo {
+  transition: transform 0.7s ease;
+}
+
+.photo-wrap {
+  overflow: hidden;
+}
+
+.photo-wrap:hover .photo {
+  transform: scale(1.055);
+}
+
+.line {
+  height: 1px;
+  background: var(--cf-line);
+}
+
+.eyebrow {
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+input,
+select,
+textarea {
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--cf-gold);
+}
+
+/* Dashboard -------------------------------------------------------------- */
+input[type="checkbox"] {
+  appearance: none;
+  width: 44px;
+  height: 24px;
+  background: #d1d5db;
+  border-radius: 9999px;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--cf-forest);
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: left 0.2s ease;
+}
+
+input[type="checkbox"]:checked::before {
+  left: 23px;
+}
+
+.dashboard-table th {
+  background: var(--cf-forest);
+  color: white;
+}
+
+.dashboard-table td,
+.dashboard-table th {
+  padding: 12px 16px;
+}
+
+.dashboard-table tr:nth-child(even) {
+  background: var(--cf-cream);
+}
+
+.active_page {
+  background: rgba(255, 255, 255, 0.18);
+  font-weight: 600;
+}
+
+/* Dark theme ------------------------------------------------------------- */
+html.dark body {
+  background: linear-gradient(135deg, #1c1917 0%, #292524 50%, #44403c 100%) !important;
+  background-attachment: fixed !important;
+  color: var(--cf-stone-text) !important;
+}
+
+/* Surfaces */
+html.dark .bg-white {
+  background-color: var(--cf-stone-surface) !important;
+}
+
+html.dark .bg-\[\#F0EDE5\],
+html.dark .bg-\[\#f0ece3\],
+html.dark .bg-\[\#E8E2D5\] {
+  background-color: var(--cf-stone-bg-alt) !important;
+}
+
+/* Hairline gaps read as stone-900 separators between stone-700 cells. */
+html.dark .bg-\[\#d8d1c2\] {
+  background-color: var(--cf-stone-surface) !important;
+}
+
+html.dark .dashboard-table tr:nth-child(even) {
+  background: var(--cf-stone-bg-alt);
+}
+
+html.dark input[type="checkbox"] {
+  background: var(--cf-stone-border);
+}
+
+html.dark input[type="checkbox"]:checked {
+  background: #78716c; /* stone-500 */
+}
+
+/* Borders */
+html.dark .border-\[\#e8e2d5\],
+html.dark .border-\[\#e8e4d9\],
+html.dark .border-gray-200,
+html.dark .border-forest\/20,
+html.dark .border-ink\/10,
+html.dark .border-ink\/15 {
+  border-color: var(--cf-stone-border) !important;
+}
+
+html.dark .border-forest {
+  border-color: var(--cf-stone-border) !important;
+}
+
+/* Text: keep the muted steps well above a 7:1 contrast ratio on stone. */
+html.dark .text-\[\#222\],
+html.dark .text-\[\#1f2937\] {
+  color: var(--cf-stone-text) !important;
+}
+
+html.dark .text-ink\/40,
+html.dark .text-ink\/45,
+html.dark .text-ink\/50,
+html.dark .text-ink\/55,
+html.dark .text-gray-500,
+html.dark .text-gray-600 {
+  color: var(--cf-stone-muted) !important;
+}
+
+html.dark .text-ink\/60,
+html.dark .text-ink\/70,
+html.dark .text-ink\/75,
+html.dark .text-ink\/80 {
+  color: var(--cf-stone-subtle) !important;
+}
+
+/* Tiny gold labels would disappear on stone, so use a neutral light tone. */
+html.dark .text-gold,
+html.dark .text-\[\#A58A5A\],
+html.dark .text-\[\#b18c43\],
+html.dark .text-\[\#bb9653\] {
+  color: var(--cf-stone-subtle) !important;
+}
+
+/* Dropdown/overlay hovers must not flash a light background behind light text. */
+html.dark .hover\:bg-\[\#f8f6f0\]:hover {
+  background-color: var(--cf-stone-surface-alt) !important;
+}
+
+/* The primary gold call-to-action keeps dark text in both themes. */
+html.dark .bg-\[\#d5c19b\],
+html.dark .bg-\[\#dccba7\] {
+  color: var(--cf-forest);
+}

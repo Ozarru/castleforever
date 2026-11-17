@@ -2,9 +2,9 @@
 {% load static i18n %}
 {% block title %}{% trans "Sign up" %} | CastleForever{% endblock %}
 {% block content %}
-<section class="min-h-[85vh] flex items-center justify-center px-6 py-16 bg-gradient-to-br from-[#f8f6f0] via-[#f2eee4] to-[#e8e2d5]">
+<section class="min-h-[85vh] flex items-center justify-center px-6 py-16">
   <div class="w-full max-w-md">
-    <div class="bg-white/90 backdrop-blur border border-[#e8e2d5] shadow-[0_30px_80px_-30px_rgba(36,59,50,0.25)] p-10 md:p-12">
+    <div class="bg-white border border-[#e8e2d5] p-10 md:p-12">
       <p class="uppercase text-xs tracking-[.3em] text-[#A58A5A] mb-3">{% trans "Join CastleForever" %}</p>
       <h1 class="font-display text-5xl leading-tight mb-2">{% trans "Create account." %}</h1>
       <p class="text-sm text-gray-500 mb-8">{% trans "Begin your journey to extraordinary estates." %}</p>
@@ -19,7 +19,7 @@
 
         {% for field in form %}
           <div>
-            <label class="block text-[10px] uppercase tracking-[.2em] text-[#243B32] mb-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <label class="block text-[10px] uppercase tracking-[.2em] text-ink mb-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field }}
             {% if field.errors %}<p class="text-red-600 text-xs mt-1">{{ field.errors|striptags }}</p>{% endif %}
           </div>
@@ -32,7 +32,7 @@
 
       <div class="mt-8 pt-6 border-t border-[#e8e2d5] text-center">
         <p class="text-sm text-gray-500">{% trans "Already have an account?" %}</p>
-        <a href="{% url 'accounts:login' %}" class="inline-block mt-3 text-xs uppercase tracking-[.2em] text-[#A58A5A] hover:text-[#243B32] transition">{% trans "Sign in" %}</a>
+        <a href="{% url 'accounts:login' %}" class="inline-block mt-3 text-xs uppercase tracking-[.2em] text-[#A58A5A] hover:text-ink transition">{% trans "Sign in" %}</a>
       </div>
     </div>
   </div>

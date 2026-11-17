@@ -12,26 +12,25 @@
         darkMode: "class",
         theme: {
           extend: {
-            colors: { cream: "#F8F6F0", forest: "#243B32", gold: "#A58A5A", ink: "#222822" },
+            colors: { cream: "#F8F6F0", forest: "#243B32", gold: "#A58A5A", ink: "rgb(var(--cf-ink) / <alpha-value>)" },
             fontFamily: { sans: ["DM Sans", "sans-serif"] },
           },
         },
       };
     </script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <style>
-      body { font-family: "DM Sans", sans-serif; }
-      input[type="checkbox"] { appearance: none; width: 44px !important; height: 24px; background: #d1d5db; border-radius: 9999px; position: relative; cursor: pointer; }
-      input[type="checkbox"]:checked { background: #243B32; }
-      input[type="checkbox"]::before { content: ''; position: absolute; width: 18px; height: 18px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: .2s; }
-      input[type="checkbox"]:checked::before { left: 23px; }
-      .dashboard-table th { background: #243B32; color: white; }
-      .dashboard-table td, .dashboard-table th { padding: 12px 16px; }
-      .dashboard-table tr:nth-child(even) { background: #f8f6f0; }
-      .active_page { background: rgba(255,255,255,0.18); font-weight: 600; }
-    </style>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("theme") === "dark") {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-[#f1f5f9] text-[#1f2937]">
+  <body class="text-[#1f2937]">
     <div class="min-h-screen flex">
       <!-- Mobile top bar -->
       <div class="md:hidden fixed top-0 left-0 right-0 bg-forest text-white p-4 flex items-center justify-between z-40">

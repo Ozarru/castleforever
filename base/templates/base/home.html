@@ -4,131 +4,6 @@
 <!--  -->
 {% block content %}
 
-<script>
-  tailwind.config = {
-    darkMode: "class",
-
-    theme: {
-      extend: {
-        colors: {
-          cream: "#F8F6F0",
-
-          forest: "#243B32",
-
-          gold: "#A58A5A",
-
-          ink: "#222822",
-        },
-
-        fontFamily: {
-          display: ["Italiana", "serif"],
-
-          sans: ["DM Sans", "sans-serif"],
-        },
-      },
-    },
-  };
-</script>
-
-<style>
-  html.dark body {
-    background: #0f172a;
-    color: #e5e7eb;
-  }
-
-  html.dark .bg-white {
-    background-color: #1e293b !important;
-  }
-
-  html.dark .text-ink {
-    color: #e5e7eb !important;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    background: #f8f6f0;
-    color: #222822;
-  }
-
-  .hero {
-    background:
-      linear-gradient(90deg, rgba(16, 27, 23, 0.65), rgba(16, 27, 23, 0.08)),
-      url("{% static 'images/castle-hero.jpg' %}") center/cover;
-  }
-
-  .photo {
-    transition: transform 0.7s;
-  }
-
-  .photo-wrap:hover .photo {
-    transform: scale(1.055);
-  }
-
-  .line {
-    height: 1px;
-    background: #c9bda6;
-  }
-
-  .eyebrow {
-    letter-spacing: 0.24em;
-
-    text-transform: uppercase;
-
-    font-size: 10px;
-
-    font-weight: 700;
-  }
-
-  .btn {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 12px;
-
-    padding: 16px 24px;
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    letter-spacing: 0.15em;
-
-    text-transform: uppercase;
-
-    transition: 0.2s;
-  }
-
-  .btn:hover {
-    transform: translateY(-2px);
-  }
-
-  input,
-  select {
-    outline: none;
-  }
-
-  input:focus,
-  select:focus {
-    border-color: #a58a5a;
-  }
-</style>
-
-<script>
-  (function () {
-    try {
-      if (localStorage.getItem("theme") === "dark") {
-        document.documentElement.classList.add("dark");
-      }
-    } catch (e) {}
-  })();
-</script>
-
 <main>
   <!-- HERO -->
 
@@ -204,7 +79,7 @@
 
   <section class="bg-white border-b border-[#e8e4d9]">
     <div
-      class="max-w-7xl mx-auto px-6 lg:px-10 py-7 flex flex-wrap items-center justify-between gap-6 text-[10px] uppercase tracking-[.2em] text-forest/75"
+      class="max-w-7xl mx-auto px-6 lg:px-10 py-7 flex flex-wrap items-center justify-between gap-6 text-[10px] uppercase tracking-[.2em] text-ink/75"
     >
       <span>{% trans "01 / Selected historic estates" %}</span>
 

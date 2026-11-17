@@ -1,106 +1,8 @@
-{% extends "base/layout.html" %} {% load static i18n %} {% block title %}
+{% extends "base/layout.html" %} {% load static i18n %}
 <!--  -->
-{% trans "Destinations" %} | CastleForever{% endblock %} {% block content %}
-<script>
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          cream: "#F8F6F0",
-          forest: "#243B32",
-          gold: "#A58A5A",
-          ink: "#222822",
-        },
-        fontFamily: {
-          display: ["Italiana", "serif"],
-          sans: ["DM Sans", "sans-serif"],
-        },
-      },
-    },
-  };
-</script>
-
-<style>
-  html.dark body {
-    background: #0f172a;
-    color: #e5e7eb;
-  }
-  html.dark .bg-white {
-    background-color: #1e293b !important;
-  }
-  html.dark .text-ink {
-    color: #e5e7eb !important;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    background: #f8f6f0;
-    color: #222822;
-  }
-
-  .hero {
-    background:
-      linear-gradient(90deg, rgba(16, 27, 23, 0.65), rgba(16, 27, 23, 0.08)),
-      url("{% static 'images/castle-hero.jpg' %}") center/cover;
-  }
-
-  .photo {
-    transition: transform 0.7s;
-  }
-  .photo-wrap:hover .photo {
-    transform: scale(1.055);
-  }
-  .line {
-    height: 1px;
-    background: #c9bda6;
-  }
-
-  .eyebrow {
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    font-size: 10px;
-    font-weight: 700;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 16px 24px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    transition: 0.2s;
-  }
-
-  .btn:hover {
-    transform: translateY(-2px);
-  }
-  input,
-  select {
-    outline: none;
-  }
-  input:focus,
-  select:focus {
-    border-color: #a58a5a;
-  }
-</style>
-
-<script>
-  (function () {
-    try {
-      if (localStorage.getItem("theme") === "dark") {
-        document.documentElement.classList.add("dark");
-      }
-    } catch (e) {}
-  })();
-</script>
-
+{% block title %} {% trans "Destinations" %} | CastleForever{% endblock %}
+<!--  -->
+{% block content %}
 <main>
   <section class="hero min-h-[520px] flex items-center relative text-white">
     <div class="max-w-7xl w-full mx-auto px-6 lg:px-10 pt-16">
@@ -278,7 +180,7 @@
               {{ venue.region }} · {{ venue.get_country_display }}
             </p>
             <h3 class="font-display text-3xl">{{ venue.name }}</h3>
-            <p class="mt-4 text-xs text-[#222822]/60">
+            <p class="mt-4 text-xs text-ink/60">
               {% trans "Up to" %} {{ venue.capacity }} {% trans "guests" %} · {%
               trans "From" %} €{{ venue.price_from }}
             </p>
@@ -314,7 +216,7 @@
               {{ venue.region }} · {{ venue.get_country_display }}
             </p>
             <h3 class="font-display text-3xl">{{ venue.name }}</h3>
-            <p class="mt-4 text-xs text-[#222822]/60">
+            <p class="mt-4 text-xs text-ink/60">
               {% trans "Up to" %} {{ venue.capacity }} {% trans "guests" %} ·
               <!--  -->
               {% trans "From" %} €{{ venue.price_from }}
@@ -351,7 +253,7 @@
               {{ venue.region }} · {{ venue.get_country_display }}
             </p>
             <h3 class="font-display text-3xl">{{ venue.name }}</h3>
-            <p class="mt-4 text-xs text-[#222822]/60">
+            <p class="mt-4 text-xs text-ink/60">
               {% trans "Up to" %} {{ venue.capacity }} {% trans "guests" %} ·
               <!--  -->
               {% trans "From" %} €{{ venue.price_from }}
@@ -388,7 +290,7 @@
               {{ venue.region }} · {{ venue.get_country_display }}
             </p>
             <h3 class="font-display text-3xl">{{ venue.name }}</h3>
-            <p class="mt-4 text-xs text-[#222822]/60">
+            <p class="mt-4 text-xs text-ink/60">
               {% trans "Up to" %} {{ venue.capacity }} {% trans "guests" %} ·
               <!--  -->
               {% trans "From" %} €{{ venue.price_from }}
