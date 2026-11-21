@@ -52,6 +52,50 @@ class DashboardImportExportTests(TestCase):
         self.assertEqual(self.client.get(reverse("catalog:estates")).status_code, 200)
         self.assertEqual(self.client.get(self.estate.get_absolute_url()).status_code, 200)
 
+    def _estate_form_data(self, name, slug, **overrides):
+        data = {
+            "name": name,
+            "slug": slug,
+            "estate_type": "castle",
+            "country": "FR",
+            "region": "Provence",
+            "city": "Amboise",
+            "description": "A test estate",
+            "capacity": 100,
+            "price_from": "5000.00",
+            "is_published": "on",
+        }
+        data.update(overrides)
+        return data
+
+    def test_estate_create_save_redirects_to_list(self):
+        response = self.client.post(
+            reverse("core:estate-create"),
+            self._estate_form_data("Created Estate", "created-estate"),
+        )
+
+        self.assertRedirects(response, reverse("core:estate-list"))
+        self.assertTrue(Estate.objects.filter(slug="created-estate").exists())
+
+    def test_estate_update_save_redirects_to_list(self):
+        response = self.client.post(
+            reverse("core:estate-update", args=[self.estate.pk]),
+            self._estate_form_data("Updated Estate", "updated-estate", estate_type="palace"),
+        )
+
+        self.assertRedirects(response, reverse("core:estate-list"))
+        self.estate.refresh_from_db()
+        self.assertEqual(self.estate.name, "Updated Estate")
+        self.assertEqual(self.estate.estate_type, "palace")
+
+    def test_estate_delete_confirmation_redirects_to_list(self):
+        response = self.client.post(
+            reverse("core:estate-delete", args=[self.estate.pk])
+        )
+
+        self.assertRedirects(response, reverse("core:estate-list"))
+        self.assertFalse(Estate.objects.filter(pk=self.estate.pk).exists())
+
     def test_statistics_page_has_structured_chart_payload(self):
         self._booking()
         response = self.client.get(reverse("core:statistics"))
@@ -173,25 +217,31 @@ class DashboardImportExportTests(TestCase):
         for value in ["2027-06-15", "80", "Confirmed", "9000.00"]:
             self.assertContains(bookings, value)
 
-    def test_list_view_has_import_and_export_buttons(self):
+    def test_list_view_has_import_button_and_export_format_dropdown(self):
         response = self.client.get(reverse("core:booking-list"))
+        export_url = reverse("core:dashboard-export", args=["core.booking"])
+
         self.assertContains(response, reverse("core:dashboard-import", args=["core.booking"]))
-        self.assertContains(response, reverse("core:dashboard-export", args=["core.booking"]))
+        self.assertContains(response, f'href="{export_url}?format=csv"')
+        self.assertContains(response, f'href="{export_url}?format=xlsx"')
         self.assertContains(response, 'class="dashboard-outline-button"', count=2)
-        self.assertContains(response, 'name="format"')
+        self.assertContains(response, 'data-popover-menu="exportFormatMenu"')
+        self.assertContains(response, 'aria-haspopup="true"')
         self.assertContains(response, "CSV")
         self.assertContains(response, "XLSX")
         self.assertContains(response, "Import")
         self.assertContains(response, "Export")
+        self.assertNotContains(response, 'name="format"')
+        self.assertNotContains(response, "dashboard-format-select")
 
-    def test_import_page_offers_both_file_formats(self):
+    def test_import_page_has_single_file_input_and_no_format_selector(self):
         response = self.client.get(reverse("core:dashboard-import", args=["core.booking"]))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'name="format"')
         self.assertContains(response, 'name="data_file"')
-        self.assertContains(response, "File format")
         self.assertContains(response, "Data file")
         self.assertContains(response, "XLSX")
+        self.assertNotContains(response, 'name="format"')
+        self.assertNotContains(response, "File format")
 
     def test_export_then_import_restores_records(self):
         original = self._booking()
@@ -239,7 +289,7 @@ class DashboardImportExportTests(TestCase):
         import_url = reverse("core:dashboard-import", args=["core.booking"])
         response = self.client.post(
             import_url,
-            {"data_file": upload, "format": "xlsx"},
+            {"data_file": upload},
             follow=True,
         )
         self.assertEqual(response.status_code, 200)

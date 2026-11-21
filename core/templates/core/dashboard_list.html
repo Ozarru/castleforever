@@ -8,13 +8,30 @@
     <h1 class="font-display text-5xl">{{ model_name }}</h1>
     <div class="flex flex-wrap items-center gap-3">
       <a href="{{ import_url }}" class="dashboard-outline-button">{% trans "Import" %} <i class="fa-solid fa-upload" aria-hidden="true"></i></a>
-      <form action="{{ export_url }}" method="get" class="flex items-center gap-2">
-        <select name="format" class="dashboard-format-select" aria-label="{% trans 'Export format' %}">
-          <option value="csv">CSV</option>
-          <option value="xlsx">XLSX</option>
-        </select>
-        <button type="submit" class="dashboard-outline-button">{% trans "Export" %} <i class="fa-solid fa-download" aria-hidden="true"></i></button>
-      </form>
+      <div class="dashboard-export-menu">
+        <button
+          type="button"
+          class="dashboard-outline-button"
+          data-popover-toggle
+          data-popover-menu="exportFormatMenu"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="exportFormatMenu"
+          aria-label="{% trans 'Export format' %}"
+        >
+          {% trans "Export" %}
+          <i class="fa-solid fa-download" aria-hidden="true"></i>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div id="exportFormatMenu" class="ui-popover export-format-popover" role="menu" hidden>
+          <a class="ui-popover-link" role="menuitem" href="{{ export_url }}?format=csv">
+            <i class="fa-solid fa-file-csv" aria-hidden="true"></i>CSV
+          </a>
+          <a class="ui-popover-link" role="menuitem" href="{{ export_url }}?format=xlsx">
+            <i class="fa-solid fa-file-excel" aria-hidden="true"></i>XLSX
+          </a>
+        </div>
+      </div>
       <a href="{% url create_url_name %}" class="bg-forest text-white py-3 px-6 uppercase tracking-widest text-xs">{% trans "Create" %} <i class="fa-solid fa-arrow-right-long"></i></a>
     </div>
   </div>

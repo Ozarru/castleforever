@@ -18,16 +18,7 @@
 
   <form method="post" enctype="multipart/form-data" class="mt-6 max-w-2xl bg-white rounded-lg shadow p-6">
     {% csrf_token %}
-    <label for="importFormat" class="block text-sm font-semibold">{% trans "File format" %}</label>
-    <select id="importFormat" name="format"
-            class="dashboard-format-select mt-2 block w-full max-w-xs rounded"
-            aria-label="{% trans 'File format' %}">
-      {% for value, label in formats %}
-        <option value="{{ value }}" {% if value == selected_format %}selected{% endif %}>{{ label }}</option>
-      {% endfor %}
-    </select>
-
-    <label for="dataFile" class="mt-4 block text-sm font-semibold">{% trans "Data file" %}</label>
+    <label for="dataFile" class="block text-sm font-semibold">{% trans "Data file" %}</label>
     <input type="file" id="dataFile" name="data_file"
            accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
            required

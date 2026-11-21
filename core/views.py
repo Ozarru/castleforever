@@ -282,7 +282,7 @@ class DashboardCreateView(StaffRequiredMixin, CreateView):
     fields = "__all__"
 
     def get_success_url(self):
-        return reversegettext_lazy(self.success_url_name)
+        return reverse_lazy(self.success_url_name)
 
 
 class DashboardUpdateView(StaffRequiredMixin, UpdateView):
@@ -290,14 +290,14 @@ class DashboardUpdateView(StaffRequiredMixin, UpdateView):
     fields = "__all__"
 
     def get_success_url(self):
-        return reversegettext_lazy(self.success_url_name)
+        return reverse_lazy(self.success_url_name)
 
 
 class DashboardDeleteView(StaffRequiredMixin, DeleteView):
     template_name = "core/dashboard_confirm_delete.html"
 
     def get_success_url(self):
-        return reversegettext_lazy(self.success_url_name)
+        return reverse_lazy(self.success_url_name)
 
 
 def _detail_fields(obj):
@@ -421,7 +421,7 @@ class DashboardImportView(StaffRequiredMixin, View):
         model, dataset = get_dataset(model_key)
         upload = request.FILES.get("data_file") or request.FILES.get("csv_file")
 
-        file_format = normalize_format(request.POST.get("format"))
+        file_format = normalize_format(request.POST.get("format"), default=None)
         if file_format is None:
             file_format = format_from_filename(upload.name if upload else "", "csv")
         context = self._context(model_key, model, dataset, file_format)
