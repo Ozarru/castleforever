@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
@@ -7,6 +8,20 @@ from catalog.models import Estate
 from .forms import AppointmentForm, BookingEnquiryForm, ContactInquiryForm, ServiceRequestForm
 from .marketing import RESULTS_YEAR, results_snapshot, testimonial_rating
 from .models import Appointment, ContactInquiry, ServiceRequest, Testimonial
+from .seo import graph_schema, page_seo, web_page_schema
+
+
+def _public_seo(title, description, path, *, page_type="website", schema=None, noindex=False):
+    return page_seo(
+        title,
+        description,
+        page_type=page_type,
+        noindex=noindex,
+        schema=graph_schema(
+            web_page_schema(title, description, f"{settings.SITE_URL}{path}"),
+            schema,
+        ),
+    )
 
 
 @require_http_methods(["GET", "POST"])
@@ -22,7 +37,13 @@ def booking_enquiry(request, slug):
         booking.save()
         messages.success(request, "Your enquiry has been received. We will contact you about availability.")
         return redirect(estate.get_absolute_url())
-    return render(request, "core/enquiry.html", {"form": form, "estate": estate})
+    title = f"Enquire about {estate.name} | CastleForever"
+    description = f"Ask CastleForever about availability, pricing and celebrations at {estate.name}."
+    return render(request, "core/enquiry.html", {
+        "form": form,
+        "estate": estate,
+        "seo": _public_seo(title, description, estate.get_absolute_url() + "enquire/", noindex=True),
+    })
 
 
 @require_http_methods(["GET", "POST"])
@@ -55,21 +76,60 @@ def contact(request):
                 messages.success(request, _("Thank you. We have received your request."))
                 return redirect("/contact/?tab=request")
 
+    title = "Contact CastleForever | Wedding Estate Planning Enquiries"
+    description = (
+        "Contact the CastleForever team to discuss your destination wedding, "
+        "request a service or arrange a consultation."
+    )
     return render(request, "core/contact.html", {
         "enquiry_form": enquiry_form,
         "request_form": request_form,
         "active_tab": active_tab,
+        "seo": _public_seo(title, description, "/contact/", page_type="ContactPage"),
     })
 
 
 def reviews(request):
     """Public customer reviews with photos."""
     testimonials = Testimonial.objects.filter(is_published=True).select_related("estate")
+    rating_average = testimonial_rating()
+    review_count = testimonials.count()
+    title = "CastleForever Reviews | Couple Stories & Ratings"
+    description = (
+        f"Read {review_count} verified couple reviews and a {rating_average:.1f}/5 "
+        "guest rating for CastleForever wedding estates and services."
+    )
+    review_schema = {
+        "@type": "ItemList",
+        "itemListElement": [
+            {
+                "@type": "Review",
+                "name": str(item.couple_names),
+                "reviewBody": str(item.quote)[:500],
+                "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": item.rating,
+                    "bestRating": 5,
+                    "worstRating": 1,
+                },
+                "author": {"@type": "Person", "name": str(item.couple_names)},
+            }
+            for item in testimonials[:10]
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": rating_average,
+            "reviewCount": review_count,
+            "bestRating": 5,
+            "worstRating": 1,
+        },
+    }
     return render(request, "core/reviews.html", {
         "testimonials": testimonials,
-        "rating_average": testimonial_rating(),
-        "testimonial_count": testimonials.count(),
+        "rating_average": rating_average,
+        "testimonial_count": review_count,
         "results": results_snapshot(),
+        "seo": _public_seo(title, description, "/reviews/", schema=review_schema),
     })
 
 
@@ -79,9 +139,15 @@ def results(request):
     requested_year = request.GET.get("year", "")
     if requested_year.isdigit():
         year = int(requested_year)
+    title = f"CastleForever {year} Results | Weddings, Guests & Estates"
+    description = (
+        f"Explore CastleForever's {year} wedding highlights: celebrations hosted, "
+        "guests welcomed and estates across Europe."
+    )
     return render(request, "core/results.html", {
         "results": results_snapshot(year),
         "testimonials": Testimonial.objects.filter(is_published=True)[:6],
+        "seo": _public_seo(title, description, "/results/"),
     })
 
 
@@ -97,7 +163,15 @@ def appointment(request):
             "our team will confirm the date and time by email within one business day.",
         )
         return redirect("core:appointment")
-    return render(request, "core/appointment.html", {"form": form})
+    title = "Book a Wedding Planning Call | CastleForever"
+    description = (
+        "Arrange a personal consultation with CastleForever to plan your destination "
+        "wedding and shortlist the right estate."
+    )
+    return render(request, "core/appointment.html", {
+        "form": form,
+        "seo": _public_seo(title, description, "/appointment/", noindex=True),
+    })
 
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin

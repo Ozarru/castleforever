@@ -1,6 +1,7 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
-{% block title %}{{ estate.name }} | CastleForever{% endblock %}
+{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
 {% block content %}
 <main class="max-w-7xl mx-auto px-6 py-12 pb-28 lg:pb-12">
   <nav class="flex flex-wrap items-center gap-2 text-xs text-ink/50" aria-label="{% trans 'Breadcrumb' %}">
@@ -62,11 +63,11 @@
     >
       <div id="carouselTrack" class="flex transition-transform duration-500 ease-out">
         {% for image in gallery %}
-          <img
+          <img decoding="async"
             class="w-full h-[420px] md:h-[560px] object-cover flex-shrink-0"
             src="{{ image.url }}"
             alt="{{ image.alt }}"
-            {% if forloop.first %}loading="eager"{% else %}loading="lazy"{% endif %}
+            {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
           />
         {% empty %}
           <div class="w-full h-[320px] md:h-[460px] flex flex-col items-center justify-center gap-4 text-white/60">
@@ -117,7 +118,7 @@
             class="carousel-thumb flex-shrink-0 w-24 h-16 overflow-hidden border-2 {% if forloop.first %}border-gold{% else %}border-transparent{% endif %} hover:border-gold transition"
             aria-label="{% trans 'Go to image' %} {{ forloop.counter }}"
           >
-            <img class="w-full h-full object-cover" src="{{ image.url }}" alt="" loading="lazy" />
+            <img decoding="async" class="w-full h-full object-cover" src="{{ image.url }}" alt="" loading="lazy" />
           </button>
         {% endfor %}
       </div>

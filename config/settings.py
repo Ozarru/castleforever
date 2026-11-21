@@ -35,6 +35,24 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-change-before-deploym
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if h.strip()]
 
+# --- Public site / SEO ------------------------------------------------------
+# SITE_URL is the single trusted origin used for canonical URLs, OG tags,
+# sitemap entries and structured data. Override with DJANGO_SITE_URL per env.
+SITE_URL = _env("DJANGO_SITE_URL", "https://www.castleforever.com").rstrip("/")
+SITE_NAME = _env("DJANGO_SITE_NAME", "CastleForever")
+SITE_EMAIL = _env("DJANGO_SITE_EMAIL", "hello@castleforever.com")
+SITE_PHONE = _env("DJANGO_SITE_PHONE", "+33 0 11 22 33 44")
+
+# Optional tracking IDs. Nothing is emitted until these are configured.
+GOOGLE_SITE_VERIFICATION = _env("GOOGLE_SITE_VERIFICATION")
+GOOGLE_ANALYTICS_ID = _env("GOOGLE_ANALYTICS_ID")
+GOOGLE_TAG_MANAGER_ID = _env("GOOGLE_TAG_MANAGER_ID")
+GOOGLE_ADS_ID = _env("GOOGLE_ADS_ID")
+GOOGLE_ADS_CONVERSION_LABEL = _env("GOOGLE_ADS_CONVERSION_LABEL")
+
+# Keep staging and local environments out of the index by default.
+NOINDEX = _env_bool("DJANGO_NOINDEX", DEBUG)
+
 # Render.com injects the public hostname of the service.
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "").strip()
 if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
@@ -92,6 +110,7 @@ TEMPLATES = [{
         "django.contrib.messages.context_processors.messages",
         "core.context_processors.static_versions",
         "core.context_processors.dashboard_notifications",
+        "core.context_processors.seo",
     ]},
 }]
 WSGI_APPLICATION = "config.wsgi.application"

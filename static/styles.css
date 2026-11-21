@@ -48,6 +48,12 @@ body {
   background:
     linear-gradient(90deg, rgba(16, 27, 23, 0.72), rgba(16, 27, 23, 0.18)),
     url("images/castle-hero.jpg") center / cover no-repeat;
+  background:
+    linear-gradient(90deg, rgba(16, 27, 23, 0.72), rgba(16, 27, 23, 0.18)),
+    image-set(
+      url("images/castle-hero.webp") type("image/webp") 1x,
+      url("images/castle-hero.jpg") type("image/jpeg") 1x
+    ) center / cover no-repeat;
 }
 
 .photo {

@@ -1,7 +1,7 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
-{% block title %}{% trans "Contact" %} | CastleForever{% endblock %}
-{% block meta_description %}{% trans "Send a message or submit a service request to the CastleForever team. Tell us about your plans and we will reply within one business day." %}{% endblock %}
+{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
 {% block content %}
 <main class="pb-24">
 
@@ -101,7 +101,7 @@
               {% trans "Ask about an estate, availability, visits or the way we work. A short note is enough to get started." %}
             </p>
 
-            <form method="post" class="mt-8 grid md:grid-cols-2 gap-5">
+            <form method="post" data-ads-conversion class="mt-8 grid md:grid-cols-2 gap-5">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="enquiry">
               {% if enquiry_form.non_field_errors %}
@@ -146,7 +146,7 @@
               {% trans "Share your date, guest count and budget so we can suggest the right estates and services." %}
             </p>
 
-            <form method="post" class="mt-8 grid md:grid-cols-2 gap-5">
+            <form method="post" data-ads-conversion class="mt-8 grid md:grid-cols-2 gap-5">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="request">
               {% if request_form.non_field_errors %}

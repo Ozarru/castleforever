@@ -33,14 +33,15 @@
         <li><a href="{% url 'core:contact' %}" class="hover:text-white transition">{% trans "Contact" %}</a></li>
         <li><a href="{% url 'core:dashboard' %}" class="hover:text-white transition">{% trans "Dashboard" %}</a></li>
         <li><a href="/contact/?tab=request" class="hover:text-white transition">{% trans "Tell us your needs" %}</a></li>
+        <li><a href="{% url 'sitemap_xml' %}" class="hover:text-white transition">{% trans "Sitemap" %}</a></li>
       </ul>
     </div>
 
     <div>
       <h3 class="text-xs uppercase tracking-[.25em] text-[#d5c19b] mb-5">{% trans "Contact" %}</h3>
       <ul class="space-y-3 text-sm text-white/60">
-        <li>hello@castleforever.com</li>
-        <li>+33 0 11 22 33 44</li>
+        <li><a href="mailto:{{ SITE_EMAIL }}" class="hover:text-white transition">{{ SITE_EMAIL }}</a></li>
+        <li><a href="tel:{{ SITE_PHONE_TEL }}" class="hover:text-white transition">{{ SITE_PHONE }}</a></li>
         <li>{% trans "Mon - Fri, 09:00 - 18:00 CET" %}</li>
       </ul>
       <div class="mt-6 flex gap-4 text-xs uppercase tracking-widest">

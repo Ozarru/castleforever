@@ -3,11 +3,14 @@ import html
 import io
 import json
 import re
+from xml.etree import ElementTree as ET
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
+from django.utils import translation
 from openpyxl import load_workbook
 
 from catalog.models import Estate
@@ -829,4 +832,225 @@ class PaymentApproachPageTests(TestCase):
         self.assertContains(response, "price - deposit")
         self.assertContains(response, "€3,000")
         self.assertNotContains(response, "price / months")
+
+
+class PublicSeoTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.estate = Estate.objects.create(
+            name="Château SEO",
+            slug="chateau-seo",
+            estate_type="castle",
+            country="FR",
+            region="Provence",
+            city="Aix",
+            description="A beautiful castle estate.",
+            capacity=120,
+            price_from="7500.00",
+            cover_image_url="https://images.example.test/cover.jpg",
+            is_published=True,
+        )
+        Estate.objects.create(
+            name="Hidden Estate",
+            slug="hidden-estate",
+            country="IT",
+            region="Tuscany",
+            description="Not for public listings.",
+            capacity=50,
+            price_from="1000.00",
+            is_published=False,
+        )
+
+    @staticmethod
+    def json_ld_objects(response):
+        content = response.content.decode()
+        objects = []
+        for script in re.findall(
+            r'<script type="application/ld\+json">(.*?)</script>', content, re.S
+        ):
+            data = json.loads(script)
+            if isinstance(data, dict) and "@graph" in data:
+                objects.extend(data["@graph"])
+            else:
+                objects.append(data)
+        return objects
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=False, DEBUG=False)
+    def test_home_has_canonical_social_and_indexable_metadata(self):
+        response = self.client.get(reverse("base:home"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<html lang="en">')
+        self.assertContains(
+            response, '<link rel="canonical" href="https://example.test/" />'
+        )
+        self.assertContains(
+            response, '<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />'
+        )
+        self.assertContains(
+            response, '<meta property="og:url" content="https://example.test/" />'
+        )
+        self.assertContains(response, '<meta property="og:type" content="website" />')
+        self.assertContains(
+            response, '<meta name="twitter:card" content="summary_large_image" />'
+        )
+        self.assertContains(response, "og-default.jpg")
+        self.assertContains(response, "Castle Wedding Estates")
+
+        schema_types = {item.get("@type") for item in self.json_ld_objects(response)}
+        self.assertTrue({"Organization", "WebSite", "WebPage"}.issubset(schema_types))
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=True, DEBUG=False)
+    def test_noindex_setting_is_reflected_in_robots_meta(self):
+        response = self.client.get(reverse("base:home"))
+
+        self.assertContains(response, '<meta name="robots" content="noindex, nofollow" />')
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=False, DEBUG=False)
+    def test_public_layout_uses_current_language(self):
+        self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = "pt"
+        try:
+            with translation.override("en"):
+                response = self.client.get(reverse("base:home"))
+        finally:
+            self.client.cookies.pop(settings.LANGUAGE_COOKIE_NAME, None)
+
+        self.assertContains(response, '<html lang="pt">')
+        self.assertContains(response, '<meta property="og:locale" content="pt_PT" />')
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=False, DEBUG=False)
+    def test_alias_urls_canonicalize_to_preferred_paths(self):
+        aliases = {
+            "/destination/": "https://example.test/destinations/",
+            "/our-approach/": "https://example.test/approach/",
+            "/our_approach/": "https://example.test/approach/",
+            "/payment-approach/": "https://example.test/approach/",
+            "/payments/": "https://example.test/approach/",
+            "/rentals/": "https://example.test/cars/",
+            "/vehicles/": "https://example.test/cars/",
+            "/needs/": "https://example.test/contact/",
+            "/inquiry/": "https://example.test/contact/",
+            "/enquire/": "https://example.test/contact/",
+            "/testimonials/": "https://example.test/reviews/",
+            "/2025-results/": "https://example.test/results/",
+            "/book-a-call/": "https://example.test/appointment/",
+        }
+        for alias, canonical in aliases.items():
+            with self.subTest(alias=alias):
+                response = self.client.get(alias, follow=True)
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(
+                    response, f'<link rel="canonical" href="{canonical}" />'
+                )
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=False, DEBUG=False)
+    def test_query_strings_are_excluded_from_canonical_url(self):
+        response = self.client.get(
+            reverse("catalog:estates"), {"q": "castle", "country": "FR"}
+        )
+
+        self.assertContains(
+            response,
+            '<link rel="canonical" href="https://example.test/estates/" />',
+        )
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=False, DEBUG=False)
+    def test_estate_detail_has_product_offer_and_breadcrumb_schema(self):
+        response = self.client.get(self.estate.get_absolute_url())
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<meta property="og:type" content="product" />')
+        self.assertContains(
+            response,
+            '<meta property="og:image" content="https://images.example.test/cover.jpg" />',
+        )
+
+        schema_by_type = {
+            item.get("@type"): item for item in self.json_ld_objects(response)
+        }
+        product = schema_by_type["Product"]
+        self.assertEqual(product["name"], "Château SEO")
+        self.assertEqual(product["image"], ["https://images.example.test/cover.jpg"])
+        self.assertEqual(product["offers"]["price"], "7500.00")
+        self.assertEqual(product["offers"]["priceCurrency"], "EUR")
+        self.assertTrue(
+            any(
+                prop.get("name") == "Capacity" and prop.get("value") == 120
+                for prop in product["additionalProperty"]
+            )
+        )
+        breadcrumbs = schema_by_type["BreadcrumbList"]["itemListElement"]
+        self.assertEqual(breadcrumbs[-1]["name"], "Château SEO")
+        self.assertEqual(
+            breadcrumbs[-1]["item"], "https://example.test/estates/chateau-seo/"
+        )
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=False, DEBUG=False)
+    def test_robots_txt_links_sitemap_when_indexable(self):
+        response = self.client.get(reverse("robots_txt"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "text/plain; charset=utf-8")
+        self.assertContains(response, "User-agent: *")
+        self.assertContains(response, "Disallow: /dashboard/")
+        self.assertContains(response, "Sitemap: https://example.test/sitemap.xml")
+        self.assertNotIn("Disallow: /", response.content.decode().splitlines())
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=True, DEBUG=False)
+    def test_robots_txt_blocks_crawlers_when_noindex(self):
+        response = self.client.get(reverse("robots_txt"))
+
+        self.assertContains(response, "Disallow: /")
+
+    @override_settings(SITE_URL="https://example.test", NOINDEX=False, DEBUG=False)
+    def test_sitemap_includes_public_pages_and_published_estates_only(self):
+        response = self.client.get(reverse("sitemap_xml"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Type"], "application/xml; charset=utf-8")
+        root = ET.fromstring(response.content)
+        locations = {
+            node.text
+            for node in root.findall(
+                f".//{{{self.sitemap_namespace()}}}loc"
+            )
+        }
+        self.assertIn("https://example.test/", locations)
+        self.assertIn("https://example.test/estates/", locations)
+        self.assertIn("https://example.test/estates/chateau-seo/", locations)
+        self.assertNotIn("https://example.test/estates/hidden-estate/", locations)
+
+    @staticmethod
+    def sitemap_namespace():
+        return "http://www.sitemaps.org/schemas/sitemap/0.9"
+
+    @override_settings(
+        GOOGLE_SITE_VERIFICATION="",
+        GOOGLE_ANALYTICS_ID="",
+        GOOGLE_TAG_MANAGER_ID="",
+        GOOGLE_ADS_ID="",
+        GOOGLE_ADS_CONVERSION_LABEL="",
+    )
+    def test_no_tracking_is_emitted_by_default(self):
+        response = self.client.get(reverse("base:home"))
+
+        self.assertNotContains(response, "googletagmanager.com")
+        self.assertNotContains(response, "google-site-verification")
+
+    @override_settings(
+        GOOGLE_SITE_VERIFICATION="verify-token",
+        GOOGLE_ANALYTICS_ID="G-TEST",
+        GOOGLE_ADS_ID="AW-TEST",
+        GOOGLE_ADS_CONVERSION_LABEL="CONVERSION",
+    )
+    def test_tracking_hooks_are_configurable(self):
+        response = self.client.get(reverse("base:home"))
+
+        self.assertContains(
+            response,
+            '<meta name="google-site-verification" content="verify-token" />',
+        )
+        self.assertContains(response, "googletagmanager.com/gtag/js?id=G-TEST")
+        self.assertContains(response, 'gtag("config", "AW-TEST")')
+        self.assertContains(response, "AW-TEST/CONVERSION")
 

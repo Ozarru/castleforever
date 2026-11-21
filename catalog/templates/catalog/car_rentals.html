@@ -1,6 +1,7 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
-{% block title %}{% trans "Car rentals" %} | CastleForever{% endblock %}
+{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
 {% block content %}
 <main class="max-w-7xl mx-auto px-6 py-12">
   <a href="{% url 'base:home' %}" class="text-sm text-gray-500"><i class="fa-solid fa-arrow-left-long"></i> Back to collection</a>
@@ -18,7 +19,7 @@
       {% for vehicle in group.list %}
       <article class="bg-white group">
         <div class="overflow-hidden h-64">
-          {% if vehicle.image_src %}<img class="h-full w-full object-cover" src="{{ vehicle.image_src }}" alt="{{ vehicle.name }}" loading="lazy">{% endif %}
+          {% if vehicle.image_src %}<img decoding="async" class="h-full w-full object-cover" src="{{ vehicle.image_src }}" alt="{{ vehicle.name }}" loading="lazy">{% endif %}
         </div>
         <div class="p-7">
           <h3 class="font-display text-3xl">{{ vehicle.name }}</h3>

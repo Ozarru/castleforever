@@ -8,6 +8,7 @@ from django.urls import include, path, re_path
 from django.views.static import serve as media_serve
 
 from accounts import views as account_views
+from core import seo_views
 
 
 def healthz(request):
@@ -21,6 +22,8 @@ def healthz(request):
 
 
 urlpatterns = [
+    path("robots.txt", seo_views.robots_txt, name="robots_txt"),
+    path("sitemap.xml", seo_views.sitemap_xml, name="sitemap_xml"),
     path("healthz/", healthz, name="healthz"),
     path("profile/", account_views.profile, name="profile"),
     path("notifications/", account_views.notifications, name="notifications"),

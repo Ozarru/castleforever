@@ -1,8 +1,8 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
 <!--  -->
-{% block title %}{% trans "Couple reviews" %} | CastleForever{% endblock %}
-{% block meta_description %}{% trans "Read real reviews and see photographs from couples who celebrated their wedding with CastleForever in France, Italy and Spain." %}{% endblock %}
+{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
 <!--  -->
 {% block content %}
 <main>
@@ -66,7 +66,7 @@
         <article class="bg-white flex flex-col">
           <div class="relative h-72 overflow-hidden bg-[#E8E2D5]">
             {% if testimonial.image_src %}
-              <img class="h-full w-full object-cover" src="{{ testimonial.image_src }}" alt="{{ testimonial.couple_names }}" loading="lazy">
+              <img decoding="async" class="h-full w-full object-cover" src="{{ testimonial.image_src }}" alt="{{ testimonial.couple_names }}" loading="lazy">
             {% endif %}
             <span class="absolute top-4 left-4 bg-white/95 text-forest text-[10px] font-bold uppercase tracking-[.16em] px-3 py-2">
               {{ testimonial.rating }}/5 ★

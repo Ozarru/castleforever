@@ -1,7 +1,7 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
-{% block title %}{% trans "2025 results" %} | CastleForever{% endblock %}
-{% block meta_description %}{% trans "Explore CastleForever's 2025 season: weddings celebrated month by month, guests welcomed, estates booked and reviews from our couples." %}{% endblock %}
+{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
 {% block content %}
 <main>
 
@@ -141,7 +141,7 @@
         <article class="bg-white">
           <div class="h-64 overflow-hidden bg-[#E8E2D5]">
             {% if testimonial.image_src %}
-              <img class="h-full w-full object-cover" src="{{ testimonial.image_src }}" alt="{{ testimonial.couple_names }}" loading="lazy">
+              <img decoding="async" class="h-full w-full object-cover" src="{{ testimonial.image_src }}" alt="{{ testimonial.couple_names }}" loading="lazy">
             {% endif %}
           </div>
           <div class="p-7">

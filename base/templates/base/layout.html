@@ -1,13 +1,43 @@
 {% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{% block title %}CastleForever{% endblock %}</title>
+    <title>{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}</title>
 
-    <meta name="description" content="{% block meta_description %}CastleForever: discover exceptional estates, exclusive services and unique experiences to celebrate your wedding.{% endblock %}" />
+    <meta name="description" content="{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}" />
+    <meta name="robots" content="{% if seo.noindex %}noindex, follow{% else %}{{ robots_content }}{% endif %}" />
+    <link rel="canonical" href="{{ canonical_url }}" />
+
+    {% if GOOGLE_SITE_VERIFICATION %}
+      <meta name="google-site-verification" content="{{ GOOGLE_SITE_VERIFICATION }}" />
+    {% endif %}
+
+    <meta property="og:site_name" content="{{ SITE_NAME }}" />
+    <meta property="og:locale" content="{{ og_locale }}" />
+    <meta property="og:type" content="{% block og_type %}{{ seo.type|default:'website' }}{% endblock %}" />
+    <meta property="og:title" content="{% block og_title %}{{ seo.title|default:SITE_NAME }}{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}{{ seo.description }}{% endblock %}" />
+    <meta property="og:url" content="{{ canonical_url }}" />
+    <meta property="og:image" content="{% block og_image %}{{ seo.image|default:default_og_image }}{% endblock %}" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ seo.title|default:SITE_NAME }}" />
+    <meta name="twitter:description" content="{{ seo.description }}" />
+    <meta name="twitter:image" content="{{ seo.image|default:default_og_image }}" />
+
+    <script type="application/ld+json">{{ organization_schema_json|safe }}</script>
+    <script type="application/ld+json">{{ website_schema_json|safe }}</script>
+    {% block structured_data %}{% if seo.schema_json %}<script type="application/ld+json">{{ seo.schema_json|safe }}</script>{% endif %}{% endblock %}
+
+    {% include "shared/tracking.html" %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -56,6 +86,16 @@
   </head>
 
   <body class="min-h-screen flex flex-col font-sans text-ink">
+    {% if GOOGLE_TAG_MANAGER_ID %}
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id={{ GOOGLE_TAG_MANAGER_ID }}"
+          height="0"
+          width="0"
+          style="display: none; visibility: hidden"
+        ></iframe>
+      </noscript>
+    {% endif %}
 
     <!-- HEADER -->
 

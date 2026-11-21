@@ -1,6 +1,7 @@
 {% extends "base/layout.html" %} {% load static i18n %}
 <!--  -->
-{% block title %}{% trans "Home" %} | CastleForever{% endblock %}
+{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
 <!--  -->
 {% block content %}
 
@@ -193,10 +194,10 @@
 
     <div class="grid md:grid-cols-2 gap-5">
       <a
-        href="#estates"
+        href="{% url 'catalog:estates' %}?country=FR"
         class="photo-wrap group relative h-[450px] overflow-hidden"
       >
-        <img
+        <img decoding="async"
           class="photo h-full w-full object-cover"
           src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=85"
           alt="Prestigious estate in France"
@@ -222,10 +223,10 @@
       </a>
 
       <a
-        href="#estates"
+        href="{% url 'catalog:estates' %}?country=IT"
         class="photo-wrap group relative h-[450px] overflow-hidden"
       >
-        <img
+        <img decoding="async"
           class="photo h-full w-full object-cover"
           src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=85"
           alt="Italian architecture"
@@ -251,10 +252,10 @@
       </a>
 
       <a
-        href="#estates"
+        href="{% url 'catalog:estates' %}?country=ES"
         class="photo-wrap group relative h-[450px] overflow-hidden"
       >
-        <img
+        <img decoding="async"
           class="photo h-full w-full object-cover"
           src="https://images.unsplash.com/photo-1509840841025-9088ba78a826?auto=format&fit=crop&w=900&q=85"
           alt="Historic Spanish architecture"
@@ -280,13 +281,13 @@
       </a>
 
       <a
-        href="#estates"
+        href="{% url 'catalog:estates' %}?country=DE"
         class="photo-wrap group relative h-[450px] overflow-hidden"
       >
-        <img
+        <img decoding="async"
           class="photo h-full w-full object-cover"
           src="https://images.unsplash.com/photo-1759955766386-01dba8a0ec49?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
-          alt="Historic Spanish architecture"
+          alt="Historic German architecture"
           loading="lazy"
         />
 
@@ -296,7 +297,7 @@
 
         <div class="absolute bottom-8 left-8 text-white">
           <p class="eyebrow mb-3 text-white/75">
-            {% trans "Palaces & sunshine" %}
+            {% trans "Castles & gardens" %}
           </p>
 
           <h3 class="font-display text-5xl">{% trans "Germany" %}</h3>
@@ -341,7 +342,7 @@
           <div class="photo-wrap overflow-hidden h-72">
             {% if estate.cover_url %}
 
-            <img
+            <img decoding="async"
               class="photo h-full w-full object-cover"
               src="{{ estate.cover_url }}"
               alt="{{ estate.name }}"
@@ -421,7 +422,7 @@
         <div class="photo-wrap overflow-hidden h-64 bg-[#E8E2D5]">
           {% if testimonial.image_src %}
 
-          <img
+          <img decoding="async"
             class="photo h-full w-full object-cover"
             src="{{ testimonial.image_src }}"
             alt="{{ testimonial.couple_names }}"
@@ -482,14 +483,14 @@
   >
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
       <div class="grid grid-cols-2 gap-4">
-        <img
+        <img decoding="async"
           class="w-full h-[420px] object-cover mt-12"
           src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85"
           alt="Luxury wedding celebration"
           loading="lazy"
         />
 
-        <img
+        <img decoding="async"
           class="w-full h-[420px] object-cover"
           src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=85"
           alt="Prestige vehicle with chauffeur"
@@ -768,9 +769,9 @@
           function calculatePayment() {
             const price = Number(priceSelect.value);
             const months = Number(yearsSelect.value);
+            const deposit = 3000;
 
-            const monthly = price / months;
-            const deposit = price * 0.12;
+            const monthly = Math.max(0, price - deposit) / months;
 
             monthlyDisplay.textContent = new Intl.NumberFormat("en-IE", {
               style: "currency",
@@ -874,45 +875,5 @@
     </div>
   </section>
 </main>
-
-<script>
-  const menu = document.getElementById("menuButton");
-
-  const mobile = document.getElementById("mobileMenu");
-
-  if (menu && mobile) {
-    menu.addEventListener("click", () => {
-      mobile.classList.toggle("hidden");
-    });
-  }
-
-  const price = document.getElementById("price");
-
-  const years = document.getElementById("years");
-
-  const monthly = document.getElementById("monthly");
-
-  if (price && years && monthly) {
-    const calc = () => {
-      const amount =
-        Math.max(0, Number(price.value) - 3000) / Number(years.value);
-
-      monthly.textContent = new Intl.NumberFormat("en-IE", {
-        style: "currency",
-
-        currency: "EUR",
-      }).format(amount);
-    };
-
-    price.addEventListener("change", calc);
-
-    years.addEventListener("change", calc);
-
-    calc();
-  }
-
-  document.getElementById("year") &&
-    (document.getElementById("year").textContent = new Date().getFullYear());
-</script>
 
 {% endblock %}

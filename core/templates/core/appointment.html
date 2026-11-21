@@ -1,7 +1,7 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
-{% block title %}{% trans "Book an appointment" %} | CastleForever{% endblock %}
-{% block meta_description %}{% trans "Book a free 30-minute appointment with CastleForever to discuss your wedding dates, guest list, estates and payment options." %}{% endblock %}
+{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
 {% block content %}
 <main>
 
@@ -107,7 +107,7 @@
           {% trans "We will confirm the exact time by email within one business day. If your preferred slot is unavailable, we will propose the closest alternative." %}
         </p>
 
-        <form method="post" class="mt-9 grid md:grid-cols-2 gap-5">
+        <form method="post" data-ads-conversion class="mt-9 grid md:grid-cols-2 gap-5">
           {% csrf_token %}
           {% if form.non_field_errors %}
             <div class="md:col-span-2 text-red-700 text-sm">{{ form.non_field_errors }}</div>

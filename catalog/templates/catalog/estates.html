@@ -1,6 +1,7 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
-{% block title %}{% trans "The collection" %} | CastleForever{% endblock %}
+{% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
 {% block content %}
 <main class="max-w-7xl mx-auto px-6 py-12">
   <a href="{% url 'base:home' %}" class="text-sm text-gray-500"><i class="fa-solid fa-arrow-left-long"></i> {% trans "Back to home" %}</a>
