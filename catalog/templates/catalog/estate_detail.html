@@ -1,0 +1,402 @@
+{% extends "base/layout.html" %}
+{% load static i18n %}
+{% block title %}{{ estate.name }} | CastleForever{% endblock %}
+{% block content %}
+<main class="max-w-7xl mx-auto px-6 py-12 pb-28 lg:pb-12">
+  <nav class="flex flex-wrap items-center gap-2 text-xs text-ink/50" aria-label="{% trans 'Breadcrumb' %}">
+    <a href="{% url 'base:home' %}" class="hover:text-gold">{% trans "Home" %}</a>
+    <i class="fa-solid fa-chevron-right text-[9px]" aria-hidden="true"></i>
+    <a href="{% url 'catalog:estates' %}" class="hover:text-gold">{% trans "Estates" %}</a>
+    <i class="fa-solid fa-chevron-right text-[9px]" aria-hidden="true"></i>
+    <span class="text-ink/80">{{ estate.name }}</span>
+  </nav>
+
+  <header class="mt-8 grid lg:grid-cols-[minmax(0,1fr)_auto] gap-8 items-end">
+    <div>
+      <p class="eyebrow text-gold">
+        {{ estate.get_estate_type_display }} ·
+        {% if estate.city %}{{ estate.city }} · {% endif %}{{ estate.region }} ·
+        {{ estate.get_country_display }}
+      </p>
+      <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl mt-4 leading-none">{{ estate.name }}</h1>
+      <p class="text-gray-600 mt-5 max-w-2xl leading-7">
+        {% trans "An exclusive estate for a celebration to remember." %}
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-xs text-ink/60">
+        <span class="inline-flex items-center gap-2">
+          <i class="fa-solid fa-location-dot text-gold" aria-hidden="true"></i>
+          {% if estate.city %}{{ estate.city }}, {% endif %}{{ estate.region }}
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <i class="fa-solid fa-users text-gold" aria-hidden="true"></i>
+          {{ estate.capacity }} {% trans "guests" %}
+        </span>
+        <span class="inline-flex items-center gap-2">
+          <i class="fa-solid fa-gem text-gold" aria-hidden="true"></i>
+          {{ estate.get_estate_type_display }}
+        </span>
+      </div>
+    </div>
+
+    <div class="bg-forest text-white p-6 min-w-[240px]">
+      <p class="eyebrow text-white/60">{% trans "Guide price from" %}</p>
+      <p class="font-display text-4xl mt-3">€{{ estate.price_from }}</p>
+      <a
+        href="#enquire"
+        class="mt-6 inline-flex items-center justify-center gap-3 w-full bg-[#d5c19b] text-forest py-4 px-6 text-[11px] font-bold uppercase tracking-[.15em] hover:bg-white transition"
+      >
+        {% trans "Request a private proposal" %}
+        <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+      </a>
+    </div>
+  </header>
+
+  <section class="mt-10" aria-label="{% trans 'Estate gallery' %}">
+    <div
+      id="estateCarousel"
+      class="relative overflow-hidden bg-[#101b17]"
+      tabindex="0"
+      role="region"
+      aria-label="{% trans 'Estate gallery' %}"
+    >
+      <div id="carouselTrack" class="flex transition-transform duration-500 ease-out">
+        {% for image in gallery %}
+          <img
+            class="w-full h-[420px] md:h-[560px] object-cover flex-shrink-0"
+            src="{{ image.url }}"
+            alt="{{ image.alt }}"
+            {% if forloop.first %}loading="eager"{% else %}loading="lazy"{% endif %}
+          />
+        {% empty %}
+          <div class="w-full h-[320px] md:h-[460px] flex flex-col items-center justify-center gap-4 text-white/60">
+            <i class="fa-solid fa-image text-5xl" aria-hidden="true"></i>
+            <p class="text-sm tracking-widest uppercase">{% trans "Gallery coming soon." %}</p>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if gallery|length > 1 %}
+        <span
+          id="carouselCounter"
+          class="absolute right-4 top-4 bg-black/60 text-white text-xs tracking-widest px-3 py-2"
+          aria-live="polite"
+        >1 / {{ gallery|length }}</span>
+
+        <button
+          type="button"
+          id="carouselPrev"
+          class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-forest w-11 h-11 flex items-center justify-center text-xl transition"
+          aria-label="{% trans 'Previous image' %}"
+        >
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button
+          type="button"
+          id="carouselNext"
+          class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/85 hover:bg-white text-forest w-11 h-11 flex items-center justify-center text-xl transition"
+          aria-label="{% trans 'Next image' %}"
+        >
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        </button>
+
+        <div
+          id="carouselDots"
+          class="absolute bottom-4 left-0 right-0 flex justify-center gap-2"
+          data-label="{% trans 'Go to image' %}"
+        ></div>
+      {% endif %}
+    </div>
+
+    {% if gallery|length > 1 %}
+      <div id="carouselThumbs" class="flex gap-3 mt-4 overflow-x-auto pb-2">
+        {% for image in gallery %}
+          <button
+            type="button"
+            data-index="{{ forloop.counter0 }}"
+            class="carousel-thumb flex-shrink-0 w-24 h-16 overflow-hidden border-2 {% if forloop.first %}border-gold{% else %}border-transparent{% endif %} hover:border-gold transition"
+            aria-label="{% trans 'Go to image' %} {{ forloop.counter }}"
+          >
+            <img class="w-full h-full object-cover" src="{{ image.url }}" alt="" loading="lazy" />
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </section>
+
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-12 xl:gap-16 mt-16 mb-24">
+    <div class="min-w-0">
+      <section>
+        <p class="eyebrow text-gold">{% trans "The experience" %}</p>
+        <h2 class="font-display text-4xl sm:text-5xl mt-4">{% trans "A celebration to remember." %}</h2>
+        <p class="leading-8 text-gray-600 mt-6 whitespace-pre-line">{{ estate.localized_description }}</p>
+      </section>
+
+      <section class="mt-12">
+        <p class="eyebrow text-gold">{% trans "Estate details" %}</p>
+        <div class="mt-5 grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="bg-[#f0ece3] p-5">
+            <i class="fa-solid fa-gem text-gold" aria-hidden="true"></i>
+            <p class="text-[10px] uppercase tracking-widest text-ink/50 mt-3">{% trans "Estate type" %}</p>
+            <p class="font-display text-xl mt-1">{{ estate.get_estate_type_display }}</p>
+          </div>
+          <div class="bg-[#f0ece3] p-5">
+            <i class="fa-solid fa-location-dot text-gold" aria-hidden="true"></i>
+            <p class="text-[10px] uppercase tracking-widest text-ink/50 mt-3">{% trans "Location" %}</p>
+            <p class="font-display text-xl mt-1">
+              {% if estate.city %}{{ estate.city }} · {% endif %}{{ estate.region }}
+            </p>
+          </div>
+          <div class="bg-[#f0ece3] p-5">
+            <i class="fa-solid fa-users text-gold" aria-hidden="true"></i>
+            <p class="text-[10px] uppercase tracking-widest text-ink/50 mt-3">{% trans "Guests" %}</p>
+            <p class="font-display text-xl mt-1">{{ estate.capacity }}</p>
+          </div>
+          <div class="bg-[#f0ece3] p-5">
+            <i class="fa-solid fa-flag text-gold" aria-hidden="true"></i>
+            <p class="text-[10px] uppercase tracking-widest text-ink/50 mt-3">{% trans "Country" %}</p>
+            <p class="font-display text-xl mt-1">{{ estate.get_country_display }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-12">
+        <p class="eyebrow text-gold">{% trans "What is included" %}</p>
+        <ul class="mt-5 grid sm:grid-cols-2 gap-x-8 gap-y-4 text-gray-600 leading-7">
+          <li class="flex gap-3"><i class="fa-solid fa-check text-gold mt-2" aria-hidden="true"></i>{% trans "Exclusive use of the estate for your celebration" %}</li>
+          <li class="flex gap-3"><i class="fa-solid fa-check text-gold mt-2" aria-hidden="true"></i>{% trans "On-site accommodation for the wedding party" %}</li>
+          <li class="flex gap-3"><i class="fa-solid fa-check text-gold mt-2" aria-hidden="true"></i>{% trans "Dedicated events team and planning support" %}</li>
+          <li class="flex gap-3"><i class="fa-solid fa-check text-gold mt-2" aria-hidden="true"></i>{% trans "Ceremony and reception spaces" %}</li>
+        </ul>
+      </section>
+
+      <section id="enquire" class="mt-16 scroll-mt-28 bg-[#f0ece3] p-6 md:p-10">
+        <p class="eyebrow text-gold">{% trans "Book directly" %}</p>
+        <h2 class="font-display text-3xl sm:text-4xl mt-3">{% trans "Request a private proposal" %}</h2>
+        <p class="text-gray-600 mt-3 max-w-2xl leading-7">
+          {% trans "Tell us a little about your plans and we will prepare a tailored proposal for this estate." %}
+        </p>
+
+        <form
+          method="post"
+          action="{% url 'core:booking-enquiry' estate.slug %}"
+          class="mt-8 grid md:grid-cols-2 gap-5"
+        >
+          {% csrf_token %}
+          {{ booking_form.non_field_errors }}
+          {% for field in booking_form %}
+            <div class="{% if field.name == 'message' %}md:col-span-2{% endif %}">
+              <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">
+                {{ field.label }}{% if field.field.required %}<span class="text-gold"> *</span>{% endif %}
+              </label>
+              <div class="[&_input]:w-full [&_textarea]:w-full [&_input]:p-3 [&_textarea]:p-3 [&_input]:border [&_textarea]:border [&_select]:w-full [&_select]:p-3 [&_select]:border">
+                {{ field }}
+              </div>
+              {% if field.help_text %}<p class="text-xs text-ink/50 mt-1">{{ field.help_text }}</p>{% endif %}
+              {% for error in field.errors %}<p class="text-red-700 text-xs mt-1">{{ error }}</p>{% endfor %}
+            </div>
+          {% endfor %}
+          <div class="md:col-span-2">
+            <button type="submit" class="btn bg-forest text-white">
+              {% trans "Submit enquiry" %}
+              <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <aside class="lg:sticky lg:top-28 h-fit bg-white p-8">
+      <p class="eyebrow text-gold">{% trans "Guide price from" %}</p>
+      <p class="font-display text-4xl mt-3">€{{ estate.price_from }}</p>
+
+      <ul class="mt-6 border-t border-black/10 divide-y divide-black/10 text-sm">
+        <li class="flex items-center justify-between gap-4 py-3">
+          <span class="text-ink/60">{% trans "Estate type" %}</span>
+          <span class="text-right font-semibold">{{ estate.get_estate_type_display }}</span>
+        </li>
+        <li class="flex items-center justify-between gap-4 py-3">
+          <span class="text-ink/60">{% trans "Guests" %}</span>
+          <span class="text-right font-semibold">{{ estate.capacity }}</span>
+        </li>
+        <li class="flex items-center justify-between gap-4 py-3">
+          <span class="text-ink/60">{% trans "Location" %}</span>
+          <span class="text-right font-semibold">{% if estate.city %}{{ estate.city }} · {% endif %}{{ estate.region }}</span>
+        </li>
+      </ul>
+
+      <h3 class="font-display text-2xl mt-8">{% trans "A considered payment approach" %}</h3>
+      <p class="text-sm leading-7 text-gray-600 mt-3">
+        {% blocktrans trimmed %}Castle rental proposals may begin with a €3,000 deposit and an agreed installment schedule, subject to eligibility and contract terms. Vehicle rentals must be paid in full.{% endblocktrans %}
+      </p>
+
+      <label class="block text-xs uppercase tracking-widest mt-7" for="term">
+        {% trans "Illustrative installment term" %}
+      </label>
+      <select id="term" class="mt-2 w-full p-3 border bg-white">
+        <option value="12">{% trans "12 months" %}</option>
+        <option value="24">{% trans "24 months" %}</option>
+        <option value="36" selected>{% trans "36 months" %}</option>
+        <option value="48">{% trans "48 months" %}</option>
+        <option value="60">{% trans "60 months" %}</option>
+      </select>
+
+      <p class="text-xs uppercase tracking-widest text-ink/50 mt-6">{% trans "Example monthly amount" %}</p>
+      <p id="estimate" class="font-display text-4xl mt-2" aria-live="polite">—</p>
+      <p class="text-xs text-gray-500 mt-4 leading-6">
+        {% trans "Illustrative only; excludes fees and interest. No approach approval or reservation is implied." %}
+      </p>
+
+      <a href="#enquire" class="block bg-forest text-white text-center py-4 mt-7 uppercase tracking-widest text-xs hover:bg-black transition">
+        {% trans "Request a private proposal" %}
+        <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+      </a>
+      <a href="{% url 'core:appointment' %}" class="block border border-forest text-center py-4 mt-3 uppercase tracking-widest text-xs hover:bg-forest hover:text-white transition">
+        {% trans "Book a private call" %}
+        <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+      </a>
+    </aside>
+  </div>
+
+  {% if similar_estates %}
+    <section class="border-t border-gray-200 pt-16">
+      <p class="eyebrow text-gold">{% trans "Similar estates" %}</p>
+      <h2 class="font-display text-4xl mt-4">{% trans "More places you may love." %}</h2>
+      <div class="grid md:grid-cols-3 gap-7 mt-10">
+        {% for similar in similar_estates %}
+          {% include "shared/estate_card.html" with estate=similar %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+</main>
+
+<div
+  id="mobileEnquiryBar"
+  class="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white/95 backdrop-blur border-t border-black/10 px-6 py-4 flex items-center justify-between gap-4 shadow-[0_-8px_30px_rgba(0,0,0,0.08)]"
+>
+  <div>
+    <p class="text-[10px] uppercase tracking-widest text-ink/50">{% trans "Guide price from" %}</p>
+    <p class="font-display text-2xl">€{{ estate.price_from }}</p>
+  </div>
+  <a href="#enquire" class="btn bg-forest text-white !py-3 !px-5">
+    {% trans "Enquire" %}
+    <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+  </a>
+</div>
+
+<script>
+  const total = Number('{{ estate.price_from }}') || 0;
+  const term = document.getElementById('term');
+  const estimate = document.getElementById('estimate');
+
+  function updateEstimate() {
+    if (!term || !estimate) return;
+    const amount = Math.max(0, total - 3000) / Number(term.value);
+    estimate.textContent = new Intl.NumberFormat(
+      document.documentElement.lang || 'en',
+      { style: 'currency', currency: 'EUR' }
+    ).format(amount);
+  }
+
+  if (term) {
+    term.addEventListener('change', updateEstimate);
+    updateEstimate();
+  }
+
+  const carousel = document.getElementById('estateCarousel');
+  const track = document.getElementById('carouselTrack');
+  const slides = track ? Array.from(track.querySelectorAll('img')) : [];
+  const prev = document.getElementById('carouselPrev');
+  const next = document.getElementById('carouselNext');
+  const counter = document.getElementById('carouselCounter');
+  const dotsWrap = document.getElementById('carouselDots');
+  const thumbs = Array.from(document.querySelectorAll('.carousel-thumb'));
+  let index = 0;
+
+  function renderCarousel() {
+    if (!track || slides.length === 0) return;
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    if (counter) counter.textContent = (index + 1) + ' / ' + slides.length;
+
+    if (dotsWrap) {
+      if (dotsWrap.children.length !== slides.length) {
+        dotsWrap.innerHTML = '';
+        slides.forEach((_slide, dotIndex) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.dataset.index = String(dotIndex);
+          dot.setAttribute('aria-label', (dotsWrap.dataset.label || 'Go to image') + ' ' + (dotIndex + 1));
+          dot.addEventListener('click', () => {
+            index = dotIndex;
+            renderCarousel();
+          });
+          dotsWrap.appendChild(dot);
+        });
+      }
+      Array.from(dotsWrap.children).forEach((dot, dotIndex) => {
+        dot.className = 'w-2.5 h-2.5 rounded-full transition ' +
+          (dotIndex === index ? 'bg-white scale-110' : 'bg-white/50 hover:bg-white/80');
+        dot.setAttribute('aria-current', dotIndex === index ? 'true' : 'false');
+      });
+    }
+
+    thumbs.forEach((thumb, thumbIndex) => {
+      const active = thumbIndex === index;
+      thumb.classList.toggle('border-gold', active);
+      thumb.classList.toggle('border-transparent', !active);
+      thumb.setAttribute('aria-current', active ? 'true' : 'false');
+    });
+
+    if (thumbs[index] && thumbs[index].scrollIntoView) {
+      thumbs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+
+  function moveCarousel(step) {
+    if (slides.length === 0) return;
+    index = (index + step + slides.length) % slides.length;
+    renderCarousel();
+  }
+
+  thumbs.forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      index = Number(thumb.dataset.index) || 0;
+      renderCarousel();
+    });
+  });
+
+  if (prev) prev.addEventListener('click', () => moveCarousel(-1));
+  if (next) next.addEventListener('click', () => moveCarousel(1));
+
+  if (carousel) {
+    carousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); moveCarousel(-1); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); moveCarousel(1); }
+    });
+
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', (event) => {
+      touchStartX = event.changedTouches[0].clientX;
+    }, { passive: true });
+    carousel.addEventListener('touchend', (event) => {
+      const distance = event.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(distance) > 40) moveCarousel(distance < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+
+  renderCarousel();
+
+  const enquirySection = document.getElementById('enquire');
+  const mobileBar = document.getElementById('mobileEnquiryBar');
+  if (enquirySection && mobileBar && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      mobileBar.classList.toggle('hidden', entries[0].isIntersecting);
+    }, { threshold: 0.1 });
+    observer.observe(enquirySection);
+  }
+
+  document.getElementById('year') &&
+    (document.getElementById('year').textContent = new Date().getFullYear());
+</script>
+{% endblock %}

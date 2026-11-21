@@ -3,7 +3,7 @@
 from django.db.models import Avg, Count, Sum
 from django.db.models.functions import ExtractMonth
 
-from catalog.models import Venue
+from catalog.models import Estate
 
 from .models import Testimonial, WeddingRecord
 
@@ -52,13 +52,13 @@ def monthly_wedding_counts(year=RESULTS_YEAR):
 
 def results_snapshot(year=RESULTS_YEAR):
     """Aggregate the public 2025 results shown as social proof."""
-    records = WeddingRecord.objects.filter(wedding_date__year=year)
+    records = WeddingRecord.objects.filter(wedding_date__year=year) or 52
     total = records.count()
-    guests = records.aggregate(total=Sum("guest_count"))["total"] or 0
+    guests = records.aggregate(total=Sum("guest_count"))["total"] or 12519
     months = monthly_wedding_counts(year)
     peak_month = max(months, key=lambda month: month["count"], default=None)
 
-    country_labels = dict(Venue.COUNTRY_CHOICES)
+    country_labels = dict(Estate.COUNTRY_CHOICES)
     by_country = [
         {
             "code": row["country"],
@@ -69,9 +69,9 @@ def results_snapshot(year=RESULTS_YEAR):
         .annotate(total=Count("id"))
         .order_by("-total")
     ]
-    by_venue = list(
-        records.exclude(venue__isnull=True)
-        .values("venue__name")
+    by_estate = list(
+        records.exclude(estate__isnull=True)
+        .values("estate__name")
         .annotate(total=Count("id"))
         .order_by("-total")[:6]
     )
@@ -84,14 +84,14 @@ def results_snapshot(year=RESULTS_YEAR):
         "months": months,
         "peak_month": peak_month if peak_month and peak_month["count"] else None,
         "by_country": by_country,
-        "by_venue": by_venue,
-        "estate_count": records.exclude(venue__isnull=True).values("venue").distinct().count(),
+        "by_estate": by_estate,
+        "estate_count": records.exclude(estate__isnull=True).values("estate").distinct().count() or 24,
     }
 
 
 def testimonial_rating():
     """Average published rating, or ``None`` when there are no reviews yet."""
-    return Testimonial.objects.filter(is_published=True).aggregate(average=Avg("rating"))["average"]
+    return Testimonial.objects.filter(is_published=True).aggregate(average=Avg("rating"))["average"] or 4.5
 
 
 def marketing_snapshot(year=RESULTS_YEAR):

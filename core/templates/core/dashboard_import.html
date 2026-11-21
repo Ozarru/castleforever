@@ -1,0 +1,52 @@
+{% extends "core/dashboard_layout.html" %}
+{% load i18n %}
+{% block title %}{% trans "Import" %} {{ model_name }} | Dashboard{% endblock %}
+{% block content %}
+<main class="max-w-7xl mx-auto p-6">
+  <a href="{{ list_url }}" class="text-sm text-gray-500"><i class="fa-solid fa-arrow-left-long"></i> {{ model_name }}</a>
+
+  <h1 class="font-display text-4xl mt-6">{% trans "Import" %} {{ model_name }}</h1>
+
+  {% if errors %}
+    <div class="mt-6 bg-red-50 border border-red-200 text-red-800 p-4 text-sm rounded-lg">
+      <p class="font-semibold">{% trans "The import was not completed. No records were changed." %}</p>
+      <ul class="list-disc pl-5 mt-2 space-y-1">
+        {% for error in errors %}<li>{{ error }}</li>{% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="mt-6 max-w-2xl bg-white rounded-lg shadow p-6">
+    {% csrf_token %}
+    <label for="importFormat" class="block text-sm font-semibold">{% trans "File format" %}</label>
+    <select id="importFormat" name="format"
+            class="dashboard-format-select mt-2 block w-full max-w-xs rounded"
+            aria-label="{% trans 'File format' %}">
+      {% for value, label in formats %}
+        <option value="{{ value }}" {% if value == selected_format %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="dataFile" class="mt-4 block text-sm font-semibold">{% trans "Data file" %}</label>
+    <input type="file" id="dataFile" name="data_file"
+           accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+           required
+           class="mt-2 block w-full text-sm border border-gray-300 rounded p-2" />
+
+    <p class="mt-4 text-xs text-gray-500">
+      {% trans "Use a CSV or XLSX exported from this list view. Rows with an id update that record, or recreate it if missing; rows without one create a new record." %}
+      {% trans "Auto-managed timestamps and uploaded images are not imported." %}
+    </p>
+    <p class="mt-2 text-xs text-gray-500">
+      {% trans "Columns" %}: <code class="break-all">{{ fields|join:", " }}</code>
+    </p>
+
+    <div class="mt-6 flex flex-wrap items-center gap-3">
+      <button type="submit" class="bg-forest text-white py-3 px-6 uppercase tracking-widest text-xs">
+        {% trans "Import" %} <i class="fa-solid fa-upload"></i>
+      </button>
+      <a href="{{ list_url }}" class="dashboard-outline-button">{% trans "Cancel" %}</a>
+    </div>
+  </form>
+</main>
+{% endblock %}

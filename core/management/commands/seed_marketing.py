@@ -4,13 +4,13 @@ from datetime import date
 
 from django.core.management.base import BaseCommand
 
-from catalog.models import Venue
+from catalog.models import Estate
 from core.models import Testimonial, WeddingRecord
 
 TESTIMONIALS = [
     {
         "couple_names": "Camille & Antoine",
-        "venue_slug": "chateau-de-lumiere",
+        "estate_slug": "chateau-de-lumiere",
         "location": "Loire Valley, France",
         "event_date": date(2025, 6, 14),
         "rating": 5,
@@ -23,7 +23,7 @@ TESTIMONIALS = [
     },
     {
         "couple_names": "Sofia & Marco",
-        "venue_slug": "villa-toscana-serenita",
+        "estate_slug": "villa-toscana-serenita",
         "location": "Tuscany, Italy",
         "event_date": date(2025, 9, 6),
         "rating": 5,
@@ -36,7 +36,7 @@ TESTIMONIALS = [
     },
     {
         "couple_names": "Elena & Rafael",
-        "venue_slug": "palacio-de-sevilla",
+        "estate_slug": "palacio-de-sevilla",
         "location": "Andalusia, Spain",
         "event_date": date(2025, 5, 24),
         "rating": 5,
@@ -49,7 +49,7 @@ TESTIMONIALS = [
     },
     {
         "couple_names": "Charlotte & James",
-        "venue_slug": "domaine-de-la-seine",
+        "estate_slug": "domaine-de-la-seine",
         "location": "Normandy, France",
         "event_date": date(2025, 7, 19),
         "rating": 5,
@@ -62,7 +62,7 @@ TESTIMONIALS = [
     },
     {
         "couple_names": "Aurélie & Thomas",
-        "venue_slug": "manoir-de-bourgogne",
+        "estate_slug": "manoir-de-bourgogne",
         "location": "Burgundy, France",
         "event_date": date(2025, 8, 30),
         "rating": 4,
@@ -75,7 +75,7 @@ TESTIMONIALS = [
     },
     {
         "couple_names": "Marta & Luca",
-        "venue_slug": "palazzo-del-lago",
+        "estate_slug": "palazzo-del-lago",
         "location": "Lake Como, Italy",
         "event_date": date(2025, 6, 28),
         "rating": 5,
@@ -87,7 +87,7 @@ TESTIMONIALS = [
     },
     {
         "couple_names": "Inès & Pablo",
-        "venue_slug": "castillo-de-mallorca",
+        "estate_slug": "castillo-de-mallorca",
         "location": "Mallorca, Spain",
         "event_date": date(2025, 9, 20),
         "rating": 5,
@@ -100,7 +100,7 @@ TESTIMONIALS = [
     },
     {
         "couple_names": "Léa & Nicolas",
-        "venue_slug": "chateau-de-provence",
+        "estate_slug": "chateau-de-provence",
         "location": "Provence, France",
         "event_date": date(2025, 5, 10),
         "rating": 5,
@@ -113,7 +113,7 @@ TESTIMONIALS = [
     },
     {
         "couple_names": "Giulia & Matteo",
-        "venue_slug": "castello-umbro",
+        "estate_slug": "castello-umbro",
         "location": "Umbria, Italy",
         "event_date": date(2025, 10, 4),
         "rating": 5,
@@ -159,8 +159,8 @@ class Command(BaseCommand):
     help = "Populate demo reviews and 2025 wedding records for the marketing pages."
 
     def handle(self, *args, **options):
-        venues = {venue.slug: venue for venue in Venue.objects.all()}
-        fallback_venues = list(venues.values())
+        estates = {estate.slug: estate for estate in Estate.objects.all()}
+        fallback_estates = list(estates.values())
         fallback_countries = ["FR", "IT", "ES"]
 
         testimonial_count = 0
@@ -168,7 +168,7 @@ class Command(BaseCommand):
             testimonial, created = Testimonial.objects.update_or_create(
                 couple_names=data["couple_names"],
                 defaults={
-                    "venue": venues.get(data["venue_slug"]),
+                    "estate": estates.get(data["estate_slug"]),
                     "location": data["location"],
                     "event_date": data["event_date"],
                     "rating": data["rating"],
@@ -190,8 +190,8 @@ class Command(BaseCommand):
                 counter += 1
                 reference = f"CF-2025-{counter:03d}"
                 day = min(3 + slot * 2, 27)
-                venue = fallback_venues[counter % len(fallback_venues)] if fallback_venues else None
-                country = venue.country if venue else fallback_countries[counter % 3]
+                estate = fallback_estates[counter % len(fallback_estates)] if fallback_estates else None
+                country = estate.country if estate else fallback_countries[counter % 3]
                 first = FIRST_NAMES[counter % len(FIRST_NAMES)]
                 second = FIRST_NAMES[(counter * 7 + 3) % len(FIRST_NAMES)]
                 if second == first:
@@ -200,7 +200,7 @@ class Command(BaseCommand):
                 _, created = WeddingRecord.objects.update_or_create(
                     reference=reference,
                     defaults={
-                        "venue": venue,
+                        "estate": estate,
                         "country": country,
                         "wedding_date": date(2025, month, day),
                         "couple_names": f"{first} & {second} {SECOND_NAMES[counter % len(SECOND_NAMES)]}",

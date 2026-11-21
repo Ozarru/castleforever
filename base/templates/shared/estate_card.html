@@ -1,0 +1,28 @@
+{% load i18n %}
+<a href="{{ estate.get_absolute_url }}" class="block bg-white group">
+  <div class="photo-wrap overflow-hidden h-72">
+    {% if estate.cover_url %}
+      <img
+        class="photo h-full w-full object-cover"
+        src="{{ estate.cover_url }}"
+        alt="{{ estate.name }}"
+        loading="lazy"
+      />
+    {% endif %}
+  </div>
+  <div class="p-7">
+    <p class="text-xs uppercase tracking-[.2em] text-[#A58A5A] mb-3">
+      {{ estate.get_estate_type_display }} · {% if estate.city %}{{ estate.city }} · {% endif %}{{ estate.region }} · {{ estate.get_country_display }}
+    </p>
+    <h3 class="font-display text-3xl">{{ estate.name }}</h3>
+    <p class="mt-4 text-xs text-ink/60">
+      {% trans "Up to" %} {{ estate.capacity }} {% trans "guests" %} ·
+      <!-- -->
+      {% trans "From" %} €{{ estate.price_from }}
+    </p>
+    <p class="mt-6 text-xs tracking-widest uppercase">
+      {% trans "Explore estate" %}
+      <i class="fa-solid fa-arrow-right-long"></i>
+    </p>
+  </div>
+</a>

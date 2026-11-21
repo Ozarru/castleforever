@@ -3,7 +3,7 @@ from . import views
 
 app_name = "core"
 urlpatterns = [
-    path("venues/<slug:slug>/enquire/", views.booking_enquiry, name="booking-enquiry"),
+    path("estates/<slug:slug>/enquire/", views.booking_enquiry, name="booking-enquiry"),
     path("needs/", views.needs, name="needs"),
     path("contact/", views.contact, name="contact"),
     path("inquiry/", views.contact, name="inquiry"),
@@ -16,6 +16,11 @@ urlpatterns = [
     path("book-a-call/", views.appointment, name="book-a-call"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("dashboard/statistics/", views.StatisticsView.as_view(), name="statistics"),
+    path("dashboard/detail/<str:model_key>/<int:pk>/", views.DashboardDetailView.as_view(), name="dashboard-detail"),
+    path("dashboard/notifications/read/", views.DashboardNotificationsMarkReadView.as_view(), name="notifications-mark-read"),
+
+    path("dashboard/data/<str:model_key>/export/", views.DashboardExportView.as_view(), name="dashboard-export"),
+    path("dashboard/data/<str:model_key>/import/", views.DashboardImportView.as_view(), name="dashboard-import"),
 
     path("dashboard/bookings/", views.BookingListView.as_view(), name="booking-list"),
     path("dashboard/bookings/create/", views.BookingCreateView.as_view(), name="booking-create"),
@@ -57,10 +62,10 @@ urlpatterns = [
     path("dashboard/wedding-records/<int:pk>/edit/", views.WeddingRecordUpdateView.as_view(), name="wedding-record-update"),
     path("dashboard/wedding-records/<int:pk>/delete/", views.WeddingRecordDeleteView.as_view(), name="wedding-record-delete"),
 
-    path("dashboard/venues/", views.VenueListView.as_view(), name="venue-list"),
-    path("dashboard/venues/create/", views.VenueCreateView.as_view(), name="venue-create"),
-    path("dashboard/venues/<int:pk>/edit/", views.VenueUpdateView.as_view(), name="venue-update"),
-    path("dashboard/venues/<int:pk>/delete/", views.VenueDeleteView.as_view(), name="venue-delete"),
+    path("dashboard/estates/", views.EstateListView.as_view(), name="estate-list"),
+    path("dashboard/estates/create/", views.EstateCreateView.as_view(), name="estate-create"),
+    path("dashboard/estates/<int:pk>/edit/", views.EstateUpdateView.as_view(), name="estate-update"),
+    path("dashboard/estates/<int:pk>/delete/", views.EstateDeleteView.as_view(), name="estate-delete"),
 
     path("dashboard/vehicles/", views.VehicleListView.as_view(), name="vehicle-list"),
     path("dashboard/vehicles/create/", views.VehicleCreateView.as_view(), name="vehicle-create"),

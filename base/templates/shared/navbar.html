@@ -7,9 +7,7 @@
 
     <nav class="hidden xl:flex items-center gap-7 text-[11px] tracking-[.14em] uppercase font-semibold">
       <a href="{% url 'base:destinations' %}" class="hover:text-[#dccba7]">{% trans "Destinations" %}</a>
-      <a href="{% url 'catalog:venues' %}" class="hover:text-[#dccba7]">{% trans "Estates" %}</a>
-      <a href="{% url 'core:results' %}" class="hover:text-[#dccba7]">{% trans "Results" %}</a>
-      <a href="{% url 'core:reviews' %}" class="hover:text-[#dccba7]">{% trans "Reviews" %}</a>
+      <a href="{% url 'catalog:estates' %}" class="hover:text-[#dccba7]">{% trans "Estates" %}</a>
       <a href="{% url 'base:approach' %}" class="hover:text-[#dccba7]">{% trans "Financing" %}</a>
       <a href="{% url 'core:contact' %}" class="hover:text-[#dccba7]">{% trans "Contact" %}</a>
 
@@ -49,9 +47,7 @@
 
   <div id="mobileMenu" class="hidden xl:hidden bg-forest mx-6 p-6 space-y-5 text-xs uppercase tracking-widest">
     <a class="block" href="{% url 'base:destinations' %}">{% trans "Destinations" %}</a>
-    <a class="block" href="{% url 'catalog:venues' %}">{% trans "Estates" %}</a>
-    <a class="block" href="{% url 'core:results' %}">{% trans "2025 results" %}</a>
-    <a class="block" href="{% url 'core:reviews' %}">{% trans "Reviews" %}</a>
+    <a class="block" href="{% url 'catalog:estates' %}">{% trans "Estates" %}</a>
     <a class="block" href="{% url 'core:appointment' %}">{% trans "Book a call" %}</a>
     <a class="block" href="{% url 'core:contact' %}?tab=request">{% trans "Your needs" %}</a>
     <a class="block" href="{% url 'core:contact' %}">{% trans "Contact" %}</a>

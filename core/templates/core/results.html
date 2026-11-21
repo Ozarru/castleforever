@@ -108,11 +108,11 @@
         <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Most requested estates" %}</p>
         <h3 class="font-display text-4xl md:text-5xl">{% trans "Where the season happened." %}</h3>
         <ol class="mt-9 border-t border-ink/15">
-          {% for row in results.by_venue %}
+          {% for row in results.by_estate %}
             <li class="flex items-baseline justify-between gap-5 py-4 border-b border-ink/15">
               <span class="flex items-baseline gap-4">
                 <span class="font-display text-2xl text-gold w-7">{{ forloop.counter|stringformat:"02d" }}</span>
-                <span class="font-display text-2xl">{{ row.venue__name }}</span>
+                <span class="font-display text-2xl">{{ row.estate__name }}</span>
               </span>
               <span class="text-sm text-ink/55 whitespace-nowrap">{{ row.total }} {% trans "weddings" %}</span>
             </li>
@@ -148,7 +148,7 @@
             <p class="text-gold text-sm tracking-[.2em]">{% for _ in testimonial.stars %}★{% endfor %}{% for _ in testimonial.empty_stars %}☆{% endfor %}</p>
             <blockquote class="mt-4 text-sm leading-7 text-ink/70">“{{ testimonial.quote|truncatewords:30 }}”</blockquote>
             <p class="mt-5 font-display text-2xl">{{ testimonial.couple_names }}</p>
-            {% if testimonial.venue %}<p class="text-[11px] uppercase tracking-[.16em] text-ink/50 mt-1">{{ testimonial.venue.name }}</p>{% endif %}
+            {% if testimonial.estate %}<p class="text-[11px] uppercase tracking-[.16em] text-ink/50 mt-1">{{ testimonial.estate.name }}</p>{% endif %}
           </div>
         </article>
       {% empty %}
@@ -174,7 +174,7 @@
 
         <ol class="border-l border-white/20">
           {% trans "Discovery call" as step1_title %}
-          {% trans "Venue shortlist" as step2_title %}
+          {% trans "Estate shortlist" as step2_title %}
           {% trans "Private visit" as step3_title %}
           {% trans "Booking & payment plan" as step4_title %}
           {% trans "Planning timeline" as step5_title %}
@@ -182,7 +182,7 @@
           {% trans "Understand your vision, your guest count, your budget and your preferred dates. No commitment, no pressure." as step1_text %}
           {% trans "We select the estates that match your brief and share full proposals, availability and guide prices." as step2_text %}
           {% trans "Visit your favourite estates with a dedicated advisor, in person or through a guided video tour." as step3_text %}
-          {% trans "Confirm the date, sign the venue agreement and agree a deposit and balance schedule in writing." as step4_text %}
+          {% trans "Confirm the date, sign the estate agreement and agree a deposit and balance schedule in writing." as step4_text %}
           {% trans "Receive a month-by-month checklist, supplier recommendations and a single point of contact." as step5_text %}
           {% trans "Your coordinator runs the timeline on site so you and your family can simply be present." as step6_text %}
 

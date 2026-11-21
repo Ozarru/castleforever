@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from catalog.models import Venue
+from catalog.models import Estate
 
 class Booking(models.Model):
     class Status(models.TextChoices):
@@ -14,18 +14,18 @@ class Booking(models.Model):
         CANCELLED = "cancelled", "Cancelled"
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
-    venue = models.ForeignKey("catalog.Venue", on_delete=models.PROTECT, related_name="bookings")
+    estate = models.ForeignKey("catalog.Estate", on_delete=models.PROTECT, related_name="bookings")
     full_name = models.CharField(max_length=180)
     email = models.EmailField()
     wedding_date = models.DateField()
     guest_count = models.PositiveIntegerField(validators=[MinValueValidator(1)])
     message = models.TextField(blank=True)
     status = models.CharField(max_length=12, choices=Status.choices, default=Status.ENQUIRY)
-    quoted_venue_total = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    quoted_estate_total = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.venue}  -  {self.full_name} ({self.wedding_date})"
+        return f"{self.estate}  -  {self.full_name} ({self.wedding_date})"
 
 
 class VehicleRental(models.Model):
@@ -51,9 +51,9 @@ class PaymentSchedule(models.Model):
 
     @property
     def monthly_estimate(self):
-        if self.booking.quoted_venue_total is None or not self.installment_months:
+        if self.booking.quoted_estate_total is None or not self.installment_months:
             return None
-        return max(Decimal("0.00"), self.booking.quoted_venue_total - self.deposit) / self.installment_months
+        return max(Decimal("0.00"), self.booking.quoted_estate_total - self.deposit) / self.installment_months
 
 
 class ServiceRequest(models.Model):
@@ -101,8 +101,8 @@ class Testimonial(models.Model):
     """A published couple review, shown on the reviews and home pages."""
 
     couple_names = models.CharField(_("Couple names"), max_length=180)
-    venue = models.ForeignKey(
-        "catalog.Venue",
+    estate = models.ForeignKey(
+        "catalog.Estate",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -149,15 +149,15 @@ class WeddingRecord(models.Model):
     """A completed wedding, used to publish verified yearly results."""
 
     reference = models.CharField(_("Reference"), max_length=40, unique=True, null=True, blank=True)
-    venue = models.ForeignKey(
-        "catalog.Venue",
+    estate = models.ForeignKey(
+        "catalog.Estate",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="wedding_records",
         verbose_name=_("Estate"),
     )
-    country = models.CharField(_("Country"), max_length=2, choices=Venue.COUNTRY_CHOICES, blank=True)
+    country = models.CharField(_("Country"), max_length=2, choices=Estate.COUNTRY_CHOICES, blank=True)
     wedding_date = models.DateField(_("Wedding date"))
     couple_names = models.CharField(_("Couple names"), max_length=180, blank=True)
     guest_count = models.PositiveIntegerField(_("Guest count"), null=True, blank=True)
@@ -199,8 +199,8 @@ class Appointment(models.Model):
     )
     preferred_date = models.DateField(_("Preferred date"))
     preferred_time = models.TimeField(_("Preferred time"))
-    venue = models.ForeignKey(
-        "catalog.Venue",
+    estate = models.ForeignKey(
+        "catalog.Estate",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -227,3 +227,29 @@ class Appointment(models.Model):
             f"{self.full_name}  -  {self.get_appointment_type_display()}  -  "
             f"{self.preferred_date} {self.preferred_time:%H:%M}"
         )
+
+
+class NotificationRead(models.Model):
+    """Tracks dashboard notifications a staff user has marked as read."""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="dashboard_notification_reads",
+    )
+    key = models.CharField(max_length=100)
+    read_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-read_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "key"],
+                name="uniq_dashboard_notification_read",
+            )
+        ]
+        verbose_name = _("Notification read")
+        verbose_name_plural = _("Notification reads")
+
+    def __str__(self):
+        return f"{self.user} - {self.key}"

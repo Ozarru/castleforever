@@ -1,6 +1,8 @@
 {% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
 <!doctype html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE|default:'en' }}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,69 +21,535 @@
       };
     </script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}?v={{ STYLES_VERSION }}" />
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/brand/favicon.ico' %}"
+      type="image/x-icon"
+    />
     <script>
       (function () {
         try {
-          if (localStorage.getItem("theme") === "dark") {
+          var storedTheme = localStorage.getItem("theme") || localStorage.getItem("catalogue-theme");
+          if (storedTheme === "dark") {
             document.documentElement.classList.add("dark");
+            document.documentElement.dataset.theme = "dark";
+          } else {
+            document.documentElement.dataset.theme = "light";
           }
         } catch (e) {}
       })();
     </script>
   </head>
   <body class="text-[#1f2937]">
-    <div class="min-h-screen flex">
-      <!-- Mobile top bar -->
-      <div class="md:hidden fixed top-0 left-0 right-0 bg-forest text-white p-4 flex items-center justify-between z-40">
-        <span class="font-semibold">Dashboard</span>
-        <button id="sidebarToggle" class="text-2xl">☰</button>
-      </div>
-
+    <div class="min-h-screen">
       <!-- Sidebar -->
-      <aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-forest text-white p-6 transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-50">
-        <div class="font-semibold text-xl mb-8">CastleForever</div>
-        <nav class="space-y-1 text-sm">
-          <a href="{% url 'core:dashboard' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'dashboard' %}active_page{% endif %}">{% trans "Dashboard" %}</a>
-          <a href="{% url 'core:statistics' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'statistics' %}active_page{% endif %}">{% trans "Statistics" %}</a>
-          <a href="{% url 'core:booking-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'booking-list' %}active_page{% endif %}">{% trans "Bookings" %}</a>
-          <a href="{% url 'core:service-request-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'service-request-list' %}active_page{% endif %}">{% trans "Service Requests" %}</a>
-          <a href="{% url 'core:contact-inquiry-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'contact-inquiry-list' %}active_page{% endif %}">{% trans "Contact Inquiries" %}</a>
-          <a href="{% url 'core:appointment-record-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'appointment-record-list' %}active_page{% endif %}">{% trans "Appointments" %}</a>
-          <a href="{% url 'core:testimonial-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'testimonial-list' %}active_page{% endif %}">{% trans "Testimonials" %}</a>
-          <a href="{% url 'core:wedding-record-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'wedding-record-list' %}active_page{% endif %}">{% trans "Wedding Records" %}</a>
-          <a href="{% url 'core:vehicle-rental-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'vehicle-rental-list' %}active_page{% endif %}">{% trans "Vehicle Rentals" %}</a>
-          <a href="{% url 'core:payment-schedule-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'payment-schedule-list' %}active_page{% endif %}">{% trans "Payment Schedules" %}</a>
-          <a href="{% url 'core:venue-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'venue-list' %}active_page{% endif %}">{% trans "Venues" %}</a>
-          <a href="{% url 'core:vehicle-list' %}" class="block py-2 px-3 rounded hover:bg-white/10 {% if request.resolver_match.url_name == 'vehicle-list' %}active_page{% endif %}">{% trans "Vehicles" %}</a>
-          <a href="{% url 'base:home' %}" class="block py-2 px-3 rounded mt-6 text-[#dccba7]">{% trans "Back to site" %}</a>
+      <aside id="sidebar" class="dashboard-sidebar fixed inset-y-0 left-0 z-50 h-screen w-64 transform -translate-x-full overflow-y-auto bg-forest p-6 text-white transition-transform md:translate-x-0">
+        <div class="mb-8 flex justify-center">
+          <a href="{% url 'base:home' %}" class="sidebar-brand flex items-center gap-3" aria-label="{% trans 'CastleForever home' %}">
+            <img class="sidebar-logo-full h-10 w-auto" src="{% static 'images/brand/logo-alt.png' %}" alt="{% trans 'CastleForever' %}" />
+            <img class="sidebar-logo-icon hidden h-10 w-10 object-contain" src="{% static 'images/brand/icon.png' %}" alt="" />
+          </a>
+        </div>
+
+        <nav id="sidebarNav" class="space-y-1 text-sm">
+          <a href="{% url 'core:dashboard' %}" title="{% trans 'Dashboard' %}" aria-label="{% trans 'Dashboard' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'dashboard' %}active_page{% endif %}">
+            <i class="fa-solid fa-table-list w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Dashboard" %}</span>
+          </a>
+          <a href="{% url 'core:statistics' %}" title="{% trans 'Statistics' %}" aria-label="{% trans 'Statistics' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'statistics' %}active_page{% endif %}">
+            <i class="fa-solid fa-chart-simple w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Statistics" %}</span>
+          </a>
+          <a href="{% url 'core:booking-list' %}" title="{% trans 'Bookings' %}" aria-label="{% trans 'Bookings' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'booking-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-calendar-check w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Bookings" %}</span>
+          </a>
+          <a href="{% url 'core:service-request-list' %}" title="{% trans 'Service Requests' %}" aria-label="{% trans 'Service Requests' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'service-request-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-clipboard-list w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Service Requests" %}</span>
+          </a>
+          <a href="{% url 'core:contact-inquiry-list' %}" title="{% trans 'Contact Inquiries' %}" aria-label="{% trans 'Contact Inquiries' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'contact-inquiry-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-envelope w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Contact Inquiries" %}</span>
+          </a>
+          <a href="{% url 'core:appointment-record-list' %}" title="{% trans 'Appointments' %}" aria-label="{% trans 'Appointments' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'appointment-record-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-calendar-day w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Appointments" %}</span>
+          </a>
+          <a href="{% url 'core:testimonial-list' %}" title="{% trans 'Testimonials' %}" aria-label="{% trans 'Testimonials' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'testimonial-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-quote-left w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Testimonials" %}</span>
+          </a>
+          <a href="{% url 'core:wedding-record-list' %}" title="{% trans 'Wedding Records' %}" aria-label="{% trans 'Wedding Records' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'wedding-record-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-ring w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Wedding Records" %}</span>
+          </a>
+          <a href="{% url 'core:vehicle-rental-list' %}" title="{% trans 'Vehicle Rentals' %}" aria-label="{% trans 'Vehicle Rentals' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'vehicle-rental-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-car-side w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Vehicle Rentals" %}</span>
+          </a>
+          <a href="{% url 'core:payment-schedule-list' %}" title="{% trans 'Payment Schedules' %}" aria-label="{% trans 'Payment Schedules' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'payment-schedule-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-credit-card w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Payment Schedules" %}</span>
+          </a>
+          <a href="{% url 'core:estate-list' %}" title="{% trans 'Estates' %}" aria-label="{% trans 'Estates' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'estate-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-building w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Estates" %}</span>
+          </a>
+          <a href="{% url 'core:vehicle-list' %}" title="{% trans 'Vehicles' %}" aria-label="{% trans 'Vehicles' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'vehicle-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-car w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Vehicles" %}</span>
+          </a>
+          <a href="{% url 'base:home' %}" title="{% trans 'Back to site' %}" aria-label="{% trans 'Back to site' %}" class="sidebar-link mt-6 flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 text-[#dccba7] hover:bg-white/10">
+            <i class="fa-solid fa-arrow-left w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Back to site" %}</span>
+          </a>
         </nav>
       </aside>
 
       <!-- Overlay -->
-      <div id="sidebarOverlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40"></div>
+      <div id="sidebarOverlay" class="fixed inset-0 z-40 hidden bg-black/40 md:hidden"></div>
 
-      <main class="flex-1 p-6 md:p-8 md:ml-0 mt-16 md:mt-0">
-        {% if messages %}
-          <div class="mb-6">
-            {% for message in messages %}<p class="text-sm">{{ message }}</p>{% endfor %}
+      <div id="dashboardShell" class="min-h-screen md:pl-64">
+        <!-- Fixed title bar -->
+        <header id="dashboardTitleBar" class="dashboard-titlebar fixed inset-x-0 top-0 z-30 flex h-16 items-center gap-4 px-4 md:left-64">
+          <button
+            id="sidebarToggle"
+            type="button"
+            class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded border border-gray-200 text-forest hover:bg-[#F0EDE5]"
+            aria-controls="sidebar"
+            aria-expanded="true"
+            aria-label="{% trans 'Collapse sidebar' %}"
+            title="{% trans 'Collapse sidebar' %}"
+            data-open-label="{% trans 'Open dashboard menu' %}"
+            data-close-label="{% trans 'Close dashboard menu' %}"
+            data-collapse-label="{% trans 'Collapse sidebar' %}"
+            data-expand-label="{% trans 'Expand sidebar' %}"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="min-w-0">
+            <p class="eyebrow hidden text-[10px] leading-none text-[#b18c43] lg:block">{% trans "CastleForever" %}</p>
+            <strong class="font-display hidden text-lg leading-tight sm:block">{% trans "Dashboard" %}</strong>
           </div>
-        {% endif %}
-        {% block content %}{% endblock %}
-      </main>
+
+          <div class="ml-auto flex items-center gap-2 text-xs">
+            <span class="hidden xl:inline text-gray-500">{% trans "Internal area" %}</span>
+
+            <div class="display-tools" role="group" aria-label="{% trans 'Display and language' %}">
+              <div class="lang-picker">
+                <button
+                  type="button"
+                  class="display-tool display-tool--lang"
+                  data-lang-toggle
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="dashboardLanguageMenu"
+                  aria-label="{% trans 'Choose language' %}"
+                  title="{% trans 'Choose language' %}"
+                >
+                  <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                  <span class="lang-code">{{ LANGUAGE_CODE|upper }}</span>
+                  <i class="fa-solid fa-chevron-down lang-chevron" aria-hidden="true"></i>
+                </button>
+                <div class="lang-menu" id="dashboardLanguageMenu" data-lang-menu hidden>
+                  <form class="lang-form" action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    {% for code, name in LANGUAGES %}
+                      <button
+                        type="submit"
+                        name="language"
+                        value="{{ code }}"
+                        class="display-tool {% if code == LANGUAGE_CODE %}is-active{% endif %}"
+                        aria-pressed="{% if code == LANGUAGE_CODE %}true{% else %}false{% endif %}"
+                      >
+                        {% if code == LANGUAGE_CODE %}<i class="fa-solid fa-check lang-check" aria-hidden="true"></i>{% else %}<span class="lang-check" aria-hidden="true"></span>{% endif %}
+                        <span>{{ name }}</span>
+                      </button>
+                    {% endfor %}
+                  </form>
+                </div>
+              </div>
+              <span class="display-tools-divider" aria-hidden="true"></span>
+              <button
+                type="button"
+                class="display-tool theme-toggle"
+                data-theme-toggle
+                aria-label="{% trans 'Toggle theme' %}"
+                title="{% trans 'Toggle theme' %}"
+                aria-pressed="false"
+                data-dark-label="{% trans 'Switch to dark theme' %}"
+                data-light-label="{% trans 'Switch to light theme' %}"
+              >
+                <i class="fa-solid fa-sun theme-icon-sun" aria-hidden="true"></i>
+                <i class="fa-solid fa-moon theme-icon-moon" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            {% if user.is_authenticated %}
+              <div class="dashboard-notifications hidden sm:block">
+                <button
+                  type="button"
+                  class="dashboard-icon-button"
+                  data-popover-toggle
+                  data-popover-menu="dashboardNotificationsMenu"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-label="{% trans 'Notifications' %}"
+                  title="{% trans 'Notifications' %}"
+                >
+                  <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                  {% if notification_count %}
+                    <span class="notification-badge">{{ notification_count }}</span>
+                  {% endif %}
+                </button>
+                <div id="dashboardNotificationsMenu" class="ui-popover dashboard-notifications-popover" role="menu" hidden>
+                  <div class="notification-popover-head">
+                    <strong>{% trans "Notifications" %}</strong>
+                    {% if notification_count %}<span>{{ notification_count }}</span>{% endif %}
+                  </div>
+                  <div class="notification-popover-list">
+                    {% for item in dashboard_notifications %}
+                      <a class="ui-popover-link notification-link" role="menuitem" href="{{ item.url }}">
+                        <i class="fa-solid {{ item.icon }}" aria-hidden="true"></i>
+                        <span class="notification-copy">
+                          <strong>{{ item.title }}</strong>
+                          <small>
+                            {% if item.meta %}{{ item.meta }} · {% endif %}{{ item.created_at|date:"M d" }}
+                          </small>
+                        </span>
+                        <i class="fa-solid fa-chevron-right notification-arrow" aria-hidden="true"></i>
+                      </a>
+                    {% empty %}
+                      <p class="notification-empty">{% trans "No new notifications." %}</p>
+                    {% endfor %}
+                  </div>
+                  {% if notification_count %}
+                    <form action="{% url 'core:notifications-mark-read' %}" method="post" class="notification-mark-all-form">
+                      {% csrf_token %}
+                      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                      <button type="submit" class="ui-popover-link notification-mark-all">
+                        <i class="fa-solid fa-check-double" aria-hidden="true"></i>{% trans "Mark all as read" %}
+                      </button>
+                    </form>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="dashboard-account">
+                <button
+                  type="button"
+                  class="dashboard-account-toggle"
+                  data-popover-toggle
+                  data-popover-menu="dashboardUserMenu"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-label="{% trans 'Account options' %}"
+                  title="{{ user.get_full_name|default:user.email|default:user.username }}"
+                >
+                  <span class="dashboard-avatar">{{ user.email|default:user.username|first|upper }}</span>
+                </button>
+                <div id="dashboardUserMenu" class="ui-popover dashboard-user-popover" role="menu" hidden>
+                  <a class="ui-popover-link" role="menuitem" href="{% url 'accounts:profile' %}">
+                    <i class="fa-solid fa-user" aria-hidden="true"></i>{% trans "Profile" %}
+                  </a>
+                  <a class="ui-popover-link" role="menuitem" href="{% url 'accounts:notifications' %}">
+                    <i class="fa-solid fa-bell" aria-hidden="true"></i>{% trans "Notifications" %}
+                  </a>
+                  <a class="ui-popover-link" role="menuitem" href="{% url 'accounts:activity' %}">
+                    <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>{% trans "Activity" %}
+                  </a>
+                  {% if user.is_staff %}
+                    <a class="ui-popover-link" role="menuitem" href="{% url 'core:dashboard' %}">
+                      <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>{% trans "Dashboard" %}
+                    </a>
+                  {% endif %}
+                  <form action="{% url 'accounts:logout' %}" method="post" class="ui-popover-form">
+                    {% csrf_token %}
+                    <button type="submit" role="menuitem" class="danger" data-confirm="{% trans 'Log out?' %}">
+                      <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>{% trans "Log out" %}
+                    </button>
+                  </form>
+                </div>
+              </div>
+            {% else %}
+              <a href="{% url 'accounts:login' %}" class="dashboard-icon-button">{% trans "Log in" %}</a>
+            {% endif %}
+          </div>
+        </header>
+
+        <main class="mx-auto w-full max-w-7xl px-4 pb-6 pt-20">
+          {% if messages %}
+            <div class="mb-6">
+              {% for message in messages %}<p class="text-sm">{{ message }}</p>{% endfor %}
+            </div>
+          {% endif %}
+          {% block content %}{% endblock %}
+        </main>
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
       $(function () { $('select').select2({ width: '100%' }); });
-      const toggle = document.getElementById('sidebarToggle');
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('sidebarOverlay');
-      function openSidebar() { sidebar.classList.remove('-translate-x-full'); overlay.classList.remove('hidden'); }
-      function closeSidebar() { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); }
-      if (toggle) toggle.addEventListener('click', openSidebar);
-      if (overlay) overlay.addEventListener('click', closeSidebar);
+
+      (function () {
+        const sidebar = document.getElementById('sidebar');
+        const toggle = document.getElementById('sidebarToggle');
+        const overlay = document.getElementById('sidebarOverlay');
+        const shell = document.getElementById('dashboardShell');
+        const titleBar = document.getElementById('dashboardTitleBar');
+        const storageKey = 'castleforever-dashboard-sidebar-collapsed';
+        const logoFull = sidebar.querySelector('.sidebar-logo-full');
+        const logoIcon = sidebar.querySelector('.sidebar-logo-icon');
+        const brand = sidebar.querySelector('.sidebar-brand');
+        const labels = Array.from(sidebar.querySelectorAll('.sidebar-label'));
+        const links = Array.from(sidebar.querySelectorAll('.sidebar-link'));
+
+        let collapsed = false;
+        try {
+          collapsed = localStorage.getItem(storageKey) === 'true';
+        } catch (e) {}
+
+        function isMobile() {
+          return window.innerWidth < 768;
+        }
+
+        function syncToggleState() {
+          if (!toggle) {
+            return;
+          }
+
+          let expanded;
+          let label;
+          if (isMobile()) {
+            expanded = !sidebar.classList.contains('-translate-x-full');
+            label = expanded ? toggle.dataset.closeLabel : toggle.dataset.openLabel;
+          } else {
+            expanded = !collapsed;
+            label = collapsed ? toggle.dataset.expandLabel : toggle.dataset.collapseLabel;
+          }
+
+          toggle.setAttribute('aria-expanded', String(expanded));
+          toggle.setAttribute('aria-label', label);
+          toggle.title = label;
+        }
+
+        function applyCollapsed(value, persist) {
+          collapsed = value;
+
+          // Tailwind utilities drive the layout so this works even if the
+          // stylesheet is cached. The custom classes add the visual polish.
+          sidebar.classList.toggle('sidebar-collapsed', collapsed);
+          sidebar.classList.toggle('w-64', !collapsed);
+          sidebar.classList.toggle('w-20', collapsed);
+
+          if (shell) {
+            shell.classList.toggle('md:pl-64', !collapsed);
+            shell.classList.toggle('md:pl-20', collapsed);
+          }
+          if (titleBar) {
+            titleBar.classList.toggle('md:left-64', !collapsed);
+            titleBar.classList.toggle('md:left-20', collapsed);
+          }
+
+          if (logoFull) {
+            logoFull.classList.toggle('hidden', collapsed);
+          }
+          if (logoIcon) {
+            logoIcon.classList.toggle('hidden', !collapsed);
+          }
+          if (brand) {
+            brand.classList.toggle('justify-center', collapsed);
+          }
+          labels.forEach((label) => label.classList.toggle('hidden', collapsed));
+          links.forEach((link) => link.classList.toggle('justify-center', collapsed));
+
+          if (persist) {
+            try {
+              localStorage.setItem(storageKey, String(collapsed));
+            } catch (e) {}
+          }
+
+          syncToggleState();
+        }
+
+        function openSidebar() {
+          sidebar.classList.remove('-translate-x-full');
+          overlay.classList.remove('hidden');
+          syncToggleState();
+        }
+
+        function closeSidebar() {
+          sidebar.classList.add('-translate-x-full');
+          overlay.classList.add('hidden');
+          syncToggleState();
+        }
+
+        function handleToggle() {
+          if (isMobile()) {
+            if (sidebar.classList.contains('-translate-x-full')) {
+              openSidebar();
+            } else {
+              closeSidebar();
+            }
+          } else {
+            applyCollapsed(!collapsed, true);
+          }
+        }
+
+        applyCollapsed(collapsed, false);
+
+        if (toggle) {
+          toggle.addEventListener('click', handleToggle);
+        }
+        if (overlay) {
+          overlay.addEventListener('click', closeSidebar);
+        }
+
+        window.addEventListener('resize', function () {
+          if (isMobile()) {
+            closeSidebar();
+          } else {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.add('hidden');
+          }
+          syncToggleState();
+        });
+      })();
+
+      (function () {
+        const root = document.documentElement;
+        const themeButton = document.querySelector('[data-theme-toggle]');
+        const langToggle = document.querySelector('[data-lang-toggle]');
+        const langMenu = document.querySelector('[data-lang-menu]');
+
+        function syncThemeButton() {
+          if (!themeButton) {
+            return;
+          }
+          const dark = root.classList.contains('dark');
+          themeButton.setAttribute('aria-pressed', String(dark));
+          const label = dark ? themeButton.dataset.lightLabel : themeButton.dataset.darkLabel;
+          if (label) {
+            themeButton.setAttribute('aria-label', label);
+            themeButton.title = label;
+          }
+        }
+
+        syncThemeButton();
+        if (themeButton) {
+          themeButton.addEventListener('click', function () {
+            const dark = root.classList.toggle('dark');
+            root.dataset.theme = dark ? 'dark' : 'light';
+            try {
+              localStorage.setItem('theme', dark ? 'dark' : 'light');
+            } catch (e) {}
+            syncThemeButton();
+          });
+        }
+
+        function closeLangMenu() {
+          if (!langMenu || langMenu.hidden) {
+            return;
+          }
+          langMenu.hidden = true;
+          if (langToggle) {
+            langToggle.setAttribute('aria-expanded', 'false');
+          }
+        }
+
+        if (langToggle && langMenu) {
+          langToggle.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const opening = langMenu.hidden;
+            langMenu.hidden = !opening;
+            langToggle.setAttribute('aria-expanded', String(opening));
+          });
+        }
+
+        function closePopovers() {
+          document.querySelectorAll('[data-popover-toggle][aria-expanded="true"]').forEach(function (item) {
+            item.setAttribute('aria-expanded', 'false');
+          });
+          document.querySelectorAll('.ui-popover:not([hidden])').forEach(function (menu) {
+            menu.hidden = true;
+          });
+        }
+
+        function positionPopover(toggle, menu) {
+          const anchor = toggle.getBoundingClientRect();
+          menu.hidden = false;
+          const box = menu.getBoundingClientRect();
+          const gap = 8;
+          const margin = 8;
+          let top = anchor.bottom + gap;
+          if (toggle.dataset.placement === 'top') {
+            top = anchor.top - box.height - gap;
+          }
+          if (top + box.height > window.innerHeight - margin) {
+            top = anchor.top - box.height - gap;
+          }
+          if (top < margin) {
+            top = Math.min(window.innerHeight - box.height - margin, anchor.bottom + gap);
+          }
+          const left = Math.min(
+            Math.max(margin, anchor.right - box.width),
+            Math.max(margin, window.innerWidth - box.width - margin)
+          );
+          menu.style.left = Math.round(left) + 'px';
+          menu.style.top = Math.round(Math.max(margin, top)) + 'px';
+        }
+
+        document.addEventListener('click', function (event) {
+          const target = event.target instanceof Element ? event.target : null;
+          const toggle = target ? target.closest('[data-popover-toggle]') : null;
+          if (toggle) {
+            const menuId = toggle.dataset.popoverMenu || toggle.getAttribute('aria-controls');
+            const menu = menuId ? document.getElementById(menuId) : null;
+            const wasOpen = toggle.getAttribute('aria-expanded') === 'true';
+            closeLangMenu();
+            closePopovers();
+            if (!wasOpen && menu) {
+              positionPopover(toggle, menu);
+              toggle.setAttribute('aria-expanded', 'true');
+            }
+            return;
+          }
+          if (!target || !target.closest('.ui-popover')) {
+            closePopovers();
+          }
+          if (!target || !target.closest('.lang-picker')) {
+            closeLangMenu();
+          }
+        });
+
+        document.addEventListener('keydown', function (event) {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          const openToggle = document.querySelector('[data-popover-toggle][aria-expanded="true"]');
+          closeLangMenu();
+          closePopovers();
+          if (openToggle) {
+            openToggle.focus();
+          }
+        });
+
+        window.addEventListener('resize', closePopovers);
+        window.addEventListener('scroll', closePopovers, true);
+
+        document.querySelectorAll('[data-confirm]').forEach(function (item) {
+          item.addEventListener('click', function (event) {
+            if (!window.confirm(item.dataset.confirm)) {
+              event.preventDefault();
+            }
+          });
+        });
+      })();
     </script>
   </body>
 </html>

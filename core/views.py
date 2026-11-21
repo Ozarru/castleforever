@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_http_methods
 
-from catalog.models import Venue
+from catalog.models import Estate
 from .forms import AppointmentForm, BookingEnquiryForm, ContactInquiryForm, ServiceRequestForm
 from .marketing import RESULTS_YEAR, results_snapshot, testimonial_rating
 from .models import Appointment, ContactInquiry, ServiceRequest, Testimonial
@@ -10,18 +11,18 @@ from .models import Appointment, ContactInquiry, ServiceRequest, Testimonial
 
 @require_http_methods(["GET", "POST"])
 def booking_enquiry(request, slug):
-    venue = get_object_or_404(Venue, slug=slug, is_published=True)
+    estate = get_object_or_404(Estate, slug=slug, is_published=True)
     form = BookingEnquiryForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
         booking = form.save(commit=False)
-        booking.venue = venue
-        booking.quoted_venue_total = venue.price_from
+        booking.estate = estate
+        booking.quoted_estate_total = estate.price_from
         if request.user.is_authenticated:
             booking.user = request.user
         booking.save()
         messages.success(request, "Your enquiry has been received. We will contact you about availability.")
-        return redirect(venue.get_absolute_url())
-    return render(request, "core/enquiry.html", {"form": form, "venue": venue})
+        return redirect(estate.get_absolute_url())
+    return render(request, "core/enquiry.html", {"form": form, "estate": estate})
 
 
 @require_http_methods(["GET", "POST"])
@@ -35,6 +36,8 @@ def contact(request):
     request_form = ServiceRequestForm(request.POST or None, prefix="request") if (request.method == "POST" and request.POST.get("form_type") == "request") else ServiceRequestForm(prefix="request")
 
     active_tab = request.GET.get("tab", "enquiry")
+    if active_tab not in ("enquiry", "request"):
+        active_tab = "enquiry"
     if request.method == "POST":
         form_type = request.POST.get("form_type")
         if form_type == "enquiry":
@@ -42,14 +45,14 @@ def contact(request):
             enquiry_form = ContactInquiryForm(request.POST, prefix="enquiry")
             if enquiry_form.is_valid():
                 enquiry_form.save()
-                messages.success(request, "Thank you. Your message has been received.")
+                messages.success(request, _("Thank you. Your message has been received."))
                 return redirect("/contact/?tab=enquiry")
         elif form_type == "request":
             active_tab = "request"
             request_form = ServiceRequestForm(request.POST, prefix="request")
             if request_form.is_valid():
                 request_form.save()
-                messages.success(request, "Thank you. We have received your request.")
+                messages.success(request, _("Thank you. We have received your request."))
                 return redirect("/contact/?tab=request")
 
     return render(request, "core/contact.html", {
@@ -61,7 +64,7 @@ def contact(request):
 
 def reviews(request):
     """Public customer reviews with photos."""
-    testimonials = Testimonial.objects.filter(is_published=True).select_related("venue")
+    testimonials = Testimonial.objects.filter(is_published=True).select_related("estate")
     return render(request, "core/reviews.html", {
         "testimonials": testimonials,
         "rating_average": testimonial_rating(),
@@ -98,10 +101,22 @@ def appointment(request):
 
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from django.urls import reverse_lazy
+from django.core.exceptions import FieldDoesNotExist
+from django.db import models as db_models
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext as _, gettext_lazy, ngettext
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView, View
+from django.urls import reverse, reverse_lazy
 
-from catalog.models import Vehicle, Venue
+from catalog.models import Vehicle, Estate
+from .data_transfer import (
+    export_field_names,
+    export_file,
+    format_from_filename,
+    get_dataset,
+    import_file,
+    normalize_format,
+)
 from .forms import AppointmentForm, BookingForm, ContactInquiryForm, ServiceRequestForm, VehicleRentalForm
 from .models import (
     Appointment,
@@ -113,6 +128,7 @@ from .models import (
     VehicleRental,
     WeddingRecord,
 )
+from .notifications import mark_notifications_read
 
 
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -121,6 +137,105 @@ class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def test_func(self):
         return self.request.user.is_staff
+
+
+# Extra columns shown by each dashboard list, after the record label and
+# before the actions menu. Labels are lazy so they follow the active language.
+LIST_COLUMNS = {
+    "core.booking": [
+        ("estate", gettext_lazy("Estate")),
+        ("wedding_date", gettext_lazy("Wedding date")),
+        ("guest_count", gettext_lazy("Guest count")),
+        ("get_status_display", gettext_lazy("Status")),
+        ("quoted_estate_total", gettext_lazy("Quoted total"), "€"),
+    ],
+    "core.servicerequest": [
+        ("full_name", gettext_lazy("Full name")),
+        ("get_event_type_display", gettext_lazy("Event type")),
+        ("event_date", gettext_lazy("Event date")),
+        ("get_destination_display", gettext_lazy("Destination")),
+        ("guest_count", gettext_lazy("Guest count")),
+    ],
+    "core.contactinquiry": [
+        ("full_name", gettext_lazy("Full name")),
+        ("email", gettext_lazy("Email")),
+        ("subject", gettext_lazy("Subject")),
+        ("created_at", gettext_lazy("Created at")),
+    ],
+    "core.vehiclerental": [
+        ("vehicle", gettext_lazy("Vehicle")),
+        ("booking", gettext_lazy("Booking")),
+        ("start_date", gettext_lazy("Start date")),
+        ("end_date", gettext_lazy("End date")),
+        ("amount_due", gettext_lazy("Amount due"), "€"),
+        ("is_paid", gettext_lazy("Paid")),
+    ],
+    "core.paymentschedule": [
+        ("booking", gettext_lazy("Booking")),
+        ("deposit", gettext_lazy("Deposit"), "€"),
+        ("installment_months", gettext_lazy("Installment months")),
+        ("monthly_estimate", gettext_lazy("Estimated monthly installment"), "€"),
+        ("approved", gettext_lazy("Approved")),
+    ],
+    "core.appointment": [
+        ("full_name", gettext_lazy("Full name")),
+        ("get_appointment_type_display", gettext_lazy("Appointment type")),
+        ("preferred_date", gettext_lazy("Preferred date")),
+        ("preferred_time", gettext_lazy("Preferred time")),
+        ("get_status_display", gettext_lazy("Status")),
+    ],
+    "core.testimonial": [
+        ("couple_names", gettext_lazy("Couple names")),
+        ("estate", gettext_lazy("Estate")),
+        ("rating", gettext_lazy("Rating")),
+        ("is_published", gettext_lazy("Published")),
+        ("position", gettext_lazy("Display order")),
+    ],
+    "core.weddingrecord": [
+        ("reference", gettext_lazy("Reference")),
+        ("estate", gettext_lazy("Estate")),
+        ("get_country_display", gettext_lazy("Country")),
+        ("wedding_date", gettext_lazy("Wedding date")),
+        ("guest_count", gettext_lazy("Guest count")),
+    ],
+    "catalog.estate": [
+        ("get_country_display", gettext_lazy("Country")),
+        ("get_estate_type_display", gettext_lazy("Estate type")),
+        ("region", gettext_lazy("Region")),
+        ("city", gettext_lazy("City")),
+        ("capacity", gettext_lazy("Capacity")),
+        ("price_from", gettext_lazy("Price from"), "€"),
+        ("is_published", gettext_lazy("Published")),
+    ],
+    "catalog.vehicle": [
+        ("brand", gettext_lazy("Brand")),
+        ("model", gettext_lazy("Model")),
+        ("get_vehicle_type_display", gettext_lazy("Vehicle type")),
+        ("daily_price", gettext_lazy("Daily price"), "€"),
+        ("is_available", gettext_lazy("Available for rental")),
+    ],
+}
+
+
+def _table_value(obj, name):
+    """Return a display-friendly value for a dashboard table cell."""
+    try:
+        field = obj._meta.get_field(name)
+    except FieldDoesNotExist:
+        field = None
+
+    value = getattr(obj, name, None)
+    if field is not None and field.choices:
+        display = getattr(obj, f"get_{name}_display", None)
+        if display is not None:
+            value = display
+    if callable(value):
+        value = value()
+    if isinstance(value, bool):
+        return _("Yes") if value else _("No")
+    if value is None or value == "":
+        return "—"
+    return str(value)
 
 
 class DashboardListView(StaffRequiredMixin, ListView):
@@ -133,10 +248,32 @@ class DashboardListView(StaffRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["model_name"] = self.model_name
-        context["create_url_name"] = self.create_url_name
-        context["update_url_name"] = self.update_url_name
-        context["delete_url_name"] = self.delete_url_name
+        model_key = self.model._meta.label_lower
+        columns = LIST_COLUMNS.get(model_key, ())
+        rows = []
+        for obj in context["objects"]:
+            cells = []
+            for spec in columns:
+                name, label = spec[:2]
+                prefix = spec[2] if len(spec) > 2 else ""
+                value = _table_value(obj, name)
+                cells.append({
+                    "label": label,
+                    "value": f"{prefix}{value}" if prefix and value != "—" else value,
+                })
+            rows.append({"object": obj, "cells": cells})
+
+        context.update({
+            "model_name": self.model_name,
+            "model_key": model_key,
+            "columns": [spec[1] for spec in columns],
+            "rows": rows,
+            "create_url_name": self.create_url_name,
+            "update_url_name": self.update_url_name,
+            "delete_url_name": self.delete_url_name,
+            "import_url": reverse("core:dashboard-import", args=[model_key]),
+            "export_url": reverse("core:dashboard-export", args=[model_key]),
+        })
         return context
 
 
@@ -145,7 +282,7 @@ class DashboardCreateView(StaffRequiredMixin, CreateView):
     fields = "__all__"
 
     def get_success_url(self):
-        return reverse_lazy(self.success_url_name)
+        return reversegettext_lazy(self.success_url_name)
 
 
 class DashboardUpdateView(StaffRequiredMixin, UpdateView):
@@ -153,14 +290,164 @@ class DashboardUpdateView(StaffRequiredMixin, UpdateView):
     fields = "__all__"
 
     def get_success_url(self):
-        return reverse_lazy(self.success_url_name)
+        return reversegettext_lazy(self.success_url_name)
 
 
 class DashboardDeleteView(StaffRequiredMixin, DeleteView):
     template_name = "core/dashboard_confirm_delete.html"
 
     def get_success_url(self):
-        return reverse_lazy(self.success_url_name)
+        return reversegettext_lazy(self.success_url_name)
+
+
+def _detail_fields(obj):
+    """Build a display-friendly field list for the generic detail page."""
+    fields = []
+    for field in obj._meta.concrete_fields:
+        if field.many_to_many:
+            value = list(getattr(obj, field.name).all())
+        elif field.is_relation:
+            value = getattr(obj, field.name)
+        else:
+            value = field.value_from_object(obj)
+
+        display = ""
+        image_url = ""
+        if value is None or value == "":
+            display = ""
+        elif isinstance(value, bool):
+            display = _("Yes") if value else _("No")
+        elif isinstance(value, (list, tuple)):
+            display = ", ".join(str(item) for item in value)
+        elif hasattr(value, "url") and hasattr(value, "name"):
+            display = value.name
+            if isinstance(field, db_models.ImageField) and value:
+                try:
+                    image_url = value.url
+                except ValueError:
+                    image_url = ""
+        else:
+            display = str(value)
+
+        fields.append({
+            "name": field.name,
+            "label": field.verbose_name,
+            "value": display,
+            "image_url": image_url,
+            "wide": isinstance(field, db_models.TextField) or field.name in {
+                "description", "message", "needs", "quote", "notes",
+            },
+        })
+    return fields
+
+
+class DashboardDetailView(StaffRequiredMixin, View):
+    """Generic read-only detail page shared by every dashboard list view."""
+
+    template_name = "core/dashboard_detail.html"
+
+    def get(self, request, model_key, pk):
+        model, dataset = get_dataset(model_key)
+        obj = get_object_or_404(model, pk=pk)
+        url_base = dataset["list_url_name"].rsplit("-list", 1)[0]
+        return render(request, self.template_name, {
+            "object": obj,
+            "model_name": dataset["label"],
+            "fields": _detail_fields(obj),
+            "list_url": reverse(dataset["list_url_name"]),
+            "update_url": reverse(f"{url_base}-update", args=[obj.pk]),
+            "delete_url": reverse(f"{url_base}-delete", args=[obj.pk]),
+        })
+
+
+class DashboardNotificationsMarkReadView(StaffRequiredMixin, View):
+    """Mark all current dashboard notifications as read for this user."""
+
+    def post(self, request):
+        count = mark_notifications_read(request.user)
+        if count:
+            messages.success(
+                request,
+                ngettext(
+                    "Marked %(count)s notification as read.",
+                    "Marked %(count)s notifications as read.",
+                    count,
+                ) % {"count": count},
+            )
+        else:
+            messages.info(request, _("All notifications are already read."))
+
+        next_url = request.POST.get("next", "")
+        if not url_has_allowed_host_and_scheme(
+            next_url,
+            allowed_hosts={request.get_host()},
+            require_https=request.is_secure(),
+        ):
+            next_url = reverse("core:dashboard")
+        return redirect(next_url)
+
+
+class DashboardExportView(StaffRequiredMixin, View):
+    """Download the current dashboard list view's records as CSV or XLSX."""
+
+    def get(self, request, model_key):
+        model, dataset = get_dataset(model_key)
+        file_format = normalize_format(request.GET.get("format")) or "csv"
+        return export_file(model, export_field_names(model), dataset["label"], file_format)
+
+
+class DashboardImportView(StaffRequiredMixin, View):
+    """Upload a CSV/XLSX file to create or update dashboard records."""
+
+    template_name = "core/dashboard_import.html"
+    formats = [("csv", "CSV"), ("xlsx", "XLSX")]
+
+    def _context(self, model_key, model, dataset, selected_format="csv", errors=None):
+        return {
+            "model_name": dataset["label"],
+            "fields": export_field_names(model),
+            "formats": self.formats,
+            "selected_format": selected_format,
+            "import_url": reverse("core:dashboard-import", args=[model_key]),
+            "list_url": reverse(dataset["list_url_name"]),
+            "errors": errors or [],
+        }
+
+    def get(self, request, model_key):
+        model, dataset = get_dataset(model_key)
+        return render(request, self.template_name, self._context(model_key, model, dataset))
+
+    def post(self, request, model_key):
+        model, dataset = get_dataset(model_key)
+        upload = request.FILES.get("data_file") or request.FILES.get("csv_file")
+
+        file_format = normalize_format(request.POST.get("format"))
+        if file_format is None:
+            file_format = format_from_filename(upload.name if upload else "", "csv")
+        context = self._context(model_key, model, dataset, file_format)
+
+        if not upload:
+            context["errors"] = [_("Please choose a file.")]
+        elif upload.size > 5 * 1024 * 1024:
+            context["errors"] = [_("The file must be smaller than 5 MB.")]
+        else:
+            imported, errors = import_file(
+                model, export_field_names(model), upload, file_format
+            )
+            if errors:
+                context["errors"] = errors
+            else:
+                messages.success(
+                    request,
+                    ngettext(
+                        "Imported %(count)s record.",
+                        "Imported %(count)s records.",
+                        imported,
+                    ) % {"count": imported},
+                )
+                return redirect(dataset["list_url_name"])
+
+        return render(request, self.template_name, context)
 
 
 class BookingListView(DashboardListView):
@@ -352,26 +639,26 @@ class WeddingRecordDeleteView(DashboardDeleteView):
     success_url_name = "core:wedding-record-list"
 
 
-class VenueListView(DashboardListView):
-    model = Venue
-    model_name = "Venue"
-    create_url_name = "core:venue-create"
-    update_url_name = "core:venue-update"
-    delete_url_name = "core:venue-delete"
+class EstateListView(DashboardListView):
+    model = Estate
+    model_name = "Estate"
+    create_url_name = "core:estate-create"
+    update_url_name = "core:estate-update"
+    delete_url_name = "core:estate-delete"
 
-class VenueCreateView(DashboardCreateView):
-    model = Venue
+class EstateCreateView(DashboardCreateView):
+    model = Estate
     fields = "__all__"
-    success_url_name = "core:venue-list"
+    success_url_name = "core:estate-list"
 
-class VenueUpdateView(DashboardUpdateView):
-    model = Venue
+class EstateUpdateView(DashboardUpdateView):
+    model = Estate
     fields = "__all__"
-    success_url_name = "core:venue-list"
+    success_url_name = "core:estate-list"
 
-class VenueDeleteView(DashboardDeleteView):
-    model = Venue
-    success_url_name = "core:venue-list"
+class EstateDeleteView(DashboardDeleteView):
+    model = Estate
+    success_url_name = "core:estate-list"
 
 
 class VehicleListView(DashboardListView):
@@ -413,15 +700,49 @@ def dashboard(request):
         {"name": "Wedding Record", "url": "core:wedding-record-list", "count": WeddingRecord.objects.count()},
         {"name": "Vehicle Rental", "url": "core:vehicle-rental-list", "count": VehicleRental.objects.count()},
         {"name": "Payment Schedule", "url": "core:payment-schedule-list", "count": PaymentSchedule.objects.count()},
-        {"name": "Venue", "url": "core:venue-list", "count": Venue.objects.count()},
+        {"name": "Estate", "url": "core:estate-list", "count": Estate.objects.count()},
         {"name": "Vehicle", "url": "core:vehicle-list", "count": Vehicle.objects.count()},
     ]
     return render(request, "core/dashboard.html", {"models": models})
 
 
-import json
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
+from django.utils.formats import date_format
+
+
+def _choice_label(value, labels):
+    """Return a display label for a grouped choice value."""
+    if value in (None, ""):
+        return str(_("Not specified"))
+    return str(labels.get(value, value))
+
+
+def _distribution(queryset, field, labels=None):
+    """Return aligned labels/totals for a simple ``values`` aggregation."""
+    rows = list(queryset.values(field).annotate(total=Count("id")).order_by("-total"))
+    return (
+        [_choice_label(row[field], labels or {}) for row in rows],
+        [row["total"] for row in rows],
+    )
+
+
+def _chart(chart_id, title, subtitle, chart_type, labels, data, **options):
+    """Build the serialisable configuration consumed by the statistics page."""
+    return {
+        "id": chart_id,
+        "title": str(title),
+        "subtitle": str(subtitle),
+        "type": chart_type,
+        "labels": labels,
+        "data": data,
+        "has_data": bool(data) and any(total > 0 for total in data),
+        "dataset_label": str(options.get("dataset_label", _("Total"))),
+        "empty_message": str(options.get("empty_message", _("No data available yet."))),
+        "color": options.get("color", "#243b32"),
+        "horizontal": options.get("horizontal", False),
+        "icon": options.get("icon", "fa-chart-simple"),
+    }
 
 
 class StatisticsView(StaffRequiredMixin, ListView):
@@ -434,50 +755,261 @@ class StatisticsView(StaffRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        bookings_by_venue = list(
-            Booking.objects.values("venue__name").annotate(total=Count("id")).order_by("-total")
+        country_labels = dict(Estate.COUNTRY_CHOICES)
+        event_labels = dict(ServiceRequest.EVENT_CHOICES)
+        destination_labels = dict(ServiceRequest.DESTINATION_CHOICES)
+        booking_status_labels = dict(Booking.Status.choices)
+        appointment_type_labels = dict(Appointment.Kind.choices)
+        category_labels = dict(Vehicle.Category.choices)
+
+        booking_count = Booking.objects.count()
+        request_count = ServiceRequest.objects.count()
+        inquiry_count = ContactInquiry.objects.count()
+        estate_count = Estate.objects.count()
+        vehicle_count = Vehicle.objects.count()
+        appointment_count = Appointment.objects.count()
+        payments_approved = PaymentSchedule.objects.filter(approved=True).count()
+        payments_pending = PaymentSchedule.objects.filter(approved=False).count()
+
+        bookings_labels, bookings_data = _distribution(Booking.objects.all(), "estate__name")
+        booking_status_labels, booking_status_data = _distribution(
+            Booking.objects.all(), "status", booking_status_labels
         )
-        requests_by_type = list(
-            ServiceRequest.objects.values("event_type").annotate(total=Count("id")).order_by("-total")
+        requests_type_labels, requests_type_data = _distribution(
+            ServiceRequest.objects.all(), "event_type", event_labels
         )
-        requests_by_destination = list(
-            ServiceRequest.objects.values("destination").annotate(total=Count("id")).order_by("-total")
+        requests_destination_labels, requests_destination_data = _distribution(
+            ServiceRequest.objects.all(), "destination", destination_labels
         )
-        inquiries_by_month = list(
+        rentals_labels, rentals_data = _distribution(VehicleRental.objects.all(), "vehicle__name")
+
+        inquiry_rows = list(
             ContactInquiry.objects.annotate(month=TruncMonth("created_at"))
             .values("month")
             .annotate(total=Count("id"))
             .order_by("month")
         )
-        vehicles_by_category = list(
-            Vehicle.objects.values("category").annotate(total=Count("id")).order_by("-total")
+        inquiry_labels = [
+            date_format(row["month"], "M Y") if row["month"] else str(_("Not specified"))
+            for row in inquiry_rows
+        ]
+        inquiry_data = [row["total"] for row in inquiry_rows]
+
+        vehicles_labels, vehicles_data = _distribution(
+            Vehicle.objects.all(), "category", category_labels
         )
-        venues_by_country = list(
-            Venue.objects.values("country").annotate(total=Count("id")).order_by("-total")
+        estates_labels, estates_data = _distribution(Estate.objects.all(), "country", country_labels)
+        appointments_labels, appointments_data = _distribution(
+            Appointment.objects.all(), "appointment_type", appointment_type_labels
         )
-        rentals_by_vehicle = list(
-            VehicleRental.objects.values("vehicle__name").annotate(total=Count("id")).order_by("-total")
-        )
-        payments_approved = PaymentSchedule.objects.filter(approved=True).count()
-        payments_pending = PaymentSchedule.objects.filter(approved=False).count()
+
+        summary = [
+            {
+                "label": str(_("Bookings")),
+                "value": booking_count,
+                "description": str(_("Estate enquiries")),
+                "icon": "fa-solid fa-building",
+                "url": reverse("core:booking-list"),
+            },
+            {
+                "label": str(_("Service requests")),
+                "value": request_count,
+                "description": str(_("Event planning requests")),
+                "icon": "fa-solid fa-clipboard-list",
+                "url": reverse("core:service-request-list"),
+            },
+            {
+                "label": str(_("Inquiries")),
+                "value": inquiry_count,
+                "description": str(_("Contact messages")),
+                "icon": "fa-solid fa-envelope",
+                "url": reverse("core:contact-inquiry-list"),
+            },
+            {
+                "label": str(_("Estates")),
+                "value": estate_count,
+                "description": str(_("Properties in the collection")),
+                "icon": "fa-solid fa-map-location-dot",
+                "url": reverse("core:estate-list"),
+            },
+            {
+                "label": str(_("Vehicles")),
+                "value": vehicle_count,
+                "description": str(_("Available fleet")),
+                "icon": "fa-solid fa-car",
+                "url": reverse("core:vehicle-list"),
+            },
+            {
+                "label": str(_("Appointments")),
+                "value": appointment_count,
+                "description": str(_("Calls and estate visits")),
+                "icon": "fa-solid fa-calendar-day",
+                "url": reverse("core:appointment-record-list"),
+            },
+        ]
+
+        chart_sections = [
+            {
+                "id": "bookings-inquiries",
+                "title": str(_("Bookings and inquiries")),
+                "description": str(_("Where demand comes from and how conversations trend.")),
+                "icon": "fa-solid fa-calendar-check",
+                "charts": [
+                    _chart(
+                        "bookings-by-estate",
+                        _("Bookings by estate"),
+                        _("Estates with the most bookings"),
+                        "bar",
+                        bookings_labels,
+                        bookings_data,
+                        dataset_label=_("Bookings"),
+                        empty_message=_("No bookings have been recorded yet."),
+                        horizontal=True,
+                        icon="fa-solid fa-building",
+                    ),
+                    _chart(
+                        "inquiries-by-month",
+                        _("Inquiries over time"),
+                        _("Contact inquiries by month"),
+                        "line",
+                        inquiry_labels,
+                        inquiry_data,
+                        dataset_label=_("Inquiries"),
+                        empty_message=_("No inquiries have been recorded yet."),
+                        color="#a58a5a",
+                        icon="fa-solid fa-envelope",
+                    ),
+                ],
+            },
+            {
+                "id": "service-requests",
+                "title": str(_("Service requests")),
+                "description": str(_("Event types and preferred destinations.")),
+                "icon": "fa-solid fa-clipboard-list",
+                "charts": [
+                    _chart(
+                        "requests-by-type",
+                        _("Requests by event type"),
+                        _("Services requested by celebration type"),
+                        "doughnut",
+                        requests_type_labels,
+                        requests_type_data,
+                        dataset_label=_("Requests"),
+                        empty_message=_("No service requests have been recorded yet."),
+                        icon="fa-solid fa-chart-pie",
+                    ),
+                    _chart(
+                        "requests-by-destination",
+                        _("Requests by destination"),
+                        _("Preferred countries"),
+                        "bar",
+                        requests_destination_labels,
+                        requests_destination_data,
+                        dataset_label=_("Requests"),
+                        empty_message=_("No service requests have been recorded yet."),
+                        color="#a58a5a",
+                        icon="fa-solid fa-globe",
+                    ),
+                ],
+            },
+            {
+                "id": "fleet-rentals",
+                "title": str(_("Fleet and rentals")),
+                "description": str(_("Vehicle mix and rental demand.")),
+                "icon": "fa-solid fa-car",
+                "charts": [
+                    _chart(
+                        "vehicles-by-category",
+                        _("Vehicles by category"),
+                        _("Current fleet composition"),
+                        "doughnut",
+                        vehicles_labels,
+                        vehicles_data,
+                        dataset_label=_("Vehicles"),
+                        empty_message=_("No vehicles have been added yet."),
+                        icon="fa-solid fa-car",
+                    ),
+                    _chart(
+                        "rentals-by-vehicle",
+                        _("Rentals by vehicle"),
+                        _("Most rented vehicles"),
+                        "bar",
+                        rentals_labels,
+                        rentals_data,
+                        dataset_label=_("Rentals"),
+                        empty_message=_("No vehicle rentals have been recorded yet."),
+                        horizontal=True,
+                        icon="fa-solid fa-car-side",
+                    ),
+                ],
+            },
+            {
+                "id": "estates-status",
+                "title": str(_("Estates and booking status")),
+                "description": str(_("Catalog coverage and the current booking pipeline.")),
+                "icon": "fa-solid fa-map-location-dot",
+                "charts": [
+                    _chart(
+                        "estates-by-country",
+                        _("Estates by country"),
+                        _("Properties in the collection"),
+                        "doughnut",
+                        estates_labels,
+                        estates_data,
+                        dataset_label=_("Estates"),
+                        empty_message=_("No estates have been added yet."),
+                        icon="fa-solid fa-chart-pie",
+                    ),
+                    _chart(
+                        "bookings-by-status",
+                        _("Bookings by status"),
+                        _("Current booking pipeline"),
+                        "bar",
+                        booking_status_labels,
+                        booking_status_data,
+                        dataset_label=_("Bookings"),
+                        empty_message=_("No bookings have been recorded yet."),
+                        color="#a58a5a",
+                        icon="fa-solid fa-list-check",
+                    ),
+                ],
+            },
+            {
+                "id": "payments-appointments",
+                "title": str(_("Payments and appointments")),
+                "description": str(_("Approvals and consultation requests.")),
+                "icon": "fa-solid fa-credit-card",
+                "charts": [
+                    _chart(
+                        "payment-status",
+                        _("Payment schedules"),
+                        _("Approved versus pending"),
+                        "doughnut",
+                        [str(_("Approved")), str(_("Pending"))],
+                        [payments_approved, payments_pending],
+                        dataset_label=_("Schedules"),
+                        empty_message=_("No payment schedules have been recorded yet."),
+                        icon="fa-solid fa-credit-card",
+                    ),
+                    _chart(
+                        "appointments-by-type",
+                        _("Appointments by type"),
+                        _("Calls and estate visits"),
+                        "bar",
+                        appointments_labels,
+                        appointments_data,
+                        dataset_label=_("Appointments"),
+                        empty_message=_("No appointments have been recorded yet."),
+                        icon="fa-solid fa-calendar-day",
+                    ),
+                ],
+            },
+        ]
 
         context.update({
-            "bookings_by_venue_labels": json.dumps([x["venue__name"] for x in bookings_by_venue]),
-            "bookings_by_venue_data": json.dumps([x["total"] for x in bookings_by_venue]),
-            "requests_by_type_labels": json.dumps([x["event_type"] for x in requests_by_type]),
-            "requests_by_type_data": json.dumps([x["total"] for x in requests_by_type]),
-            "requests_by_destination_labels": json.dumps([x["destination"] for x in requests_by_destination]),
-            "requests_by_destination_data": json.dumps([x["total"] for x in requests_by_destination]),
-            "inquiries_month_labels": json.dumps([x["month"].strftime("%Y-%m") if x["month"] else "" for x in inquiries_by_month]),
-            "inquiries_month_data": json.dumps([x["total"] for x in inquiries_by_month]),
-            "vehicles_category_labels": json.dumps([x["category"] for x in vehicles_by_category]),
-            "vehicles_category_data": json.dumps([x["total"] for x in vehicles_by_category]),
-            "venues_country_labels": json.dumps([x["country"] for x in venues_by_country]),
-            "venues_country_data": json.dumps([x["total"] for x in venues_by_country]),
-            "rentals_vehicle_labels": json.dumps([x["vehicle__name"] for x in rentals_by_vehicle]),
-            "rentals_vehicle_data": json.dumps([x["total"] for x in rentals_by_vehicle]),
-            "payments_approved": payments_approved,
-            "payments_pending": payments_pending,
+            "summary": summary,
+            "chart_sections": chart_sections,
+            "statistics_data": {"summary": summary, "chart_sections": chart_sections},
         })
         return context
 

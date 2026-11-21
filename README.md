@@ -3,8 +3,8 @@
 A lean Django 5.2 project with four apps:
 
 - `accounts`  -  custom User, Django Groups and Permissions, login/logout.
-- `catalog`  -  venues, venue photos, vehicles, venue detail pages.
-- `core`  -  booking enquiries, vehicle rentals, proposed venue payment schedules.
+- `catalog`  -  estates, estate photos, vehicles, estate detail pages.
+- `core`  -  booking enquiries, vehicle rentals, proposed estate payment schedules.
 - `base`  -  public homepage and shared templates.
 
 ## Local setup
@@ -22,17 +22,17 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Open http://127.0.0.1:8000/admin/ and create published venues. The homepage displays those venues automatically. Upload optional photos or supply remote image URLs.
+Open http://127.0.0.1:8000/admin/ and create published estates. The homepage displays those estates automatically. Upload optional photos or supply remote image URLs.
 
 **Important:** Generate and commit the initial migrations before production deployment. Do not change `AUTH_USER_MODEL` after creating the database.
 
 ## Scope
 
-- Venue enquiry forms save records to the database; they do not confirm bookings.
+- Estate enquiry forms save records to the database; they do not confirm bookings.
 - The public `/reviews/`, `/results/` and `/appointment/` pages are marketing pages backed by the `Testimonial`, `WeddingRecord` and `Appointment` models. Run `python manage.py seed_marketing` to load the demo reviews and 2025 figures, then replace them with verified data in the admin.
 - Appointment requests are stored for staff follow-up; they are not synced to an external calendar.
 - Vehicle rental and payment schedule models exist for admin-managed workflows; online checkout, availability locking, financing approvals, and automatic installments are **not implemented**.
-- Installment examples are nonbinding, assume no interest or fees, and apply only to venue rentals. Vehicle rentals require full payment.
+- Installment examples are nonbinding, assume no interest or fees, and apply only to estate rentals. Vehicle rentals require full payment.
 - Estate prices and remote photos must be populated with verified, licensed real listings before launch.
 - The prototype homepage uses Tailwind CDN and remote images. Compile Tailwind locally for production and review image licensing.
 - For production, set `DJANGO_DEBUG=0`, a strong `DJANGO_SECRET_KEY`, and `DJANGO_ALLOWED_HOSTS`. Use a production database, HTTPS and appropriate static/media hosting.

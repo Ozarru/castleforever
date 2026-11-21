@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-16 17:56+0000\n"
+"POT-Creation-Date: 2026-11-21 18:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,7 @@ msgstr ""
 
 #: .\accounts\forms.py:17 .\accounts\templates\accounts\login.html:21
 #: .\core\models.py:75 .\core\models.py:91 .\core\models.py:192
+#: .\core\templates\core\contact.html:190 .\core\views.py:161
 msgid "Email"
 msgstr ""
 
@@ -29,8 +30,9 @@ msgstr ""
 
 #: .\accounts\templates\accounts\activity.html:3
 #: .\accounts\templates\accounts\activity.html:6
-#: .\base\templates\shared\navbar.html:28
-#: .\base\templates\shared\navbar.html:62
+#: .\base\templates\shared\navbar.html:26
+#: .\base\templates\shared\navbar.html:58
+#: .\core\templates\core\dashboard_layout.html:257
 msgid "Activity"
 msgstr ""
 
@@ -39,19 +41,19 @@ msgid "Your activity."
 msgstr ""
 
 #: .\accounts\templates\accounts\activity.html:10
-#: .\core\templates\core\dashboard_layout.html:48
-#: .\core\templates\core\statistics.html:11
-#: .\core\templates\core\statistics.html:70
+#: .\core\templates\core\dashboard_layout.html:60
+#: .\core\templates\core\dashboard_layout.html:62 .\core\views.py:808
+#: .\core\views.py:865 .\core\views.py:970
 msgid "Bookings"
 msgstr ""
 
-#: .\accounts\templates\accounts\activity.html:11
-#: .\core\templates\core\statistics.html:25
+#: .\accounts\templates\accounts\activity.html:11 .\core\views.py:815
+#: .\core\views.py:886
 msgid "Service requests"
 msgstr ""
 
-#: .\accounts\templates\accounts\activity.html:12
-#: .\core\templates\core\statistics.html:85
+#: .\accounts\templates\accounts\activity.html:12 .\core\views.py:822
+#: .\core\views.py:877
 msgid "Inquiries"
 msgstr ""
 
@@ -95,8 +97,12 @@ msgstr ""
 
 #: .\accounts\templates\accounts\notifications.html:3
 #: .\accounts\templates\accounts\notifications.html:6
-#: .\base\templates\shared\navbar.html:27
-#: .\base\templates\shared\navbar.html:61
+#: .\base\templates\shared\navbar.html:25
+#: .\base\templates\shared\navbar.html:57
+#: .\core\templates\core\dashboard_layout.html:196
+#: .\core\templates\core\dashboard_layout.html:197
+#: .\core\templates\core\dashboard_layout.html:206
+#: .\core\templates\core\dashboard_layout.html:254
 msgid "Notifications"
 msgstr ""
 
@@ -105,13 +111,15 @@ msgid "Your notifications."
 msgstr ""
 
 #: .\accounts\templates\accounts\notifications.html:8
+#: .\core\templates\core\dashboard_layout.html:222
 msgid "No new notifications."
 msgstr ""
 
 #: .\accounts\templates\accounts\profile.html:3
 #: .\accounts\templates\accounts\profile.html:6
-#: .\base\templates\shared\navbar.html:26
-#: .\base\templates\shared\navbar.html:60
+#: .\base\templates\shared\navbar.html:24
+#: .\base\templates\shared\navbar.html:56
+#: .\core\templates\core\dashboard_layout.html:251
 msgid "Profile"
 msgstr ""
 
@@ -151,480 +159,151 @@ msgstr ""
 msgid "Already have an account?"
 msgstr ""
 
-#: .\base\templates\base\approach.html:3 .\base\templates\base\approach.html:82
+#: .\base\templates\base\approach.html:3 .\base\templates\base\approach.html:12
 msgid "Our approach"
 msgstr ""
 
-#: .\base\templates\base\approach.html:83
-#: .\base\templates\base\approach.html:107
+#: .\base\templates\base\approach.html:4
+msgid ""
+"Explore a flexible castle rental payment approach with an initial deposit "
+"and an agreed installment schedule, illustrated without interest or "
+"additional fees."
+msgstr ""
+
+#: .\base\templates\base\approach.html:13
 msgid "Your dream day. Your own pace."
 msgstr ""
 
-#: .\base\templates\base\approach.html:85
-#: .\base\templates\base\approach.html:109
+#: .\base\templates\base\approach.html:15
 msgid ""
-"An unforgettable castle wedding shouldn't require settling the entire venue "
+"An unforgettable castle wedding shouldn't require settling the entire estate "
 "cost at once. Our proposed payment approach lets you secure your celebration "
-"with an initial deposit, then spread the remaining venue balance across an "
+"with an initial deposit, then spread the remaining estate balance across an "
 "agreed installment schedule."
 msgstr ""
 
-#: .\base\templates\base\approach.html:92 .\base\templates\base\home.html:1083
-msgid "The CastleForever philosophy"
+#: .\base\templates\base\approach.html:19
+msgid "See the payment plan"
 msgstr ""
 
-#: .\base\templates\base\approach.html:93
-msgid "Not simply a venue. A moment in history."
+#: .\base\templates\base\approach.html:23
+#: .\base\templates\base\approach.html:158
+msgid "Explore estates"
 msgstr ""
 
-#: .\base\templates\base\approach.html:95
-msgid ""
-"We believe in celebrations that feel deeply personal, effortlessly elegant, "
-"and entirely unforgettable. The kind of day that becomes a story told for "
-"generations."
+#: .\base\templates\base\approach.html:30
+#: .\base\templates\base\approach.html:89
+#: .\base\templates\base\approach.html:102 .\base\templates\base\home.html:695
+msgid "Castle rental payment example"
 msgstr ""
 
-#: .\base\templates\base\approach.html:98
-#: .\base\templates\base\approach.html:112
+#: .\base\templates\base\approach.html:31 .\base\templates\base\home.html:699
+msgid "€3,000"
+msgstr ""
+
+#: .\base\templates\base\approach.html:32 .\base\templates\base\home.html:703
+msgid "Initial deposit toward your castle rental"
+msgstr ""
+
+#: .\base\templates\base\approach.html:38
+#: .\base\templates\base\approach.html:116 .\base\templates\base\home.html:729
+msgid "Illustrative repayment period"
+msgstr ""
+
+#: .\base\templates\base\approach.html:39
+#: .\base\templates\base\approach.html:119
+#: .\base\templates\base\approach.html:120
+#: .\base\templates\base\approach.html:121
+#: .\base\templates\base\approach.html:122
+#: .\base\templates\base\approach.html:123 .\base\templates\base\home.html:736
+#: .\base\templates\base\home.html:737 .\base\templates\base\home.html:738
+#: .\base\templates\base\home.html:739 .\base\templates\base\home.html:740
+msgid "months"
+msgstr ""
+
+#: .\base\templates\base\approach.html:42
+#: .\base\templates\base\approach.html:127 .\base\templates\base\home.html:745
+#: .\core\views.py:177
+msgid "Estimated monthly installment"
+msgstr ""
+
+#: .\base\templates\base\approach.html:53
+msgid "An exceptional way to celebrate"
+msgstr ""
+
+#: .\base\templates\base\approach.html:54
+msgid "A clear path to your celebration."
+msgstr ""
+
+#: .\base\templates\base\approach.html:56
 msgid ""
 "What sets CastleForever apart is our approach: solutions designed to let "
 "couples and their families fully enjoy their celebration without financial "
 "hardship afterwards."
 msgstr ""
 
-#: .\base\templates\base\approach.html:106
-msgid "An exceptional way to celebrate"
+#: .\base\templates\base\approach.html:63
+msgid "Secure your date"
 msgstr ""
 
-#: .\base\templates\base\approach.html:114
+#: .\base\templates\base\approach.html:65
+msgid ""
+"An initial deposit confirms your preferred estate and celebration dates."
+msgstr ""
+
+#: .\base\templates\base\approach.html:70
+msgid "Spread the balance"
+msgstr ""
+
+#: .\base\templates\base\approach.html:72
+msgid "The remaining estate cost is divided into agreed monthly installments."
+msgstr ""
+
+#: .\base\templates\base\approach.html:77
+msgid "Celebrate with confidence"
+msgstr ""
+
+#: .\base\templates\base\approach.html:79
+msgid ""
+"Your schedule is agreed in advance, so there are no surprises after the "
+"celebration."
+msgstr ""
+
+#: .\base\templates\base\approach.html:90
+msgid "An illustrative payment plan."
+msgstr ""
+
+#: .\base\templates\base\approach.html:92
+msgid ""
+"Adjust the figures to see how an estate balance could be spread across an "
+"agreed schedule. This is an illustration, not a financing offer."
+msgstr ""
+
+#: .\base\templates\base\approach.html:95
 msgid "Ask about a payment plan"
 msgstr ""
 
-#: .\base\templates\base\approach.html:118 .\base\templates\base\home.html:961
-msgid "Castle rental payment example"
-msgstr ""
-
-#: .\base\templates\base\approach.html:120 .\base\templates\base\home.html:973
-msgid "Initial deposit toward your castle rental"
-msgstr ""
-
-#: .\base\templates\base\approach.html:123
-msgid "Illustrative castle rental cost"
-msgstr ""
-
-#: .\base\templates\base\approach.html:131 .\base\templates\base\home.html:1011
-msgid "Illustrative repayment period"
-msgstr ""
-
-#: .\base\templates\base\approach.html:141 .\base\templates\base\home.html:1043
-msgid "Estimated monthly installment"
-msgstr ""
-
-#: .\base\templates\base\approach.html:146
-msgid ""
-"Illustration only, assuming no interest or fees. Multi-year repayment after "
-"the wedding is subject to eligibility, a signed agreement, and applicable "
-"law. No approach is offered or approved through this demo. Transport must be "
-"paid in full."
-msgstr ""
-
-#: .\base\templates\base\approach.html:155
-msgid "Begin your story"
-msgstr ""
-
-#: .\base\templates\base\approach.html:156
-msgid "Shall we create something timeless?"
-msgstr ""
-
-#: .\base\templates\base\approach.html:158
-msgid ""
-"Tell us a little about your dream celebration. This demo will prepare your "
-"enquiry for your email application."
-msgstr ""
-
-#: .\base\templates\base\approach.html:162
-msgid "Browse the collection and select an estate to submit a private enquiry."
-msgstr ""
-
-#: .\base\templates\base\approach.html:163
-msgid "Explore estates"
-msgstr ""
-
-#: .\base\templates\base\destination.html:3
-#: .\base\templates\shared\footer.html:18 .\base\templates\shared\navbar.html:9
-#: .\base\templates\shared\navbar.html:51
-msgid "Destinations"
-msgstr ""
-
-#: .\base\templates\base\destination.html:82
-msgid "The destinations"
-msgstr ""
-
-#: .\base\templates\base\destination.html:83
-msgid "Where dreams unfold."
-msgstr ""
-
-#: .\base\templates\base\destination.html:85
-msgid ""
-"Four extraordinary countries. A world of timeless architecture, captivating "
-"landscapes, and celebrations to remember."
-msgstr ""
-
-#: .\base\templates\base\destination.html:88
-msgid "Explore France"
-msgstr ""
-
-#: .\base\templates\base\destination.html:89
-msgid "Explore Italy"
-msgstr ""
-
-#: .\base\templates\base\destination.html:98
-#: .\base\templates\base\home.html:355
-msgid "Our destinations"
-msgstr ""
-
-#: .\base\templates\base\destination.html:99
-#: .\base\templates\base\home.html:357
-msgid "Where dreams come to life."
-msgstr ""
-
-#: .\base\templates\base\destination.html:102
-#: .\base\templates\base\home.html:365
-msgid ""
-"Four extraordinary destinations, blending timeless architecture, enchanting "
-"landscapes, and unforgettable celebrations."
-msgstr ""
-
-#: .\base\templates\base\destination.html:111
-#: .\base\templates\base\destination.html:152
-#: .\base\templates\base\home.html:395
-msgid "Castles & gardens"
-msgstr ""
-
-#: .\base\templates\base\destination.html:113
-#: .\base\templates\base\destination.html:123
-#: .\base\templates\base\destination.html:133
-#: .\base\templates\base\destination.html:143
-#: .\base\templates\base\home.html:399 .\base\templates\base\home.html:429
-#: .\base\templates\base\home.html:459
-msgid "Explore destination"
-msgstr ""
-
-#: .\base\templates\base\destination.html:121
-#: .\base\templates\base\destination.html:176
-#: .\base\templates\base\home.html:425
-msgid "Villas & romance"
-msgstr ""
-
-#: .\base\templates\base\destination.html:131
-#: .\base\templates\base\destination.html:141
-#: .\base\templates\base\destination.html:200
-#: .\base\templates\base\home.html:455
-msgid "Palaces & sunshine"
-msgstr ""
-
-#: .\base\templates\base\destination.html:151 .\core\models.py:61
-msgid "France"
-msgstr ""
-
-#: .\base\templates\base\destination.html:153
-msgid "Historic estates, manicured gardens, and timeless French elegance."
-msgstr ""
-
-#: .\base\templates\base\destination.html:164
-#: .\base\templates\base\destination.html:188
-#: .\base\templates\base\destination.html:212
-#: .\base\templates\base\home.html:577
-#: .\catalog\templates\catalog\venue_detail.html:17
-#: .\catalog\templates\catalog\venue_detail.html:142
-#: .\catalog\templates\catalog\venues.html:29
-msgid "Up to"
-msgstr ""
-
-#: .\base\templates\base\destination.html:164
-#: .\base\templates\base\destination.html:188
-#: .\base\templates\base\destination.html:212
-#: .\base\templates\base\home.html:577
-#: .\catalog\templates\catalog\venue_detail.html:17
-#: .\catalog\templates\catalog\venue_detail.html:142
-#: .\catalog\templates\catalog\venues.html:29
-msgid "guests"
-msgstr ""
-
-#: .\base\templates\base\destination.html:164
-#: .\base\templates\base\destination.html:188
-#: .\base\templates\base\destination.html:212
-#: .\base\templates\base\home.html:577
-#: .\catalog\templates\catalog\car_rentals.html:26
-#: .\catalog\templates\catalog\venue_detail.html:142
-#: .\catalog\templates\catalog\venues.html:29
-msgid "From"
-msgstr ""
-
-#: .\base\templates\base\destination.html:175 .\core\models.py:62
-msgid "Italy"
-msgstr ""
-
-#: .\base\templates\base\destination.html:177
-msgid "Sunlit villas, rolling hills, and Italian romance."
-msgstr ""
-
-#: .\base\templates\base\destination.html:199 .\core\models.py:63
-msgid "Spain"
-msgstr ""
-
-#: .\base\templates\base\destination.html:201
-msgid "Sun-drenched palaces and vibrant Spanish celebrations."
-msgstr ""
-
-#: .\base\templates\base\destination.html:222
-msgid "View full collection"
-msgstr ""
-
-#: .\base\templates\base\home.html:5
-msgid "Home"
-msgstr ""
-
-#: .\base\templates\base\home.html:177
-msgid "The art of celebrating love differently"
-msgstr ""
-
-#: .\base\templates\base\home.html:185
-msgid "Your love story deserves an exceptional setting."
-msgstr ""
-
-#: .\base\templates\base\home.html:193
-msgid ""
-"From the châteaux of France to sun-drenched estates in Italy and Spain, "
-"discover exceptional venues to celebrate your union in your own way."
-msgstr ""
-
-#: .\base\templates\base\home.html:205 .\base\templates\base\home.html:1177
-msgid "Explore our estates"
-msgstr ""
-
-#: .\base\templates\base\home.html:215 .\base\templates\base\home.html:693
-#: .\base\templates\base\home.html:892 .\base\templates\base\home.html:1183
-#: .\catalog\templates\catalog\venue_detail.html:125
-#: .\core\templates\core\results.html:21 .\core\templates\core\reviews.html:19
-#: .\core\templates\core\reviews.html:97
-msgid "Book a private call"
-msgstr ""
-
-#: .\base\templates\base\home.html:233 .\base\templates\shared\footer.html:10
-#: .\base\templates\shared\footer.html:69
-msgid "France · Italy · Spain · Germany"
-msgstr ""
-
-#: .\base\templates\base\home.html:241
-msgid "Scroll to explore"
-msgstr ""
-
-#: .\base\templates\base\home.html:263
-msgid "01 / Selected historic estates"
-msgstr ""
-
-#: .\base\templates\base\home.html:265
-msgid "02 / Private and exclusive experiences"
-msgstr ""
-
-#: .\base\templates\base\home.html:267
-msgid "03 / Flexible payment solutions"
-msgstr ""
-
-#: .\base\templates\base\home.html:287
-msgid "Proven results"
-msgstr ""
-
-#: .\base\templates\base\home.html:287
-msgid "season"
-msgstr ""
-
-#: .\base\templates\base\home.html:289
-msgid "Celebrations we have accompanied."
-msgstr ""
-
-#: .\base\templates\base\home.html:294
-msgid "See the full 2025 results"
-msgstr ""
-
-#: .\base\templates\base\home.html:305
-msgid "Weddings in 2025"
-msgstr ""
-
-#: .\base\templates\base\home.html:313 .\core\templates\core\results.html:35
-msgid "Guests welcomed"
-msgstr ""
-
-#: .\base\templates\base\home.html:321
-msgid "Average couple rating"
-msgstr ""
-
-#: .\base\templates\base\home.html:329 .\core\templates\core\results.html:43
-#: .\core\templates\core\reviews.html:43
-msgid "Estates celebrated in"
-msgstr ""
-
-#: .\base\templates\base\home.html:493
-msgid "Our private collection"
-msgstr ""
-
-#: .\base\templates\base\home.html:495
-msgid "Extraordinary estates."
-msgstr ""
-
-#: .\base\templates\base\home.html:507
-msgid "All estates"
-msgstr ""
-
-#: .\base\templates\base\home.html:585
-#: .\catalog\templates\catalog\venues.html:30
-msgid "Explore estate"
-msgstr ""
-
-#: .\base\templates\base\home.html:603
-msgid ""
-"Our collection is currently being curated. Check back soon to discover our "
-"estates."
-msgstr ""
-
-#: .\base\templates\base\home.html:619
-msgid ""
-"The estates shown and prices listed are illustrative for this demo version. "
-"Availability and bookings are not confirmed."
-msgstr ""
-
-#: .\base\templates\base\home.html:639
-msgid "Words from our couples"
-msgstr ""
-
-#: .\base\templates\base\home.html:641
-msgid "They said yes. Then they told us."
-msgstr ""
-
-#: .\base\templates\base\home.html:646 .\core\templates\core\results.html:135
-msgid "Read all reviews"
-msgstr ""
-
-#: .\base\templates\base\home.html:691
-msgid "Our first couple stories will appear here soon."
-msgstr ""
-
-#: .\base\templates\base\home.html:737
-msgid "More than just a venue"
-msgstr ""
-
-#: .\base\templates\base\home.html:743
-msgid "Every detail deserves careful attention."
-msgstr ""
-
-#: .\base\templates\base\home.html:751
-msgid ""
-"An exceptional setting is only the beginning of the experience. Enjoy "
-"exclusive services to elevate your day and bring your vision of the perfect "
-"wedding to life."
-msgstr ""
-
-#: .\base\templates\base\home.html:763
-msgid "Limousines and prestige cars"
-msgstr ""
-
-#: .\base\templates\base\home.html:773
-msgid "Private chauffeur service"
-msgstr ""
-
-#: .\base\templates\base\home.html:783
-msgid "Event concierge"
-msgstr ""
-
-#: .\base\templates\base\home.html:797
-msgid ""
-"Vehicle rentals are payable in full at the time of booking. Other services "
-"are covered by a separate quote."
-msgstr ""
-
-#: .\base\templates\base\home.html:805
-msgid "Design your experience"
-msgstr ""
-
-#: .\base\templates\base\home.html:829
-msgid "An organisation behind every celebration"
-msgstr ""
-
-#: .\base\templates\base\home.html:831
-msgid "From first call to last dance."
-msgstr ""
-
-#: .\base\templates\base\home.html:837
-msgid ""
-"A documented timeline, a dedicated coordinator and clear milestones  -  so you "
-"always know what happens next."
-msgstr ""
-
-#: .\base\templates\base\home.html:849 .\core\templates\core\results.html:176
-msgid "Discovery call"
-msgstr ""
-
-#: .\base\templates\base\home.html:851
-msgid "We listen to your dates, guest count and budget  -  with no commitment."
-msgstr ""
-
-#: .\base\templates\base\home.html:859
-msgid "Your shortlist"
-msgstr ""
-
-#: .\base\templates\base\home.html:861
-msgid ""
-"A personalised selection of estates, with full proposals and guide prices."
-msgstr ""
-
-#: .\base\templates\base\home.html:869
-msgid "Visit & booking"
-msgstr ""
-
-#: .\base\templates\base\home.html:871
-msgid ""
-"Walk the estate with an advisor, then confirm your date and payment plan."
-msgstr ""
-
-#: .\base\templates\base\home.html:879
-msgid "Planning & the day"
-msgstr ""
-
-#: .\base\templates\base\home.html:881
-msgid ""
-"A month-by-month checklist and an on-site coordinator for the celebration."
-msgstr ""
-
-#: .\base\templates\base\home.html:889
-msgid "Want the detail? We explain every step during your first appointment."
-msgstr ""
-
-#: .\base\templates\base\home.html:921
-msgid "A new way to celebrate"
-msgstr ""
-
-#: .\base\templates\base\home.html:929
-msgid "Your dream wedding, at your own pace."
-msgstr ""
-
-#: .\base\templates\base\home.html:937
-msgid ""
-"An exceptional castle wedding shouldn't necessarily require paying the "
-"entire rental cost at once. Our proposed payment approach lets you confirm "
-"your celebration with an initial deposit, then spread the remaining venue "
-"balance across a schedule agreed together."
-msgstr ""
-
-#: .\base\templates\base\home.html:945
-msgid "Discover our payment options"
-msgstr ""
-
-#: .\base\templates\base\home.html:985
+#: .\base\templates\base\approach.html:106 .\base\templates\base\home.html:712
 msgid "Illustrative rental cost"
 msgstr ""
 
-#: .\base\templates\base\home.html:1059
+#: .\base\templates\base\approach.html:109 .\base\templates\base\home.html:719
+msgid "€15,000"
+msgstr ""
+
+#: .\base\templates\base\approach.html:110 .\base\templates\base\home.html:720
+msgid "€25,000"
+msgstr ""
+
+#: .\base\templates\base\approach.html:111 .\base\templates\base\home.html:721
+msgid "€40,000"
+msgstr ""
+
+#: .\base\templates\base\approach.html:112 .\base\templates\base\home.html:722
+msgid "€60,000"
+msgstr ""
+
+#: .\base\templates\base\approach.html:132 .\base\templates\base\home.html:752
 msgid ""
 "Illustrative simulation only, with no interest or additional fees. Any "
 "payment schedule extending beyond the wedding date remains subject to an "
@@ -633,42 +312,444 @@ msgid ""
 "Transport services must be paid in full."
 msgstr ""
 
-#: .\base\templates\base\home.html:1091
-msgid "More than just a venue. A moment in history."
+#: .\base\templates\base\approach.html:147
+msgid "Begin your story"
 msgstr ""
 
-#: .\base\templates\base\home.html:1099
+#: .\base\templates\base\approach.html:148
+msgid "Shall we create something timeless?"
+msgstr ""
+
+#: .\base\templates\base\approach.html:150
+msgid ""
+"Tell us a little about your dream celebration. This demo will prepare your "
+"enquiry for your email application."
+msgstr ""
+
+#: .\base\templates\base\approach.html:155
+msgid "Browse the collection and select an estate to submit a private enquiry."
+msgstr ""
+
+#: .\base\templates\base\destination.html:3
+#: .\base\templates\shared\footer.html:18 .\base\templates\shared\navbar.html:9
+#: .\base\templates\shared\navbar.html:49
+msgid "Destinations"
+msgstr ""
+
+#: .\base\templates\base\destination.html:11
+msgid "The destinations"
+msgstr ""
+
+#: .\base\templates\base\destination.html:14
+msgid "Where dreams unfold."
+msgstr ""
+
+#: .\base\templates\base\destination.html:19
+msgid ""
+"Discover our estates by style, from castles and palaces to villas and "
+"gardens."
+msgstr ""
+
+#: .\base\templates\base\destination.html:24
+msgid "Explore by estate type"
+msgstr ""
+
+#: .\base\templates\base\destination.html:28
+#: .\base\templates\base\destination.html:127
+msgid "View full collection"
+msgstr ""
+
+#: .\base\templates\base\destination.html:41
+#: .\base\templates\base\home.html:173
+msgid "Our destinations"
+msgstr ""
+
+#: .\base\templates\base\destination.html:43
+#: .\base\templates\base\home.html:175
+msgid "Where dreams come to life."
+msgstr ""
+
+#: .\base\templates\base\destination.html:46
+msgid ""
+"Explore the collection by the character of each estate rather than by "
+"country."
+msgstr ""
+
+#: .\base\templates\base\destination.html:55
+#: .\base\templates\base\home.html:188 .\base\templates\base\home.html:332
+msgid "View all estates"
+msgstr ""
+
+#: .\base\templates\base\destination.html:75
+#: .\base\templates\shared\navbar.html:10
+#: .\base\templates\shared\navbar.html:50 .\catalog\models.py:78
+#: .\catalog\templates\catalog\estate_detail.html:9
+#: .\core\templates\core\dashboard_layout.html:92
+#: .\core\templates\core\dashboard_layout.html:94 .\core\views.py:829
+#: .\core\views.py:959
+msgid "Estates"
+msgstr ""
+
+#: .\base\templates\base\destination.html:78
+msgid "Explore estate type"
+msgstr ""
+
+#: .\base\templates\base\destination.html:87
+#: .\base\templates\base\home.html:377
+msgid ""
+"Our collection is currently being curated. Check back soon to discover our "
+"estates."
+msgstr ""
+
+#: .\base\templates\base\destination.html:101 .\catalog\models.py:31
+#: .\catalog\templates\catalog\estate_detail.html:140
+#: .\catalog\templates\catalog\estate_detail.html:215
+#: .\catalog\templates\catalog\estates.html:37 .\core\views.py:203
+msgid "Estate type"
+msgstr ""
+
+#: .\base\templates\base\destination.html:104
+#, python-format
+msgid ""
+"A curated selection of\n"
+"              %(type_label)s estates for an unforgettable celebration."
+msgstr ""
+
+#: .\base\templates\base\destination.html:112
+msgid "View more"
+msgstr ""
+
+#: .\base\templates\base\home.html:3
+#: .\catalog\templates\catalog\estate_detail.html:7
+msgid "Home"
+msgstr ""
+
+#: .\base\templates\base\home.html:30
+msgid "The art of royal celebration"
+msgstr ""
+
+#: .\base\templates\base\home.html:36
+msgid "Your story deserves an exceptional setting."
+msgstr ""
+
+#: .\base\templates\base\home.html:42
+msgid ""
+"From the châteaux of France to sun-drenched estates in Italy and Spain, "
+"discover exceptional estates to celebrate your union in your own way."
+msgstr ""
+
+#: .\base\templates\base\home.html:49 .\base\templates\base\home.html:861
+msgid "Explore our estates"
+msgstr ""
+
+#: .\base\templates\base\home.html:58 .\base\templates\base\home.html:469
+#: .\base\templates\base\home.html:657 .\base\templates\base\home.html:869
+#: .\catalog\templates\catalog\estate_detail.html:255
+#: .\core\templates\core\contact.html:23 .\core\templates\core\contact.html:240
+#: .\core\templates\core\results.html:21 .\core\templates\core\reviews.html:21
+#: .\core\templates\core\reviews.html:99
+msgid "Book a private call"
+msgstr ""
+
+#: .\base\templates\base\home.html:70 .\base\templates\shared\footer.html:10
+#: .\base\templates\shared\footer.html:72
+msgid "France · Italy · Spain · Germany"
+msgstr ""
+
+#: .\base\templates\base\home.html:74
+msgid "Scroll to explore"
+msgstr ""
+
+#: .\base\templates\base\home.html:84
+msgid "01 / Selected historic estates"
+msgstr ""
+
+#: .\base\templates\base\home.html:86
+msgid "02 / Private and exclusive experiences"
+msgstr ""
+
+#: .\base\templates\base\home.html:88
+msgid "03 / Flexible payment solutions"
+msgstr ""
+
+#: .\base\templates\base\home.html:99
+msgid "Proven results"
+msgstr ""
+
+#: .\base\templates\base\home.html:101
+msgid "season"
+msgstr ""
+
+#: .\base\templates\base\home.html:105
+msgid "Celebrations we have accompanied."
+msgstr ""
+
+#: .\base\templates\base\home.html:113
+msgid "See the full 2025 results"
+msgstr ""
+
+#: .\base\templates\base\home.html:123
+msgid "Weddings in 2025"
+msgstr ""
+
+#: .\base\templates\base\home.html:131 .\core\templates\core\results.html:35
+msgid "Guests welcomed"
+msgstr ""
+
+#: .\base\templates\base\home.html:146
+msgid "Average couple rating"
+msgstr ""
+
+#: .\base\templates\base\home.html:156 .\core\templates\core\results.html:43
+#: .\core\templates\core\reviews.html:45
+msgid "Estates celebrated in"
+msgstr ""
+
+#: .\base\templates\base\home.html:178
+msgid ""
+"Four extraordinary destinations, blending timeless architecture, enchanting "
+"landscapes, and unforgettable celebrations."
+msgstr ""
+
+#: .\base\templates\base\home.html:212
+msgid "Castles & gardens"
+msgstr ""
+
+#: .\base\templates\base\home.html:215 .\catalog\models.py:11
+#: .\core\models.py:61
+msgid "France"
+msgstr ""
+
+#: .\base\templates\base\home.html:218 .\base\templates\base\home.html:247
+#: .\base\templates\base\home.html:276 .\base\templates\base\home.html:305
+msgid "Explore destination"
+msgstr ""
+
+#: .\base\templates\base\home.html:241
+msgid "Villas & romance"
+msgstr ""
+
+#: .\base\templates\base\home.html:244 .\catalog\models.py:12
+#: .\core\models.py:62
+msgid "Italy"
+msgstr ""
+
+#: .\base\templates\base\home.html:270 .\base\templates\base\home.html:299
+msgid "Palaces & sunshine"
+msgstr ""
+
+#: .\base\templates\base\home.html:273 .\catalog\models.py:13
+#: .\core\models.py:63
+msgid "Spain"
+msgstr ""
+
+#: .\base\templates\base\home.html:302 .\catalog\models.py:14
+#: .\core\models.py:64
+msgid "Germany"
+msgstr ""
+
+#: .\base\templates\base\home.html:320
+msgid "Our private collection"
+msgstr ""
+
+#: .\base\templates\base\home.html:324
+msgid "Extraordinary estates."
+msgstr ""
+
+#: .\base\templates\base\home.html:362
+#: .\base\templates\shared\estate_card.html:19
+msgid "Up to"
+msgstr ""
+
+#: .\base\templates\base\home.html:362
+#: .\base\templates\shared\estate_card.html:19
+#: .\catalog\templates\catalog\estate_detail.html:33
+msgid "guests"
+msgstr ""
+
+#: .\base\templates\base\home.html:364
+#: .\base\templates\shared\estate_card.html:21
+#: .\catalog\templates\catalog\car_rentals.html:26
+msgid "From"
+msgstr ""
+
+#: .\base\templates\base\home.html:368
+#: .\base\templates\shared\estate_card.html:24
+msgid "Explore estate"
+msgstr ""
+
+#: .\base\templates\base\home.html:385
+msgid ""
+"The estates shown and prices listed are illustrative for this demo version. "
+"Availability and bookings are not confirmed."
+msgstr ""
+
+#: .\base\templates\base\home.html:400
+msgid "Words from our couples"
+msgstr ""
+
+#: .\base\templates\base\home.html:404
+msgid "They said yes. Then they told us."
+msgstr ""
+
+#: .\base\templates\base\home.html:412 .\core\templates\core\results.html:135
+msgid "Read all reviews"
+msgstr ""
+
+#: .\base\templates\base\home.html:464
+msgid "Our first couple stories will appear here soon."
+msgstr ""
+
+#: .\base\templates\base\home.html:502
+msgid "More than just an estate"
+msgstr ""
+
+#: .\base\templates\base\home.html:506
+msgid "Every detail deserves careful attention."
+msgstr ""
+
+#: .\base\templates\base\home.html:510
+msgid ""
+"An exceptional setting is only the beginning of the experience. Enjoy "
+"exclusive services to elevate your day and bring your vision of the perfect "
+"wedding to life."
+msgstr ""
+
+#: .\base\templates\base\home.html:520
+msgid "Limousines and prestige cars"
+msgstr ""
+
+#: .\base\templates\base\home.html:532
+msgid "Private chauffeur service"
+msgstr ""
+
+#: .\base\templates\base\home.html:544
+msgid "Event concierge"
+msgstr ""
+
+#: .\base\templates\base\home.html:554
+msgid ""
+"Vehicle rentals are payable in full at the time of booking. Other services "
+"are covered by a separate quote. <!--  -->"
+msgstr ""
+
+#: .\base\templates\base\home.html:561
+msgid "Design your experience"
+msgstr ""
+
+#: .\base\templates\base\home.html:580
+msgid "An organisation behind every celebration"
+msgstr ""
+
+#: .\base\templates\base\home.html:584
+msgid "From first call to last dance."
+msgstr ""
+
+#: .\base\templates\base\home.html:589
+msgid ""
+"A documented timeline, a dedicated coordinator and clear milestones - so you "
+"always know what happens next. <!--  -->"
+msgstr ""
+
+#: .\base\templates\base\home.html:601 .\core\templates\core\results.html:176
+msgid "Discovery call"
+msgstr ""
+
+#: .\base\templates\base\home.html:605
+msgid "We listen to your dates, guest count and budget - with no commitment."
+msgstr ""
+
+#: .\base\templates\base\home.html:614
+msgid "Your shortlist"
+msgstr ""
+
+#: .\base\templates\base\home.html:618
+msgid ""
+"A personalised selection of estates, with full proposals and guide prices."
+msgstr ""
+
+#: .\base\templates\base\home.html:627
+msgid "Visit & booking"
+msgstr ""
+
+#: .\base\templates\base\home.html:631
+msgid ""
+"Walk the estate with an advisor, then confirm your date and payment plan."
+msgstr ""
+
+#: .\base\templates\base\home.html:640
+msgid "Planning & the day"
+msgstr ""
+
+#: .\base\templates\base\home.html:644
+msgid ""
+"A month-by-month checklist and an on-site coordinator for the celebration."
+msgstr ""
+
+#: .\base\templates\base\home.html:652
+msgid "Want the detail? We explain every step during your first appointment."
+msgstr ""
+
+#: .\base\templates\base\home.html:672
+msgid "A new way to celebrate"
+msgstr ""
+
+#: .\base\templates\base\home.html:676
+msgid "Your dream celebration, at your own pace."
+msgstr ""
+
+#: .\base\templates\base\home.html:680
+msgid ""
+"An exceptional castle celebration shouldn't necessarily require paying the "
+"entire rental cost at once. Our proposed payment approach lets you confirm "
+"your celebration with an initial deposit, then spread the remaining estate "
+"balance across a schedule agreed together."
+msgstr ""
+
+#: .\base\templates\base\home.html:688
+msgid "Discover our payment options"
+msgstr ""
+
+#: .\base\templates\base\home.html:802
+msgid "The CastleForever philosophy"
+msgstr ""
+
+#: .\base\templates\base\home.html:808
+msgid "More than just an estate. A moment in history."
+msgstr ""
+
+#: .\base\templates\base\home.html:812
 msgid ""
 "We believe in deeply personal celebrations, marked by elegance and "
 "refinement, that remain etched in memory. Precious moments that become "
-"stories passed down from generation to generation."
+"stories passed down from generation to generation. <!--  -->"
 msgstr ""
 
-#: .\base\templates\base\home.html:1107
+#: .\base\templates\base\home.html:820
 msgid ""
 "What sets CastleForever apart from others in the market is above all our "
 "approach: offering solutions designed to let couples and their families "
 "fully enjoy their celebration, without it becoming a source of financial "
-"difficulty after the wedding."
+"difficulty after the wedding. <!--  -->"
 msgstr ""
 
-#: .\base\templates\base\home.html:1139
+#: .\base\templates\base\home.html:837
 msgid "Bring your vision to life"
 msgstr ""
 
-#: .\base\templates\base\home.html:1147
+#: .\base\templates\base\home.html:841
 msgid "Shall we imagine an unforgettable celebration together?"
 msgstr ""
 
-#: .\base\templates\base\home.html:1155
+#: .\base\templates\base\home.html:845
 msgid ""
 "Tell us about your vision and the celebration you dream of. This demo will "
 "help you prepare your enquiry in your messaging app."
 msgstr ""
 
-#: .\base\templates\base\home.html:1169
+#: .\base\templates\base\home.html:852
 msgid ""
-"Browse our collection and select the estate that inspires you  -  or book a "
+"Browse our collection and select the estate that inspires you - or book a "
 "private call and we will prepare a shortlist for you."
 msgstr ""
 
@@ -703,7 +784,7 @@ msgstr ""
 
 #: .\base\templates\legal\terms.html:7
 msgid ""
-"Use of this website is for demonstration purposes. Venue and vehicle "
+"Use of this website is for demonstration purposes. Estate and vehicle "
 "listings are illustrative. Replace this text with your verified terms before "
 "launch."
 msgstr ""
@@ -719,7 +800,7 @@ msgid "Explore"
 msgstr ""
 
 #: .\base\templates\shared\footer.html:16
-#: .\catalog\templates\catalog\venues.html:3
+#: .\catalog\templates\catalog\estates.html:3
 msgid "The collection"
 msgstr ""
 
@@ -728,13 +809,12 @@ msgstr ""
 msgid "Car rentals"
 msgstr ""
 
-#: .\base\templates\shared\footer.html:19
-#: .\base\templates\shared\navbar.html:53 .\core\templates\core\results.html:3
+#: .\base\templates\shared\footer.html:19 .\core\templates\core\results.html:3
 msgid "2025 results"
 msgstr ""
 
-#: .\base\templates\shared\footer.html:20 .\core\templates\core\reviews.html:3
-#: .\core\templates\core\reviews.html:12
+#: .\base\templates\shared\footer.html:20 .\core\templates\core\reviews.html:4
+#: .\core\templates\core\reviews.html:14
 msgid "Couple reviews"
 msgstr ""
 
@@ -759,18 +839,21 @@ msgstr ""
 
 #: .\base\templates\shared\footer.html:33
 #: .\base\templates\shared\footer.html:40
-#: .\base\templates\shared\navbar.html:14
-#: .\base\templates\shared\navbar.html:57 .\core\templates\core\contact.html:3
-#: .\core\templates\core\contact.html:6
+#: .\base\templates\shared\navbar.html:12
+#: .\base\templates\shared\navbar.html:53 .\core\templates\core\contact.html:3
+#: .\core\templates\core\contact.html:12
 msgid "Contact"
 msgstr ""
 
 #: .\base\templates\shared\footer.html:34
-#: .\base\templates\shared\navbar.html:30
-#: .\base\templates\shared\navbar.html:64
+#: .\base\templates\shared\navbar.html:28
+#: .\base\templates\shared\navbar.html:60
 #: .\core\templates\core\dashboard.html:3
 #: .\core\templates\core\dashboard.html:6
-#: .\core\templates\core\dashboard_layout.html:46
+#: .\core\templates\core\dashboard_layout.html:52
+#: .\core\templates\core\dashboard_layout.html:54
+#: .\core\templates\core\dashboard_layout.html:130
+#: .\core\templates\core\dashboard_layout.html:261
 #: .\core\templates\core\dashboard_list.html:6
 msgid "Dashboard"
 msgstr ""
@@ -780,74 +863,181 @@ msgid "Tell us your needs"
 msgstr ""
 
 #: .\base\templates\shared\footer.html:44
+#: .\core\templates\core\contact.html:205
 msgid "Mon - Fri, 09:00 - 18:00 CET"
 msgstr ""
 
 #: .\base\templates\shared\footer.html:47
-msgid "Instagram"
+msgid "TikTok"
 msgstr ""
 
 #: .\base\templates\shared\footer.html:48
+msgid "Instagram"
+msgstr ""
+
+#: .\base\templates\shared\footer.html:49
 msgid "Pinterest"
 msgstr ""
 
-#: .\base\templates\shared\footer.html:55
+#: .\base\templates\shared\footer.html:56
 msgid "All rights reserved."
 msgstr ""
 
-#: .\base\templates\shared\footer.html:62
+#: .\base\templates\shared\footer.html:63
 msgid "Language"
 msgstr ""
 
-#: .\base\templates\shared\footer.html:69
+#: .\base\templates\shared\footer.html:72
 msgid "Concept prototype"
 msgstr ""
 
-#: .\base\templates\shared\navbar.html:10
-#: .\base\templates\shared\navbar.html:52
-msgid "Estates"
-msgstr ""
-
 #: .\base\templates\shared\navbar.html:11
-msgid "Results"
-msgstr ""
-
-#: .\base\templates\shared\navbar.html:12
-#: .\base\templates\shared\navbar.html:54
-msgid "Reviews"
-msgstr ""
-
-#: .\base\templates\shared\navbar.html:13
 msgid "Financing"
 msgstr ""
 
-#: .\base\templates\shared\navbar.html:32
-#: .\base\templates\shared\navbar.html:66
+#: .\base\templates\shared\navbar.html:30
+#: .\base\templates\shared\navbar.html:62
+#: .\core\templates\core\dashboard_layout.html:266
 msgid "Log out?"
 msgstr ""
 
-#: .\base\templates\shared\navbar.html:34
-#: .\base\templates\shared\navbar.html:68
+#: .\base\templates\shared\navbar.html:32
+#: .\base\templates\shared\navbar.html:64
+#: .\core\templates\core\dashboard_layout.html:267
 msgid "Log out"
 msgstr ""
 
-#: .\base\templates\shared\navbar.html:39
-#: .\base\templates\shared\navbar.html:71
+#: .\base\templates\shared\navbar.html:37
+#: .\base\templates\shared\navbar.html:67
+#: .\core\templates\core\dashboard_layout.html:273
 msgid "Log in"
 msgstr ""
 
-#: .\base\templates\shared\navbar.html:44
-#: .\base\templates\shared\navbar.html:55
+#: .\base\templates\shared\navbar.html:42
+#: .\base\templates\shared\navbar.html:51
 msgid "Book a call"
 msgstr ""
 
-#: .\base\templates\shared\navbar.html:56 .\core\models.py:82
+#: .\base\templates\shared\navbar.html:52 .\core\models.py:82
 #: .\core\templates\core\needs.html:6
 msgid "Your needs"
 msgstr ""
 
-#: .\base\templates\shared\navbar.html:58
+#: .\base\templates\shared\navbar.html:54
 msgid "Payment solutions"
+msgstr ""
+
+#: .\catalog\models.py:15
+msgid "Portugal"
+msgstr ""
+
+#: .\catalog\models.py:18
+msgid "Castle"
+msgstr ""
+
+#: .\catalog\models.py:19
+msgid "Palace"
+msgstr ""
+
+#: .\catalog\models.py:20
+msgid "Villa"
+msgstr ""
+
+#: .\catalog\models.py:21
+msgid "Manor"
+msgstr ""
+
+#: .\catalog\models.py:22
+msgid "Garden"
+msgstr ""
+
+#: .\catalog\models.py:28
+msgid "Name"
+msgstr ""
+
+#: .\catalog\models.py:29
+msgid "Slug"
+msgstr ""
+
+#: .\catalog\models.py:36 .\catalog\templates\catalog\estate_detail.html:157
+#: .\catalog\templates\catalog\estates.html:49 .\core\models.py:160
+#: .\core\views.py:197 .\core\views.py:202
+msgid "Country"
+msgstr ""
+
+#: .\catalog\models.py:37 .\catalog\templates\catalog\estates.html:61
+#: .\core\views.py:204
+msgid "Region"
+msgstr ""
+
+#: .\catalog\models.py:39 .\core\views.py:205
+msgid "City"
+msgstr ""
+
+#: .\catalog\models.py:42
+msgid "Nearest city or town, used in public search."
+msgstr ""
+
+#: .\catalog\models.py:44
+msgid "Description"
+msgstr ""
+
+#: .\catalog\models.py:45
+msgid "Description (French)"
+msgstr ""
+
+#: .\catalog\models.py:46
+msgid "Description (Spanish)"
+msgstr ""
+
+#: .\catalog\models.py:47
+msgid "Description (Italian)"
+msgstr ""
+
+#: .\catalog\models.py:48
+msgid "Description (German)"
+msgstr ""
+
+#: .\catalog\models.py:49
+msgid "Description (Portuguese)"
+msgstr ""
+
+#: .\catalog\models.py:50 .\core\views.py:206
+msgid "Capacity"
+msgstr ""
+
+#: .\catalog\models.py:52 .\core\views.py:207
+msgid "Price from"
+msgstr ""
+
+#: .\catalog\models.py:58
+msgid "Cover image"
+msgstr ""
+
+#: .\catalog\models.py:61
+msgid "Optional uploaded cover image"
+msgstr ""
+
+#: .\catalog\models.py:64
+msgid "Cover image URL"
+msgstr ""
+
+#: .\catalog\models.py:66
+msgid "Optional remote image for initial catalog"
+msgstr ""
+
+#: .\catalog\models.py:68 .\core\models.py:122 .\core\views.py:191
+#: .\core\views.py:208
+msgid "Published"
+msgstr ""
+
+#: .\catalog\models.py:69 .\core\views.py:163
+msgid "Created at"
+msgstr ""
+
+#: .\catalog\models.py:77 .\core\models.py:110 .\core\models.py:158
+#: .\core\views.py:146 .\core\views.py:189 .\core\views.py:196
+msgid "Estate"
 msgstr ""
 
 #: .\catalog\templates\catalog\car_rentals.html:9
@@ -864,7 +1054,7 @@ msgstr ""
 msgid "per day"
 msgstr ""
 
-#: .\catalog\templates\catalog\car_rentals.html:27
+#: .\catalog\templates\catalog\car_rentals.html:27 .\core\views.py:215
 msgid "Available for rental"
 msgstr ""
 
@@ -872,128 +1062,265 @@ msgstr ""
 msgid "Our rental fleet is being curated. Please check back soon."
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:6
-msgid "Back to collection"
+#: .\catalog\templates\catalog\estate_detail.html:6
+msgid "Breadcrumb"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:12
+#: .\catalog\templates\catalog\estate_detail.html:23
 msgid "An exclusive estate for a celebration to remember."
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:15
-#: .\catalog\templates\catalog\venue_detail.html:109
+#: .\catalog\templates\catalog\estate_detail.html:43
+#: .\catalog\templates\catalog\estate_detail.html:210
+#: .\catalog\templates\catalog\estate_detail.html:279
 msgid "Guide price from"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:57
-msgid "Book directly"
-msgstr ""
-
-#: .\catalog\templates\catalog\venue_detail.html:58
-#: .\catalog\templates\catalog\venue_detail.html:124
+#: .\catalog\templates\catalog\estate_detail.html:49
+#: .\catalog\templates\catalog\estate_detail.html:175
+#: .\catalog\templates\catalog\estate_detail.html:251
 msgid "Request a private proposal"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:71
-msgid "Submit enquiry"
+#: .\catalog\templates\catalog\estate_detail.html:55
+#: .\catalog\templates\catalog\estate_detail.html:61
+msgid "Estate gallery"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:78
+#: .\catalog\templates\catalog\estate_detail.html:74
+msgid "Gallery coming soon."
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:90
+msgid "Previous image"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:98
+msgid "Next image"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:106
+#: .\catalog\templates\catalog\estate_detail.html:118
+msgid "Go to image"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:130
 msgid "The experience"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:79
+#: .\catalog\templates\catalog\estate_detail.html:131
 msgid "A celebration to remember."
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:84 .\core\models.py:160
-msgid "Country"
+#: .\catalog\templates\catalog\estate_detail.html:136
+msgid "Estate details"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:88
-msgid "Region"
+#: .\catalog\templates\catalog\estate_detail.html:145
+#: .\catalog\templates\catalog\estate_detail.html:223 .\core\models.py:112
+msgid "Location"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:92
+#: .\catalog\templates\catalog\estate_detail.html:152
+#: .\catalog\templates\catalog\estate_detail.html:219
 msgid "Guests"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:98
+#: .\catalog\templates\catalog\estate_detail.html:164
 msgid "What is included"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:100
+#: .\catalog\templates\catalog\estate_detail.html:166
 msgid "Exclusive use of the estate for your celebration"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:101
+#: .\catalog\templates\catalog\estate_detail.html:167
 msgid "On-site accommodation for the wedding party"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:102
+#: .\catalog\templates\catalog\estate_detail.html:168
 msgid "Dedicated events team and planning support"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:103
+#: .\catalog\templates\catalog\estate_detail.html:169
 msgid "Ceremony and reception spaces"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:111
+#: .\catalog\templates\catalog\estate_detail.html:174
+msgid "Book directly"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:177
+msgid ""
+"Tell us a little about your plans and we will prepare a tailored proposal "
+"for this estate."
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:201
+msgid "Submit enquiry"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:228
 msgid "A considered payment approach"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:113
+#: .\catalog\templates\catalog\estate_detail.html:230
+msgid ""
+"Castle rental proposals may begin with a €3,000 deposit and an agreed "
+"installment schedule, subject to eligibility and contract terms. Vehicle "
+"rentals must be paid in full."
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:234
 msgid "Illustrative installment term"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:121
+#: .\catalog\templates\catalog\estate_detail.html:237
+msgid "12 months"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:238
+msgid "24 months"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:239
+msgid "36 months"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:240
+msgid "48 months"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:241
+msgid "60 months"
+msgstr ""
+
+#: .\catalog\templates\catalog\estate_detail.html:244
 msgid "Example monthly amount"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:123
+#: .\catalog\templates\catalog\estate_detail.html:247
 msgid ""
 "Illustrative only; excludes fees and interest. No approach approval or "
 "reservation is implied."
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:131
+#: .\catalog\templates\catalog\estate_detail.html:263
 msgid "Similar estates"
 msgstr ""
 
-#: .\catalog\templates\catalog\venue_detail.html:132
+#: .\catalog\templates\catalog\estate_detail.html:264
 msgid "More places you may love."
 msgstr ""
 
-#: .\catalog\templates\catalog\venues.html:6
+#: .\catalog\templates\catalog\estate_detail.html:283
+msgid "Enquire"
+msgstr ""
+
+#: .\catalog\templates\catalog\estates.html:6
 msgid "Back to home"
 msgstr ""
 
-#: .\catalog\templates\catalog\venues.html:8
+#: .\catalog\templates\catalog\estates.html:8
 msgid "The private collection"
 msgstr ""
 
-#: .\catalog\templates\catalog\venues.html:9
+#: .\catalog\templates\catalog\estates.html:9
 msgid "Extraordinary estates"
 msgstr ""
 
-#: .\catalog\templates\catalog\venues.html:10
-msgid "Discover our curated estates across France, Italy and Spain."
+#: .\catalog\templates\catalog\estates.html:10
+msgid "Discover our curated estates across Europe."
 msgstr ""
 
-#: .\catalog\templates\catalog\venues.html:14
-msgid "All places"
+#: .\catalog\templates\catalog\estates.html:18
+msgid "Search the collection"
 msgstr ""
 
-#: .\catalog\templates\catalog\venues.html:34
-msgid "Our collection is being curated. Please check back soon."
+#: .\catalog\templates\catalog\estates.html:23
+#: .\catalog\templates\catalog\estates.html:73
+msgid "Search"
+msgstr ""
+
+#: .\catalog\templates\catalog\estates.html:30
+msgid "Search by name, city, country, or region"
+msgstr ""
+
+#: .\catalog\templates\catalog\estates.html:40
+msgid "All estate types"
+msgstr ""
+
+#: .\catalog\templates\catalog\estates.html:52
+msgid "All countries"
+msgstr ""
+
+#: .\catalog\templates\catalog\estates.html:64
+msgid "All regions"
+msgstr ""
+
+#: .\catalog\templates\catalog\estates.html:78
+msgid "Clear filters"
+msgstr ""
+
+#: .\catalog\templates\catalog\estates.html:86
+#, python-format
+msgid ""
+"\n"
+"      %(count)s estate found\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(count)s estates found\n"
+"    "
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\catalog\templates\catalog\estates.html:98
+msgid ""
+"No estates match your search. Try a different term or clear the filters."
+msgstr ""
+
+#: .\core\data_transfer.py:92
+msgid "Unknown dashboard dataset."
+msgstr ""
+
+#: .\core\data_transfer.py:177
+msgid "Unsupported file format."
+msgstr ""
+
+#: .\core\data_transfer.py:182
+msgid "The file is empty."
+msgstr ""
+
+#: .\core\data_transfer.py:196
+#, python-format
+msgid "Missing required column(s): %(fields)s"
+msgstr ""
+
+#: .\core\data_transfer.py:215
+#, python-format
+msgid "Row %(row)s: invalid id %(id)s."
+msgstr ""
+
+#: .\core\data_transfer.py:239
+#, python-format
+msgid "Row %(row)s: %(field)s %(error)s"
+msgstr ""
+
+#: .\core\data_transfer.py:259
+msgid "The CSV file must be UTF-8 encoded."
+msgstr ""
+
+#: .\core\data_transfer.py:282
+msgid "XLSX support is not available."
+msgstr ""
+
+#: .\core\data_transfer.py:288
+msgid "The XLSX file could not be read."
 msgstr ""
 
 #: .\core\forms.py:83
 msgid "Please choose a date in the future."
-msgstr ""
-
-#: .\core\models.py:64
-msgid "Germany"
 msgstr ""
 
 #: .\core\models.py:68 .\core\models.py:173
@@ -1013,26 +1340,29 @@ msgid "Corporate event"
 msgstr ""
 
 #: .\core\models.py:74 .\core\models.py:90 .\core\models.py:191
+#: .\core\views.py:153 .\core\views.py:160 .\core\views.py:181
 msgid "Full name"
 msgstr ""
 
 #: .\core\models.py:76 .\core\models.py:193
+#: .\core\templates\core\contact.html:197
 msgid "Phone"
 msgstr ""
 
-#: .\core\models.py:77
+#: .\core\models.py:77 .\core\views.py:156
 msgid "Destination"
 msgstr ""
 
-#: .\core\models.py:78
+#: .\core\models.py:78 .\core\views.py:154
 msgid "Event type"
 msgstr ""
 
-#: .\core\models.py:79 .\core\models.py:113
+#: .\core\models.py:79 .\core\models.py:113 .\core\views.py:155
 msgid "Event date"
 msgstr ""
 
-#: .\core\models.py:80 .\core\models.py:163
+#: .\core\models.py:80 .\core\models.py:163 .\core\views.py:148
+#: .\core\views.py:157 .\core\views.py:199
 msgid "Guest count"
 msgstr ""
 
@@ -1044,7 +1374,7 @@ msgstr ""
 msgid "Describe your needs and expectations"
 msgstr ""
 
-#: .\core\models.py:92
+#: .\core\models.py:92 .\core\views.py:162
 msgid "Subject"
 msgstr ""
 
@@ -1056,19 +1386,11 @@ msgstr ""
 msgid "Inquiry"
 msgstr ""
 
-#: .\core\models.py:103 .\core\models.py:162
+#: .\core\models.py:103 .\core\models.py:162 .\core\views.py:188
 msgid "Couple names"
 msgstr ""
 
-#: .\core\models.py:110 .\core\models.py:158
-msgid "Estate"
-msgstr ""
-
-#: .\core\models.py:112
-msgid "Location"
-msgstr ""
-
-#: .\core\models.py:115
+#: .\core\models.py:115 .\core\views.py:190
 msgid "Rating"
 msgstr ""
 
@@ -1084,23 +1406,20 @@ msgstr ""
 msgid "Photo URL"
 msgstr ""
 
-#: .\core\models.py:122
-msgid "Published"
-msgstr ""
-
-#: .\core\models.py:123
+#: .\core\models.py:123 .\core\views.py:192
 msgid "Display order"
 msgstr ""
 
-#: .\core\models.py:128 .\core\templates\core\dashboard_layout.html:52
+#: .\core\models.py:128 .\core\templates\core\dashboard_layout.html:76
+#: .\core\templates\core\dashboard_layout.html:78
 msgid "Testimonials"
 msgstr ""
 
-#: .\core\models.py:151
+#: .\core\models.py:151 .\core\views.py:195
 msgid "Reference"
 msgstr ""
 
-#: .\core\models.py:161
+#: .\core\models.py:161 .\core\views.py:147 .\core\views.py:198
 msgid "Wedding date"
 msgstr ""
 
@@ -1144,15 +1463,15 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
-#: .\core\models.py:195
+#: .\core\models.py:195 .\core\views.py:182
 msgid "Appointment type"
 msgstr ""
 
-#: .\core\models.py:200
+#: .\core\models.py:200 .\core\views.py:183
 msgid "Preferred date"
 msgstr ""
 
-#: .\core\models.py:201
+#: .\core\models.py:201 .\core\views.py:184
 msgid "Preferred time"
 msgstr ""
 
@@ -1168,7 +1487,7 @@ msgstr ""
 msgid "What would you like to discuss?"
 msgstr ""
 
-#: .\core\models.py:213
+#: .\core\models.py:213 .\core\views.py:149 .\core\views.py:185
 msgid "Status"
 msgstr ""
 
@@ -1176,8 +1495,38 @@ msgstr ""
 msgid "Appointment"
 msgstr ""
 
-#: .\core\models.py:223 .\core\templates\core\dashboard_layout.html:51
+#: .\core\models.py:223 .\core\templates\core\dashboard_layout.html:72
+#: .\core\templates\core\dashboard_layout.html:74 .\core\views.py:843
+#: .\core\views.py:1001
 msgid "Appointments"
+msgstr ""
+
+#: .\core\models.py:251
+msgid "Notification read"
+msgstr ""
+
+#: .\core\models.py:252
+msgid "Notification reads"
+msgstr ""
+
+#: .\core\notifications.py:29
+#, python-format
+msgid "New booking enquiry: %(name)s"
+msgstr ""
+
+#: .\core\notifications.py:41
+#, python-format
+msgid "New service request: %(name)s"
+msgstr ""
+
+#: .\core\notifications.py:53
+#, python-format
+msgid "New contact inquiry: %(name)s"
+msgstr ""
+
+#: .\core\notifications.py:65
+#, python-format
+msgid "Appointment requested: %(name)s"
 msgstr ""
 
 #: .\core\templates\core\appointment.html:4
@@ -1223,6 +1572,7 @@ msgid "Formats"
 msgstr ""
 
 #: .\core\templates\core\appointment.html:41
+#: .\core\templates\core\contact.html:31
 msgid "Reply within"
 msgstr ""
 
@@ -1312,6 +1662,8 @@ msgid ""
 msgstr ""
 
 #: .\core\templates\core\appointment.html:133
+#: .\core\templates\core\contact.html:129
+#: .\core\templates\core\contact.html:174
 msgid "privacy policy"
 msgstr ""
 
@@ -1352,6 +1704,7 @@ msgid "Prefer to write to us first?"
 msgstr ""
 
 #: .\core\templates\core\appointment.html:168
+#: .\core\templates\core\contact.html:19
 msgid "Send an enquiry"
 msgstr ""
 
@@ -1361,7 +1714,7 @@ msgstr ""
 
 #: .\core\templates\core\appointment.html:174
 msgid ""
-"Tell us your date and venue, and we will adapt the call to what you still "
+"Tell us your date and estate, and we will adapt the call to what you still "
 "need to decide."
 msgstr ""
 
@@ -1369,28 +1722,136 @@ msgstr ""
 msgid "Submit a service request"
 msgstr ""
 
-#: .\core\templates\core\contact.html:7
+#: .\core\templates\core\contact.html:4
+msgid ""
+"Send a message or submit a service request to the CastleForever team. Tell "
+"us about your plans and we will reply within one business day."
+msgstr ""
+
+#: .\core\templates\core\contact.html:13
 msgid "Get in touch."
 msgstr ""
 
-#: .\core\templates\core\contact.html:8
-msgid "Choose an enquiry or a service request."
+#: .\core\templates\core\contact.html:15
+msgid ""
+"Choose an enquiry or a service request. We read every message ourselves and "
+"reply with the next steps."
 msgstr ""
 
-#: .\core\templates\core\contact.html:11
+#: .\core\templates\core\contact.html:35
+msgid "Ways to write"
+msgstr ""
+
+#: .\core\templates\core\contact.html:39
+msgid "Direct email"
+msgstr ""
+
+#: .\core\templates\core\contact.html:49 .\core\templates\core\contact.html:59
+msgid "Contact options"
+msgstr ""
+
+#: .\core\templates\core\contact.html:50
+msgid "How can we help?"
+msgstr ""
+
+#: .\core\templates\core\contact.html:52
+msgid ""
+"Ask a quick question, or tell us about your celebration so we can prepare a "
+"tailored shortlist."
+msgstr ""
+
+#: .\core\templates\core\contact.html:72
 msgid "Enquiry"
 msgstr ""
 
-#: .\core\templates\core\contact.html:12
+#: .\core\templates\core\contact.html:84
 msgid "Request"
 msgstr ""
 
-#: .\core\templates\core\contact.html:30
+#: .\core\templates\core\contact.html:98
+msgid "Direct enquiry"
+msgstr ""
+
+#: .\core\templates\core\contact.html:99
+msgid "Send us a message."
+msgstr ""
+
+#: .\core\templates\core\contact.html:101
+msgid ""
+"Ask about an estate, availability, visits or the way we work. A short note "
+"is enough to get started."
+msgstr ""
+
+#: .\core\templates\core\contact.html:124
 msgid "Send enquiry"
 msgstr ""
 
-#: .\core\templates\core\contact.html:49
+#: .\core\templates\core\contact.html:128
+msgid "We will only use your details to respond to your message."
+msgstr ""
+
+#: .\core\templates\core\contact.html:143
+msgid "Service request"
+msgstr ""
+
+#: .\core\templates\core\contact.html:144
+msgid "Tell us what you need."
+msgstr ""
+
+#: .\core\templates\core\contact.html:146
+msgid ""
+"Share your date, guest count and budget so we can suggest the right estates "
+"and services."
+msgstr ""
+
+#: .\core\templates\core\contact.html:169
 msgid "Submit request"
+msgstr ""
+
+#: .\core\templates\core\contact.html:173
+msgid "We will only use your details to prepare your proposal."
+msgstr ""
+
+#: .\core\templates\core\contact.html:185
+msgid "Talk to us directly"
+msgstr ""
+
+#: .\core\templates\core\contact.html:204
+msgid "Office hours"
+msgstr ""
+
+#: .\core\templates\core\contact.html:212
+msgid "What happens next"
+msgstr ""
+
+#: .\core\templates\core\contact.html:217
+msgid "We read your message"
+msgstr ""
+
+#: .\core\templates\core\contact.html:218
+msgid "A specialist reviews your plans and checks the details with the team."
+msgstr ""
+
+#: .\core\templates\core\contact.html:224
+msgid "We check availability"
+msgstr ""
+
+#: .\core\templates\core\contact.html:225
+msgid "We look at dates, estates and the practical options that suit you."
+msgstr ""
+
+#: .\core\templates\core\contact.html:231
+msgid "We reply"
+msgstr ""
+
+#: .\core\templates\core\contact.html:232
+msgid ""
+"You receive a clear answer and the next steps, usually within one business "
+"day."
+msgstr ""
+
+#: .\core\templates\core\contact.html:238
+msgid "Prefer to speak to someone?"
 msgstr ""
 
 #: .\core\templates\core\dashboard.html:7
@@ -1402,9 +1863,10 @@ msgid "Open list"
 msgstr ""
 
 #: .\core\templates\core\dashboard.html:18
-#: .\core\templates\core\dashboard_layout.html:47
-#: .\core\templates\core\statistics.html:3
-#: .\core\templates\core\statistics.html:6
+#: .\core\templates\core\dashboard_layout.html:56
+#: .\core\templates\core\dashboard_layout.html:58
+#: .\core\templates\core\statistics.html:4
+#: .\core\templates\core\statistics.html:15
 msgid "Statistics"
 msgstr ""
 
@@ -1414,7 +1876,8 @@ msgstr ""
 
 #: .\core\templates\core\dashboard_confirm_delete.html:3
 #: .\core\templates\core\dashboard_confirm_delete.html:10
-#: .\core\templates\core\dashboard_list.html:26
+#: .\core\templates\core\dashboard_detail.html:15
+#: .\core\templates\core\dashboard_list.html:68
 msgid "Delete"
 msgstr ""
 
@@ -1423,7 +1886,21 @@ msgid "Delete record?"
 msgstr ""
 
 #: .\core\templates\core\dashboard_confirm_delete.html:11
+#: .\core\templates\core\dashboard_import.html:48
 msgid "Cancel"
+msgstr ""
+
+#: .\core\templates\core\dashboard_detail.html:10
+msgid "Record details"
+msgstr ""
+
+#: .\core\templates\core\dashboard_detail.html:14
+#: .\core\templates\core\dashboard_list.html:65
+msgid "Edit"
+msgstr ""
+
+#: .\core\templates\core\dashboard_detail.html:31
+msgid "No fields to display."
 msgstr ""
 
 #: .\core\templates\core\dashboard_form.html:3
@@ -1442,57 +1919,165 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: .\core\templates\core\dashboard_layout.html:49
+#: .\core\templates\core\dashboard_import.html:3
+#: .\core\templates\core\dashboard_import.html:8
+#: .\core\templates\core\dashboard_import.html:46
+#: .\core\templates\core\dashboard_list.html:10
+msgid "Import"
+msgstr ""
+
+#: .\core\templates\core\dashboard_import.html:12
+msgid "The import was not completed. No records were changed."
+msgstr ""
+
+#: .\core\templates\core\dashboard_import.html:21
+#: .\core\templates\core\dashboard_import.html:24
+msgid "File format"
+msgstr ""
+
+#: .\core\templates\core\dashboard_import.html:30
+msgid "Data file"
+msgstr ""
+
+#: .\core\templates\core\dashboard_import.html:37
+msgid ""
+"Use a CSV or XLSX exported from this list view. Rows with an id update that "
+"record, or recreate it if missing; rows without one create a new record."
+msgstr ""
+
+#: .\core\templates\core\dashboard_import.html:38
+msgid "Auto-managed timestamps and uploaded images are not imported."
+msgstr ""
+
+#: .\core\templates\core\dashboard_import.html:41
+msgid "Columns"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:45
+msgid "CastleForever home"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:46
+#: .\core\templates\core\dashboard_layout.html:129
+msgid "CastleForever"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:64
+#: .\core\templates\core\dashboard_layout.html:66
 msgid "Service Requests"
 msgstr ""
 
-#: .\core\templates\core\dashboard_layout.html:50
+#: .\core\templates\core\dashboard_layout.html:68
+#: .\core\templates\core\dashboard_layout.html:70
 msgid "Contact Inquiries"
 msgstr ""
 
-#: .\core\templates\core\dashboard_layout.html:53
+#: .\core\templates\core\dashboard_layout.html:80
+#: .\core\templates\core\dashboard_layout.html:82
 msgid "Wedding Records"
 msgstr ""
 
-#: .\core\templates\core\dashboard_layout.html:54
+#: .\core\templates\core\dashboard_layout.html:84
+#: .\core\templates\core\dashboard_layout.html:86
 msgid "Vehicle Rentals"
 msgstr ""
 
-#: .\core\templates\core\dashboard_layout.html:55
+#: .\core\templates\core\dashboard_layout.html:88
+#: .\core\templates\core\dashboard_layout.html:90
 msgid "Payment Schedules"
 msgstr ""
 
-#: .\core\templates\core\dashboard_layout.html:56
-#: .\core\templates\core\statistics.html:53
-msgid "Venues"
-msgstr ""
-
-#: .\core\templates\core\dashboard_layout.html:57
-#: .\core\templates\core\statistics.html:90
+#: .\core\templates\core\dashboard_layout.html:96
+#: .\core\templates\core\dashboard_layout.html:98 .\core\views.py:836
+#: .\core\views.py:928
 msgid "Vehicles"
 msgstr ""
 
-#: .\core\templates\core\dashboard_layout.html:58
+#: .\core\templates\core\dashboard_layout.html:100
+#: .\core\templates\core\dashboard_layout.html:102
 msgid "Back to site"
 msgstr ""
 
-#: .\core\templates\core\dashboard_list.html:9
-msgid "Create"
+#: .\core\templates\core\dashboard_layout.html:119
+#: .\core\templates\core\dashboard_layout.html:120
+#: .\core\templates\core\dashboard_layout.html:123
+msgid "Collapse sidebar"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:121
+msgid "Open dashboard menu"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:122
+msgid "Close dashboard menu"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:124
+msgid "Expand sidebar"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:134
+msgid "Internal area"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:136
+msgid "Display and language"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:145
+#: .\core\templates\core\dashboard_layout.html:146
+msgid "Choose language"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:176
+#: .\core\templates\core\dashboard_layout.html:177
+msgid "Toggle theme"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:179
+msgid "Switch to dark theme"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:180
+msgid "Switch to light theme"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:230
+msgid "Mark all as read"
+msgstr ""
+
+#: .\core\templates\core\dashboard_layout.html:244
+msgid "Account options"
+msgstr ""
+
+#: .\core\templates\core\dashboard_list.html:12
+msgid "Export format"
 msgstr ""
 
 #: .\core\templates\core\dashboard_list.html:16
+msgid "Export"
+msgstr ""
+
+#: .\core\templates\core\dashboard_list.html:18
+msgid "Create"
+msgstr ""
+
+#: .\core\templates\core\dashboard_list.html:26
 msgid "Record"
 msgstr ""
 
-#: .\core\templates\core\dashboard_list.html:17
+#: .\core\templates\core\dashboard_list.html:30
+#: .\core\templates\core\dashboard_list.html:58
+#: .\core\templates\core\dashboard_list.html:59
 msgid "Actions"
 msgstr ""
 
-#: .\core\templates\core\dashboard_list.html:25
-msgid "Edit"
+#: .\core\templates\core\dashboard_list.html:45
+#: .\core\templates\core\dashboard_list.html:46
+msgid "Details"
 msgstr ""
 
-#: .\core\templates\core\dashboard_list.html:30
+#: .\core\templates\core\dashboard_list.html:76
 msgid "No records yet."
 msgstr ""
 
@@ -1569,7 +2154,7 @@ msgstr ""
 msgid "Completed weddings · Jan - Dec"
 msgstr ""
 
-#: .\core\templates\core\results.html:79
+#: .\core\templates\core\results.html:79 .\core\views.py:740
 msgid "Total"
 msgstr ""
 
@@ -1601,7 +2186,7 @@ msgstr ""
 msgid "Estate results will appear once the first 2025 records are published."
 msgstr ""
 
-#: .\core\templates\core\results.html:131 .\core\templates\core\reviews.html:54
+#: .\core\templates\core\results.html:131 .\core\templates\core\reviews.html:56
 msgid "In their words"
 msgstr ""
 
@@ -1633,7 +2218,7 @@ msgid "Start with a private call"
 msgstr ""
 
 #: .\core\templates\core\results.html:177
-msgid "Venue shortlist"
+msgid "Estate shortlist"
 msgstr ""
 
 #: .\core\templates\core\results.html:178
@@ -1672,7 +2257,7 @@ msgstr ""
 
 #: .\core\templates\core\results.html:185
 msgid ""
-"Confirm the date, sign the venue agreement and agree a deposit and balance "
+"Confirm the date, sign the estate agreement and agree a deposit and balance "
 "schedule in writing."
 msgstr ""
 
@@ -1717,136 +2302,396 @@ msgid ""
 "with verified wedding records before launch."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:4
+#: .\core\templates\core\reviews.html:5
 msgid ""
 "Read real reviews and see photographs from couples who celebrated their "
 "wedding with CastleForever in France, Italy and Spain."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:13
-msgid "The best stories are the ones our couples tell."
+#: .\core\templates\core\reviews.html:15
+msgid "The best stories are the ones our clients tell."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:15
+#: .\core\templates\core\reviews.html:17
 msgid ""
 "Every celebration leaves a story behind. Discover the words  -  and the "
-"photographs  -  of couples who trusted us with their day."
+"photographs  -  of people who trusted us with their day."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:22
+#: .\core\templates\core\reviews.html:24
 msgid "Explore the estates"
 msgstr ""
 
-#: .\core\templates\core\reviews.html:29
+#: .\core\templates\core\reviews.html:31
 msgid "Average rating"
 msgstr ""
 
-#: .\core\templates\core\reviews.html:35
+#: .\core\templates\core\reviews.html:37
 msgid "Published reviews"
 msgstr ""
 
-#: .\core\templates\core\reviews.html:39
+#: .\core\templates\core\reviews.html:41
 msgid "Weddings in"
 msgstr ""
 
-#: .\core\templates\core\reviews.html:55
+#: .\core\templates\core\reviews.html:57
 msgid "Real couples. Real celebrations."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:58
+#: .\core\templates\core\reviews.html:60
 msgid ""
 "Photographs and reviews are shared with the kind permission of each couple. "
 "Names are published as agreed with them."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:74
+#: .\core\templates\core\reviews.html:76
 msgid "out of 5"
 msgstr ""
 
-#: .\core\templates\core\reviews.html:95
+#: .\core\templates\core\reviews.html:97
 msgid "Our first reviews are on their way."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:96
+#: .\core\templates\core\reviews.html:98
 msgid ""
 "Meet us for a private call and discover the estates and the team behind "
 "CastleForever."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:107
+#: .\core\templates\core\reviews.html:109
 msgid "See for yourself"
 msgstr ""
 
-#: .\core\templates\core\reviews.html:108
+#: .\core\templates\core\reviews.html:110
 msgid "Our 2025 season, month by month."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:110
+#: .\core\templates\core\reviews.html:112
 msgid ""
 "Weddings celebrated, guests welcomed and estates brought to life. Explore "
 "the figures behind the stories."
 msgstr ""
 
-#: .\core\templates\core\reviews.html:114
+#: .\core\templates\core\reviews.html:116
 msgid "View 2025 results"
 msgstr ""
 
-#: .\core\templates\core\statistics.html:7
-msgid "Overview of activity across the platform."
+#: .\core\templates\core\statistics.html:12
+msgid "Back to dashboard"
 msgstr ""
 
 #: .\core\templates\core\statistics.html:14
-#: .\core\templates\core\statistics.html:71
-msgid "Bookings by venue"
+msgid "Insights"
 msgstr ""
 
-#: .\core\templates\core\statistics.html:18
-#: .\core\templates\core\statistics.html:86
-msgid "Inquiries over time"
+#: .\core\templates\core\statistics.html:17
+msgid ""
+"A clear view of bookings, requests, and catalog activity across "
+"CastleForever."
 msgstr ""
 
-#: .\core\templates\core\statistics.html:28
-#: .\core\templates\core\statistics.html:76
-msgid "Requests by event type"
+#: .\core\templates\core\statistics.html:22
+msgid "Updated from live dashboard records"
 msgstr ""
 
-#: .\core\templates\core\statistics.html:32
-#: .\core\templates\core\statistics.html:81
-msgid "Requests by destination"
-msgstr ""
-
-#: .\core\templates\core\statistics.html:39
-msgid "Fleet"
+#: .\core\templates\core\statistics.html:27
+msgid "Key metrics"
 msgstr ""
 
 #: .\core\templates\core\statistics.html:42
-#: .\core\templates\core\statistics.html:91
-msgid "Vehicles by category"
+msgid "View records"
 msgstr ""
 
-#: .\core\templates\core\statistics.html:46
-#: .\core\templates\core\statistics.html:101
-msgid "Rentals by vehicle"
+#: .\core\templates\core\statistics.html:54
+msgid "Sections"
 msgstr ""
 
 #: .\core\templates\core\statistics.html:56
-#: .\core\templates\core\statistics.html:96
-msgid "Venues by country"
+msgid "Statistics sections"
 msgstr ""
 
-#: .\core\templates\core\statistics.html:60
-#: .\core\templates\core\statistics.html:106
-msgid "Payment schedules"
+#: .\core\views.py:48
+msgid "Thank you. Your message has been received."
 msgstr ""
 
-#: .\core\templates\core\statistics.html:100
-msgid "Rentals"
+#: .\core\views.py:55
+msgid "Thank you. We have received your request."
 msgstr ""
 
-#: .\core\templates\core\statistics.html:105
+#: .\core\views.py:150
+msgid "Quoted total"
+msgstr ""
+
+#: .\core\views.py:166
+msgid "Vehicle"
+msgstr ""
+
+#: .\core\views.py:167 .\core\views.py:174
+msgid "Booking"
+msgstr ""
+
+#: .\core\views.py:168
+msgid "Start date"
+msgstr ""
+
+#: .\core\views.py:169
+msgid "End date"
+msgstr ""
+
+#: .\core\views.py:170
+msgid "Amount due"
+msgstr ""
+
+#: .\core\views.py:171
+msgid "Paid"
+msgstr ""
+
+#: .\core\views.py:175
+msgid "Deposit"
+msgstr ""
+
+#: .\core\views.py:176
+msgid "Installment months"
+msgstr ""
+
+#: .\core\views.py:178 .\core\views.py:988
 msgid "Approved"
 msgstr ""
 
-#: .\core\templates\core\statistics.html:105
+#: .\core\views.py:211
+msgid "Brand"
+msgstr ""
+
+#: .\core\views.py:212
+msgid "Model"
+msgstr ""
+
+#: .\core\views.py:213
+msgid "Vehicle type"
+msgstr ""
+
+#: .\core\views.py:214
+msgid "Daily price"
+msgstr ""
+
+#: .\core\views.py:235 .\core\views.py:319
+msgid "Yes"
+msgstr ""
+
+#: .\core\views.py:235 .\core\views.py:319
+msgid "No"
+msgstr ""
+
+#: .\core\views.py:372
+#, python-format
+msgid "Marked %(count)s notification as read."
+msgid_plural "Marked %(count)s notifications as read."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\core\views.py:378
+msgid "All notifications are already read."
+msgstr ""
+
+#: .\core\views.py:430
+msgid "Please choose a file."
+msgstr ""
+
+#: .\core\views.py:432
+msgid "The file must be smaller than 5 MB."
+msgstr ""
+
+#: .\core\views.py:443
+#, python-format
+msgid "Imported %(count)s record."
+msgid_plural "Imported %(count)s records."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\core\views.py:717 .\core\views.py:793
+msgid "Not specified"
+msgstr ""
+
+#: .\core\views.py:741
+msgid "No data available yet."
+msgstr ""
+
+#: .\core\views.py:810
+msgid "Estate enquiries"
+msgstr ""
+
+#: .\core\views.py:817
+msgid "Event planning requests"
+msgstr ""
+
+#: .\core\views.py:824
+msgid "Contact messages"
+msgstr ""
+
+#: .\core\views.py:831 .\core\views.py:955
+msgid "Properties in the collection"
+msgstr ""
+
+#: .\core\views.py:838
+msgid "Available fleet"
+msgstr ""
+
+#: .\core\views.py:845 .\core\views.py:997
+msgid "Calls and estate visits"
+msgstr ""
+
+#: .\core\views.py:854
+msgid "Bookings and inquiries"
+msgstr ""
+
+#: .\core\views.py:855
+msgid "Where demand comes from and how conversations trend."
+msgstr ""
+
+#: .\core\views.py:860
+msgid "Bookings by estate"
+msgstr ""
+
+#: .\core\views.py:861
+msgid "Estates with the most bookings"
+msgstr ""
+
+#: .\core\views.py:866 .\core\views.py:971
+msgid "No bookings have been recorded yet."
+msgstr ""
+
+#: .\core\views.py:872
+msgid "Inquiries over time"
+msgstr ""
+
+#: .\core\views.py:873
+msgid "Contact inquiries by month"
+msgstr ""
+
+#: .\core\views.py:878
+msgid "No inquiries have been recorded yet."
+msgstr ""
+
+#: .\core\views.py:887
+msgid "Event types and preferred destinations."
+msgstr ""
+
+#: .\core\views.py:892
+msgid "Requests by event type"
+msgstr ""
+
+#: .\core\views.py:893
+msgid "Services requested by celebration type"
+msgstr ""
+
+#: .\core\views.py:897 .\core\views.py:908
+msgid "Requests"
+msgstr ""
+
+#: .\core\views.py:898 .\core\views.py:909
+msgid "No service requests have been recorded yet."
+msgstr ""
+
+#: .\core\views.py:903
+msgid "Requests by destination"
+msgstr ""
+
+#: .\core\views.py:904
+msgid "Preferred countries"
+msgstr ""
+
+#: .\core\views.py:917
+msgid "Fleet and rentals"
+msgstr ""
+
+#: .\core\views.py:918
+msgid "Vehicle mix and rental demand."
+msgstr ""
+
+#: .\core\views.py:923
+msgid "Vehicles by category"
+msgstr ""
+
+#: .\core\views.py:924
+msgid "Current fleet composition"
+msgstr ""
+
+#: .\core\views.py:929
+msgid "No vehicles have been added yet."
+msgstr ""
+
+#: .\core\views.py:934
+msgid "Rentals by vehicle"
+msgstr ""
+
+#: .\core\views.py:935
+msgid "Most rented vehicles"
+msgstr ""
+
+#: .\core\views.py:939
+msgid "Rentals"
+msgstr ""
+
+#: .\core\views.py:940
+msgid "No vehicle rentals have been recorded yet."
+msgstr ""
+
+#: .\core\views.py:948
+msgid "Estates and booking status"
+msgstr ""
+
+#: .\core\views.py:949
+msgid "Catalog coverage and the current booking pipeline."
+msgstr ""
+
+#: .\core\views.py:954
+msgid "Estates by country"
+msgstr ""
+
+#: .\core\views.py:960
+msgid "No estates have been added yet."
+msgstr ""
+
+#: .\core\views.py:965
+msgid "Bookings by status"
+msgstr ""
+
+#: .\core\views.py:966
+msgid "Current booking pipeline"
+msgstr ""
+
+#: .\core\views.py:979
+msgid "Payments and appointments"
+msgstr ""
+
+#: .\core\views.py:980
+msgid "Approvals and consultation requests."
+msgstr ""
+
+#: .\core\views.py:985
+msgid "Payment schedules"
+msgstr ""
+
+#: .\core\views.py:986
+msgid "Approved versus pending"
+msgstr ""
+
+#: .\core\views.py:988
 msgid "Pending"
+msgstr ""
+
+#: .\core\views.py:990
+msgid "Schedules"
+msgstr ""
+
+#: .\core\views.py:991
+msgid "No payment schedules have been recorded yet."
+msgstr ""
+
+#: .\core\views.py:996
+msgid "Appointments by type"
+msgstr ""
+
+#: .\core\views.py:1002
+msgid "No appointments have been recorded yet."
 msgstr ""

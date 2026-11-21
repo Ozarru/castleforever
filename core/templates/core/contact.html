@@ -1,83 +1,301 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
 {% block title %}{% trans "Contact" %} | CastleForever{% endblock %}
+{% block meta_description %}{% trans "Send a message or submit a service request to the CastleForever team. Tell us about your plans and we will reply within one business day." %}{% endblock %}
 {% block content %}
-<main class="w-full max-w-4xl mx-auto px-6 py-16">
-  <p class="uppercase text-xs tracking-[.25em] text-[#b18c43]">{% trans "Contact" %}</p>
-  <h1 class="font-display text-5xl mt-4">{% trans "Get in touch." %}</h1>
-  <p class="text-gray-600 mt-5">{% trans "Choose an enquiry or a service request." %}</p>
+<main class="pb-24">
 
-  <div class="mt-8 flex gap-2">
-    <button type="button" id="tabEnquiryBtn" class="px-5 py-3 text-[10px] tracking-widest uppercase border border-forest" data-tab="enquiry">{% trans "Enquiry" %}</button>
-    <button type="button" id="tabRequestBtn" class="px-5 py-3 text-[10px] tracking-widest uppercase border border-forest/20" data-tab="request">{% trans "Request" %}</button>
-  </div>
-
-  <div id="tabEnquiry" class="mt-8">
-    <form method="post" class="space-y-5">
-      {% csrf_token %}
-      <input type="hidden" name="form_type" value="enquiry">
-      {% for field in enquiry_form %}
-        <div>
-          <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">{{ field.label }}</label>
-          <div class="[&_input]:w-full [&_select]:w-full [&_textarea]:w-full [&_input]:p-3 [&_select]:p-3 [&_textarea]:p-3 [&_input]:border [&_select]:border [&_textarea]:border">
-            {{ field }}
-          </div>
-          {% for error in field.errors %}
-            <p class="text-red-700 text-xs mt-1">{{ error }}</p>
-          {% endfor %}
+  <!-- HERO -->
+  <section class="bg-forest text-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 md:py-24 grid lg:grid-cols-[1.15fr_.85fr] gap-12 items-end">
+      <div>
+        <p class="eyebrow text-[#e4d4b3] mb-6">{% trans "Contact" %}</p>
+        <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl leading-[.98]">{% trans "Get in touch." %}</h1>
+        <p class="mt-7 max-w-xl text-white/70 text-sm md:text-base font-light leading-8">
+          {% trans "Choose an enquiry or a service request. We read every message ourselves and reply with the next steps." %}
+        </p>
+        <div class="mt-9 flex flex-wrap gap-4">
+          <a href="#contact-form" class="btn bg-[#d5c19b] text-forest">
+            {% trans "Send an enquiry" %}
+            <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+          </a>
+          <a href="{% url 'core:appointment' %}" class="btn border border-white/70 text-white">
+            {% trans "Book a private call" %}
+            <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+          </a>
         </div>
-      {% endfor %}
-      <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans "Send enquiry" %} <i class="fa-solid fa-arrow-right-long"></i></button>
-    </form>
-  </div>
+      </div>
 
-  <div id="tabRequest" class="mt-8 hidden">
-    <form method="post" class="space-y-5">
-      {% csrf_token %}
-      <input type="hidden" name="form_type" value="request">
-      {% for field in request_form %}
-        <div>
-          <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">{{ field.label }}</label>
-          <div class="[&_input]:w-full [&_select]:w-full [&_textarea]:w-full [&_input]:p-3 [&_select]:p-3 [&_textarea]:p-3 [&_input]:border [&_select]:border [&_textarea]:border">
-            {{ field }}
-          </div>
-          {% for error in field.errors %}
-            <p class="text-red-700 text-xs mt-1">{{ error }}</p>
-          {% endfor %}
+      <dl class="grid grid-cols-2 gap-px bg-white/15 border border-white/15">
+        <div class="bg-forest p-6">
+          <dt class="eyebrow text-white/55">{% trans "Reply within" %}</dt>
+          <dd class="font-display text-3xl mt-3">24h</dd>
         </div>
-      {% endfor %}
-      <button class="bg-forest text-white py-4 px-8 uppercase tracking-widest text-xs">{% trans "Submit request" %} <i class="fa-solid fa-arrow-right-long"></i></button>
-    </form>
-  </div>
+        <div class="bg-forest p-6">
+          <dt class="eyebrow text-white/55">{% trans "Ways to write" %}</dt>
+          <dd class="font-display text-3xl mt-3">2</dd>
+        </div>
+        <div class="bg-forest p-6 col-span-2">
+          <dt class="eyebrow text-white/55">{% trans "Direct email" %}</dt>
+          <dd class="text-sm mt-3 break-all">hello@castleforever.com</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CONTACT OPTIONS -->
+  <section id="contact-form" class="max-w-7xl mx-auto px-6 lg:px-10 py-16 md:py-24 scroll-mt-8">
+    <div class="mb-10">
+      <p class="eyebrow text-gold mb-4">{% trans "Contact options" %}</p>
+      <h2 class="font-display text-4xl md:text-5xl">{% trans "How can we help?" %}</h2>
+      <p class="text-ink/60 mt-4 max-w-2xl leading-7">
+        {% trans "Ask a quick question, or tell us about your celebration so we can prepare a tailored shortlist." %}
+      </p>
+    </div>
+
+    <div
+      class="inline-flex flex-wrap gap-1 border-b border-forest/20"
+      role="tablist"
+      aria-label="{% trans 'Contact options' %}"
+      id="contactTabs"
+    >
+      <button
+        type="button"
+        id="tabEnquiryBtn"
+        role="tab"
+        aria-controls="tabEnquiry"
+        aria-selected="{% if active_tab == 'enquiry' %}true{% else %}false{% endif %}"
+        tabindex="{% if active_tab == 'enquiry' %}0{% else %}-1{% endif %}"
+        data-contact-tab="enquiry"
+        class="contact-tab px-6 py-4 text-[11px] font-bold uppercase tracking-[.15em] border-b-2 transition"
+      >
+        {% trans "Enquiry" %}
+      </button>
+      <button
+        type="button"
+        id="tabRequestBtn"
+        role="tab"
+        aria-controls="tabRequest"
+        aria-selected="{% if active_tab == 'request' %}true{% else %}false{% endif %}"
+        tabindex="{% if active_tab == 'request' %}0{% else %}-1{% endif %}"
+        data-contact-tab="request"
+        class="contact-tab px-6 py-4 text-[11px] font-bold uppercase tracking-[.15em] border-b-2 transition"
+      >
+        {% trans "Request" %}
+      </button>
+    </div>
+
+    <div class="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-12 xl:gap-16 mt-10">
+      <div class="min-w-0">
+
+        <!-- ENQUIRY PANEL -->
+        <div
+          id="tabEnquiry"
+          role="tabpanel"
+          aria-labelledby="tabEnquiryBtn" {% if active_tab != 'enquiry' %}hidden{% endif %}
+        >
+          <div class="bg-white p-6 md:p-10">
+            <p class="eyebrow text-gold mb-3">{% trans "Direct enquiry" %}</p>
+            <h3 class="font-display text-3xl md:text-4xl">{% trans "Send us a message." %}</h3>
+            <p class="text-sm leading-7 text-ink/60 mt-3 max-w-xl">
+              {% trans "Ask about an estate, availability, visits or the way we work. A short note is enough to get started." %}
+            </p>
+
+            <form method="post" class="mt-8 grid md:grid-cols-2 gap-5">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="enquiry">
+              {% if enquiry_form.non_field_errors %}
+                <div class="md:col-span-2 text-red-700 text-sm">{{ enquiry_form.non_field_errors }}</div>
+              {% endif %}
+              {% for field in enquiry_form %}
+                <div class="{% if field.name == 'message' %}md:col-span-2{% endif %}">
+                  <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">
+                    {{ field.label }}{% if field.field.required %}<span class="text-gold"> *</span>{% endif %}
+                  </label>
+                  <div class="[&_input]:w-full [&_select]:w-full [&_textarea]:w-full [&_input]:p-3 [&_select]:p-3 [&_textarea]:p-3 [&_input]:border [&_select]:border [&_textarea]:border [&_input]:bg-white [&_select]:bg-white [&_textarea]:bg-white">
+                    {{ field }}
+                  </div>
+                  {% if field.help_text %}<p class="text-xs text-ink/50 mt-1">{{ field.help_text }}</p>{% endif %}
+                  {% for error in field.errors %}<p class="text-red-700 text-xs mt-1">{{ error }}</p>{% endfor %}
+                </div>
+              {% endfor %}
+              <div class="md:col-span-2">
+                <button type="submit" class="btn bg-forest text-white">
+                  {% trans "Send enquiry" %}
+                  <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                </button>
+                <p class="text-xs leading-6 text-ink/50 mt-4">
+                  {% trans "We will only use your details to respond to your message." %}
+                  <a href="{% url 'base:privacy' %}" class="underline hover:text-gold">{% trans "privacy policy" %}</a>.
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- SERVICE REQUEST PANEL -->
+        <div
+          id="tabRequest"
+          role="tabpanel"
+          aria-labelledby="tabRequestBtn" {% if active_tab != 'request' %}hidden{% endif %}
+        >
+          <div class="bg-white p-6 md:p-10">
+            <p class="eyebrow text-gold mb-3">{% trans "Service request" %}</p>
+            <h3 class="font-display text-3xl md:text-4xl">{% trans "Tell us what you need." %}</h3>
+            <p class="text-sm leading-7 text-ink/60 mt-3 max-w-xl">
+              {% trans "Share your date, guest count and budget so we can suggest the right estates and services." %}
+            </p>
+
+            <form method="post" class="mt-8 grid md:grid-cols-2 gap-5">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="request">
+              {% if request_form.non_field_errors %}
+                <div class="md:col-span-2 text-red-700 text-sm">{{ request_form.non_field_errors }}</div>
+              {% endif %}
+              {% for field in request_form %}
+                <div class="{% if field.name == 'needs' %}md:col-span-2{% endif %}">
+                  <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">
+                    {{ field.label }}{% if field.field.required %}<span class="text-gold"> *</span>{% endif %}
+                  </label>
+                  <div class="[&_input]:w-full [&_select]:w-full [&_textarea]:w-full [&_input]:p-3 [&_select]:p-3 [&_textarea]:p-3 [&_input]:border [&_select]:border [&_textarea]:border [&_input]:bg-white [&_select]:bg-white [&_textarea]:bg-white">
+                    {{ field }}
+                  </div>
+                  {% if field.help_text %}<p class="text-xs text-ink/50 mt-1">{{ field.help_text }}</p>{% endif %}
+                  {% for error in field.errors %}<p class="text-red-700 text-xs mt-1">{{ error }}</p>{% endfor %}
+                </div>
+              {% endfor %}
+              <div class="md:col-span-2">
+                <button type="submit" class="btn bg-forest text-white">
+                  {% trans "Submit request" %}
+                  <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                </button>
+                <p class="text-xs leading-6 text-ink/50 mt-4">
+                  {% trans "We will only use your details to prepare your proposal." %}
+                  <a href="{% url 'base:privacy' %}" class="underline hover:text-gold">{% trans "privacy policy" %}</a>.
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUPPORTING INFORMATION -->
+      <aside class="h-fit">
+        <div class="bg-[#F0EDE5] p-8 shadow-lg">
+          <p class="eyebrow text-gold mb-5">{% trans "Talk to us directly" %}</p>
+          <ul class="space-y-5 text-sm">
+            <li class="flex gap-4">
+              <i class="fa-solid fa-envelope text-gold mt-1" aria-hidden="true"></i>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-ink/50">{% trans "Email" %}</p>
+                <a href="mailto:hello@castleforever.com" class="mt-1 block break-all hover:text-gold">hello@castleforever.com</a>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <i class="fa-solid fa-phone text-gold mt-1" aria-hidden="true"></i>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-ink/50">{% trans "Phone" %}</p>
+                <a href="tel:+331123344" class="mt-1 block hover:text-gold">+33 0 11 22 33 44</a>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <i class="fa-regular fa-clock text-gold mt-1" aria-hidden="true"></i>
+              <div>
+                <p class="text-[10px] uppercase tracking-widest text-ink/50">{% trans "Office hours" %}</p>
+                <p class="mt-1">{% trans "Mon - Fri, 09:00 - 18:00 CET" %}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-white p-8 mt-6">
+          <p class="eyebrow text-gold mb-5">{% trans "What happens next" %}</p>
+          <ol class="space-y-6">
+            <li class="flex gap-4">
+              <span class="font-display text-2xl text-gold leading-none">01</span>
+              <div>
+                <h4 class="font-display text-xl">{% trans "We read your message" %}</h4>
+                <p class="text-sm leading-7 text-ink/60 mt-1">{% trans "A specialist reviews your plans and checks the details with the team." %}</p>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <span class="font-display text-2xl text-gold leading-none">02</span>
+              <div>
+                <h4 class="font-display text-xl">{% trans "We check availability" %}</h4>
+                <p class="text-sm leading-7 text-ink/60 mt-1">{% trans "We look at dates, estates and the practical options that suit you." %}</p>
+              </div>
+            </li>
+            <li class="flex gap-4">
+              <span class="font-display text-2xl text-gold leading-none">03</span>
+              <div>
+                <h4 class="font-display text-xl">{% trans "We reply" %}</h4>
+                <p class="text-sm leading-7 text-ink/60 mt-1">{% trans "You receive a clear answer and the next steps, usually within one business day." %}</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="mt-8 pt-6 border-t border-ink/10">
+            <p class="text-sm leading-7 text-ink/60">{% trans "Prefer to speak to someone?" %}</p>
+            <a href="{% url 'core:appointment' %}" class="inline-flex mt-4 text-[11px] font-bold uppercase tracking-[.15em] border-b border-forest pb-1 hover:text-gold hover:border-gold transition">
+              {% trans "Book a private call" %}
+              <i class="fa-solid fa-arrow-right-long ml-3" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
 </main>
 
 <script>
-  const activeTab = "{{ active_tab }}";
-  const enquiryPanel = document.getElementById('tabEnquiry');
-  const requestPanel = document.getElementById('tabRequest');
-  const enquiryBtn = document.getElementById('tabEnquiryBtn');
-  const requestBtn = document.getElementById('tabRequestBtn');
+  (function () {
+    const tablist = document.getElementById('contactTabs');
+    const tabs = Array.from(document.querySelectorAll('[data-contact-tab]'));
+    const panels = {
+      enquiry: document.getElementById('tabEnquiry'),
+      request: document.getElementById('tabRequest'),
+    };
+    const activeClasses = ['bg-forest', 'text-white', 'border-forest'];
+    const idleClasses = ['bg-transparent', 'text-ink/60', 'border-transparent'];
 
-  function showTab(tab) {
-    if (tab === 'request') {
-      enquiryPanel.classList.add('hidden');
-      requestPanel.classList.remove('hidden');
-      enquiryBtn.classList.remove('bg-forest', 'text-white');
-      enquiryBtn.classList.add('border-forest/20');
-      requestBtn.classList.add('bg-forest', 'text-white');
-      requestBtn.classList.remove('border-forest/20');
-    } else {
-      requestPanel.classList.add('hidden');
-      enquiryPanel.classList.remove('hidden');
-      requestBtn.classList.remove('bg-forest', 'text-white');
-      requestBtn.classList.add('border-forest/20');
-      enquiryBtn.classList.add('bg-forest', 'text-white');
-      enquiryBtn.classList.remove('border-forest/20');
+    function activate(tab, moveFocus) {
+      if (!panels[tab]) return;
+      tabs.forEach((button) => {
+        const active = button.dataset.contactTab === tab;
+        button.setAttribute('aria-selected', active ? 'true' : 'false');
+        button.tabIndex = active ? 0 : -1;
+        activeClasses.forEach((className) => button.classList.toggle(className, active));
+        idleClasses.forEach((className) => button.classList.toggle(className, !active));
+        if (active && moveFocus) button.focus();
+      });
+      Object.entries(panels).forEach(([name, panel]) => {
+        if (panel) panel.hidden = name !== tab;
+      });
     }
-  }
 
-  enquiryBtn.addEventListener('click', () => showTab('enquiry'));
-  requestBtn.addEventListener('click', () => showTab('request'));
-  showTab(activeTab === 'request' ? 'request' : 'enquiry');
+    tabs.forEach((button) => {
+      button.addEventListener('click', () => activate(button.dataset.contactTab));
+    });
+
+    if (tablist) {
+      tablist.addEventListener('keydown', (event) => {
+        const current = tabs.findIndex((button) => button.getAttribute('aria-selected') === 'true');
+        let next = current;
+        if (event.key === 'ArrowRight') next = (current + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else return;
+        event.preventDefault();
+        activate(tabs[next].dataset.contactTab, true);
+      });
+    }
+
+    const initial = tabs.find((button) => button.getAttribute('aria-selected') === 'true');
+    activate(initial ? initial.dataset.contactTab : 'enquiry');
+  })();
+
+  document.getElementById('year') &&
+    (document.getElementById('year').textContent = new Date().getFullYear());
 </script>
 {% endblock %}

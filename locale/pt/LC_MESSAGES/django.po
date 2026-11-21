@@ -1,0 +1,2953 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CastleForever 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-21 18:55+0000\n"
+"PO-Revision-Date: 2026-11-21 15:47+0000\n"
+"Last-Translator: CastleForever <translations@castleforever.example>\n"
+"Language-Team: Portuguese <LL@li.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\accounts\forms.py:17 .\accounts\templates\accounts\login.html:21
+#: .\core\models.py:75 .\core\models.py:91 .\core\models.py:192
+#: .\core\templates\core\contact.html:190 .\core\views.py:161
+msgid "Email"
+msgstr "Email"
+
+#: .\accounts\forms.py:28 .\accounts\templates\accounts\login.html:27
+msgid "Password"
+msgstr "Palavra-passe"
+
+#: .\accounts\templates\accounts\activity.html:3
+#: .\accounts\templates\accounts\activity.html:6
+#: .\base\templates\shared\navbar.html:26
+#: .\base\templates\shared\navbar.html:58
+#: .\core\templates\core\dashboard_layout.html:257
+msgid "Activity"
+msgstr "Atividade"
+
+#: .\accounts\templates\accounts\activity.html:7
+msgid "Your activity."
+msgstr "A sua atividade."
+
+#: .\accounts\templates\accounts\activity.html:10
+#: .\core\templates\core\dashboard_layout.html:60
+#: .\core\templates\core\dashboard_layout.html:62 .\core\views.py:808
+#: .\core\views.py:865 .\core\views.py:970
+msgid "Bookings"
+msgstr "Reservas"
+
+#: .\accounts\templates\accounts\activity.html:11 .\core\views.py:815
+#: .\core\views.py:886
+msgid "Service requests"
+msgstr "Pedidos de serviço"
+
+#: .\accounts\templates\accounts\activity.html:12 .\core\views.py:822
+#: .\core\views.py:877
+msgid "Inquiries"
+msgstr "Consultas"
+
+#: .\accounts\templates\accounts\activity.html:17
+msgid "No bookings yet."
+msgstr "Ainda não há reservas."
+
+#: .\accounts\templates\accounts\activity.html:22
+msgid "No requests yet."
+msgstr "Ainda não há pedidos."
+
+#: .\accounts\templates\accounts\activity.html:27
+msgid "No inquiries yet."
+msgstr "Ainda não há consultas."
+
+#: .\accounts\templates\accounts\login.html:3
+#: .\accounts\templates\accounts\login.html:33
+#: .\accounts\templates\accounts\signup.html:35
+msgid "Sign in"
+msgstr "Iniciar sessão"
+
+#: .\accounts\templates\accounts\login.html:8
+msgid "Welcome back"
+msgstr "Bem-vindo de volta"
+
+#: .\accounts\templates\accounts\login.html:9
+msgid "Sign in."
+msgstr "Inicie sessão."
+
+#: .\accounts\templates\accounts\login.html:10
+msgid "Access your CastleForever account."
+msgstr "Aceda à sua conta CastleForever."
+
+#: .\accounts\templates\accounts\login.html:38
+msgid "New to CastleForever?"
+msgstr "Ainda não tem conta CastleForever?"
+
+#: .\accounts\templates\accounts\login.html:39
+msgid "Create an account"
+msgstr "Criar uma conta"
+
+#: .\accounts\templates\accounts\notifications.html:3
+#: .\accounts\templates\accounts\notifications.html:6
+#: .\base\templates\shared\navbar.html:25
+#: .\base\templates\shared\navbar.html:57
+#: .\core\templates\core\dashboard_layout.html:196
+#: .\core\templates\core\dashboard_layout.html:197
+#: .\core\templates\core\dashboard_layout.html:206
+#: .\core\templates\core\dashboard_layout.html:254
+msgid "Notifications"
+msgstr "Notificações"
+
+#: .\accounts\templates\accounts\notifications.html:7
+msgid "Your notifications."
+msgstr "As suas notificações."
+
+#: .\accounts\templates\accounts\notifications.html:8
+#: .\core\templates\core\dashboard_layout.html:222
+msgid "No new notifications."
+msgstr "Não há novas notificações."
+
+#: .\accounts\templates\accounts\profile.html:3
+#: .\accounts\templates\accounts\profile.html:6
+#: .\base\templates\shared\navbar.html:24
+#: .\base\templates\shared\navbar.html:56
+#: .\core\templates\core\dashboard_layout.html:251
+msgid "Profile"
+msgstr "Perfil"
+
+#: .\accounts\templates\accounts\profile.html:7
+msgid "Your profile."
+msgstr "O seu perfil."
+
+#: .\accounts\templates\accounts\profile.html:8
+msgid "Update your personal information."
+msgstr "Atualize os seus dados pessoais."
+
+#: .\accounts\templates\accounts\profile.html:23
+msgid "Save profile"
+msgstr "Guardar perfil"
+
+#: .\accounts\templates\accounts\signup.html:3
+msgid "Sign up"
+msgstr "Registar-se"
+
+#: .\accounts\templates\accounts\signup.html:8
+msgid "Join CastleForever"
+msgstr "Junte-se à CastleForever"
+
+#: .\accounts\templates\accounts\signup.html:9
+msgid "Create account."
+msgstr "Criar conta."
+
+#: .\accounts\templates\accounts\signup.html:10
+msgid "Begin your journey to extraordinary estates."
+msgstr "Comece a sua jornada rumo a propriedades extraordinárias."
+
+#: .\accounts\templates\accounts\signup.html:29
+msgid "Create account"
+msgstr "Criar conta"
+
+#: .\accounts\templates\accounts\signup.html:34
+msgid "Already have an account?"
+msgstr "Já tem uma conta?"
+
+#: .\base\templates\base\approach.html:3
+#: .\base\templates\base\approach.html:12
+msgid "Our approach"
+msgstr "A nossa abordagem"
+
+#: .\base\templates\base\approach.html:4
+msgid ""
+"Explore a flexible castle rental payment approach with an initial deposit "
+"and an agreed installment schedule, illustrated without interest or "
+"additional fees."
+msgstr ""
+"Explore uma abordagem flexível de pagamento de aluguer de castelos, com um "
+"depósito inicial e um plano de prestações acordado, ilustrada sem juros nem "
+"taxas adicionais."
+
+#: .\base\templates\base\approach.html:13
+msgid "Your dream day. Your own pace."
+msgstr "O seu dia de sonho. Ao seu ritmo."
+
+#: .\base\templates\base\approach.html:15
+msgid ""
+"An unforgettable castle wedding shouldn't require settling the entire estate"
+" cost at once. Our proposed payment approach lets you secure your "
+"celebration with an initial deposit, then spread the remaining estate "
+"balance across an agreed installment schedule."
+msgstr ""
+"Um casamento de conto de fadas num castelo não deveria exigir pagar todo o "
+"custo da propriedade de uma só vez. A nossa abordagem de pagamento permite-"
+"lhe garantir a celebração com um depósito inicial e distribuir o restante "
+"saldo da propriedade por um calendário de prestações acordado."
+
+#: .\base\templates\base\approach.html:19
+msgid "See the payment plan"
+msgstr "Ver o plano de pagamento"
+
+#: .\base\templates\base\approach.html:23
+#: .\base\templates\base\approach.html:158
+msgid "Explore estates"
+msgstr "Explorar propriedades"
+
+#: .\base\templates\base\approach.html:30
+#: .\base\templates\base\approach.html:89
+#: .\base\templates\base\approach.html:102 .\base\templates\base\home.html:695
+msgid "Castle rental payment example"
+msgstr "Exemplo de pagamento de aluguer de castelo"
+
+#: .\base\templates\base\approach.html:31 .\base\templates\base\home.html:699
+msgid "€3,000"
+msgstr "€3.000"
+
+#: .\base\templates\base\approach.html:32 .\base\templates\base\home.html:703
+msgid "Initial deposit toward your castle rental"
+msgstr "Depósito inicial para o aluguer do castelo"
+
+#: .\base\templates\base\approach.html:38
+#: .\base\templates\base\approach.html:116 .\base\templates\base\home.html:729
+msgid "Illustrative repayment period"
+msgstr "Período de reembolso ilustrativo"
+
+#: .\base\templates\base\approach.html:39
+#: .\base\templates\base\approach.html:119
+#: .\base\templates\base\approach.html:120
+#: .\base\templates\base\approach.html:121
+#: .\base\templates\base\approach.html:122
+#: .\base\templates\base\approach.html:123 .\base\templates\base\home.html:736
+#: .\base\templates\base\home.html:737 .\base\templates\base\home.html:738
+#: .\base\templates\base\home.html:739 .\base\templates\base\home.html:740
+msgid "months"
+msgstr "meses"
+
+#: .\base\templates\base\approach.html:42
+#: .\base\templates\base\approach.html:127 .\base\templates\base\home.html:745
+#: .\core\views.py:177
+msgid "Estimated monthly installment"
+msgstr "Prestação mensal estimada"
+
+#: .\base\templates\base\approach.html:53
+msgid "An exceptional way to celebrate"
+msgstr "Uma forma excecional de celebrar"
+
+#: .\base\templates\base\approach.html:54
+msgid "A clear path to your celebration."
+msgstr "Um caminho claro para a sua celebração."
+
+#: .\base\templates\base\approach.html:56
+msgid ""
+"What sets CastleForever apart is our approach: solutions designed to let "
+"couples and their families fully enjoy their celebration without financial "
+"hardship afterwards."
+msgstr ""
+"O que distingue a CastleForever é a nossa abordagem: soluções criadas para "
+"que casais e famílias possam desfrutar plenamente da celebração sem que isso"
+" se torne um problema financeiro depois."
+
+#: .\base\templates\base\approach.html:63
+msgid "Secure your date"
+msgstr "Garanta a sua data"
+
+#: .\base\templates\base\approach.html:65
+msgid ""
+"An initial deposit confirms your preferred estate and celebration dates."
+msgstr ""
+"Um depósito inicial confirma a propriedade e as datas da sua celebração."
+
+#: .\base\templates\base\approach.html:70
+msgid "Spread the balance"
+msgstr "Distribua o saldo"
+
+#: .\base\templates\base\approach.html:72
+msgid "The remaining estate cost is divided into agreed monthly installments."
+msgstr ""
+"O custo restante da propriedade é dividido em prestações mensais acordadas."
+
+#: .\base\templates\base\approach.html:77
+msgid "Celebrate with confidence"
+msgstr "Celebre com confiança"
+
+#: .\base\templates\base\approach.html:79
+msgid ""
+"Your schedule is agreed in advance, so there are no surprises after the "
+"celebration."
+msgstr ""
+"O seu plano é acordado antecipadamente, para que não haja surpresas após a "
+"celebração."
+
+#: .\base\templates\base\approach.html:90
+msgid "An illustrative payment plan."
+msgstr "Um plano de pagamento ilustrativo."
+
+#: .\base\templates\base\approach.html:92
+msgid ""
+"Adjust the figures to see how an estate balance could be spread across an "
+"agreed schedule. This is an illustration, not a financing offer."
+msgstr ""
+"Ajuste os valores para ver como o saldo de uma propriedade pode ser "
+"distribuído por um plano acordado. Esta é uma ilustração, não uma oferta de "
+"financiamento."
+
+#: .\base\templates\base\approach.html:95
+msgid "Ask about a payment plan"
+msgstr "Pergunte sobre um plano de pagamento"
+
+#: .\base\templates\base\approach.html:106 .\base\templates\base\home.html:712
+msgid "Illustrative rental cost"
+msgstr "Custo de aluguer ilustrativo"
+
+#: .\base\templates\base\approach.html:109 .\base\templates\base\home.html:719
+msgid "€15,000"
+msgstr "€15.000"
+
+#: .\base\templates\base\approach.html:110 .\base\templates\base\home.html:720
+msgid "€25,000"
+msgstr "€25.000"
+
+#: .\base\templates\base\approach.html:111 .\base\templates\base\home.html:721
+msgid "€40,000"
+msgstr "€40.000"
+
+#: .\base\templates\base\approach.html:112 .\base\templates\base\home.html:722
+msgid "€60,000"
+msgstr "€60.000"
+
+#: .\base\templates\base\approach.html:132 .\base\templates\base\home.html:752
+msgid ""
+"Illustrative simulation only, with no interest or additional fees. Any "
+"payment schedule extending beyond the wedding date remains subject to an "
+"eligibility review, a signed agreement, and compliance with applicable law. "
+"No financing solution is offered or granted as part of this demonstration. "
+"Transport services must be paid in full."
+msgstr ""
+"Simulação meramente ilustrativa, sem juros ou taxas adicionais. Qualquer "
+"plano de pagamento que se estenda para além da data do casamento permanece "
+"sujeito a análise de elegibilidade, assinatura de contrato e cumprimento da "
+"legislação aplicável. Nenhuma solução de financiamento é oferecida ou "
+"concedida como parte desta demonstração. Os serviços de transporte devem ser"
+" pagos na íntegra."
+
+#: .\base\templates\base\approach.html:147
+msgid "Begin your story"
+msgstr "Comece a sua história"
+
+#: .\base\templates\base\approach.html:148
+msgid "Shall we create something timeless?"
+msgstr "Vamos criar algo intemporal?"
+
+#: .\base\templates\base\approach.html:150
+msgid ""
+"Tell us a little about your dream celebration. This demo will prepare your "
+"enquiry for your email application."
+msgstr ""
+"Conte-nos um pouco sobre a sua celebração de sonho. Esta demonstração "
+"preparará o seu pedido na sua aplicação de email."
+
+#: .\base\templates\base\approach.html:155
+msgid ""
+"Browse the collection and select an estate to submit a private enquiry."
+msgstr ""
+"Explore a coleção e selecione uma propriedade para submeter uma consulta "
+"privada."
+
+#: .\base\templates\base\destination.html:3
+#: .\base\templates\shared\footer.html:18
+#: .\base\templates\shared\navbar.html:9
+#: .\base\templates\shared\navbar.html:49
+msgid "Destinations"
+msgstr "Destinos"
+
+#: .\base\templates\base\destination.html:11
+msgid "The destinations"
+msgstr "Os destinos"
+
+#: .\base\templates\base\destination.html:14
+msgid "Where dreams unfold."
+msgstr "Onde os sonhos se concretizam."
+
+#: .\base\templates\base\destination.html:19
+msgid ""
+"Discover our estates by style, from castles and palaces to villas and "
+"gardens."
+msgstr ""
+"Descubra as nossas propriedades por estilo, de castelos e palácios a villas "
+"e jardins."
+
+#: .\base\templates\base\destination.html:24
+msgid "Explore by estate type"
+msgstr "Explorar por tipo de propriedade"
+
+#: .\base\templates\base\destination.html:28
+#: .\base\templates\base\destination.html:127
+msgid "View full collection"
+msgstr "Ver coleção completa"
+
+#: .\base\templates\base\destination.html:41
+#: .\base\templates\base\home.html:173
+msgid "Our destinations"
+msgstr "Os nossos destinos"
+
+#: .\base\templates\base\destination.html:43
+#: .\base\templates\base\home.html:175
+msgid "Where dreams come to life."
+msgstr "Onde os sonhos ganham vida."
+
+#: .\base\templates\base\destination.html:46
+msgid ""
+"Explore the collection by the character of each estate rather than by "
+"country."
+msgstr ""
+"Explore a coleção pelo caráter de cada propriedade, em vez de pelo país."
+
+#: .\base\templates\base\destination.html:55
+#: .\base\templates\base\home.html:188 .\base\templates\base\home.html:332
+msgid "View all estates"
+msgstr "Ver todas as propriedades"
+
+#: .\base\templates\base\destination.html:75
+#: .\base\templates\shared\navbar.html:10
+#: .\base\templates\shared\navbar.html:50 .\catalog\models.py:78
+#: .\catalog\templates\catalog\estate_detail.html:9
+#: .\core\templates\core\dashboard_layout.html:92
+#: .\core\templates\core\dashboard_layout.html:94 .\core\views.py:829
+#: .\core\views.py:959
+msgid "Estates"
+msgstr "Propriedades"
+
+#: .\base\templates\base\destination.html:78
+msgid "Explore estate type"
+msgstr "Explorar tipo de propriedade"
+
+#: .\base\templates\base\destination.html:87
+#: .\base\templates\base\home.html:377
+msgid ""
+"Our collection is currently being curated. Check back soon to discover our "
+"estates."
+msgstr ""
+"A nossa coleção está a ser preparada. Volte em breve para descobrir as "
+"nossas propriedades."
+
+#: .\base\templates\base\destination.html:101 .\catalog\models.py:31
+#: .\catalog\templates\catalog\estate_detail.html:140
+#: .\catalog\templates\catalog\estate_detail.html:215
+#: .\catalog\templates\catalog\estates.html:37 .\core\views.py:203
+msgid "Estate type"
+msgstr "Tipo de propriedade"
+
+#: .\base\templates\base\destination.html:104
+#, python-format
+msgid ""
+"A curated selection of\n"
+"              %(type_label)s estates for an unforgettable celebration."
+msgstr ""
+"Uma seleção de propriedades do tipo\n"
+"              %(type_label)s para uma celebração inesquecível."
+
+#: .\base\templates\base\destination.html:112
+#| msgid "View records"
+msgid "View more"
+msgstr "Ver mais"
+
+#: .\base\templates\base\home.html:3
+#: .\catalog\templates\catalog\estate_detail.html:7
+msgid "Home"
+msgstr "Início"
+
+#: .\base\templates\base\home.html:30
+msgid "The art of royal celebration"
+msgstr "A arte da celebração real"
+
+#: .\base\templates\base\home.html:36
+msgid "Your story deserves an exceptional setting."
+msgstr "A sua história merece um cenário excecional."
+
+#: .\base\templates\base\home.html:42
+msgid ""
+"From the châteaux of France to sun-drenched estates in Italy and Spain, "
+"discover exceptional estates to celebrate your union in your own way."
+msgstr ""
+"Dos châteaux de França às propriedades banhadas de sol de Itália e Espanha, "
+"descubra propriedades excecionais para celebrar a sua união à sua maneira."
+
+#: .\base\templates\base\home.html:49 .\base\templates\base\home.html:861
+msgid "Explore our estates"
+msgstr "Explorar as nossas propriedades"
+
+#: .\base\templates\base\home.html:58 .\base\templates\base\home.html:469
+#: .\base\templates\base\home.html:657 .\base\templates\base\home.html:869
+#: .\catalog\templates\catalog\estate_detail.html:255
+#: .\core\templates\core\contact.html:23
+#: .\core\templates\core\contact.html:240
+#: .\core\templates\core\results.html:21 .\core\templates\core\reviews.html:21
+#: .\core\templates\core\reviews.html:99
+msgid "Book a private call"
+msgstr "Agendar uma chamada privada"
+
+#: .\base\templates\base\home.html:70 .\base\templates\shared\footer.html:10
+#: .\base\templates\shared\footer.html:72
+msgid "France · Italy · Spain · Germany"
+msgstr "França · Itália · Espanha · Alemanha"
+
+#: .\base\templates\base\home.html:74
+msgid "Scroll to explore"
+msgstr "Deslize para explorar"
+
+#: .\base\templates\base\home.html:84
+msgid "01 / Selected historic estates"
+msgstr "01 / Propriedades históricas selecionadas"
+
+#: .\base\templates\base\home.html:86
+msgid "02 / Private and exclusive experiences"
+msgstr "02 / Experiências privadas e exclusivas"
+
+#: .\base\templates\base\home.html:88
+msgid "03 / Flexible payment solutions"
+msgstr "03 / Soluções de pagamento flexíveis"
+
+#: .\base\templates\base\home.html:99
+msgid "Proven results"
+msgstr "Resultados comprovados"
+
+#: .\base\templates\base\home.html:101
+msgid "season"
+msgstr "temporada"
+
+#: .\base\templates\base\home.html:105
+msgid "Celebrations we have accompanied."
+msgstr "Celebrações que acompanhámos."
+
+#: .\base\templates\base\home.html:113
+msgid "See the full 2025 results"
+msgstr "Ver todos os resultados de 2025"
+
+#: .\base\templates\base\home.html:123
+msgid "Weddings in 2025"
+msgstr "Casamentos em 2025"
+
+#: .\base\templates\base\home.html:131 .\core\templates\core\results.html:35
+msgid "Guests welcomed"
+msgstr "Convidados recebidos"
+
+#: .\base\templates\base\home.html:146
+msgid "Average couple rating"
+msgstr "Classificação média dos casais"
+
+#: .\base\templates\base\home.html:156 .\core\templates\core\results.html:43
+#: .\core\templates\core\reviews.html:45
+msgid "Estates celebrated in"
+msgstr "Propriedades celebradas em"
+
+#: .\base\templates\base\home.html:178
+msgid ""
+"Four extraordinary destinations, blending timeless architecture, enchanting "
+"landscapes, and unforgettable celebrations."
+msgstr ""
+"Quatro destinos extraordinários, que combinam arquitetura intemporal, "
+"paisagens encantadoras e celebrações inesquecíveis."
+
+#: .\base\templates\base\home.html:212
+msgid "Castles & gardens"
+msgstr "Castelos e jardins"
+
+#: .\base\templates\base\home.html:215 .\catalog\models.py:11
+#: .\core\models.py:61
+msgid "France"
+msgstr "França"
+
+#: .\base\templates\base\home.html:218 .\base\templates\base\home.html:247
+#: .\base\templates\base\home.html:276 .\base\templates\base\home.html:305
+msgid "Explore destination"
+msgstr "Explorar destino"
+
+#: .\base\templates\base\home.html:241
+msgid "Villas & romance"
+msgstr "Villas e romance"
+
+#: .\base\templates\base\home.html:244 .\catalog\models.py:12
+#: .\core\models.py:62
+msgid "Italy"
+msgstr "Itália"
+
+#: .\base\templates\base\home.html:270 .\base\templates\base\home.html:299
+msgid "Palaces & sunshine"
+msgstr "Palácios e sol"
+
+#: .\base\templates\base\home.html:273 .\catalog\models.py:13
+#: .\core\models.py:63
+msgid "Spain"
+msgstr "Espanha"
+
+#: .\base\templates\base\home.html:302 .\catalog\models.py:14
+#: .\core\models.py:64
+msgid "Germany"
+msgstr "Alemanha"
+
+#: .\base\templates\base\home.html:320
+msgid "Our private collection"
+msgstr "A nossa coleção privada"
+
+#: .\base\templates\base\home.html:324
+msgid "Extraordinary estates."
+msgstr "Propriedades extraordinárias."
+
+#: .\base\templates\base\home.html:362
+#: .\base\templates\shared\estate_card.html:19
+msgid "Up to"
+msgstr "Até"
+
+#: .\base\templates\base\home.html:362
+#: .\base\templates\shared\estate_card.html:19
+#: .\catalog\templates\catalog\estate_detail.html:33
+msgid "guests"
+msgstr "convidados"
+
+#: .\base\templates\base\home.html:364
+#: .\base\templates\shared\estate_card.html:21
+#: .\catalog\templates\catalog\car_rentals.html:26
+msgid "From"
+msgstr "Desde"
+
+#: .\base\templates\base\home.html:368
+#: .\base\templates\shared\estate_card.html:24
+msgid "Explore estate"
+msgstr "Explorar propriedade"
+
+#: .\base\templates\base\home.html:385
+msgid ""
+"The estates shown and prices listed are illustrative for this demo version. "
+"Availability and bookings are not confirmed."
+msgstr ""
+"As propriedades e preços apresentados são ilustrativos para esta versão de "
+"demonstração. Disponibilidade e reservas não estão confirmadas."
+
+#: .\base\templates\base\home.html:400
+msgid "Words from our couples"
+msgstr "Palavras dos nossos casais"
+
+#: .\base\templates\base\home.html:404
+msgid "They said yes. Then they told us."
+msgstr "Disseram sim. Depois contaram-nos."
+
+#: .\base\templates\base\home.html:412 .\core\templates\core\results.html:135
+msgid "Read all reviews"
+msgstr "Ler todas as avaliações"
+
+#: .\base\templates\base\home.html:464
+msgid "Our first couple stories will appear here soon."
+msgstr "As primeiras histórias dos nossos casais aparecerão aqui em breve."
+
+#: .\base\templates\base\home.html:502
+msgid "More than just an estate"
+msgstr "Mais do que uma propriedade"
+
+#: .\base\templates\base\home.html:506
+msgid "Every detail deserves careful attention."
+msgstr "Cada detalhe merece atenção cuidadosa."
+
+#: .\base\templates\base\home.html:510
+msgid ""
+"An exceptional setting is only the beginning of the experience. Enjoy "
+"exclusive services to elevate your day and bring your vision of the perfect "
+"wedding to life."
+msgstr ""
+"Um cenário excecional é apenas o começo da experiência. Desfrute de serviços"
+" exclusivos para elevar o seu dia e dar vida à sua visão do casamento "
+"perfeito."
+
+#: .\base\templates\base\home.html:520
+msgid "Limousines and prestige cars"
+msgstr "Limusinas e carros de prestígio"
+
+#: .\base\templates\base\home.html:532
+msgid "Private chauffeur service"
+msgstr "Serviço de motorista privado"
+
+#: .\base\templates\base\home.html:544
+msgid "Event concierge"
+msgstr "Concierge de eventos"
+
+#: .\base\templates\base\home.html:554
+msgid ""
+"Vehicle rentals are payable in full at the time of booking. Other services "
+"are covered by a separate quote. <!--  -->"
+msgstr ""
+"Os alugueres de veículos devem ser pagos na íntegra no momento da reserva. "
+"Os restantes serviços são objeto de orçamento separado. <!--  -->"
+
+#: .\base\templates\base\home.html:561
+msgid "Design your experience"
+msgstr "Desenhe a sua experiência"
+
+#: .\base\templates\base\home.html:580
+msgid "An organisation behind every celebration"
+msgstr "Uma organização por trás de cada celebração"
+
+#: .\base\templates\base\home.html:584
+msgid "From first call to last dance."
+msgstr "Da primeira chamada à última dança."
+
+#: .\base\templates\base\home.html:589
+msgid ""
+"A documented timeline, a dedicated coordinator and clear milestones - so you"
+" always know what happens next. <!--  -->"
+msgstr ""
+"Um cronograma documentado, um coordenador dedicado e marcos claros -  para "
+"que saiba sempre o que acontece a seguir. <!--  -->"
+
+#: .\base\templates\base\home.html:601 .\core\templates\core\results.html:176
+msgid "Discovery call"
+msgstr "Chamada de descoberta"
+
+#: .\base\templates\base\home.html:605
+msgid "We listen to your dates, guest count and budget - with no commitment."
+msgstr ""
+"Ouvimos as suas datas, número de convidados e orçamento - sem qualquer "
+"compromisso."
+
+#: .\base\templates\base\home.html:614
+msgid "Your shortlist"
+msgstr "A sua seleção"
+
+#: .\base\templates\base\home.html:618
+msgid ""
+"A personalised selection of estates, with full proposals and guide prices."
+msgstr ""
+"Uma seleção personalizada de propriedades, com propostas completas e preços "
+"indicativos."
+
+#: .\base\templates\base\home.html:627
+msgid "Visit & booking"
+msgstr "Visita e reserva"
+
+#: .\base\templates\base\home.html:631
+msgid ""
+"Walk the estate with an advisor, then confirm your date and payment plan."
+msgstr ""
+"Percorra a propriedade com um consultor e confirme a sua data e plano de "
+"pagamento."
+
+#: .\base\templates\base\home.html:640
+msgid "Planning & the day"
+msgstr "Planeamento e o dia"
+
+#: .\base\templates\base\home.html:644
+msgid ""
+"A month-by-month checklist and an on-site coordinator for the celebration."
+msgstr ""
+"Uma lista de tarefas mês a mês e um coordenador no local para a celebração."
+
+#: .\base\templates\base\home.html:652
+msgid "Want the detail? We explain every step during your first appointment."
+msgstr ""
+"Quer conhecer os detalhes? Explicamos cada etapa no seu primeiro encontro."
+
+#: .\base\templates\base\home.html:672
+msgid "A new way to celebrate"
+msgstr "Uma nova forma de celebrar"
+
+#: .\base\templates\base\home.html:676
+msgid "Your dream celebration, at your own pace."
+msgstr "A sua celebração de sonho, ao seu ritmo."
+
+#: .\base\templates\base\home.html:680
+msgid ""
+"An exceptional castle celebration shouldn't necessarily require paying the "
+"entire rental cost at once. Our proposed payment approach lets you confirm "
+"your celebration with an initial deposit, then spread the remaining estate "
+"balance across a schedule agreed together."
+msgstr ""
+"Uma celebração excecional num castelo não deverá exigir necessariamente o "
+"pagamento de todo o custo de aluguer de uma só vez. A nossa abordagem de "
+"pagamento permite-lhe confirmar a celebração com um depósito inicial e "
+"distribuir o restante saldo da propriedade por um calendário acordado em "
+"conjunto."
+
+#: .\base\templates\base\home.html:688
+msgid "Discover our payment options"
+msgstr "Descubra as nossas opções de pagamento"
+
+#: .\base\templates\base\home.html:802
+msgid "The CastleForever philosophy"
+msgstr "A filosofia CastleForever"
+
+#: .\base\templates\base\home.html:808
+msgid "More than just an estate. A moment in history."
+msgstr "Mais do que uma propriedade. Um momento na história."
+
+#: .\base\templates\base\home.html:812
+msgid ""
+"We believe in deeply personal celebrations, marked by elegance and "
+"refinement, that remain etched in memory. Precious moments that become "
+"stories passed down from generation to generation. <!--  -->"
+msgstr ""
+"Acreditamos em celebrações profundamente pessoais, marcadas pela elegância e"
+" pelo requinte, que ficam gravadas na memória. Momentos preciosos que se "
+"tornam histórias transmitidas de geração em geração. <!--  -->"
+
+#: .\base\templates\base\home.html:820
+msgid ""
+"What sets CastleForever apart from others in the market is above all our "
+"approach: offering solutions designed to let couples and their families "
+"fully enjoy their celebration, without it becoming a source of financial "
+"difficulty after the wedding. <!--  -->"
+msgstr ""
+"O que distingue a CastleForever das demais no mercado é, sobretudo, a nossa "
+"abordagem: oferecer soluções que permitem aos casais e às suas famílias "
+"desfrutar plenamente da celebração, sem que esta se torne uma fonte de "
+"dificuldade financeira após o casamento. <!--  -->"
+
+#: .\base\templates\base\home.html:837
+msgid "Bring your vision to life"
+msgstr "Dê vida à sua visão"
+
+#: .\base\templates\base\home.html:841
+msgid "Shall we imagine an unforgettable celebration together?"
+msgstr "Vamos imaginar juntos uma celebração inesquecível?"
+
+#: .\base\templates\base\home.html:845
+msgid ""
+"Tell us about your vision and the celebration you dream of. This demo will "
+"help you prepare your enquiry in your messaging app."
+msgstr ""
+"Conte-nos a sua visão e a celebração com que sonha. Esta demonstração ajudá-"
+"lo-á a preparar o seu pedido na sua aplicação de mensagens."
+
+#: .\base\templates\base\home.html:852
+msgid ""
+"Browse our collection and select the estate that inspires you - or book a "
+"private call and we will prepare a shortlist for you."
+msgstr ""
+"Explore a nossa coleção e selecione a propriedade que o inspira -  ou agende"
+" uma chamada privada e prepararemos uma seleção para si."
+
+#: .\base\templates\legal\cookies.html:3 .\base\templates\legal\cookies.html:6
+#: .\base\templates\shared\footer.html:31
+msgid "Cookie policy"
+msgstr "Política de cookies"
+
+#: .\base\templates\legal\cookies.html:7
+msgid ""
+"This prototype uses only essential session cookies for authentication. "
+"Replace this text with your verified cookie policy before launch."
+msgstr ""
+"Este protótipo utiliza apenas cookies de sessão essenciais para "
+"autenticação. Substitua este texto pela sua política de cookies verificada "
+"antes do lançamento."
+
+#: .\base\templates\legal\privacy.html:3 .\base\templates\legal\privacy.html:6
+#: .\base\templates\shared\footer.html:29
+msgid "Privacy policy"
+msgstr "Política de privacidade"
+
+#: .\base\templates\legal\privacy.html:7
+msgid ""
+"This prototype stores enquiry details you submit (name, email, wedding date,"
+" guest count, message) to manage your request. We do not process payments or"
+" run production analytics in this demo. Replace this text with your verified"
+" legal policy before launch."
+msgstr ""
+"Este protótipo armazena os dados da consulta que submete (nome, email, data "
+"do casamento, número de convidados, mensagem) para gerir o seu pedido. Não "
+"processamos pagamentos nem realizamos análises de produção nesta "
+"demonstração. Substitua este texto pela sua política legal verificada antes "
+"do lançamento."
+
+#: .\base\templates\legal\terms.html:3 .\base\templates\legal\terms.html:6
+#: .\base\templates\shared\footer.html:30
+msgid "Terms of service"
+msgstr "Termos de serviço"
+
+#: .\base\templates\legal\terms.html:7
+msgid ""
+"Use of this website is for demonstration purposes. Estate and vehicle "
+"listings are illustrative. Replace this text with your verified terms before"
+" launch."
+msgstr ""
+"A utilização deste site é apenas para fins de demonstração. As listagens de "
+"propriedades e veículos são ilustrativas. Substitua este texto pelos seus "
+"termos verificados antes do lançamento."
+
+#: .\base\templates\shared\footer.html:9
+msgid ""
+"Extraordinary estates, considered arrivals, and thoughtful payment "
+"approaches for celebrations to remember."
+msgstr ""
+"Propriedades extraordinárias, chegadas ponderadas e abordagens de pagamento "
+"cuidadosas para celebrações inesquecíveis."
+
+#: .\base\templates\shared\footer.html:14
+msgid "Explore"
+msgstr "Explorar"
+
+#: .\base\templates\shared\footer.html:16
+#: .\catalog\templates\catalog\estates.html:3
+msgid "The collection"
+msgstr "A coleção"
+
+#: .\base\templates\shared\footer.html:17
+#: .\catalog\templates\catalog\car_rentals.html:3
+msgid "Car rentals"
+msgstr "Aluguer de carros"
+
+#: .\base\templates\shared\footer.html:19 .\core\templates\core\results.html:3
+msgid "2025 results"
+msgstr "Resultados de 2025"
+
+#: .\base\templates\shared\footer.html:20 .\core\templates\core\reviews.html:4
+#: .\core\templates\core\reviews.html:14
+msgid "Couple reviews"
+msgstr "Avaliações dos casais"
+
+#: .\base\templates\shared\footer.html:21
+msgid "Experiences"
+msgstr "Experiências"
+
+#: .\base\templates\shared\footer.html:22
+msgid "Payment approach"
+msgstr "Abordagem de pagamento"
+
+#: .\base\templates\shared\footer.html:27
+msgid "Legal"
+msgstr "Legal"
+
+#: .\base\templates\shared\footer.html:32
+#: .\core\templates\core\appointment.html:3
+#: .\core\templates\core\appointment.html:12
+#: .\core\templates\core\results.html:241
+msgid "Book an appointment"
+msgstr "Agendar um encontro"
+
+#: .\base\templates\shared\footer.html:33
+#: .\base\templates\shared\footer.html:40
+#: .\base\templates\shared\navbar.html:12
+#: .\base\templates\shared\navbar.html:53 .\core\templates\core\contact.html:3
+#: .\core\templates\core\contact.html:12
+msgid "Contact"
+msgstr "Contacto"
+
+#: .\base\templates\shared\footer.html:34
+#: .\base\templates\shared\navbar.html:28
+#: .\base\templates\shared\navbar.html:60
+#: .\core\templates\core\dashboard.html:3
+#: .\core\templates\core\dashboard.html:6
+#: .\core\templates\core\dashboard_layout.html:52
+#: .\core\templates\core\dashboard_layout.html:54
+#: .\core\templates\core\dashboard_layout.html:130
+#: .\core\templates\core\dashboard_layout.html:261
+#: .\core\templates\core\dashboard_list.html:6
+msgid "Dashboard"
+msgstr "Painel"
+
+#: .\base\templates\shared\footer.html:35 .\core\templates\core\needs.html:3
+msgid "Tell us your needs"
+msgstr "Conte-nos as suas necessidades"
+
+#: .\base\templates\shared\footer.html:44
+#: .\core\templates\core\contact.html:205
+msgid "Mon - Fri, 09:00 - 18:00 CET"
+msgstr "Seg - Sex, 09:00 - 18:00 CET"
+
+#: .\base\templates\shared\footer.html:47
+msgid "TikTok"
+msgstr "TikTok"
+
+#: .\base\templates\shared\footer.html:48
+msgid "Instagram"
+msgstr "Instagram"
+
+#: .\base\templates\shared\footer.html:49
+msgid "Pinterest"
+msgstr "Pinterest"
+
+#: .\base\templates\shared\footer.html:56
+msgid "All rights reserved."
+msgstr "Todos os direitos reservados."
+
+#: .\base\templates\shared\footer.html:63
+msgid "Language"
+msgstr "Idioma"
+
+#: .\base\templates\shared\footer.html:72
+msgid "Concept prototype"
+msgstr "Protótipo conceptual"
+
+#: .\base\templates\shared\navbar.html:11
+msgid "Financing"
+msgstr "Financiamento"
+
+#: .\base\templates\shared\navbar.html:30
+#: .\base\templates\shared\navbar.html:62
+#: .\core\templates\core\dashboard_layout.html:266
+msgid "Log out?"
+msgstr "Terminar sessão?"
+
+#: .\base\templates\shared\navbar.html:32
+#: .\base\templates\shared\navbar.html:64
+#: .\core\templates\core\dashboard_layout.html:267
+msgid "Log out"
+msgstr "Terminar sessão"
+
+#: .\base\templates\shared\navbar.html:37
+#: .\base\templates\shared\navbar.html:67
+#: .\core\templates\core\dashboard_layout.html:273
+msgid "Log in"
+msgstr "Iniciar sessão"
+
+#: .\base\templates\shared\navbar.html:42
+#: .\base\templates\shared\navbar.html:51
+msgid "Book a call"
+msgstr "Agendar uma chamada"
+
+#: .\base\templates\shared\navbar.html:52 .\core\models.py:82
+#: .\core\templates\core\needs.html:6
+msgid "Your needs"
+msgstr "As suas necessidades"
+
+#: .\base\templates\shared\navbar.html:54
+msgid "Payment solutions"
+msgstr "Soluções de pagamento"
+
+#: .\catalog\models.py:15
+msgid "Portugal"
+msgstr "Portugal"
+
+#: .\catalog\models.py:18
+msgid "Castle"
+msgstr "Castelo"
+
+#: .\catalog\models.py:19
+msgid "Palace"
+msgstr "Palácio"
+
+#: .\catalog\models.py:20
+msgid "Villa"
+msgstr "Villa"
+
+#: .\catalog\models.py:21
+msgid "Manor"
+msgstr "Solar"
+
+#: .\catalog\models.py:22
+msgid "Garden"
+msgstr "Jardim"
+
+#: .\catalog\models.py:28
+msgid "Name"
+msgstr "Nome"
+
+#: .\catalog\models.py:29
+msgid "Slug"
+msgstr "Slug"
+
+#: .\catalog\models.py:36 .\catalog\templates\catalog\estate_detail.html:157
+#: .\catalog\templates\catalog\estates.html:49 .\core\models.py:160
+#: .\core\views.py:197 .\core\views.py:202
+msgid "Country"
+msgstr "País"
+
+#: .\catalog\models.py:37 .\catalog\templates\catalog\estates.html:61
+#: .\core\views.py:204
+msgid "Region"
+msgstr "Região"
+
+#: .\catalog\models.py:39 .\core\views.py:205
+msgid "City"
+msgstr "Cidade"
+
+#: .\catalog\models.py:42
+msgid "Nearest city or town, used in public search."
+msgstr "Cidade ou localidade mais próxima, usada na pesquisa pública."
+
+#: .\catalog\models.py:44
+msgid "Description"
+msgstr "Descrição"
+
+#: .\catalog\models.py:45
+msgid "Description (French)"
+msgstr "Descrição (francesa)"
+
+#: .\catalog\models.py:46
+msgid "Description (Spanish)"
+msgstr "Descrição (espanhola)"
+
+#: .\catalog\models.py:47
+msgid "Description (Italian)"
+msgstr "Descrição (italiana)"
+
+#: .\catalog\models.py:48
+msgid "Description (German)"
+msgstr "Descrição (alemã)"
+
+#: .\catalog\models.py:49
+msgid "Description (Portuguese)"
+msgstr "Descrição (portuguesa)"
+
+#: .\catalog\models.py:50 .\core\views.py:206
+msgid "Capacity"
+msgstr "Capacidade"
+
+#: .\catalog\models.py:52 .\core\views.py:207
+msgid "Price from"
+msgstr "Preço a partir de"
+
+#: .\catalog\models.py:58
+msgid "Cover image"
+msgstr "Imagem de capa"
+
+#: .\catalog\models.py:61
+msgid "Optional uploaded cover image"
+msgstr "Imagem de capa opcional"
+
+#: .\catalog\models.py:64
+msgid "Cover image URL"
+msgstr "URL da imagem de capa"
+
+#: .\catalog\models.py:66
+msgid "Optional remote image for initial catalog"
+msgstr "Imagem remota opcional para o catálogo inicial"
+
+#: .\catalog\models.py:68 .\core\models.py:122 .\core\views.py:191
+#: .\core\views.py:208
+msgid "Published"
+msgstr "Publicado"
+
+#: .\catalog\models.py:69 .\core\views.py:163
+msgid "Created at"
+msgstr "Criado em"
+
+#: .\catalog\models.py:77 .\core\models.py:110 .\core\models.py:158
+#: .\core\views.py:146 .\core\views.py:189 .\core\views.py:196
+msgid "Estate"
+msgstr "Propriedade"
+
+#: .\catalog\templates\catalog\car_rentals.html:9
+msgid "Exotic cars & limousines"
+msgstr "Carros exóticos e limusinas"
+
+#: .\catalog\templates\catalog\car_rentals.html:10
+msgid ""
+"Arrive in style. Choose from our curated fleet of exotic supercars and "
+"chauffeur-driven limousines. Vehicle rentals require full payment at "
+"booking."
+msgstr ""
+"Chegue com estilo. Escolha da nossa frota selecionada de supercarros "
+"exóticos e limusinas com motorista. O aluguer de veículos requer pagamento "
+"integral na reserva."
+
+#: .\catalog\templates\catalog\car_rentals.html:26
+msgid "per day"
+msgstr "por dia"
+
+#: .\catalog\templates\catalog\car_rentals.html:27 .\core\views.py:215
+msgid "Available for rental"
+msgstr "Disponível para aluguer"
+
+#: .\catalog\templates\catalog\car_rentals.html:34
+msgid "Our rental fleet is being curated. Please check back soon."
+msgstr "A nossa frota está a ser preparada. Volte em breve."
+
+#: .\catalog\templates\catalog\estate_detail.html:6
+msgid "Breadcrumb"
+msgstr "Navegação"
+
+#: .\catalog\templates\catalog\estate_detail.html:23
+msgid "An exclusive estate for a celebration to remember."
+msgstr "Uma propriedade exclusiva para uma celebração inesquecível."
+
+#: .\catalog\templates\catalog\estate_detail.html:43
+#: .\catalog\templates\catalog\estate_detail.html:210
+#: .\catalog\templates\catalog\estate_detail.html:279
+msgid "Guide price from"
+msgstr "Preço indicativo a partir de"
+
+#: .\catalog\templates\catalog\estate_detail.html:49
+#: .\catalog\templates\catalog\estate_detail.html:175
+#: .\catalog\templates\catalog\estate_detail.html:251
+msgid "Request a private proposal"
+msgstr "Solicitar uma proposta privada"
+
+#: .\catalog\templates\catalog\estate_detail.html:55
+#: .\catalog\templates\catalog\estate_detail.html:61
+msgid "Estate gallery"
+msgstr "Galeria da propriedade"
+
+#: .\catalog\templates\catalog\estate_detail.html:74
+msgid "Gallery coming soon."
+msgstr "Galeria em breve."
+
+#: .\catalog\templates\catalog\estate_detail.html:90
+msgid "Previous image"
+msgstr "Imagem anterior"
+
+#: .\catalog\templates\catalog\estate_detail.html:98
+msgid "Next image"
+msgstr "Imagem seguinte"
+
+#: .\catalog\templates\catalog\estate_detail.html:106
+#: .\catalog\templates\catalog\estate_detail.html:118
+msgid "Go to image"
+msgstr "Ir para a imagem"
+
+#: .\catalog\templates\catalog\estate_detail.html:130
+msgid "The experience"
+msgstr "A experiência"
+
+#: .\catalog\templates\catalog\estate_detail.html:131
+msgid "A celebration to remember."
+msgstr "Uma celebração inesquecível."
+
+#: .\catalog\templates\catalog\estate_detail.html:136
+msgid "Estate details"
+msgstr "Detalhes da propriedade"
+
+#: .\catalog\templates\catalog\estate_detail.html:145
+#: .\catalog\templates\catalog\estate_detail.html:223 .\core\models.py:112
+msgid "Location"
+msgstr "Localização"
+
+#: .\catalog\templates\catalog\estate_detail.html:152
+#: .\catalog\templates\catalog\estate_detail.html:219
+msgid "Guests"
+msgstr "Convidados"
+
+#: .\catalog\templates\catalog\estate_detail.html:164
+msgid "What is included"
+msgstr "O que está incluído"
+
+#: .\catalog\templates\catalog\estate_detail.html:166
+msgid "Exclusive use of the estate for your celebration"
+msgstr "Uso exclusivo da propriedade para a sua celebração"
+
+#: .\catalog\templates\catalog\estate_detail.html:167
+msgid "On-site accommodation for the wedding party"
+msgstr "Alojamento no local para o cortejo nupcial"
+
+#: .\catalog\templates\catalog\estate_detail.html:168
+msgid "Dedicated events team and planning support"
+msgstr "Equipa de eventos dedicada e apoio de planeamento"
+
+#: .\catalog\templates\catalog\estate_detail.html:169
+msgid "Ceremony and reception spaces"
+msgstr "Espaços para a cerimónia e a receção"
+
+#: .\catalog\templates\catalog\estate_detail.html:174
+msgid "Book directly"
+msgstr "Reservar diretamente"
+
+#: .\catalog\templates\catalog\estate_detail.html:177
+msgid ""
+"Tell us a little about your plans and we will prepare a tailored proposal "
+"for this estate."
+msgstr ""
+"Conte-nos um pouco sobre os seus planos e prepararemos uma proposta "
+"personalizada para esta propriedade."
+
+#: .\catalog\templates\catalog\estate_detail.html:201
+msgid "Submit enquiry"
+msgstr "Submeter consulta"
+
+#: .\catalog\templates\catalog\estate_detail.html:228
+msgid "A considered payment approach"
+msgstr "Uma abordagem de pagamento cuidada"
+
+#: .\catalog\templates\catalog\estate_detail.html:230
+msgid ""
+"Castle rental proposals may begin with a €3,000 deposit and an agreed "
+"installment schedule, subject to eligibility and contract terms. Vehicle "
+"rentals must be paid in full."
+msgstr ""
+"As propostas de aluguer de castelos podem começar com um depósito de €3.000 "
+"e um plano de prestações acordado, sujeito a elegibilidade e condições "
+"contratuais. O aluguer de veículos deve ser pago na íntegra."
+
+#: .\catalog\templates\catalog\estate_detail.html:234
+msgid "Illustrative installment term"
+msgstr "Prazo de prestações ilustrativo"
+
+#: .\catalog\templates\catalog\estate_detail.html:237
+msgid "12 months"
+msgstr "12 meses"
+
+#: .\catalog\templates\catalog\estate_detail.html:238
+msgid "24 months"
+msgstr "24 meses"
+
+#: .\catalog\templates\catalog\estate_detail.html:239
+msgid "36 months"
+msgstr "36 meses"
+
+#: .\catalog\templates\catalog\estate_detail.html:240
+msgid "48 months"
+msgstr "48 meses"
+
+#: .\catalog\templates\catalog\estate_detail.html:241
+msgid "60 months"
+msgstr "60 meses"
+
+#: .\catalog\templates\catalog\estate_detail.html:244
+msgid "Example monthly amount"
+msgstr "Valor mensal de exemplo"
+
+#: .\catalog\templates\catalog\estate_detail.html:247
+msgid ""
+"Illustrative only; excludes fees and interest. No approach approval or "
+"reservation is implied."
+msgstr ""
+"Apenas ilustrativo; exclui taxas e juros. Não implica aprovação nem reserva."
+
+#: .\catalog\templates\catalog\estate_detail.html:263
+msgid "Similar estates"
+msgstr "Propriedades semelhantes"
+
+#: .\catalog\templates\catalog\estate_detail.html:264
+msgid "More places you may love."
+msgstr "Mais lugares que pode adorar."
+
+#: .\catalog\templates\catalog\estate_detail.html:283
+msgid "Enquire"
+msgstr "Pedir informações"
+
+#: .\catalog\templates\catalog\estates.html:6
+msgid "Back to home"
+msgstr "Voltar ao início"
+
+#: .\catalog\templates\catalog\estates.html:8
+msgid "The private collection"
+msgstr "A coleção privada"
+
+#: .\catalog\templates\catalog\estates.html:9
+msgid "Extraordinary estates"
+msgstr "Propriedades extraordinárias"
+
+#: .\catalog\templates\catalog\estates.html:10
+msgid "Discover our curated estates across Europe."
+msgstr "Descubra as nossas propriedades selecionadas na Europa."
+
+#: .\catalog\templates\catalog\estates.html:18
+msgid "Search the collection"
+msgstr "Pesquisar na coleção"
+
+#: .\catalog\templates\catalog\estates.html:23
+#: .\catalog\templates\catalog\estates.html:73
+msgid "Search"
+msgstr "Pesquisar"
+
+#: .\catalog\templates\catalog\estates.html:30
+msgid "Search by name, city, country, or region"
+msgstr "Pesquisar por nome, cidade, país ou região"
+
+#: .\catalog\templates\catalog\estates.html:40
+msgid "All estate types"
+msgstr "Todos os tipos de propriedade"
+
+#: .\catalog\templates\catalog\estates.html:52
+msgid "All countries"
+msgstr "Todos os países"
+
+#: .\catalog\templates\catalog\estates.html:64
+msgid "All regions"
+msgstr "Todas as regiões"
+
+#: .\catalog\templates\catalog\estates.html:78
+msgid "Clear filters"
+msgstr "Limpar filtros"
+
+#: .\catalog\templates\catalog\estates.html:86
+#, python-format
+msgid ""
+"\n"
+"      %(count)s estate found\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(count)s estates found\n"
+"    "
+msgstr[0] ""
+"\n"
+"      %(count)s propriedade encontrada\n"
+"    "
+msgstr[1] ""
+"\n"
+"      %(count)s propriedades encontradas\n"
+"    "
+
+#: .\catalog\templates\catalog\estates.html:98
+msgid ""
+"No estates match your search. Try a different term or clear the filters."
+msgstr ""
+"Nenhuma propriedade corresponde à sua pesquisa. Tente outro termo ou limpe "
+"os filtros."
+
+#: .\core\data_transfer.py:92
+msgid "Unknown dashboard dataset."
+msgstr "Conjunto de dados do painel desconhecido."
+
+#: .\core\data_transfer.py:177
+msgid "Unsupported file format."
+msgstr "Formato de ficheiro não suportado."
+
+#: .\core\data_transfer.py:182
+msgid "The file is empty."
+msgstr "O ficheiro está vazio."
+
+#: .\core\data_transfer.py:196
+#, python-format
+msgid "Missing required column(s): %(fields)s"
+msgstr "Coluna(s) obrigatória(s) em falta: %(fields)s"
+
+#: .\core\data_transfer.py:215
+#, python-format
+msgid "Row %(row)s: invalid id %(id)s."
+msgstr "Linha %(row)s: id %(id)s inválido."
+
+#: .\core\data_transfer.py:239
+#, python-format
+msgid "Row %(row)s: %(field)s %(error)s"
+msgstr "Linha %(row)s: %(field)s %(error)s"
+
+#: .\core\data_transfer.py:259
+msgid "The CSV file must be UTF-8 encoded."
+msgstr "O ficheiro CSV deve estar codificado em UTF-8."
+
+#: .\core\data_transfer.py:282
+msgid "XLSX support is not available."
+msgstr "O suporte para XLSX não está disponível."
+
+#: .\core\data_transfer.py:288
+msgid "The XLSX file could not be read."
+msgstr "Não foi possível ler o ficheiro XLSX."
+
+#: .\core\forms.py:83
+msgid "Please choose a date in the future."
+msgstr "Escolha uma data futura."
+
+#: .\core\models.py:68 .\core\models.py:173
+msgid "Wedding"
+msgstr "Casamento"
+
+#: .\core\models.py:69
+msgid "Engagement"
+msgstr "Noivado"
+
+#: .\core\models.py:70
+msgid "Anniversary"
+msgstr "Aniversário"
+
+#: .\core\models.py:71
+msgid "Corporate event"
+msgstr "Evento corporativo"
+
+#: .\core\models.py:74 .\core\models.py:90 .\core\models.py:191
+#: .\core\views.py:153 .\core\views.py:160 .\core\views.py:181
+msgid "Full name"
+msgstr "Nome completo"
+
+#: .\core\models.py:76 .\core\models.py:193
+#: .\core\templates\core\contact.html:197
+msgid "Phone"
+msgstr "Telefone"
+
+#: .\core\models.py:77 .\core\views.py:156
+msgid "Destination"
+msgstr "Destino"
+
+#: .\core\models.py:78 .\core\views.py:154
+msgid "Event type"
+msgstr "Tipo de evento"
+
+#: .\core\models.py:79 .\core\models.py:113 .\core\views.py:155
+msgid "Event date"
+msgstr "Data do evento"
+
+#: .\core\models.py:80 .\core\models.py:163 .\core\views.py:148
+#: .\core\views.py:157 .\core\views.py:199
+msgid "Guest count"
+msgstr "Número de convidados"
+
+#: .\core\models.py:81
+msgid "Budget"
+msgstr "Orçamento"
+
+#: .\core\models.py:82
+msgid "Describe your needs and expectations"
+msgstr "Descreva as suas necessidades e expectativas"
+
+#: .\core\models.py:92 .\core\views.py:162
+msgid "Subject"
+msgstr "Assunto"
+
+#: .\core\models.py:93
+msgid "Message"
+msgstr "Mensagem"
+
+#: .\core\models.py:97
+msgid "Inquiry"
+msgstr "Consulta"
+
+#: .\core\models.py:103 .\core\models.py:162 .\core\views.py:188
+msgid "Couple names"
+msgstr "Nomes do casal"
+
+#: .\core\models.py:115 .\core\views.py:190
+msgid "Rating"
+msgstr "Classificação"
+
+#: .\core\models.py:119 .\core\models.py:127
+msgid "Testimonial"
+msgstr "Testemunho"
+
+#: .\core\models.py:120
+msgid "Photo"
+msgstr "Fotografia"
+
+#: .\core\models.py:121
+msgid "Photo URL"
+msgstr "URL da fotografia"
+
+#: .\core\models.py:123 .\core\views.py:192
+msgid "Display order"
+msgstr "Ordem de exibição"
+
+#: .\core\models.py:128 .\core\templates\core\dashboard_layout.html:76
+#: .\core\templates\core\dashboard_layout.html:78
+msgid "Testimonials"
+msgstr "Testemunhos"
+
+#: .\core\models.py:151 .\core\views.py:195
+msgid "Reference"
+msgstr "Referência"
+
+#: .\core\models.py:161 .\core\views.py:147 .\core\views.py:198
+msgid "Wedding date"
+msgstr "Data do casamento"
+
+#: .\core\models.py:164
+msgid "Notes"
+msgstr "Notas"
+
+#: .\core\models.py:169
+msgid "Wedding record"
+msgstr "Registo de casamento"
+
+#: .\core\models.py:170
+msgid "Wedding records"
+msgstr "Registos de casamento"
+
+#: .\core\models.py:181 .\core\templates\core\appointment.html:86
+msgid "Video call"
+msgstr "Chamada de vídeo"
+
+#: .\core\models.py:182 .\core\templates\core\appointment.html:90
+msgid "Phone call"
+msgstr "Chamada telefónica"
+
+#: .\core\models.py:183 .\core\templates\core\appointment.html:94
+msgid "Estate visit"
+msgstr "Visita à propriedade"
+
+#: .\core\models.py:186
+msgid "Requested"
+msgstr "Solicitado"
+
+#: .\core\models.py:187
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#: .\core\models.py:188
+msgid "Completed"
+msgstr "Concluído"
+
+#: .\core\models.py:189
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#: .\core\models.py:195 .\core\views.py:182
+msgid "Appointment type"
+msgstr "Tipo de encontro"
+
+#: .\core\models.py:200 .\core\views.py:183
+msgid "Preferred date"
+msgstr "Data preferida"
+
+#: .\core\models.py:201 .\core\views.py:184
+msgid "Preferred time"
+msgstr "Hora preferida"
+
+#: .\core\models.py:208
+msgid "Estate of interest"
+msgstr "Propriedade de interesse"
+
+#: .\core\models.py:210
+msgid "Estimated guest count"
+msgstr "Número estimado de convidados"
+
+#: .\core\models.py:211
+msgid "What would you like to discuss?"
+msgstr "Sobre o que gostaria de falar?"
+
+#: .\core\models.py:213 .\core\views.py:149 .\core\views.py:185
+msgid "Status"
+msgstr "Estado"
+
+#: .\core\models.py:222
+msgid "Appointment"
+msgstr "Encontro"
+
+#: .\core\models.py:223 .\core\templates\core\dashboard_layout.html:72
+#: .\core\templates\core\dashboard_layout.html:74 .\core\views.py:843
+#: .\core\views.py:1001
+msgid "Appointments"
+msgstr "Encontros"
+
+#: .\core\models.py:251
+msgid "Notification read"
+msgstr "Notificação lida"
+
+#: .\core\models.py:252
+msgid "Notification reads"
+msgstr "Notificações lidas"
+
+#: .\core\notifications.py:29
+#, python-format
+msgid "New booking enquiry: %(name)s"
+msgstr "Nova consulta de reserva: %(name)s"
+
+#: .\core\notifications.py:41
+#, python-format
+msgid "New service request: %(name)s"
+msgstr "Novo pedido de serviço: %(name)s"
+
+#: .\core\notifications.py:53
+#, python-format
+msgid "New contact inquiry: %(name)s"
+msgstr "Nova consulta de contacto: %(name)s"
+
+#: .\core\notifications.py:65
+#, python-format
+msgid "Appointment requested: %(name)s"
+msgstr "Encontro solicitado: %(name)s"
+
+#: .\core\templates\core\appointment.html:4
+msgid ""
+"Book a free 30-minute appointment with CastleForever to discuss your wedding"
+" dates, guest list, estates and payment options."
+msgstr ""
+"Agende um encontro gratuito de 30 minutos com a CastleForever para discutir "
+"as datas do casamento, a lista de convidados, as propriedades e as opções de"
+" pagamento."
+
+#: .\core\templates\core\appointment.html:13
+msgid "Let's talk about your day."
+msgstr "Vamos falar sobre o seu dia."
+
+#: .\core\templates\core\appointment.html:15
+msgid ""
+"A free, 30-minute conversation with a CastleForever advisor. We listen to "
+"your plans, explain how we work and help you shortlist the estates that "
+"could suit you  -  with no commitment."
+msgstr ""
+"Uma conversa gratuita de 30 minutos com um consultor da CastleForever. "
+"Ouvimos os seus planos, explicamos o nosso funcionamento e ajudamos a "
+"selecionar as propriedades que poderão ser adequadas para si - sem "
+"compromisso."
+
+#: .\core\templates\core\appointment.html:19
+msgid "Choose a date"
+msgstr "Escolher uma data"
+
+#: .\core\templates\core\appointment.html:22
+#: .\core\templates\core\results.html:18
+msgid "Read couple reviews"
+msgstr "Ler avaliações dos casais"
+
+#: .\core\templates\core\appointment.html:29
+msgid "Duration"
+msgstr "Duração"
+
+#: .\core\templates\core\appointment.html:33
+msgid "Cost"
+msgstr "Custo"
+
+#: .\core\templates\core\appointment.html:34
+msgid "Free"
+msgstr "Gratuito"
+
+#: .\core\templates\core\appointment.html:37
+msgid "Formats"
+msgstr "Formatos"
+
+#: .\core\templates\core\appointment.html:41
+#: .\core\templates\core\contact.html:31
+msgid "Reply within"
+msgstr "Resposta em até"
+
+#: .\core\templates\core\appointment.html:52
+msgid "What to expect"
+msgstr "O que esperar"
+
+#: .\core\templates\core\appointment.html:53
+msgid "An hour that saves you months."
+msgstr "Uma hora que poupa meses."
+
+#: .\core\templates\core\appointment.html:56
+msgid ""
+"No sales script. A structured conversation with someone who knows the "
+"estates, the suppliers and the real costs."
+msgstr ""
+"Sem guião de vendas. Uma conversa estruturada com alguém que conhece as "
+"propriedades, os fornecedores e os custos reais."
+
+#: .\core\templates\core\appointment.html:63
+msgid "We listen"
+msgstr "Ouvimos"
+
+#: .\core\templates\core\appointment.html:65
+msgid ""
+"Your story, your guest count, your preferred months and your budget. We take"
+" notes and ask the questions that matter."
+msgstr ""
+"A sua história, o número de convidados, os meses preferidos e o seu "
+"orçamento. Tomamos notas e fazemos as perguntas que importam."
+
+#: .\core\templates\core\appointment.html:70
+msgid "We explain"
+msgstr "Explicamos"
+
+#: .\core\templates\core\appointment.html:72
+msgid ""
+"How our selection works, what is included in each estate, and how deposits "
+"and payment schedules are structured."
+msgstr ""
+"Como funciona a nossa seleção, o que está incluído em cada propriedade e "
+"como os depósitos e calendários de pagamento estão estruturados."
+
+#: .\core\templates\core\appointment.html:77
+msgid "We prepare your shortlist"
+msgstr "Preparamos a sua seleção"
+
+#: .\core\templates\core\appointment.html:79
+msgid ""
+"You leave with a personalised selection of estates, next steps and a clear "
+"idea of the timeline ahead."
+msgstr ""
+"Saí com uma seleção personalizada de propriedades, próximos passos e uma "
+"ideia clara do cronograma."
+
+#: .\core\templates\core\appointment.html:87
+msgid ""
+"A face-to-face conversation from wherever you are, with the estates on "
+"screen."
+msgstr ""
+"Uma conversa presencial a partir de onde estiver, com as propriedades no "
+"ecrã."
+
+#: .\core\templates\core\appointment.html:91
+msgid ""
+"The simplest option if you prefer to talk first and receive documents by "
+"email."
+msgstr ""
+"A opção mais simples se preferir falar primeiro e receber documentos por "
+"email."
+
+#: .\core\templates\core\appointment.html:95
+msgid ""
+"Meet us on site to walk the ceremony and reception spaces with an advisor."
+msgstr ""
+"Encontre-nos no local e percorra os espaços da cerimónia e da receção com um"
+" consultor."
+
+#: .\core\templates\core\appointment.html:104
+msgid "Request your appointment"
+msgstr "Solicitar o seu encontro"
+
+#: .\core\templates\core\appointment.html:105
+msgid "Choose a preferred date and time."
+msgstr "Escolha a data e a hora preferidas."
+
+#: .\core\templates\core\appointment.html:107
+msgid ""
+"We will confirm the exact time by email within one business day. If your "
+"preferred slot is unavailable, we will propose the closest alternative."
+msgstr ""
+"Confirmaremos a hora exata por email no prazo de um dia útil. Se o horário "
+"preferido não estiver disponível, propor-lhe-emos a alternativa mais "
+"próxima."
+
+#: .\core\templates\core\appointment.html:129
+msgid "Request my appointment"
+msgstr "Solicitar o meu encontro"
+
+#: .\core\templates\core\appointment.html:132
+msgid ""
+"By submitting this form you agree to be contacted about your appointment. "
+"See our"
+msgstr ""
+"Ao submeter este formulário, concorda em ser contactado sobre o seu "
+"encontro. Consulte a nossa"
+
+#: .\core\templates\core\appointment.html:133
+#: .\core\templates\core\contact.html:129
+#: .\core\templates\core\contact.html:174
+msgid "privacy policy"
+msgstr "política de privacidade"
+
+#: .\core\templates\core\appointment.html:140
+msgid "How the first meeting works"
+msgstr "Como funciona o primeiro encontro"
+
+#: .\core\templates\core\appointment.html:145
+msgid "Before the call"
+msgstr "Antes da chamada"
+
+#: .\core\templates\core\appointment.html:146
+msgid ""
+"We send a short questionnaire so the conversation starts with the "
+"essentials."
+msgstr ""
+"Enviamos um breve questionário para que a conversa comece pelo essencial."
+
+#: .\core\templates\core\appointment.html:152
+msgid "During the call"
+msgstr "Durante a chamada"
+
+#: .\core\templates\core\appointment.html:153
+msgid ""
+"30 minutes to explore your plans, the estates and the practical details."
+msgstr ""
+"30 minutos para explorar os seus planos, as propriedades e os detalhes "
+"práticos."
+
+#: .\core\templates\core\appointment.html:159
+msgid "After the call"
+msgstr "Depois da chamada"
+
+#: .\core\templates\core\appointment.html:160
+msgid ""
+"You receive your shortlist, guide prices and a written summary within 48 "
+"hours."
+msgstr ""
+"Recebe a sua seleção, preços indicativos e um resumo por escrito em 48 "
+"horas."
+
+#: .\core\templates\core\appointment.html:166
+msgid "Prefer to write to us first?"
+msgstr "Prefere escrever-nos primeiro?"
+
+#: .\core\templates\core\appointment.html:168
+#: .\core\templates\core\contact.html:19
+msgid "Send an enquiry"
+msgstr "Enviar uma consulta"
+
+#: .\core\templates\core\appointment.html:173
+msgid "Already planning?"
+msgstr "Já está a planear?"
+
+#: .\core\templates\core\appointment.html:174
+msgid ""
+"Tell us your date and estate, and we will adapt the call to what you still "
+"need to decide."
+msgstr ""
+"Diga-nos a sua data e a propriedade, e adaptaremos a chamada ao que ainda "
+"precisa de decidir."
+
+#: .\core\templates\core\appointment.html:176
+msgid "Submit a service request"
+msgstr "Submeter um pedido de serviço"
+
+#: .\core\templates\core\contact.html:4
+msgid ""
+"Send a message or submit a service request to the CastleForever team. Tell "
+"us about your plans and we will reply within one business day."
+msgstr ""
+"Envie uma mensagem ou submeta um pedido de serviço à equipa CastleForever. "
+"Conte-nos os seus planos e responderemos dentro de um dia útil."
+
+#: .\core\templates\core\contact.html:13
+msgid "Get in touch."
+msgstr "Entre em contacto."
+
+#: .\core\templates\core\contact.html:15
+msgid ""
+"Choose an enquiry or a service request. We read every message ourselves and "
+"reply with the next steps."
+msgstr ""
+"Escolha uma consulta ou um pedido de serviço. Lemos todas as mensagens "
+"pessoalmente e respondemos com os próximos passos."
+
+#: .\core\templates\core\contact.html:35
+msgid "Ways to write"
+msgstr "Formas de escrever"
+
+#: .\core\templates\core\contact.html:39
+msgid "Direct email"
+msgstr "Email direto"
+
+#: .\core\templates\core\contact.html:49 .\core\templates\core\contact.html:59
+msgid "Contact options"
+msgstr "Opções de contacto"
+
+#: .\core\templates\core\contact.html:50
+msgid "How can we help?"
+msgstr "Como podemos ajudar?"
+
+#: .\core\templates\core\contact.html:52
+msgid ""
+"Ask a quick question, or tell us about your celebration so we can prepare a "
+"tailored shortlist."
+msgstr ""
+"Faça uma pergunta rápida ou conte-nos sobre a sua celebração para "
+"prepararmos uma seleção personalizada."
+
+#: .\core\templates\core\contact.html:72
+msgid "Enquiry"
+msgstr "Consulta"
+
+#: .\core\templates\core\contact.html:84
+msgid "Request"
+msgstr "Pedido"
+
+#: .\core\templates\core\contact.html:98
+msgid "Direct enquiry"
+msgstr "Consulta direta"
+
+#: .\core\templates\core\contact.html:99
+msgid "Send us a message."
+msgstr "Envie-nos uma mensagem."
+
+#: .\core\templates\core\contact.html:101
+msgid ""
+"Ask about an estate, availability, visits or the way we work. A short note "
+"is enough to get started."
+msgstr ""
+"Pergunte sobre uma propriedade, disponibilidade, visitas ou a nossa forma de"
+" trabalhar. Basta uma breve mensagem para começar."
+
+#: .\core\templates\core\contact.html:124
+msgid "Send enquiry"
+msgstr "Enviar consulta"
+
+#: .\core\templates\core\contact.html:128
+msgid "We will only use your details to respond to your message."
+msgstr "Usaremos os seus dados apenas para responder à sua mensagem."
+
+#: .\core\templates\core\contact.html:143
+msgid "Service request"
+msgstr "Pedido de serviço"
+
+#: .\core\templates\core\contact.html:144
+msgid "Tell us what you need."
+msgstr "Conte-nos o que precisa."
+
+#: .\core\templates\core\contact.html:146
+msgid ""
+"Share your date, guest count and budget so we can suggest the right estates "
+"and services."
+msgstr ""
+"Indique a data, o número de convidados e o orçamento para sugerirmos as "
+"propriedades e serviços adequados."
+
+#: .\core\templates\core\contact.html:169
+msgid "Submit request"
+msgstr "Submeter pedido"
+
+#: .\core\templates\core\contact.html:173
+msgid "We will only use your details to prepare your proposal."
+msgstr "Usaremos os seus dados apenas para preparar a sua proposta."
+
+#: .\core\templates\core\contact.html:185
+msgid "Talk to us directly"
+msgstr "Fale connosco diretamente"
+
+#: .\core\templates\core\contact.html:204
+msgid "Office hours"
+msgstr "Horário de atendimento"
+
+#: .\core\templates\core\contact.html:212
+msgid "What happens next"
+msgstr "O que acontece a seguir"
+
+#: .\core\templates\core\contact.html:217
+msgid "We read your message"
+msgstr "Lemos a sua mensagem"
+
+#: .\core\templates\core\contact.html:218
+msgid "A specialist reviews your plans and checks the details with the team."
+msgstr ""
+"Um especialista analisa os seus planos e confirma os detalhes com a equipa."
+
+#: .\core\templates\core\contact.html:224
+msgid "We check availability"
+msgstr "Verificamos a disponibilidade"
+
+#: .\core\templates\core\contact.html:225
+msgid "We look at dates, estates and the practical options that suit you."
+msgstr ""
+"Analisamos datas, propriedades e as opções práticas mais adequadas para si."
+
+#: .\core\templates\core\contact.html:231
+msgid "We reply"
+msgstr "Respondemos"
+
+#: .\core\templates\core\contact.html:232
+msgid ""
+"You receive a clear answer and the next steps, usually within one business "
+"day."
+msgstr ""
+"Recebe uma resposta clara e os próximos passos, normalmente dentro de um dia"
+" útil."
+
+#: .\core\templates\core\contact.html:238
+msgid "Prefer to speak to someone?"
+msgstr "Prefere falar com alguém?"
+
+#: .\core\templates\core\dashboard.html:7
+msgid "Manage models"
+msgstr "Gerir modelos"
+
+#: .\core\templates\core\dashboard.html:14
+msgid "Open list"
+msgstr "Abrir lista"
+
+#: .\core\templates\core\dashboard.html:18
+#: .\core\templates\core\dashboard_layout.html:56
+#: .\core\templates\core\dashboard_layout.html:58
+#: .\core\templates\core\statistics.html:4
+#: .\core\templates\core\statistics.html:15
+msgid "Statistics"
+msgstr "Estatísticas"
+
+#: .\core\templates\core\dashboard.html:20
+msgid "View charts"
+msgstr "Ver gráficos"
+
+#: .\core\templates\core\dashboard_confirm_delete.html:3
+#: .\core\templates\core\dashboard_confirm_delete.html:10
+#: .\core\templates\core\dashboard_detail.html:15
+#: .\core\templates\core\dashboard_list.html:68
+msgid "Delete"
+msgstr "Eliminar"
+
+#: .\core\templates\core\dashboard_confirm_delete.html:6
+msgid "Delete record?"
+msgstr "Eliminar registo?"
+
+#: .\core\templates\core\dashboard_confirm_delete.html:11
+#: .\core\templates\core\dashboard_import.html:48
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: .\core\templates\core\dashboard_detail.html:10
+msgid "Record details"
+msgstr "Detalhes do registo"
+
+#: .\core\templates\core\dashboard_detail.html:14
+#: .\core\templates\core\dashboard_list.html:65
+msgid "Edit"
+msgstr "Editar"
+
+#: .\core\templates\core\dashboard_detail.html:31
+msgid "No fields to display."
+msgstr "Não há campos para apresentar."
+
+#: .\core\templates\core\dashboard_form.html:3
+msgid "Form"
+msgstr "Formulário"
+
+#: .\core\templates\core\dashboard_form.html:6
+msgid "Back"
+msgstr "Voltar"
+
+#: .\core\templates\core\dashboard_form.html:7
+msgid "Edit record"
+msgstr "Editar registo"
+
+#: .\core\templates\core\dashboard_form.html:22
+msgid "Save"
+msgstr "Guardar"
+
+#: .\core\templates\core\dashboard_import.html:3
+#: .\core\templates\core\dashboard_import.html:8
+#: .\core\templates\core\dashboard_import.html:46
+#: .\core\templates\core\dashboard_list.html:10
+msgid "Import"
+msgstr "Importar"
+
+#: .\core\templates\core\dashboard_import.html:12
+msgid "The import was not completed. No records were changed."
+msgstr "A importação não foi concluída. Nenhum registo foi alterado."
+
+#: .\core\templates\core\dashboard_import.html:21
+#: .\core\templates\core\dashboard_import.html:24
+msgid "File format"
+msgstr "Formato do ficheiro"
+
+#: .\core\templates\core\dashboard_import.html:30
+msgid "Data file"
+msgstr "Ficheiro de dados"
+
+#: .\core\templates\core\dashboard_import.html:37
+msgid ""
+"Use a CSV or XLSX exported from this list view. Rows with an id update that "
+"record, or recreate it if missing; rows without one create a new record."
+msgstr ""
+"Utilize um CSV ou XLSX exportado desta vista de lista. As linhas com id "
+"atualizam esse registo, ou recriam-no se estiver em falta; as linhas sem id "
+"criam um novo registo."
+
+#: .\core\templates\core\dashboard_import.html:38
+msgid "Auto-managed timestamps and uploaded images are not imported."
+msgstr ""
+"Os carimbos de data/hora gerados automaticamente e as imagens carregadas não"
+" são importados."
+
+#: .\core\templates\core\dashboard_import.html:41
+msgid "Columns"
+msgstr "Colunas"
+
+#: .\core\templates\core\dashboard_layout.html:45
+msgid "CastleForever home"
+msgstr "Início CastleForever"
+
+#: .\core\templates\core\dashboard_layout.html:46
+#: .\core\templates\core\dashboard_layout.html:129
+msgid "CastleForever"
+msgstr "CastleForever"
+
+#: .\core\templates\core\dashboard_layout.html:64
+#: .\core\templates\core\dashboard_layout.html:66
+msgid "Service Requests"
+msgstr "Pedidos de serviço"
+
+#: .\core\templates\core\dashboard_layout.html:68
+#: .\core\templates\core\dashboard_layout.html:70
+msgid "Contact Inquiries"
+msgstr "Consultas de contacto"
+
+#: .\core\templates\core\dashboard_layout.html:80
+#: .\core\templates\core\dashboard_layout.html:82
+msgid "Wedding Records"
+msgstr "Registos de casamento"
+
+#: .\core\templates\core\dashboard_layout.html:84
+#: .\core\templates\core\dashboard_layout.html:86
+msgid "Vehicle Rentals"
+msgstr "Alugueres de veículos"
+
+#: .\core\templates\core\dashboard_layout.html:88
+#: .\core\templates\core\dashboard_layout.html:90
+msgid "Payment Schedules"
+msgstr "Calendários de pagamento"
+
+#: .\core\templates\core\dashboard_layout.html:96
+#: .\core\templates\core\dashboard_layout.html:98 .\core\views.py:836
+#: .\core\views.py:928
+msgid "Vehicles"
+msgstr "Veículos"
+
+#: .\core\templates\core\dashboard_layout.html:100
+#: .\core\templates\core\dashboard_layout.html:102
+msgid "Back to site"
+msgstr "Voltar ao site"
+
+#: .\core\templates\core\dashboard_layout.html:119
+#: .\core\templates\core\dashboard_layout.html:120
+#: .\core\templates\core\dashboard_layout.html:123
+msgid "Collapse sidebar"
+msgstr "Recolher barra lateral"
+
+#: .\core\templates\core\dashboard_layout.html:121
+msgid "Open dashboard menu"
+msgstr "Abrir menu do painel"
+
+#: .\core\templates\core\dashboard_layout.html:122
+msgid "Close dashboard menu"
+msgstr "Fechar menu do painel"
+
+#: .\core\templates\core\dashboard_layout.html:124
+msgid "Expand sidebar"
+msgstr "Expandir barra lateral"
+
+#: .\core\templates\core\dashboard_layout.html:134
+msgid "Internal area"
+msgstr "Área interna"
+
+#: .\core\templates\core\dashboard_layout.html:136
+msgid "Display and language"
+msgstr "Apresentação e idioma"
+
+#: .\core\templates\core\dashboard_layout.html:145
+#: .\core\templates\core\dashboard_layout.html:146
+msgid "Choose language"
+msgstr "Escolher idioma"
+
+#: .\core\templates\core\dashboard_layout.html:176
+#: .\core\templates\core\dashboard_layout.html:177
+msgid "Toggle theme"
+msgstr "Alternar tema"
+
+#: .\core\templates\core\dashboard_layout.html:179
+msgid "Switch to dark theme"
+msgstr "Mudar para tema escuro"
+
+#: .\core\templates\core\dashboard_layout.html:180
+msgid "Switch to light theme"
+msgstr "Mudar para tema claro"
+
+#: .\core\templates\core\dashboard_layout.html:230
+msgid "Mark all as read"
+msgstr "Marcar todas como lidas"
+
+#: .\core\templates\core\dashboard_layout.html:244
+msgid "Account options"
+msgstr "Opções da conta"
+
+#: .\core\templates\core\dashboard_list.html:12
+msgid "Export format"
+msgstr "Formato de exportação"
+
+#: .\core\templates\core\dashboard_list.html:16
+msgid "Export"
+msgstr "Exportar"
+
+#: .\core\templates\core\dashboard_list.html:18
+msgid "Create"
+msgstr "Criar"
+
+#: .\core\templates\core\dashboard_list.html:26
+msgid "Record"
+msgstr "Registo"
+
+#: .\core\templates\core\dashboard_list.html:30
+#: .\core\templates\core\dashboard_list.html:58
+#: .\core\templates\core\dashboard_list.html:59
+msgid "Actions"
+msgstr "Ações"
+
+#: .\core\templates\core\dashboard_list.html:45
+#: .\core\templates\core\dashboard_list.html:46
+msgid "Details"
+msgstr "Detalhes"
+
+#: .\core\templates\core\dashboard_list.html:76
+msgid "No records yet."
+msgstr "Ainda não há registos."
+
+#: .\core\templates\core\needs.html:7
+msgid "Tell us about your celebration."
+msgstr "Conte-nos sobre a sua celebração."
+
+#: .\core\templates\core\needs.html:8
+msgid ""
+"Share your needs and preferences so we can help create your perfect day."
+msgstr ""
+"Partilhe as suas necessidades e preferências para que possamos ajudar a "
+"criar o seu dia perfeito."
+
+#: .\core\templates\core\needs.html:23
+msgid "Submit your needs"
+msgstr "Submeter as suas necessidades"
+
+#: .\core\templates\core\results.html:4
+msgid ""
+"Explore CastleForever's 2025 season: weddings celebrated month by month, "
+"guests welcomed, estates booked and reviews from our couples."
+msgstr ""
+"Explore a temporada de 2025 da CastleForever: casamentos celebrados mês a "
+"mês, convidados recebidos, propriedades reservadas e avaliações dos nossos "
+"casais."
+
+#: .\core\templates\core\results.html:11
+msgid "Our season in numbers"
+msgstr "A nossa temporada em números"
+
+#: .\core\templates\core\results.html:12
+msgid "A year of celebrations, told in figures."
+msgstr "Um ano de celebrações, contado em números."
+
+#: .\core\templates\core\results.html:14
+msgid ""
+"Behind every wedding is a date, a place and a team. Explore the celebrations"
+" we accompanied through 2025  -  month by month, estate by estate."
+msgstr ""
+"Por trás de cada casamento há uma data, um lugar e uma equipa. Explore as "
+"celebrações que acompanhámos ao longo de 2025 -  mês a mês, propriedade a "
+"propriedade."
+
+#: .\core\templates\core\results.html:31
+msgid "Weddings celebrated"
+msgstr "Casamentos celebrados"
+
+#: .\core\templates\core\results.html:39
+msgid "Average guests per wedding"
+msgstr "Média de convidados por casamento"
+
+#: .\core\templates\core\results.html:53
+msgid "Weddings per month"
+msgstr "Casamentos por mês"
+
+#: .\core\templates\core\results.html:54
+msgid "The 2025 rhythm."
+msgstr "O ritmo de 2025."
+
+#: .\core\templates\core\results.html:58
+msgid "Our busiest month was"
+msgstr "O nosso mês mais movimentado foi"
+
+#: .\core\templates\core\results.html:58
+msgid "with"
+msgstr "com"
+
+#: .\core\templates\core\results.html:58
+msgid "celebrations."
+msgstr "celebrações."
+
+#: .\core\templates\core\results.html:60
+msgid "The first 2025 celebrations will appear here as they are confirmed."
+msgstr ""
+"As primeiras celebrações de 2025 aparecerão aqui assim que forem "
+"confirmadas."
+
+#: .\core\templates\core\results.html:66
+msgid "Bar chart of weddings celebrated per month in 2025"
+msgstr "Gráfico de barras dos casamentos celebrados por mês em 2025"
+
+#: .\core\templates\core\results.html:78
+msgid "Completed weddings · Jan - Dec"
+msgstr "Casamentos concluídos · Jan - Dez"
+
+#: .\core\templates\core\results.html:79 .\core\views.py:740
+msgid "Total"
+msgstr "Total"
+
+#: .\core\templates\core\results.html:88
+msgid "Where couples celebrated"
+msgstr "Onde os casais celebraram"
+
+#: .\core\templates\core\results.html:89
+msgid "Three countries, one standard."
+msgstr "Três países, um mesmo padrão."
+
+#: .\core\templates\core\results.html:95
+#: .\core\templates\core\results.html:117
+msgid "weddings"
+msgstr "casamentos"
+
+#: .\core\templates\core\results.html:102
+msgid "Country results will appear once the first 2025 records are published."
+msgstr ""
+"Os resultados por país aparecerão assim que os primeiros registos de 2025 "
+"forem publicados."
+
+#: .\core\templates\core\results.html:108
+msgid "Most requested estates"
+msgstr "Propriedades mais procuradas"
+
+#: .\core\templates\core\results.html:109
+msgid "Where the season happened."
+msgstr "Onde a temporada aconteceu."
+
+#: .\core\templates\core\results.html:120
+msgid "Estate results will appear once the first 2025 records are published."
+msgstr ""
+"Os resultados por propriedade aparecerão assim que os primeiros registos de "
+"2025 forem publicados."
+
+#: .\core\templates\core\results.html:131
+#: .\core\templates\core\reviews.html:56
+msgid "In their words"
+msgstr "Nas palavras deles"
+
+#: .\core\templates\core\results.html:132
+msgid "The faces behind the figures."
+msgstr "Os rostos por trás dos números."
+
+#: .\core\templates\core\results.html:155
+msgid "Reviews will appear here as couples share their stories."
+msgstr ""
+"As avaliações aparecerão aqui assim que os casais partilharem as suas "
+"histórias."
+
+#: .\core\templates\core\results.html:165
+msgid "The organisation behind the season"
+msgstr "A organização por trás da temporada"
+
+#: .\core\templates\core\results.html:166
+msgid "A clear process, from first call to last dance."
+msgstr "Um processo claro, da primeira chamada à última dança."
+
+#: .\core\templates\core\results.html:168
+msgid ""
+"Nothing is left to improvisation. Each celebration follows a documented "
+"timeline, with a dedicated coordinator and clear milestones for you and your"
+" family."
+msgstr ""
+"Nada fica entregue ao acaso. Cada celebração segue um cronograma "
+"documentado, com um coordenador dedicado e marcos claros para si e para a "
+"sua família."
+
+#: .\core\templates\core\results.html:171
+msgid "Start with a private call"
+msgstr "Comece com uma chamada privada"
+
+#: .\core\templates\core\results.html:177
+msgid "Estate shortlist"
+msgstr "Seleção de propriedades"
+
+#: .\core\templates\core\results.html:178
+msgid "Private visit"
+msgstr "Visita privada"
+
+#: .\core\templates\core\results.html:179
+msgid "Booking & payment plan"
+msgstr "Reserva e plano de pagamento"
+
+#: .\core\templates\core\results.html:180
+msgid "Planning timeline"
+msgstr "Cronograma de planeamento"
+
+#: .\core\templates\core\results.html:181
+msgid "The wedding day"
+msgstr "O dia do casamento"
+
+#: .\core\templates\core\results.html:182
+msgid ""
+"Understand your vision, your guest count, your budget and your preferred "
+"dates. No commitment, no pressure."
+msgstr ""
+"Compreenda a sua visão, o número de convidados, o orçamento e as datas "
+"preferidas. Sem compromisso, sem pressão."
+
+#: .\core\templates\core\results.html:183
+msgid ""
+"We select the estates that match your brief and share full proposals, "
+"availability and guide prices."
+msgstr ""
+"Selecionamos as propriedades que correspondem ao seu pedido e partilhamos "
+"propostas completas, disponibilidade e preços indicativos."
+
+#: .\core\templates\core\results.html:184
+msgid ""
+"Visit your favourite estates with a dedicated advisor, in person or through "
+"a guided video tour."
+msgstr ""
+"Visite as suas propriedades favoritas com um consultor dedicado, "
+"presencialmente ou através de uma visita virtual guiada."
+
+#: .\core\templates\core\results.html:185
+msgid ""
+"Confirm the date, sign the estate agreement and agree a deposit and balance "
+"schedule in writing."
+msgstr ""
+"Confirme a data, assine o contrato da propriedade e acorde por escrito um "
+"depósito e um calendário de pagamento do saldo."
+
+#: .\core\templates\core\results.html:186
+msgid ""
+"Receive a month-by-month checklist, supplier recommendations and a single "
+"point of contact."
+msgstr ""
+"Receba uma lista de tarefas mês a mês, recomendações de fornecedores e um "
+"único ponto de contacto."
+
+#: .\core\templates\core\results.html:187
+msgid ""
+"Your coordinator runs the timeline on site so you and your family can simply"
+" be present."
+msgstr ""
+"O seu coordenador gere o cronograma no local para que você e a sua família "
+"possam simplesmente estar presentes."
+
+#: .\core\templates\core\results.html:191
+#: .\core\templates\core\results.html:197
+#: .\core\templates\core\results.html:203
+#: .\core\templates\core\results.html:209
+#: .\core\templates\core\results.html:215
+#: .\core\templates\core\results.html:221
+msgid "Step"
+msgstr "Etapa"
+
+#: .\core\templates\core\results.html:234
+msgid "Your turn"
+msgstr "A sua vez"
+
+#: .\core\templates\core\results.html:235
+msgid "Let's add your celebration to the story."
+msgstr "Vamos acrescentar a sua celebração à história."
+
+#: .\core\templates\core\results.html:237
+msgid ""
+"Book a 30-minute call to talk through your dates, your guest list and the "
+"estates that could suit you."
+msgstr ""
+"Agende uma chamada de 30 minutos para falar sobre as suas datas, a lista de "
+"convidados e as propriedades que possam ser adequadas para si."
+
+#: .\core\templates\core\results.html:247
+msgid ""
+"Figures shown are illustrative demo data for this prototype. Replace them "
+"with verified wedding records before launch."
+msgstr ""
+"Os valores apresentados são dados de demonstração ilustrativos para este "
+"protótipo. Substitua-os por registos de casamento verificados antes do "
+"lançamento."
+
+#: .\core\templates\core\reviews.html:5
+msgid ""
+"Read real reviews and see photographs from couples who celebrated their "
+"wedding with CastleForever in France, Italy and Spain."
+msgstr ""
+"Leia avaliações reais e veja fotografias de casais que celebraram o seu "
+"casamento com a CastleForever em França, Itália e Espanha."
+
+#: .\core\templates\core\reviews.html:15
+msgid "The best stories are the ones our clients tell."
+msgstr "As melhores histórias são as que os nossos clientes contam."
+
+#: .\core\templates\core\reviews.html:17
+msgid ""
+"Every celebration leaves a story behind. Discover the words  -  and the "
+"photographs  -  of people who trusted us with their day."
+msgstr ""
+"Cada celebração deixa uma história. Descubra as palavras -  e as fotografias"
+" -  de quem nos confiou o seu dia."
+
+#: .\core\templates\core\reviews.html:24
+msgid "Explore the estates"
+msgstr "Explorar as propriedades"
+
+#: .\core\templates\core\reviews.html:31
+msgid "Average rating"
+msgstr "Classificação média"
+
+#: .\core\templates\core\reviews.html:37
+msgid "Published reviews"
+msgstr "Avaliações publicadas"
+
+#: .\core\templates\core\reviews.html:41
+msgid "Weddings in"
+msgstr "Casamentos em"
+
+#: .\core\templates\core\reviews.html:57
+msgid "Real couples. Real celebrations."
+msgstr "Casais reais. Celebrações reais."
+
+#: .\core\templates\core\reviews.html:60
+msgid ""
+"Photographs and reviews are shared with the kind permission of each couple. "
+"Names are published as agreed with them."
+msgstr ""
+"Fotografias e avaliações são partilhadas com a autorização de cada casal. Os"
+" nomes são publicados conforme acordado com eles."
+
+#: .\core\templates\core\reviews.html:76
+msgid "out of 5"
+msgstr "de 5"
+
+#: .\core\templates\core\reviews.html:97
+msgid "Our first reviews are on their way."
+msgstr "As nossas primeiras avaliações estão a caminho."
+
+#: .\core\templates\core\reviews.html:98
+msgid ""
+"Meet us for a private call and discover the estates and the team behind "
+"CastleForever."
+msgstr ""
+"Encontre-nos para uma chamada privada e descubra as propriedades e a equipa "
+"por trás da CastleForever."
+
+#: .\core\templates\core\reviews.html:109
+msgid "See for yourself"
+msgstr "Veja por si"
+
+#: .\core\templates\core\reviews.html:110
+msgid "Our 2025 season, month by month."
+msgstr "A nossa temporada de 2025, mês a mês."
+
+#: .\core\templates\core\reviews.html:112
+msgid ""
+"Weddings celebrated, guests welcomed and estates brought to life. Explore "
+"the figures behind the stories."
+msgstr ""
+"Casamentos celebrados, convidados recebidos e propriedades ganhando vida. "
+"Explore os números por trás das histórias."
+
+#: .\core\templates\core\reviews.html:116
+msgid "View 2025 results"
+msgstr "Ver resultados de 2025"
+
+#: .\core\templates\core\statistics.html:12
+msgid "Back to dashboard"
+msgstr "Voltar ao painel"
+
+#: .\core\templates\core\statistics.html:14
+msgid "Insights"
+msgstr "Informações"
+
+#: .\core\templates\core\statistics.html:17
+msgid ""
+"A clear view of bookings, requests, and catalog activity across "
+"CastleForever."
+msgstr ""
+"Uma visão clara de reservas, pedidos e atividade do catálogo em toda a "
+"CastleForever."
+
+#: .\core\templates\core\statistics.html:22
+msgid "Updated from live dashboard records"
+msgstr "Atualizado a partir dos registos atuais do painel"
+
+#: .\core\templates\core\statistics.html:27
+msgid "Key metrics"
+msgstr "Métricas principais"
+
+#: .\core\templates\core\statistics.html:42
+msgid "View records"
+msgstr "Ver registos"
+
+#: .\core\templates\core\statistics.html:54
+msgid "Sections"
+msgstr "Secções"
+
+#: .\core\templates\core\statistics.html:56
+msgid "Statistics sections"
+msgstr "Secções de estatísticas"
+
+#: .\core\views.py:48
+msgid "Thank you. Your message has been received."
+msgstr "Obrigado. Recebemos a sua mensagem."
+
+#: .\core\views.py:55
+msgid "Thank you. We have received your request."
+msgstr "Obrigado. Recebemos o seu pedido."
+
+#: .\core\views.py:150
+msgid "Quoted total"
+msgstr "Total orçamentado"
+
+#: .\core\views.py:166
+msgid "Vehicle"
+msgstr "Veículo"
+
+#: .\core\views.py:167 .\core\views.py:174
+msgid "Booking"
+msgstr "Reserva"
+
+#: .\core\views.py:168
+msgid "Start date"
+msgstr "Data de início"
+
+#: .\core\views.py:169
+msgid "End date"
+msgstr "Data de fim"
+
+#: .\core\views.py:170
+msgid "Amount due"
+msgstr "Valor devido"
+
+#: .\core\views.py:171
+msgid "Paid"
+msgstr "Pago"
+
+#: .\core\views.py:175
+msgid "Deposit"
+msgstr "Depósito"
+
+#: .\core\views.py:176
+msgid "Installment months"
+msgstr "Meses de prestações"
+
+#: .\core\views.py:178 .\core\views.py:988
+msgid "Approved"
+msgstr "Aprovado"
+
+#: .\core\views.py:211
+msgid "Brand"
+msgstr "Marca"
+
+#: .\core\views.py:212
+msgid "Model"
+msgstr "Modelo"
+
+#: .\core\views.py:213
+msgid "Vehicle type"
+msgstr "Tipo de veículo"
+
+#: .\core\views.py:214
+msgid "Daily price"
+msgstr "Preço diário"
+
+#: .\core\views.py:235 .\core\views.py:319
+msgid "Yes"
+msgstr "Sim"
+
+#: .\core\views.py:235 .\core\views.py:319
+msgid "No"
+msgstr "Não"
+
+#: .\core\views.py:372
+#, python-format
+msgid "Marked %(count)s notification as read."
+msgid_plural "Marked %(count)s notifications as read."
+msgstr[0] "Marcada %(count)s notificação como lida."
+msgstr[1] "Marcadas %(count)s notificações como lidas."
+
+#: .\core\views.py:378
+msgid "All notifications are already read."
+msgstr "Todas as notificações já foram lidas."
+
+#: .\core\views.py:430
+msgid "Please choose a file."
+msgstr "Escolha um ficheiro."
+
+#: .\core\views.py:432
+msgid "The file must be smaller than 5 MB."
+msgstr "O ficheiro deve ter menos de 5 MB."
+
+#: .\core\views.py:443
+#, python-format
+msgid "Imported %(count)s record."
+msgid_plural "Imported %(count)s records."
+msgstr[0] "Importado %(count)s registo."
+msgstr[1] "Importados %(count)s registos."
+
+#: .\core\views.py:717 .\core\views.py:793
+msgid "Not specified"
+msgstr "Não especificado"
+
+#: .\core\views.py:741
+msgid "No data available yet."
+msgstr "Ainda não há dados disponíveis."
+
+#: .\core\views.py:810
+msgid "Estate enquiries"
+msgstr "Consultas sobre propriedades"
+
+#: .\core\views.py:817
+msgid "Event planning requests"
+msgstr "Pedidos de planeamento de eventos"
+
+#: .\core\views.py:824
+msgid "Contact messages"
+msgstr "Mensagens de contacto"
+
+#: .\core\views.py:831 .\core\views.py:955
+msgid "Properties in the collection"
+msgstr "Propriedades na coleção"
+
+#: .\core\views.py:838
+msgid "Available fleet"
+msgstr "Frota disponível"
+
+#: .\core\views.py:845 .\core\views.py:997
+msgid "Calls and estate visits"
+msgstr "Chamadas e visitas a propriedades"
+
+#: .\core\views.py:854
+msgid "Bookings and inquiries"
+msgstr "Reservas e consultas"
+
+#: .\core\views.py:855
+msgid "Where demand comes from and how conversations trend."
+msgstr "De onde vem a procura e como evoluem as conversas."
+
+#: .\core\views.py:860
+msgid "Bookings by estate"
+msgstr "Reservas por propriedade"
+
+#: .\core\views.py:861
+msgid "Estates with the most bookings"
+msgstr "Propriedades com mais reservas"
+
+#: .\core\views.py:866 .\core\views.py:971
+msgid "No bookings have been recorded yet."
+msgstr "Ainda não foram registadas reservas."
+
+#: .\core\views.py:872
+msgid "Inquiries over time"
+msgstr "Consultas ao longo do tempo"
+
+#: .\core\views.py:873
+msgid "Contact inquiries by month"
+msgstr "Consultas de contacto por mês"
+
+#: .\core\views.py:878
+msgid "No inquiries have been recorded yet."
+msgstr "Ainda não foram registadas consultas."
+
+#: .\core\views.py:887
+msgid "Event types and preferred destinations."
+msgstr "Tipos de evento e destinos preferidos."
+
+#: .\core\views.py:892
+msgid "Requests by event type"
+msgstr "Pedidos por tipo de evento"
+
+#: .\core\views.py:893
+msgid "Services requested by celebration type"
+msgstr "Serviços solicitados por tipo de celebração"
+
+#: .\core\views.py:897 .\core\views.py:908
+msgid "Requests"
+msgstr "Pedidos"
+
+#: .\core\views.py:898 .\core\views.py:909
+msgid "No service requests have been recorded yet."
+msgstr "Ainda não foram registados pedidos de serviço."
+
+#: .\core\views.py:903
+msgid "Requests by destination"
+msgstr "Pedidos por destino"
+
+#: .\core\views.py:904
+msgid "Preferred countries"
+msgstr "Países preferidos"
+
+#: .\core\views.py:917
+msgid "Fleet and rentals"
+msgstr "Frota e alugueres"
+
+#: .\core\views.py:918
+msgid "Vehicle mix and rental demand."
+msgstr "Composição da frota e procura de aluguer."
+
+#: .\core\views.py:923
+msgid "Vehicles by category"
+msgstr "Veículos por categoria"
+
+#: .\core\views.py:924
+msgid "Current fleet composition"
+msgstr "Composição atual da frota"
+
+#: .\core\views.py:929
+msgid "No vehicles have been added yet."
+msgstr "Ainda não foram adicionados veículos."
+
+#: .\core\views.py:934
+msgid "Rentals by vehicle"
+msgstr "Alugueres por veículo"
+
+#: .\core\views.py:935
+msgid "Most rented vehicles"
+msgstr "Veículos mais alugados"
+
+#: .\core\views.py:939
+msgid "Rentals"
+msgstr "Alugueres"
+
+#: .\core\views.py:940
+msgid "No vehicle rentals have been recorded yet."
+msgstr "Ainda não foram registados alugueres de veículos."
+
+#: .\core\views.py:948
+msgid "Estates and booking status"
+msgstr "Propriedades e estado das reservas"
+
+#: .\core\views.py:949
+msgid "Catalog coverage and the current booking pipeline."
+msgstr "Cobertura do catálogo e estado atual das reservas."
+
+#: .\core\views.py:954
+msgid "Estates by country"
+msgstr "Propriedades por país"
+
+#: .\core\views.py:960
+msgid "No estates have been added yet."
+msgstr "Ainda não foram adicionadas propriedades."
+
+#: .\core\views.py:965
+msgid "Bookings by status"
+msgstr "Reservas por estado"
+
+#: .\core\views.py:966
+msgid "Current booking pipeline"
+msgstr "Estado atual das reservas"
+
+#: .\core\views.py:979
+msgid "Payments and appointments"
+msgstr "Pagamentos e encontros"
+
+#: .\core\views.py:980
+msgid "Approvals and consultation requests."
+msgstr "Aprovações e pedidos de consulta."
+
+#: .\core\views.py:985
+msgid "Payment schedules"
+msgstr "Calendários de pagamento"
+
+#: .\core\views.py:986
+msgid "Approved versus pending"
+msgstr "Aprovados versus pendentes"
+
+#: .\core\views.py:988
+msgid "Pending"
+msgstr "Pendente"
+
+#: .\core\views.py:990
+msgid "Schedules"
+msgstr "Calendários"
+
+#: .\core\views.py:991
+msgid "No payment schedules have been recorded yet."
+msgstr "Ainda não foram registados calendários de pagamento."
+
+#: .\core\views.py:996
+msgid "Appointments by type"
+msgstr "Encontros por tipo"
+
+#: .\core\views.py:1002
+msgid "No appointments have been recorded yet."
+msgstr "Ainda não foram registados encontros."
+
+#~ msgid "Choose an enquiry or a service request."
+#~ msgstr "Escolha uma consulta ou um pedido de serviço."
+
+#~ msgid "Back to collection"
+#~ msgstr "Voltar à coleção"
+
+#~ msgid ""
+#~ "Four extraordinary countries. A world of timeless architecture, captivating "
+#~ "landscapes, and celebrations to remember."
+#~ msgstr ""
+#~ "Quatro países extraordinários. Um mundo de arquitetura intemporal, paisagens"
+#~ " cativantes e celebrações inesquecíveis."
+
+#~ msgid "Explore France"
+#~ msgstr "Explorar França"
+
+#~ msgid "Explore Italy"
+#~ msgstr "Explorar Itália"
+
+#~ msgid "Historic estates, manicured gardens, and timeless French elegance."
+#~ msgstr ""
+#~ "Propriedades históricas, jardins cuidados e elegância francesa intemporal."
+
+#~ msgid "Sunlit villas, rolling hills, and Italian romance."
+#~ msgstr "Villas banhadas de sol, colinas ondulantes e romance italiano."
+
+#~ msgid "Sun-drenched palaces and vibrant Spanish celebrations."
+#~ msgstr "Palácios banhados de sol e celebrações espanholas vibrantes."
+
+#~ msgid "Sun-drenched palaces and vibrant German celebrations."
+#~ msgstr "Palácios banhados de sol e celebrações alemãs vibrantes."
+
+#~ msgid "All places"
+#~ msgstr "Todos os lugares"
+
+#~ msgid "Our collection is being curated. Please check back soon."
+#~ msgstr "A nossa coleção está a ser preparada. Volte em breve."
+
+#~ msgid "Results"
+#~ msgstr "Resultados"
+
+#~ msgid "Reviews"
+#~ msgstr "Avaliações"
+
+#~ msgid "CSV file"
+#~ msgstr "Ficheiro CSV"

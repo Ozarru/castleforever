@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Vehicle, Venue
+from .models import Vehicle, Estate
 
 
-class VenueForm(forms.ModelForm):
+class EstateForm(forms.ModelForm):
     class Meta:
-        model = Venue
+        model = Estate
         fields = "__all__"
 
 

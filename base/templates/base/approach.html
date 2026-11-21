@@ -1,80 +1,121 @@
 {% extends "base/layout.html" %}
 {% load static i18n %}
 {% block title %}{% trans "Our approach" %} | CastleForever{% endblock %}
+{% block meta_description %}{% trans "Explore a flexible castle rental payment approach with an initial deposit and an agreed installment schedule, illustrated without interest or additional fees." %}{% endblock %}
 {% block content %}
-<main>
+<main class="pb-24">
 
-<section class="hero min-h-[520px] flex items-center relative text-white">
-  <div class="max-w-7xl w-full mx-auto px-6 lg:px-10 pt-16">
-    <div class="max-w-3xl">
-      <p class="eyebrow text-[#e4d4b3] mb-7">{% trans "Our approach" %}</p>
-      <h1 class="font-display text-6xl sm:text-7xl leading-[.98]">{% trans "Your dream day. Your own pace." %}</h1>
-      <p class="mt-8 max-w-lg text-white/85 text-sm md:text-base font-light leading-8">
-        {% trans "An unforgettable castle wedding shouldn't require settling the entire venue cost at once. Our proposed payment approach lets you secure your celebration with an initial deposit, then spread the remaining venue balance across an agreed installment schedule." %}
-      </p>
+  <!-- LIGHT HERO -->
+  <section class="bg-[#F0EDE5] border-b border-forest/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 md:py-24 grid lg:grid-cols-[1.15fr_.85fr] gap-12 items-center">
+      <div>
+        <p class="eyebrow text-gold mb-6">{% trans "Our approach" %}</p>
+        <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl leading-[.98]">{% trans "Your dream day. Your own pace." %}</h1>
+        <p class="mt-7 max-w-xl text-sm md:text-base leading-8 text-ink/60">
+          {% trans "An unforgettable castle wedding shouldn't require settling the entire estate cost at once. Our proposed payment approach lets you secure your celebration with an initial deposit, then spread the remaining estate balance across an agreed installment schedule." %}
+        </p>
+        <div class="mt-9 flex flex-wrap gap-4">
+          <a href="#payment-plan" class="btn bg-forest text-white">
+            {% trans "See the payment plan" %}
+            <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+          </a>
+          <a href="{% url 'catalog:estates' %}" class="btn border border-forest text-ink">
+            {% trans "Explore estates" %}
+            <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+      <aside class="bg-white border border-forest/10 p-8 md:p-10">
+        <p class="eyebrow text-gold mb-5">{% trans "Castle rental payment example" %}</p>
+        <p id="deposit" class="font-display text-5xl md:text-6xl">{% trans "€3,000" %}</p>
+        <p class="text-sm text-ink/60 mt-2">{% trans "Initial deposit toward your castle rental" %}</p>
+
+        <div class="line my-8"></div>
+
+        <dl class="space-y-4 text-sm">
+          <div class="flex justify-between gap-4">
+            <dt class="text-ink/60">{% trans "Illustrative repayment period" %}</dt>
+            <dd class="font-semibold text-right">12 - 60 {% trans "months" %}</dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt class="text-ink/60">{% trans "Estimated monthly installment" %}</dt>
+            <dd class="font-semibold text-right">—</dd>
+          </div>
+        </dl>
+      </aside>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="bg-forest text-white py-24 md:py-32">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
-    <div>
-      <p class="eyebrow text-[#d9c59d] mb-6">{% trans "An exceptional way to celebrate" %}</p>
-      <h2 class="font-display text-5xl md:text-7xl leading-[1.07]">{% trans "Your dream day. Your own pace." %}</h2>
-      <p class="mt-8 text-white/65 text-sm leading-8 max-w-lg">
-        {% trans "An unforgettable castle wedding shouldn't require settling the entire venue cost at once. Our proposed payment approach lets you secure your celebration with an initial deposit, then spread the remaining venue balance across an agreed installment schedule." %}
-      </p>
-      <p class="mt-6 text-white/65 text-sm leading-8 max-w-lg">
+  <!-- HOW IT WORKS -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-16 md:py-24">
+    <div class="max-w-3xl">
+      <p class="eyebrow text-gold mb-4">{% trans "An exceptional way to celebrate" %}</p>
+      <h2 class="font-display text-4xl md:text-5xl">{% trans "A clear path to your celebration." %}</h2>
+      <p class="mt-5 text-sm leading-8 text-ink/60">
         {% trans "What sets CastleForever apart is our approach: solutions designed to let couples and their families fully enjoy their celebration without financial hardship afterwards." %}
       </p>
-      <a href="{% url 'core:contact' %}?tab=request" class="btn bg-[#d5c19b] text-forest mt-9">{% trans "Ask about a payment plan" %} <i class="fa-solid fa-arrow-right-long"></i></a>
     </div>
 
-    
+    <div class="grid md:grid-cols-3 gap-6 mt-12">
+      <article class="bg-white border border-forest/10 p-8">
+        <p class="font-display text-4xl text-gold">01</p>
+        <h3 class="font-display text-2xl mt-5">{% trans "Secure your date" %}</h3>
+        <p class="text-sm leading-7 text-ink/60 mt-3">
+          {% trans "An initial deposit confirms your preferred estate and celebration dates." %}
+        </p>
+      </article>
+      <article class="bg-white border border-forest/10 p-8">
+        <p class="font-display text-4xl text-gold">02</p>
+        <h3 class="font-display text-2xl mt-5">{% trans "Spread the balance" %}</h3>
+        <p class="text-sm leading-7 text-ink/60 mt-3">
+          {% trans "The remaining estate cost is divided into agreed monthly installments." %}
+        </p>
+      </article>
+      <article class="bg-white border border-forest/10 p-8">
+        <p class="font-display text-4xl text-gold">03</p>
+        <h3 class="font-display text-2xl mt-5">{% trans "Celebrate with confidence" %}</h3>
+        <p class="text-sm leading-7 text-ink/60 mt-3">
+          {% trans "Your schedule is agreed in advance, so there are no surprises after the celebration." %}
+        </p>
+      </article>
+    </div>
+  </section>
 
-      <div class="bg-[#314a40] border border-white/10 p-8 md:p-12">
-        <p class="eyebrow text-[#d9c59d]">
+  <!-- INTERACTIVE EXAMPLE -->
+  <section id="payment-plan" class="bg-[#F0EDE5] py-16 md:py-24 scroll-mt-8">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-[.85fr_1.15fr] gap-12 items-start">
+      <div>
+        <p class="eyebrow text-gold mb-4">{% trans "Castle rental payment example" %}</p>
+        <h2 class="font-display text-4xl md:text-5xl">{% trans "An illustrative payment plan." %}</h2>
+        <p class="mt-5 text-sm leading-8 text-ink/60">
+          {% trans "Adjust the figures to see how an estate balance could be spread across an agreed schedule. This is an illustration, not a financing offer." %}
+        </p>
+        <a href="{% url 'core:contact' %}?tab=request" class="btn bg-forest text-white mt-8">
+          {% trans "Ask about a payment plan" %}
+          <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+        </a>
+      </div>
+
+      <div class="bg-white border border-forest/10 p-8 md:p-10">
+        <p class="text-xs uppercase tracking-widest text-ink/60">
           {% trans "Castle rental payment example" %}
         </p>
 
-        <div id="deposit" class="font-display text-6xl md:text-7xl mt-5">
-          {% trans "€3,000" %}
-        </div>
-
-        <p class="text-white/60 text-sm mt-2">
-          {% trans "Initial deposit toward your castle rental" %}
-        </p>
-
-        <div class="line opacity-30 my-9"></div>
-
-        <label
-          class="text-xs uppercase tracking-widest text-white/70"
-          for="price"
-        >
+        <label class="block text-xs uppercase tracking-widest text-ink/60 mt-8" for="price">
           {% trans "Illustrative rental cost" %}
         </label>
-
-        <select
-          id="price"
-          class="mt-3 w-full bg-[#243b32] border border-white/20 px-4 py-4 text-white"
-        >
+        <select id="price" class="mt-3 w-full border border-forest/20 bg-white px-4 py-4 text-ink">
           <option value="15000" selected>{% trans "€15,000" %}</option>
           <option value="25000">{% trans "€25,000" %}</option>
           <option value="40000">{% trans "€40,000" %}</option>
           <option value="60000">{% trans "€60,000" %}</option>
         </select>
 
-        <label
-          class="block text-xs uppercase tracking-widest text-white/70 mt-6"
-          for="years"
-        >
+        <label class="block text-xs uppercase tracking-widest text-ink/60 mt-6" for="years">
           {% trans "Illustrative repayment period" %}
         </label>
-
-        <select
-          id="years"
-          class="mt-3 w-full bg-[#243b32] border border-white/20 px-4 py-4 text-white"
-        >
+        <select id="years" class="mt-3 w-full border border-forest/20 bg-white px-4 py-4 text-ink">
           <option value="12">12 {% trans "months" %}</option>
           <option value="24">24 {% trans "months" %}</option>
           <option value="36">36 {% trans "months" %}</option>
@@ -82,15 +123,12 @@
           <option value="60" selected>60 {% trans "months" %}</option>
         </select>
 
-        <div class="flex justify-between items-end gap-3 mt-8">
-          <span class="text-white/65 text-sm">
-            {% trans "Estimated monthly installment" %}
-          </span>
-
-          <span id="monthly" class="font-display text-4xl"> €694.44 </span>
+        <div class="flex justify-between items-end gap-3 mt-8 border-t border-forest/10 pt-6">
+          <span class="text-sm text-ink/60">{% trans "Estimated monthly installment" %}</span>
+          <span id="monthly" class="font-display text-4xl" aria-live="polite">—</span>
         </div>
 
-        <p class="text-[11px] text-white/50 leading-6 mt-6">
+        <p class="text-[11px] leading-6 text-ink/50 mt-6">
           {% blocktrans trimmed %}Illustrative simulation only, with no interest
           or additional fees. Any payment schedule extending beyond the wedding
           date remains subject to an eligibility review, a signed agreement, and
@@ -99,77 +137,58 @@
           in full.{% endblocktrans %}
         </p>
       </div>
-
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          const priceSelect = document.getElementById("price");
-          const yearsSelect = document.getElementById("years");
-          const monthlyDisplay = document.getElementById("monthly");
-          const depositDisplay = document.getElementById("deposit");
-
-          function calculatePayment() {
-            const price = Number(priceSelect.value);
-            const months = Number(yearsSelect.value);
-
-            const monthly = price / months;
-            const deposit = price * 0.12;
-
-            monthlyDisplay.textContent = new Intl.NumberFormat("en-IE", {
-              style: "currency",
-              currency: "EUR",
-              maximumFractionDigits: 2,
-            }).format(monthly);
-
-            depositDisplay.textContent = new Intl.NumberFormat("en-IE", {
-              style: "currency",
-              currency: "EUR",
-              maximumFractionDigits: 0,
-            }).format(deposit);
-          }
-
-          priceSelect.addEventListener("change", calculatePayment);
-          yearsSelect.addEventListener("change", calculatePayment);
-
-          // Calculate initial values on page load
-          calculatePayment();
-        });
-      </script>
-  </div>
-</section>
-
-<section class="bg-[#E8E2D5] py-24">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16">
-    <div>
-      <p class="eyebrow text-gold mb-5">{% trans "Begin your story" %}</p>
-      <h2 class="font-display text-5xl md:text-7xl">{% trans "Shall we create something timeless?" %}</h2>
-      <p class="mt-7 text-sm leading-8 text-ink/60 max-w-md">
-        {% trans "Tell us a little about your dream celebration. This demo will prepare your enquiry for your email application." %}
-      </p>
     </div>
-    <div class="text-ink/80 text-sm leading-7">
-      {% trans "Browse the collection and select an estate to submit a private enquiry." %}
-      <a href="{% url 'catalog:venues' %}" class="btn bg-[#d5c19b] text-forest mt-7">{% trans "Explore estates" %} <i class="fa-solid fa-arrow-right-long"></i></a>
-    </div>
-  </div>
-</section>
+  </section>
 
+  <!-- FINAL CALL TO ACTION -->
+  <section class="bg-white py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <p class="eyebrow text-gold mb-4">{% trans "Begin your story" %}</p>
+        <h2 class="font-display text-4xl md:text-5xl">{% trans "Shall we create something timeless?" %}</h2>
+        <p class="mt-6 text-sm leading-8 text-ink/60 max-w-md">
+          {% trans "Tell us a little about your dream celebration. This demo will prepare your enquiry for your email application." %}
+        </p>
+      </div>
+      <div class="bg-[#F0EDE5] p-8 border border-forest/10">
+        <p class="text-sm leading-7 text-ink/70">
+          {% trans "Browse the collection and select an estate to submit a private enquiry." %}
+        </p>
+        <a href="{% url 'catalog:estates' %}" class="btn bg-[#d5c19b] text-forest mt-7">
+          {% trans "Explore estates" %}
+          <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <script>
-const price=document.getElementById('price');
-const years=document.getElementById('years');
-const monthly=document.getElementById('monthly');
+  document.addEventListener("DOMContentLoaded", function () {
+    const priceSelect = document.getElementById("price");
+    const yearsSelect = document.getElementById("years");
+    const monthlyDisplay = document.getElementById("monthly");
+    if (!priceSelect || !yearsSelect || !monthlyDisplay) return;
 
-if(price&&years&&monthly){
- const calc=()=>{
-  const amount=Math.max(0,Number(price.value)-3000)/Number(years.value);
-  monthly.textContent=new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR'}).format(amount);
- };
- price.addEventListener('change',calc);
- years.addEventListener('change',calc);
- calc();
-}
+    const deposit = 3000;
 
-document.getElementById('year')&&(document.getElementById('year').textContent=new Date().getFullYear());
+    function calculatePayment() {
+      const price = Number(priceSelect.value);
+      const months = Number(yearsSelect.value) || 1;
+      const monthly = Math.max(0, price - deposit) / months;
+
+      monthlyDisplay.textContent = new Intl.NumberFormat(
+        document.documentElement.lang || "en-IE",
+        { style: "currency", currency: "EUR", maximumFractionDigits: 2 }
+      ).format(monthly);
+    }
+
+    priceSelect.addEventListener("change", calculatePayment);
+    yearsSelect.addEventListener("change", calculatePayment);
+    calculatePayment();
+  });
+
+  document.getElementById('year') &&
+    (document.getElementById('year').textContent = new Date().getFullYear());
 </script>
 {% endblock %}

@@ -278,7 +278,7 @@ Staging is configured for local media (`USE_S3_MEDIA=0`). To use a bucket:
 ```
 
 4. Upload them to the bucket with `aws s3 sync`, `rclone` or the provider's UI,
-   preserving paths such as `venues/...`.
+   preserving paths such as `estates/...`.
 5. Recreate the web container:
 
 ```bash

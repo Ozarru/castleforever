@@ -1,17 +1,17 @@
 from django.contrib import admin
-from .models import Vehicle, VehicleImage, Venue, VenueImage
+from .models import Vehicle, VehicleImage, Estate, EstateImage
 
-class VenueImageInline(admin.TabularInline):
-    model = VenueImage
+class EstateImageInline(admin.TabularInline):
+    model = EstateImage
     extra = 1
 
-@admin.register(Venue)
-class VenueAdmin(admin.ModelAdmin):
-    list_display = ("name", "country", "region", "capacity", "price_from", "is_published")
-    list_filter = ("country", "is_published")
-    search_fields = ("name", "region")
+@admin.register(Estate)
+class EstateAdmin(admin.ModelAdmin):
+    list_display = ("name", "estate_type", "country", "region", "city", "capacity", "price_from", "is_published")
+    list_filter = ("estate_type", "country", "is_published")
+    search_fields = ("name", "region", "city", "description")
     prepopulated_fields = {"slug": ("name",)}
-    inlines = [VenueImageInline]
+    inlines = [EstateImageInline]
 
 class VehicleImageInline(admin.TabularInline):
     model = VehicleImage

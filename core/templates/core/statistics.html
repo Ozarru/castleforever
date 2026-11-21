@@ -1,109 +1,326 @@
 {% extends "core/dashboard_layout.html" %}
 {% load static i18n %}
+
 {% block title %}{% trans "Statistics" %} | Dashboard{% endblock %}
+
 {% block content %}
-  <div class="mb-8">
-    <h1 class="text-2xl font-semibold">{% trans "Statistics" %}</h1>
-    <p class="text-gray-600 mt-2">{% trans "Overview of activity across the platform." %}</p>
+<main class="w-full max-w-7xl mx-auto p-4 lg:p-6">
+  <header class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+    <div>
+      <a href="{% url 'core:dashboard' %}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gray-500 hover:text-[#b18c43]">
+        <i class="fa-solid fa-arrow-left"></i>
+        {% trans "Back to dashboard" %}
+      </a>
+      <p class="eyebrow text-[#b18c43] mt-6">{% trans "Insights" %}</p>
+      <h1 class="font-display text-4xl md:text-5xl mt-3">{% trans "Statistics" %}</h1>
+      <p class="text-sm text-gray-500 mt-3 max-w-2xl">
+        {% trans "A clear view of bookings, requests, and catalog activity across CastleForever." %}
+      </p>
+    </div>
+    <div class="inline-flex items-center gap-2 text-xs text-gray-500 bg-white border border-gray-200 px-4 py-3 self-start md:self-auto">
+      <i class="fa-solid fa-circle-info text-[#b18c43]"></i>
+      {% trans "Updated from live dashboard records" %}
+    </div>
+  </header>
+
+  <section class="mt-8" aria-labelledby="summary-heading">
+    <h2 id="summary-heading" class="sr-only">{% trans "Key metrics" %}</h2>
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      {% for item in summary %}
+      <a href="{{ item.url }}" class="summary-card bg-white border border-gray-200 p-5">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-[10px] font-bold uppercase tracking-[.2em] text-[#b18c43]">{{ item.label }}</p>
+            <p class="font-display text-4xl mt-3">{{ item.value }}</p>
+            <p class="text-xs text-gray-500 mt-2">{{ item.description }}</p>
+          </div>
+          <span class="summary-icon flex h-11 w-11 items-center justify-center rounded-full bg-[#F0EDE5] text-[#b18c43]">
+            <i class="{{ item.icon }}"></i>
+          </span>
+        </div>
+        <p class="mt-5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[.14em] text-[#b18c43]">
+          {% trans "View records" %}
+          <i class="fa-solid fa-arrow-right-long"></i>
+        </p>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  {{ statistics_data|json_script:"statistics-charts" }}
+
+  <div class="mt-10 flex items-center gap-3 overflow-x-auto border-b border-gray-200 pb-3">
+    <span class="hidden flex-shrink-0 text-[10px] font-bold uppercase tracking-[.2em] text-[#b18c43] md:block">
+      {% trans "Sections" %}
+    </span>
+    <div id="statistics-tabs" class="flex min-w-max gap-2" role="tablist" aria-label="{% trans 'Statistics sections' %}">
+      {% for section in chart_sections %}
+      <button
+        type="button"
+        id="tab-{{ section.id }}"
+        class="statistics-tab inline-flex items-center gap-2 border border-gray-200 px-4 py-2 text-xs font-semibold"
+        role="tab"
+        aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+        aria-controls="panel-{{ section.id }}"
+        tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+        data-tab-target="panel-{{ section.id }}"
+      >
+        <i class="{{ section.icon }}"></i>
+        <span>{{ section.title }}</span>
+      </button>
+      {% endfor %}
+    </div>
   </div>
 
-  <section class="mb-10">
-    <h2 class="text-lg font-semibold mb-4">{% trans "Bookings" %}</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-medium mb-2">{% trans "Bookings by venue" %}</h3>
-        <canvas id="bookingsByVenue"></canvas>
+  <div class="mt-6">
+    {% for section in chart_sections %}
+    <section
+      id="panel-{{ section.id }}"
+      class="statistics-panel"
+      role="tabpanel"
+      aria-labelledby="tab-{{ section.id }}"
+      data-statistics-panel="{{ section.id }}"
+      {% if not forloop.first %}hidden{% endif %}
+    >
+      <div class="flex items-start gap-4">
+        <span class="mt-3 h-px w-8 flex-shrink-0 bg-[#b18c43]"></span>
+        <div>
+          <h2 class="font-display text-2xl">{{ section.title }}</h2>
+          <p class="text-xs text-gray-500 mt-1">{{ section.description }}</p>
+        </div>
       </div>
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-medium mb-2">{% trans "Inquiries over time" %}</h3>
-        <canvas id="inquiriesByMonth"></canvas>
-      </div>
-    </div>
-  </section>
 
-  <section class="mb-10">
-    <h2 class="text-lg font-semibold mb-4">{% trans "Service requests" %}</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-medium mb-2">{% trans "Requests by event type" %}</h3>
-        <canvas id="requestsByType"></canvas>
+      <div class="chart-grid mt-5">
+        {% for chart in section.charts %}
+        <article class="chart-card bg-white border border-gray-200 p-5" data-chart-card="{{ chart.id }}">
+          <header class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold">{{ chart.title }}</h3>
+              <p class="text-xs text-gray-500 mt-1">{{ chart.subtitle }}</p>
+            </div>
+            <span class="chart-icon flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#F0EDE5] text-[#b18c43]">
+              <i class="{{ chart.icon }}"></i>
+            </span>
+          </header>
+          <div class="chart-box mt-5">
+            <canvas id="{{ chart.id }}" role="img" aria-label="{{ chart.title }}"></canvas>
+          </div>
+          <div class="chart-empty mt-5 border border-dashed border-gray-200 bg-[#F0EDE5] p-6" hidden>
+            <i class="fa-solid fa-chart-bar text-2xl text-[#b18c43]"></i>
+            <p class="mt-3 text-sm text-gray-500">{{ chart.empty_message }}</p>
+          </div>
+        </article>
+        {% endfor %}
       </div>
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-medium mb-2">{% trans "Requests by destination" %}</h3>
-        <canvas id="requestsByDestination"></canvas>
-      </div>
-    </div>
-  </section>
-
-  <section class="mb-10">
-    <h2 class="text-lg font-semibold mb-4">{% trans "Fleet" %}</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-medium mb-2">{% trans "Vehicles by category" %}</h3>
-        <canvas id="vehiclesByCategory"></canvas>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-medium mb-2">{% trans "Rentals by vehicle" %}</h3>
-        <canvas id="rentalsByVehicle"></canvas>
-      </div>
-    </div>
-  </section>
-
-  <section class="mb-10">
-    <h2 class="text-lg font-semibold mb-4">{% trans "Venues" %}</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-medium mb-2">{% trans "Venues by country" %}</h3>
-        <canvas id="venuesByCountry"></canvas>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <h3 class="font-medium mb-2">{% trans "Payment schedules" %}</h3>
-        <canvas id="paymentsStatus"></canvas>
-      </div>
-    </div>
-  </section>
+    </section>
+    {% endfor %}
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    new Chart(document.getElementById('bookingsByVenue'), {
-      type: 'bar',
-      data: { labels: {{ bookings_by_venue_labels|safe }}, datasets: [{ label: '{% trans "Bookings" %}', data: {{ bookings_by_venue_data|safe }}, backgroundColor: '#243B32' }] },
-      options: { plugins: { title: { display: true, text: '{% trans "Bookings by venue" %}' } } }
-    });
-    new Chart(document.getElementById('requestsByType'), {
-      type: 'pie',
-      data: { labels: {{ requests_by_type_labels|safe }}, datasets: [{ data: {{ requests_by_type_data|safe }} }] },
-      options: { plugins: { title: { display: true, text: '{% trans "Requests by event type" %}' } } }
-    });
-    new Chart(document.getElementById('requestsByDestination'), {
-      type: 'doughnut',
-      data: { labels: {{ requests_by_destination_labels|safe }}, datasets: [{ data: {{ requests_by_destination_data|safe }} }] },
-      options: { plugins: { title: { display: true, text: '{% trans "Requests by destination" %}' } } }
-    });
-    new Chart(document.getElementById('inquiriesByMonth'), {
-      type: 'line',
-      data: { labels: {{ inquiries_month_labels|safe }}, datasets: [{ label: '{% trans "Inquiries" %}', data: {{ inquiries_month_data|safe }}, borderColor: '#A58A5A', fill: false }] },
-      options: { plugins: { title: { display: true, text: '{% trans "Inquiries over time" %}' } } }
-    });
-    new Chart(document.getElementById('vehiclesByCategory'), {
-      type: 'bar',
-      data: { labels: {{ vehicles_category_labels|safe }}, datasets: [{ label: '{% trans "Vehicles" %}', data: {{ vehicles_category_data|safe }}, backgroundColor: '#A58A5A' }] },
-      options: { plugins: { title: { display: true, text: '{% trans "Vehicles by category" %}' } } }
-    });
-    new Chart(document.getElementById('venuesByCountry'), {
-      type: 'pie',
-      data: { labels: {{ venues_country_labels|safe }}, datasets: [{ data: {{ venues_country_data|safe }} }] },
-      options: { plugins: { title: { display: true, text: '{% trans "Venues by country" %}' } } }
-    });
-    new Chart(document.getElementById('rentalsByVehicle'), {
-      type: 'bar',
-      data: { labels: {{ rentals_vehicle_labels|safe }}, datasets: [{ label: '{% trans "Rentals" %}', data: {{ rentals_vehicle_data|safe }}, backgroundColor: '#243B32' }] },
-      options: { plugins: { title: { display: true, text: '{% trans "Rentals by vehicle" %}' } } }
-    });
-    new Chart(document.getElementById('paymentsStatus'), {
-      type: 'doughnut',
-      data: { labels: ['{% trans "Approved" %}', '{% trans "Pending" %}'], datasets: [{ data: [{{ payments_approved }}, {{ payments_pending }}] }] },
-      options: { plugins: { title: { display: true, text: '{% trans "Payment schedules" %}' } } }
-    });
+    (function () {
+      const payloadElement = document.getElementById("statistics-charts");
+      const tablist = document.getElementById("statistics-tabs");
+      if (!payloadElement || !tablist) {
+        return;
+      }
+
+      const payload = JSON.parse(payloadElement.textContent);
+      const sections = payload.chart_sections || [];
+      const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+      const panels = Array.from(document.querySelectorAll("[data-statistics-panel]"));
+      const renderedPanels = new Set();
+      const palette = ["#243b32", "#a58a5a", "#7b8f83", "#c8a96a", "#46584e", "#b08d57", "#6e7d75"];
+      const isDark = document.documentElement.classList.contains("dark");
+      const textColor = isDark ? "#d6d3d1" : "#52525b";
+      const gridColor = isDark ? "rgba(214, 211, 209, 0.12)" : "rgba(36, 59, 50, 0.10)";
+
+      if (typeof Chart !== "undefined") {
+        Chart.defaults.font.family = "'DM Sans', sans-serif";
+        Chart.defaults.color = textColor;
+      }
+
+      function resizePanelCharts(panel) {
+        if (typeof Chart === "undefined" || !Chart.getChart) {
+          return;
+        }
+        panel.querySelectorAll("canvas").forEach((canvas) => {
+          const chart = Chart.getChart(canvas);
+          if (chart) {
+            chart.resize();
+          }
+        });
+      }
+
+      function buildChart(config, panel, index) {
+        const card = panel.querySelector(`[data-chart-card="${config.id}"]`);
+        if (!card) {
+          return;
+        }
+
+        const canvas = card.querySelector("canvas");
+        const empty = card.querySelector(".chart-empty");
+
+        if (!config.has_data) {
+          canvas.hidden = true;
+          empty.hidden = false;
+          return;
+        }
+
+        const circular = config.type === "pie" || config.type === "doughnut";
+        const line = config.type === "line";
+        const singleColor = config.color || palette[index % palette.length];
+
+        const dataset = {
+          label: config.dataset_label,
+          data: config.data,
+          backgroundColor: circular ? palette : singleColor,
+          borderColor: line ? singleColor : undefined,
+          borderWidth: circular ? 2 : 0,
+          borderRadius: config.type === "bar" ? 8 : 0,
+          borderSkipped: false,
+          pointRadius: line ? 4 : 0,
+          pointHoverRadius: line ? 6 : 0,
+          pointBackgroundColor: line ? singleColor : undefined,
+          tension: line ? 0.35 : 0,
+          fill: line,
+        };
+
+        if (line) {
+          dataset.backgroundColor = `${singleColor}1a`;
+        }
+
+        const options = {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 500 },
+          layout: { padding: 8 },
+          plugins: {
+            legend: {
+              display: circular,
+              position: "bottom",
+              labels: {
+                usePointStyle: true,
+                pointStyle: "circle",
+                boxWidth: 8,
+                boxHeight: 8,
+                padding: 16,
+              },
+            },
+            tooltip: {
+              backgroundColor: isDark ? "#1c1917" : "#243b32",
+              padding: 12,
+              callbacks: {
+                label(context) {
+                  const value = config.horizontal
+                    ? context.parsed.x
+                    : (context.parsed.y ?? context.parsed);
+                  return ` ${context.label || config.dataset_label}: ${value}`;
+                },
+              },
+            },
+          },
+        };
+
+        if (!circular) {
+          options.indexAxis = config.horizontal ? "y" : "x";
+          options.scales = {
+            x: {
+              beginAtZero: true,
+              grid: { display: config.horizontal || !line, color: gridColor },
+              border: { display: false },
+              ticks: {
+                precision: 0,
+                maxRotation: config.horizontal || line ? 0 : 45,
+                minRotation: 0,
+                autoSkip: true,
+              },
+            },
+            y: {
+              beginAtZero: true,
+              grid: { display: !config.horizontal, color: gridColor },
+              border: { display: false },
+              ticks: { precision: 0 },
+            },
+          };
+
+          if (line) {
+            options.scales.x.grid.display = false;
+          }
+        }
+
+        new Chart(canvas, {
+          type: config.type,
+          data: { labels: config.labels, datasets: [dataset] },
+          options: options,
+        });
+      }
+
+      function renderPanelCharts(panel) {
+        const panelId = panel.dataset.statisticsPanel;
+        if (renderedPanels.has(panelId)) {
+          resizePanelCharts(panel);
+          return;
+        }
+        if (typeof Chart === "undefined") {
+          return;
+        }
+
+        const section = sections.find((item) => item.id === panelId);
+        if (!section) {
+          return;
+        }
+
+        section.charts.forEach((config, index) => buildChart(config, panel, index));
+        renderedPanels.add(panelId);
+      }
+
+      function activateTab(tab, focusTab) {
+        tabs.forEach((item) => {
+          const active = item === tab;
+          item.setAttribute("aria-selected", String(active));
+          item.tabIndex = active ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+          panel.hidden = panel.id !== tab.dataset.tabTarget;
+        });
+
+        const panel = document.getElementById(tab.dataset.tabTarget);
+        if (panel) {
+          renderPanelCharts(panel);
+        }
+
+        if (focusTab) {
+          tab.focus();
+        }
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => activateTab(tab, false));
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex = null;
+          if (event.key === "ArrowRight") {
+            nextIndex = (index + 1) % tabs.length;
+          } else if (event.key === "ArrowLeft") {
+            nextIndex = (index - 1 + tabs.length) % tabs.length;
+          } else if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = tabs.length - 1;
+          }
+
+          if (nextIndex !== null) {
+            event.preventDefault();
+            activateTab(tabs[nextIndex], true);
+          }
+        });
+      });
+
+      if (tabs.length) {
+        activateTab(tabs[0], false);
+      }
+    })();
   </script>
+</main>
 {% endblock %}

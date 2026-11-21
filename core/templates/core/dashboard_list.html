@@ -2,11 +2,21 @@
 {% load static i18n %}
 {% block title %}{{ model_name }} | Dashboard{% endblock %}
 {% block content %}
-<main class="max-w-7xl mx-auto px-6 py-16">
-  <a href="{% url 'core:dashboard' %}" class="text-sm text-gray-500">← {% trans "Dashboard" %}</a>
-  <div class="flex items-center justify-between mt-6">
+<main class="max-w-7xl mx-auto p-6">
+  <a href="{% url 'core:dashboard' %}" class="text-sm text-gray-500"><i class="fa-solid fa-arrow-left-long"></i> {% trans "Dashboard" %}</a>
+  <div class="flex flex-wrap items-center justify-between gap-4 mt-6">
     <h1 class="font-display text-5xl">{{ model_name }}</h1>
-    <a href="{% url create_url_name %}" class="bg-forest text-white py-3 px-6 uppercase tracking-widest text-xs">{% trans "Create" %} <i class="fa-solid fa-arrow-right-long"></i></a>
+    <div class="flex flex-wrap items-center gap-3">
+      <a href="{{ import_url }}" class="dashboard-outline-button">{% trans "Import" %} <i class="fa-solid fa-upload" aria-hidden="true"></i></a>
+      <form action="{{ export_url }}" method="get" class="flex items-center gap-2">
+        <select name="format" class="dashboard-format-select" aria-label="{% trans 'Export format' %}">
+          <option value="csv">CSV</option>
+          <option value="xlsx">XLSX</option>
+        </select>
+        <button type="submit" class="dashboard-outline-button">{% trans "Export" %} <i class="fa-solid fa-download" aria-hidden="true"></i></button>
+      </form>
+      <a href="{% url create_url_name %}" class="bg-forest text-white py-3 px-6 uppercase tracking-widest text-xs">{% trans "Create" %} <i class="fa-solid fa-arrow-right-long"></i></a>
+    </div>
   </div>
 
   <div class="mt-6 overflow-x-auto bg-white rounded-lg shadow">
@@ -14,20 +24,56 @@
       <thead>
         <tr class="text-left">
           <th class="py-3 px-4">{% trans "Record" %}</th>
+          {% for column in columns %}
+            <th class="py-3 px-4 whitespace-nowrap">{{ column }}</th>
+          {% endfor %}
           <th class="py-3 px-4">{% trans "Actions" %}</th>
         </tr>
       </thead>
       <tbody>
-        {% for obj in objects %}
+        {% for row in rows %}
           <tr class="border-b">
-            <td class="py-3 px-4">{{ obj }}</td>
-            <td class="py-3 px-4 flex gap-3">
-              <a href="{% url update_url_name obj.pk %}" class="text-[#b18c43] hover:underline">{% trans "Edit" %}</a>
-              <a href="{% url delete_url_name obj.pk %}" class="text-red-700 hover:underline">{% trans "Delete" %}</a>
+            <td class="py-3 px-4 font-medium">{{ row.object }}</td>
+            {% for cell in row.cells %}
+              <td class="py-3 px-4 whitespace-nowrap">{{ cell.value }}</td>
+            {% endfor %}
+            <td class="py-3 px-4">
+              <div class="dashboard-row-actions flex items-center gap-2">
+                <a
+                  href="{% url 'core:dashboard-detail' model_key row.object.pk %}"
+                  class="dashboard-row-primary"
+                  aria-label="{% trans 'Details' %}"
+                  title="{% trans 'Details' %}"
+                >
+                  <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                </a>
+                <div class="dashboard-row-action-menu">
+                  <button
+                    type="button"
+                    class="dashboard-row-more"
+                    data-popover-toggle
+                    data-popover-menu="rowActionsMenu_{{ forloop.counter }}"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    aria-label="{% trans 'Actions' %}"
+                    title="{% trans 'Actions' %}"
+                  >
+                    <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                  </button>
+                  <div id="rowActionsMenu_{{ forloop.counter }}" class="ui-popover row-actions-popover" role="menu" hidden>
+                    <a class="ui-popover-link" role="menuitem" href="{% url update_url_name row.object.pk %}">
+                      <i class="fa-solid fa-pen" aria-hidden="true"></i>{% trans "Edit" %}
+                    </a>
+                    <a class="ui-popover-link danger" role="menuitem" href="{% url delete_url_name row.object.pk %}">
+                      <i class="fa-solid fa-trash" aria-hidden="true"></i>{% trans "Delete" %}
+                    </a>
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
         {% empty %}
-          <tr><td colspan="2" class="py-6 px-4 text-gray-500">{% trans "No records yet." %}</td></tr>
+          <tr><td colspan="{{ columns|length|add:2 }}" class="py-6 px-4 text-gray-500">{% trans "No records yet." %}</td></tr>
         {% endfor %}
       </tbody>
     </table>

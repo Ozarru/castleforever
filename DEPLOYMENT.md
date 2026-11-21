@@ -12,7 +12,7 @@ This guide deploys the project to a single Ubuntu 22.04/24.04 VPS with:
 - **Let's Encrypt (Certbot)** for HTTPS
 - **S3-compatible object storage** for uploaded media
 
-Static assets stay on the VPS (`staticfiles/`). Only user uploads (venues,
+Static assets stay on the VPS (`staticfiles/`). Only user uploads (estates,
 vehicles, etc.) go to the bucket.
 
 ---
@@ -245,7 +245,7 @@ aws s3 sync /srv/castleforever/media/ s3://castleforever-media/media/ \
 
 For R2/MinIO, the AWS CLI works with `--endpoint-url`; `rclone` is a good
 alternative. Keep `S3_LOCATION=media` so database paths remain valid  -  the
-stored values are relative (e.g. `venues/castle.jpg`).
+stored values are relative (e.g. `estates/castle.jpg`).
 
 After copying, set `USE_S3_MEDIA=1`, restart the service, and verify that
 existing images load and that a new admin upload succeeds.

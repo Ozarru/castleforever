@@ -1,16 +1,94 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 
 from core.forms import BookingEnquiryForm
-from .models import Vehicle, Venue
+from .models import Vehicle, Estate
 
-def venues(request):
-    venues = Venue.objects.filter(is_published=True).order_by("country", "name")
-    return render(request, "catalog/venues.html", {"venues": venues})
 
-def venue_detail(request, slug):
-    venue = get_object_or_404(Venue.objects.prefetch_related("images"), slug=slug, is_published=True)
-    similar = Venue.objects.filter(is_published=True, country=venue.country).exclude(pk=venue.pk).order_by("name")[:3]
-    return render(request, "catalog/venue_detail.html", {"venue": venue, "similar_venues": similar, "booking_form": BookingEnquiryForm()})
+def _valid_choice(choices, value):
+    """Return a submitted choice only when it is one of the model's options."""
+    value = (value or "").strip()
+    return value if value in dict(choices) else ""
+
+
+def estates(request):
+    query = (request.GET.get("q") or "").strip()
+    estate_type = _valid_choice(Estate.EstateType.choices, request.GET.get("estate_type"))
+    country = _valid_choice(Estate.Country.choices, request.GET.get("country"))
+    region = (request.GET.get("region") or "").strip()
+
+    published = Estate.objects.filter(is_published=True)
+    matching = published
+
+    if query:
+        search = (
+            Q(name__icontains=query)
+            | Q(city__icontains=query)
+            | Q(region__icontains=query)
+            | Q(country__icontains=query)
+        )
+        # Country is stored as a two-letter code, so also match its translated
+        # label (for example "France" should find records stored as "FR").
+        for code, label in Estate.Country.choices:
+            if query.lower() in str(label).lower():
+                search |= Q(country=code)
+        matching = matching.filter(search)
+
+    if estate_type:
+        matching = matching.filter(estate_type=estate_type)
+    if country:
+        matching = matching.filter(country=country)
+    if region:
+        matching = matching.filter(region__iexact=region)
+
+    matching = matching.order_by("estate_type", "country", "name")
+    regions = published.values_list("region", flat=True).distinct().order_by("region")
+
+    return render(request, "catalog/estates.html", {
+        "estates": matching,
+        "query": query,
+        "estate_types": Estate.EstateType.choices,
+        "countries": Estate.Country.choices,
+        "regions": regions,
+        "selected_estate_type": estate_type,
+        "selected_country": country,
+        "selected_region": region,
+        "has_filters": bool(query or estate_type or country or region),
+    })
+
+
+def estate_detail(request, slug):
+    estate = get_object_or_404(Estate.objects.prefetch_related("images"), slug=slug, is_published=True)
+
+    gallery = []
+    if estate.cover_url:
+        gallery.append({"url": estate.cover_url, "alt": estate.name})
+    for photo in estate.images.all():
+        if photo.url:
+            gallery.append({"url": photo.url, "alt": photo.alt_text or estate.name})
+
+    # Prefer the same estate type, then fill any remaining slots so the page
+    # always has useful suggestions even when a type has few entries.
+    similar = list(
+        Estate.objects.filter(is_published=True, estate_type=estate.estate_type)
+        .exclude(pk=estate.pk)
+        .order_by("country", "name")[:3]
+    )
+    if len(similar) < 3:
+        excluded = [estate.pk] + [item.pk for item in similar]
+        similar.extend(
+            Estate.objects.filter(is_published=True)
+            .exclude(pk__in=excluded)
+            .order_by("country", "name")[:3 - len(similar)]
+        )
+
+    return render(request, "catalog/estate_detail.html", {
+        "estate": estate,
+        "gallery": gallery,
+        "similar_estates": similar,
+        "booking_form": BookingEnquiryForm(),
+    })
+
 
 def car_rentals(request):
     vehicles = Vehicle.objects.filter(is_available=True).order_by("category", "name")

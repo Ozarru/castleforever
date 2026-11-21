@@ -90,6 +90,8 @@ TEMPLATES = [{
         "django.template.context_processors.request",
         "django.contrib.auth.context_processors.auth",
         "django.contrib.messages.context_processors.messages",
+        "core.context_processors.static_versions",
+        "core.context_processors.dashboard_notifications",
     ]},
 }]
 WSGI_APPLICATION = "config.wsgi.application"
@@ -118,7 +120,8 @@ LANGUAGES = [
     ("it", "Italiano"),
     ("es", "Español"),
     ("de", "Deutsch"),
-    ]
+    ("pt", "Português"),
+]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = "UTC"
 USE_I18N = True
@@ -183,10 +186,18 @@ else:
         "OPTIONS": {"location": str(MEDIA_ROOT), "base_url": MEDIA_URL},
     }
 
+# Manifest hashing is for deployment. In development it can serve a stale
+# hashed stylesheet after CSS edits, so use the unhashed static storage there.
+_staticfiles_backend = (
+    "whitenoise.storage.CompressedStaticFilesStorage"
+    if DEBUG
+    else "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
+
 STORAGES = {
     "default": _default_storage,
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": _staticfiles_backend,
     },
 }
 

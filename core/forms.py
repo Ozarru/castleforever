@@ -59,7 +59,7 @@ class AppointmentForm(forms.ModelForm):
             "appointment_type",
             "preferred_date",
             "preferred_time",
-            "venue",
+            "estate",
             "guest_count",
             "message",
         )
@@ -72,10 +72,10 @@ class AppointmentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["preferred_date"].widget.attrs.setdefault("min", date.today().isoformat())
-        venue_filter = Q(is_published=True)
-        if self.instance.pk and self.instance.venue_id:
-            venue_filter |= Q(pk=self.instance.venue_id)
-        self.fields["venue"].queryset = self.fields["venue"].queryset.filter(venue_filter)
+        estate_filter = Q(is_published=True)
+        if self.instance.pk and self.instance.estate_id:
+            estate_filter |= Q(pk=self.instance.estate_id)
+        self.fields["estate"].queryset = self.fields["estate"].queryset.filter(estate_filter)
 
     def clean_preferred_date(self):
         preferred = self.cleaned_data.get("preferred_date")

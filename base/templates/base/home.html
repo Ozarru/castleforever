@@ -40,12 +40,12 @@
           class="mt-8 max-w-lg text-white/85 text-sm md:text-base font-light leading-8"
         >
           {% blocktrans trimmed %}From the châteaux of France to sun-drenched
-          estates in Italy and Spain, discover exceptional venues to celebrate
+          estates in Italy and Spain, discover exceptional estates to celebrate
           your union in your own way.{% endblocktrans %}
         </p>
 
         <div class="mt-10 flex flex-wrap gap-4">
-          <a href="#venues" class="btn bg-[#d5c19b] text-forest">
+          <a href="#estates" class="btn bg-[#d5c19b] text-forest">
             {% trans "Explore our estates" %}
 
             <span><i class="fa-solid fa-arrow-right-long"></i></span>
@@ -143,7 +143,7 @@
           </p>
 
           <p class="text-[10px] uppercase tracking-[.2em] text-white/55 mt-3">
-            {% trans "Average couple rating" %}
+            {% trans "Average guest rating" %}
           </p>
         </div>
 
@@ -171,23 +171,29 @@
     >
       <div>
         <p class="eyebrow text-gold mb-4">{% trans "Our destinations" %}</p>
-
         <h2 class="font-display text-5xl md:text-7xl">
           {% trans "Where dreams come to life." %}
         </h2>
-      </div>
-
-      <p class="max-w-sm text-sm leading-7 text-ink/60">
+        <p class="text-sm leading-7 text-ink/60">
         {% blocktrans trimmed %}Four extraordinary destinations, blending
         timeless architecture, enchanting landscapes, and unforgettable
         celebrations.{% endblocktrans %}
-      </p>
+        </p>
+      </div>
+      <div class="max-w-sm">
+        <a
+          href="{% url 'catalog:estates' %}"
+          class="inline-flex items-center gap-3 mt-5 text-[11px] font-bold uppercase tracking-[.15em] border-b border-forest pb-1 hover:text-gold hover:border-gold transition"
+        >
+          {% trans "View all estates" %}
+          <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+        </a>
+      </div>
     </div>
 
     <div class="grid md:grid-cols-2 gap-5">
       <a
-        href="#venues"
-        data-country-link="France"
+        href="#estates"
         class="photo-wrap group relative h-[450px] overflow-hidden"
       >
         <img
@@ -216,8 +222,7 @@
       </a>
 
       <a
-        href="#venues"
-        data-country-link="Italy"
+        href="#estates"
         class="photo-wrap group relative h-[450px] overflow-hidden"
       >
         <img
@@ -246,8 +251,7 @@
       </a>
 
       <a
-        href="#venues"
-        data-country-link="Spain"
+        href="#estates"
         class="photo-wrap group relative h-[450px] overflow-hidden"
       >
         <img
@@ -276,8 +280,7 @@
       </a>
 
       <a
-        href="#venues"
-        data-country-link="Germany"
+        href="#estates"
         class="photo-wrap group relative h-[450px] overflow-hidden"
       >
         <img
@@ -307,9 +310,9 @@
     </div>
   </section>
 
-  <!-- VENUES -->
+  <!-- ESTATES -->
 
-  <section id="venues" class="bg-[#F0EDE5] py-16 md:py-20">
+  <section id="estates" class="bg-[#F0EDE5] py-16 md:py-20">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
       <div class="flex flex-wrap justify-between items-end gap-6 mb-10">
         <div>
@@ -322,59 +325,26 @@
           </h2>
         </div>
 
-        <div class="flex gap-2 flex-wrap" id="filters">
-          <button
-            class="filter border border-forest bg-forest text-white px-5 py-3 text-[10px] tracking-widest uppercase"
-            data-filter="All"
-          >
-            {% trans "All estates" %}
-          </button>
-
-          <button
-            class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase"
-            data-filter="France"
-          >
-            {% trans "France" %}
-          </button>
-
-          <button
-            class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase"
-            data-filter="Italy"
-          >
-            {% trans "Italy" %}
-          </button>
-
-          <button
-            class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase"
-            data-filter="Spain"
-          >
-            {% trans "Spain" %}
-          </button>
-
-          <button
-            class="filter border border-forest/20 px-5 py-3 text-[10px] tracking-widest uppercase"
-            data-filter="Germany"
-          >
-            {% trans "Germany" %}
-          </button>
-        </div>
+        <a
+          href="{% url 'catalog:estates' %}"
+          class="text-[10px] font-bold uppercase tracking-[.18em] border-b border-forest pb-1 hover:text-gold hover:border-gold transition"
+        >
+          {% trans "View all estates" %}
+          <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
       </div>
 
-      <div id="venueGrid" class="grid md:grid-cols-3 gap-7">
-        {% for venue in venues %}
+      <div id="estateGrid" class="grid md:grid-cols-3 gap-7">
+        {% for estate in estates %}
 
-        <a
-          data-venue-country="{{ venue.get_country_display }}"
-          href="{{ venue.get_absolute_url }}"
-          class="block bg-white group"
-        >
+        <a href="{{ estate.get_absolute_url }}" class="block bg-white group">
           <div class="photo-wrap overflow-hidden h-72">
-            {% if venue.cover_url %}
+            {% if estate.cover_url %}
 
             <img
               class="photo h-full w-full object-cover"
-              src="{{ venue.cover_url }}"
-              alt="{{ venue.name }}"
+              src="{{ estate.cover_url }}"
+              alt="{{ estate.name }}"
               loading="lazy"
             />
 
@@ -383,15 +353,15 @@
 
           <div class="p-7">
             <p class="eyebrow text-gold mb-3">
-              {{ venue.region }} · {{ venue.get_country_display }}
+              {{ estate.region }} · {{ estate.get_country_display }}
             </p>
 
-            <h3 class="font-display text-3xl">{{ venue.name }}</h3>
+            <h3 class="font-display text-3xl">{{ estate.name }}</h3>
 
             <p class="mt-4 text-xs text-ink/60">
-              {% trans "Up to" %} {{ venue.capacity }} {% trans "guests" %} ·
+              {% trans "Up to" %} {{ estate.capacity }} {% trans "guests" %} ·
               <!--  -->
-              {% trans "From" %} €{{ venue.price_from }}
+              {% trans "From" %} €{{ estate.price_from }}
             </p>
 
             <p class="mt-6 text-xs tracking-widest uppercase">
@@ -477,7 +447,7 @@
           </p>
 
           <p class="mt-1 text-[10px] uppercase tracking-[.16em] text-ink/50">
-            {% if testimonial.venue %}{{ testimonial.venue.name }}
+            {% if testimonial.estate %}{{ testimonial.estate.name }}
             <!--  -->
             {% elif testimonial.location %}{{ testimonial.location }}{% endif %}
             <!--  -->
@@ -529,7 +499,7 @@
 
       <div>
         <p class="eyebrow text-gold mb-5">
-          {% trans "More than just a venue" %}
+          {% trans "More than just an estate" %}
         </p>
 
         <h2 class="font-display text-5xl md:text-7xl leading-[1.05]">
@@ -599,7 +569,7 @@
 
   <section
     id="process"
-    class="bg-[#F0EDE5] py-16 md:py-20 border-t border-[#e8e4d9]"
+    class="bg-white py-16 md:py-20 border-t border-[#e8e4d9]"
   >
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
       <div
@@ -710,7 +680,7 @@
           {% blocktrans trimmed %}An exceptional castle celebration shouldn't
           necessarily require paying the entire rental cost at once. Our
           proposed payment approach lets you confirm your celebration with an
-          initial deposit, then spread the remaining venue balance across a
+          initial deposit, then spread the remaining estate balance across a
           schedule agreed together.{% endblocktrans %}
         </p>
 
@@ -835,7 +805,7 @@
     <h2
       class="font-display text-5xl md:text-7xl max-w-4xl mx-auto leading-[1.15]"
     >
-      {% trans "More than just a venue. A moment in history." %}
+      {% trans "More than just an estate. A moment in history." %}
     </h2>
 
     <p class="text-ink/60 text-sm max-w-xl mx-auto leading-8 mt-8">
@@ -885,7 +855,7 @@
 
         <div class="mt-7 flex flex-wrap gap-3">
           <a
-            href="{% url 'catalog:venues' %}"
+            href="{% url 'catalog:estates' %}"
             class="btn bg-[#d5c19b] text-forest"
           >
             {% trans "Explore our estates" %}
@@ -915,34 +885,6 @@
       mobile.classList.toggle("hidden");
     });
   }
-
-  const buttons = document.querySelectorAll("[data-filter]");
-
-  buttons.forEach((button) =>
-    button.addEventListener("click", () => {
-      const value = button.dataset.filter;
-
-      document.querySelectorAll("[data-venue-country]").forEach((card) => {
-        card.hidden = value !== "All" && card.dataset.venueCountry !== value;
-      });
-
-      buttons.forEach((b) => {
-        b.classList.remove("bg-forest", "text-white");
-
-        b.classList.add("border-forest/20");
-      });
-
-      button.classList.add("bg-forest", "text-white");
-    }),
-  );
-
-  document.querySelectorAll("[data-country-link]").forEach((link) => {
-    link.addEventListener("click", () => {
-      const country = link.dataset.countryLink;
-
-      document.querySelector(`[data-filter="${country}"]`)?.click();
-    });
-  });
 
   const price = document.getElementById("price");
 

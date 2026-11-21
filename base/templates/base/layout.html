@@ -16,7 +16,7 @@
       rel="stylesheet"
     />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}?v={{ STYLES_VERSION }}" />
 
     <link
       rel="shortcut icon"
@@ -65,13 +65,19 @@
 
     {% if messages %}
 
-      <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="max-w-7xl mx-auto px-6 py-4 space-y-3" role="status" aria-live="polite">
 
         {% for message in messages %}
 
-          <p class="text-sm">
-            {{ message }}
-          </p>
+          <div
+            class="flex items-start gap-3 bg-[#F0EDE5] border border-forest/20 px-5 py-4 text-sm leading-6 {% if 'error' in message.tags or 'danger' in message.tags %}text-red-700 dark:text-red-300{% elif 'warning' in message.tags %}text-ink{% else %}text-ink{% endif %}"
+          >
+            <i
+              class="fa-solid {% if 'error' in message.tags or 'danger' in message.tags or 'warning' in message.tags %}fa-circle-exclamation{% else %}fa-circle-check{% endif %} text-gold mt-1"
+              aria-hidden="true"
+            ></i>
+            <p>{{ message }}</p>
+          </div>
 
         {% endfor %}
 

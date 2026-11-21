@@ -1,0 +1,35 @@
+{% extends "core/dashboard_layout.html" %}
+{% load static i18n %}
+{% block title %}{{ object }} | Dashboard{% endblock %}
+{% block content %}
+<main class="max-w-7xl mx-auto p-6">
+  <a href="{{ list_url }}" class="text-sm text-gray-500"><i class="fa-solid fa-arrow-left-long"></i> {{ model_name }}</a>
+
+  <div class="flex flex-wrap items-center justify-between gap-4 mt-6">
+    <div class="min-w-0">
+      <p class="text-xs uppercase tracking-[.25em] text-[#b18c43]">{% trans "Record details" %}</p>
+      <h1 class="font-display text-4xl mt-2 break-words">{{ object }}</h1>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <a href="{{ update_url }}" class="bg-forest text-white py-3 px-6 uppercase tracking-widest text-xs">{% trans "Edit" %} <i class="fa-solid fa-pen"></i></a>
+      <a href="{{ delete_url }}" class="border border-red-700 text-red-700 py-3 px-6 uppercase tracking-widest text-xs hover:bg-red-700 hover:text-white">{% trans "Delete" %} <i class="fa-solid fa-trash"></i></a>
+    </div>
+  </div>
+
+  <div class="mt-8 grid md:grid-cols-2 gap-4">
+    {% for field in fields %}
+      <section class="bg-white rounded-lg shadow p-5 {% if field.wide %}md:col-span-2{% endif %}">
+        <p class="text-xs uppercase tracking-widest text-[#b18c43]">{{ field.label|capfirst }}</p>
+        {% if field.image_url %}
+          <img src="{{ field.image_url }}" alt="" class="mt-3 max-h-48 max-w-full object-contain">
+        {% endif %}
+        <div class="mt-2 whitespace-pre-line break-words">
+          {% if field.value %}{{ field.value }}{% else %}<span class="text-gray-400">—</span>{% endif %}
+        </div>
+      </section>
+    {% empty %}
+      <p class="text-gray-500">{% trans "No fields to display." %}</p>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

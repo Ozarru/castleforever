@@ -113,7 +113,7 @@
             <div class="md:col-span-2 text-red-700 text-sm">{{ form.non_field_errors }}</div>
           {% endif %}
           {% for field in form %}
-            <div class="{% if field.name == 'message' or field.name == 'venue' %}md:col-span-2{% endif %}">
+            <div class="{% if field.name == 'message' or field.name == 'estate' %}md:col-span-2{% endif %}">
               <label for="{{ field.id_for_label }}" class="block text-xs uppercase tracking-widest mb-2">{{ field.label }}</label>
               <div class="[&_input]:w-full [&_select]:w-full [&_textarea]:w-full [&_input]:p-3 [&_select]:p-3 [&_textarea]:p-3 [&_input]:border [&_select]:border [&_textarea]:border [&_input]:bg-white [&_select]:bg-white [&_textarea]:bg-white">
                 {{ field }}
@@ -171,7 +171,7 @@
 
         <div class="mt-8 bg-[#F0EDE5] p-5 text-sm leading-7 text-ink/60">
           <p class="text-[10px] uppercase tracking-[.2em] text-gold mb-2">{% trans "Already planning?" %}</p>
-          <p>{% trans "Tell us your date and venue, and we will adapt the call to what you still need to decide." %}</p>
+          <p>{% trans "Tell us your date and estate, and we will adapt the call to what you still need to decide." %}</p>
           <a href="{% url 'core:contact' %}?tab=request" class="inline-flex mt-3 text-[11px] font-bold uppercase tracking-[.15em] underline hover:text-gold">
             {% trans "Submit a service request" %}
           </a>
