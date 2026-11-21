@@ -12,7 +12,8 @@ from openpyxl import load_workbook
 
 from catalog.models import Estate
 from core.data_transfer import DATASETS, XLSX_CONTENT_TYPE
-from core.models import Booking, ContactInquiry, NotificationRead, ServiceRequest
+from core.marketing import marketing_snapshot, results_snapshot
+from core.models import Booking, ContactInquiry, NotificationRead, ServiceRequest, WeddingRecord
 
 
 class DashboardImportExportTests(TestCase):
@@ -368,6 +369,104 @@ class PublicHomeTests(TestCase):
         self.assertNotContains(
             response,
             f'<a class="block" href="{reviews_url}">Reviews</a>',
+        )
+
+
+class MarketingSnapshotTests(TestCase):
+    def test_empty_wedding_records_use_complete_default_snapshot(self):
+        snapshot = results_snapshot()
+
+        self.assertEqual(snapshot["total"], 52)
+        self.assertEqual(snapshot["guests"], 12519)
+        self.assertEqual(snapshot["average_guests"], 241)
+        self.assertEqual(snapshot["estate_count"], 24)
+        self.assertEqual(
+            [month["count"] for month in snapshot["months"]],
+            [1, 2, 3, 4, 5, 6, 8, 9, 7, 4, 2, 1],
+        )
+        self.assertEqual(snapshot["peak_month"]["label"], "Aug")
+        self.assertEqual(snapshot["peak_month"]["count"], 9)
+        self.assertEqual(
+            [(row["code"], row["total"]) for row in snapshot["by_country"]],
+            [("FR", 24), ("IT", 13), ("ES", 9), ("PT", 4), ("DE", 2)],
+        )
+        self.assertEqual(
+            [(row["estate__name"], row["total"]) for row in snapshot["by_estate"]],
+            [
+                ("Chateau de Lumiere", 6),
+                ("Villa Toscana Serenita", 5),
+                ("Chateau de Provence", 5),
+                ("Palacio de Sevilla", 4),
+                ("Palazzo del Lago", 4),
+                ("Castello Umbro", 3),
+            ],
+        )
+        self.assertEqual(
+            sum(month["count"] for month in snapshot["months"]),
+            snapshot["total"],
+        )
+        self.assertEqual(sum(row["total"] for row in snapshot["by_country"]), snapshot["total"])
+
+        home_snapshot = marketing_snapshot()
+        self.assertEqual(home_snapshot["rating_average"], 4.5)
+        self.assertEqual(home_snapshot["testimonial_count"], 0)
+
+    def test_public_pages_render_with_empty_marketing_tables(self):
+        for url_name in ["base:home", "core:results", "core:reviews"]:
+            with self.subTest(url_name=url_name):
+                response = self.client.get(reverse(url_name))
+                self.assertEqual(response.status_code, 200)
+
+    def test_results_page_renders_default_breakdowns(self):
+        response = self.client.get(reverse("core:results"))
+
+        self.assertContains(response, "Chateau de Lumiere")
+        self.assertContains(response, "Villa Toscana Serenita")
+        self.assertContains(response, "Aug")
+        self.assertNotContains(
+            response,
+            "Country results will appear once the first 2025 records are published.",
+        )
+
+    def test_results_snapshot_uses_real_records_when_available(self):
+        estate = Estate.objects.create(
+            name="Marketing Estate",
+            slug="marketing-estate",
+            country="FR",
+            region="Provence",
+            description="A test estate",
+            capacity=100,
+            price_from="5000.00",
+            is_published=True,
+        )
+        WeddingRecord.objects.create(
+            reference="WR-2025-001",
+            estate=estate,
+            country="FR",
+            wedding_date="2025-06-15",
+            guest_count=100,
+        )
+        WeddingRecord.objects.create(
+            reference="WR-2025-002",
+            estate=estate,
+            country="FR",
+            wedding_date="2025-08-20",
+            guest_count=80,
+        )
+
+        snapshot = results_snapshot()
+
+        self.assertEqual(snapshot["total"], 2)
+        self.assertEqual(snapshot["guests"], 180)
+        self.assertEqual(snapshot["average_guests"], 90)
+        self.assertEqual(snapshot["estate_count"], 1)
+        self.assertEqual(snapshot["by_country"][0]["code"], "FR")
+        self.assertEqual(snapshot["by_country"][0]["total"], 2)
+        self.assertEqual(snapshot["by_estate"][0]["estate__name"], "Marketing Estate")
+        self.assertEqual(snapshot["by_estate"][0]["total"], 2)
+        self.assertEqual(
+            [month["count"] for month in snapshot["months"]],
+            [1 if month in (6, 8) else 0 for month in range(1, 13)],
         )
 
 
