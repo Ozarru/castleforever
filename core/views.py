@@ -103,6 +103,7 @@ def appointment(request):
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models as db_models
+from django.db.models import Q
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext as _, gettext_lazy, ngettext
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView, View
@@ -238,18 +239,140 @@ def _table_value(obj, name):
     return str(value)
 
 
+BULK_BOOLEAN_ACTIONS = {
+    "is_published": (
+        gettext_lazy("Publish"),
+        gettext_lazy("Unpublish"),
+    ),
+    "is_active": (
+        gettext_lazy("Activate"),
+        gettext_lazy("Deactivate"),
+    ),
+    "approved": (
+        gettext_lazy("Approve"),
+        gettext_lazy("Unapprove"),
+    ),
+    "is_paid": (
+        gettext_lazy("Mark as paid"),
+        gettext_lazy("Mark as unpaid"),
+    ),
+    "is_available": (
+        gettext_lazy("Mark as available"),
+        gettext_lazy("Mark as unavailable"),
+    ),
+}
+
+
+def _bulk_actions(model):
+    """Return bulk actions supported by the fields on ``model``."""
+    fields = {field.name: field for field in model._meta.concrete_fields}
+    actions = []
+    for field_name, (true_label, false_label) in BULK_BOOLEAN_ACTIONS.items():
+        field = fields.get(field_name)
+        if not isinstance(field, db_models.BooleanField):
+            continue
+        actions.append({
+            "value": f"set_true:{field_name}",
+            "label": true_label,
+        })
+        actions.append({
+            "value": f"set_false:{field_name}",
+            "label": false_label,
+        })
+    actions.append({
+        "value": "delete",
+        "label": gettext_lazy("Delete selected"),
+        "danger": True,
+    })
+    return actions
+
+
+SEARCH_FIELD_TYPES = (db_models.CharField, db_models.TextField)
+
+
+def _search_fields(model):
+    return [
+        field.name
+        for field in model._meta.concrete_fields
+        if isinstance(field, SEARCH_FIELD_TYPES)
+    ]
+
+
+def _list_filters(model):
+    filters = []
+    for field in model._meta.concrete_fields:
+        if isinstance(field, db_models.BooleanField):
+            options = [
+                {"value": "true", "label": _("Yes")},
+                {"value": "false", "label": _("No")},
+            ]
+        elif field.choices:
+            options = [
+                {"value": str(value), "label": label}
+                for value, label in field.choices
+            ]
+        else:
+            continue
+        filters.append({
+            "name": f"filter_{field.name}",
+            "field": field.name,
+            "label": field.verbose_name,
+            "boolean": isinstance(field, db_models.BooleanField),
+            "options": options,
+        })
+    return filters
+
+
 class DashboardListView(StaffRequiredMixin, ListView):
     template_name = "core/dashboard_list.html"
+    partial_template_name = "core/dashboard_list_results.html"
     context_object_name = "objects"
     model_name = ""
     create_url_name = ""
     update_url_name = ""
     delete_url_name = ""
+    ordering = "pk"
+    paginate_by = 24
+
+    def get_template_names(self):
+        if self.request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return [self.partial_template_name]
+        return [self.template_name]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.search_query = self.request.GET.get("q", "").strip()
+        if self.search_query:
+            conditions = Q()
+            for field_name in _search_fields(self.model):
+                conditions |= Q(**{f"{field_name}__icontains": self.search_query})
+            if self.search_query.isdigit():
+                conditions |= Q(pk=int(self.search_query))
+            queryset = queryset.filter(conditions)
+
+        self.active_filters = {}
+        for item in _list_filters(self.model):
+            value = self.request.GET.get(item["name"], "")
+            allowed = {str(option["value"]) for option in item["options"]}
+            if not value or value not in allowed:
+                continue
+            queryset = queryset.filter(
+                **{item["field"]: value == "true" if item["boolean"] else value}
+            )
+            self.active_filters[item["field"]] = value
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         model_key = self.model._meta.label_lower
         columns = LIST_COLUMNS.get(model_key, ())
+        list_filters = _list_filters(self.model)
+        for item in list_filters:
+            for option in item["options"]:
+                option["selected"] = (
+                    getattr(self, "active_filters", {}).get(item["field"])
+                    == str(option["value"])
+                )
         rows = []
         for obj in context["objects"]:
             cells = []
@@ -273,6 +396,14 @@ class DashboardListView(StaffRequiredMixin, ListView):
             "delete_url_name": self.delete_url_name,
             "import_url": reverse("core:dashboard-import", args=[model_key]),
             "export_url": reverse("core:dashboard-export", args=[model_key]),
+            "bulk_action_url": reverse("core:dashboard-bulk", args=[model_key]),
+            "bulk_actions": _bulk_actions(self.model),
+            "search_query": getattr(self, "search_query", ""),
+            "list_filters": list_filters,
+            "has_filters": bool(getattr(self, "search_query", "") or getattr(self, "active_filters", {})),
+            "per_page": context["paginator"].per_page if context.get("paginator") else self.paginate_by,
+            "objects_in_view": len(context["page_obj"].object_list) if context.get("page_obj") else len(context["objects"]),
+            "total_count": context["paginator"].count if context.get("paginator") else len(context["objects"]),
         })
         return context
 
@@ -394,6 +525,56 @@ class DashboardExportView(StaffRequiredMixin, View):
         model, dataset = get_dataset(model_key)
         file_format = normalize_format(request.GET.get("format")) or "csv"
         return export_file(model, export_field_names(model), dataset["label"], file_format)
+
+
+class DashboardBulkActionView(StaffRequiredMixin, View):
+    """Apply a shared action to one or more records from a dashboard list."""
+
+    def post(self, request, model_key):
+        model, dataset = get_dataset(model_key)
+        list_url = reverse(dataset["list_url_name"])
+
+        selected_ids = []
+        for value in request.POST.getlist("selected_ids"):
+            try:
+                selected_ids.append(int(value))
+            except (TypeError, ValueError):
+                continue
+
+        if not selected_ids:
+            messages.error(request, _("Please select at least one record."))
+            return redirect(list_url)
+
+        action = request.POST.get("action", "")
+        allowed_actions = {item["value"] for item in _bulk_actions(model)}
+        if action not in allowed_actions:
+            messages.error(request, _("Please choose a valid action."))
+            return redirect(list_url)
+
+        queryset = model.objects.filter(pk__in=selected_ids)
+        count = queryset.count()
+        if not count:
+            messages.error(request, _("The selected records no longer exist."))
+            return redirect(list_url)
+
+        if action == "delete":
+            queryset.delete()
+            message = ngettext(
+                "Deleted %(count)s record.",
+                "Deleted %(count)s records.",
+                count,
+            ) % {"count": count}
+        else:
+            operation, field_name = action.split(":", 1)
+            queryset.update(**{field_name: operation == "set_true"})
+            message = ngettext(
+                "Updated %(count)s record.",
+                "Updated %(count)s records.",
+                count,
+            ) % {"count": count}
+
+        messages.success(request, message)
+        return redirect(list_url)
 
 
 class DashboardImportView(StaffRequiredMixin, View):

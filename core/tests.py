@@ -14,6 +14,7 @@ from catalog.models import Estate
 from core.data_transfer import DATASETS, XLSX_CONTENT_TYPE
 from core.marketing import marketing_snapshot, results_snapshot
 from core.models import Booking, ContactInquiry, NotificationRead, ServiceRequest, WeddingRecord
+from core.views import _bulk_actions
 
 
 class DashboardImportExportTests(TestCase):
@@ -68,6 +69,22 @@ class DashboardImportExportTests(TestCase):
         data.update(overrides)
         return data
 
+    def _extra_estates(self, count):
+        created = []
+        for index in range(count):
+            created.append(Estate.objects.create(
+                name=f"Extra Estate {index + 1}",
+                slug=f"extra-estate-{index + 1}",
+                country="IT",
+                region="Tuscany",
+                city="Florence",
+                description="Another test estate",
+                capacity=80,
+                price_from="4000.00",
+                is_published=True,
+            ))
+        return created
+
     def test_estate_create_save_redirects_to_list(self):
         response = self.client.post(
             reverse("core:estate-create"),
@@ -95,6 +112,172 @@ class DashboardImportExportTests(TestCase):
 
         self.assertRedirects(response, reverse("core:estate-list"))
         self.assertFalse(Estate.objects.filter(pk=self.estate.pk).exists())
+
+    def test_estate_list_has_bulk_selection_and_actions(self):
+        response = self.client.get(reverse("core:estate-list"))
+
+        self.assertContains(
+            response,
+            f'action="{reverse("core:dashboard-bulk", args=["catalog.estate"])}"',
+        )
+        self.assertContains(response, 'name="selected_ids"')
+        self.assertContains(response, 'data-select-all')
+        self.assertContains(response, 'id="bulkActionSelect"')
+        self.assertContains(response, 'id="bulkActionApply"')
+        for value in ["set_true:is_published", "set_false:is_published", "delete"]:
+            self.assertContains(response, f'value="{value}"')
+
+    def test_bulk_action_can_unpublish_multiple_estates(self):
+        extra = Estate.objects.create(
+            name="Bulk Estate",
+            slug="bulk-estate",
+            country="IT",
+            region="Tuscany",
+            description="Another test estate",
+            capacity=80,
+            price_from="4000.00",
+            is_published=True,
+        )
+        response = self.client.post(
+            reverse("core:dashboard-bulk", args=["catalog.estate"]),
+            {
+                "selected_ids": [self.estate.pk, extra.pk],
+                "action": "set_false:is_published",
+            },
+        )
+
+        self.assertRedirects(response, reverse("core:estate-list"))
+        self.estate.refresh_from_db()
+        extra.refresh_from_db()
+        self.assertFalse(self.estate.is_published)
+        self.assertFalse(extra.is_published)
+
+    def test_bulk_delete_removes_only_selected_estates(self):
+        unselected = Estate.objects.create(
+            name="Keep Estate",
+            slug="keep-estate",
+            country="ES",
+            region="Andalusia",
+            description="Keep this estate",
+            capacity=60,
+            price_from="3000.00",
+            is_published=False,
+        )
+        response = self.client.post(
+            reverse("core:dashboard-bulk", args=["catalog.estate"]),
+            {
+                "selected_ids": [self.estate.pk],
+                "action": "delete",
+            },
+        )
+
+        self.assertRedirects(response, reverse("core:estate-list"))
+        self.assertFalse(Estate.objects.filter(pk=self.estate.pk).exists())
+        self.assertTrue(Estate.objects.filter(pk=unselected.pk).exists())
+
+    def test_bulk_action_requires_selection_and_valid_action(self):
+        bulk_url = reverse("core:dashboard-bulk", args=["catalog.estate"])
+
+        response = self.client.post(bulk_url, {"action": "delete"})
+        self.assertRedirects(response, reverse("core:estate-list"))
+        self.assertTrue(Estate.objects.filter(pk=self.estate.pk).exists())
+
+        response = self.client.post(
+            bulk_url,
+            {"selected_ids": [self.estate.pk], "action": "set_true:not_a_field"},
+        )
+        self.assertRedirects(response, reverse("core:estate-list"))
+        self.estate.refresh_from_db()
+        self.assertTrue(self.estate.is_published)
+
+    def test_bulk_actions_include_is_active_for_models_with_that_field(self):
+        values = [action["value"] for action in _bulk_actions(get_user_model())]
+
+        self.assertIn("set_true:is_active", values)
+        self.assertIn("set_false:is_active", values)
+
+    def test_list_paginates_by_twenty_four_by_default(self):
+        self._extra_estates(24)
+        response = self.client.get(reverse("core:estate-list"))
+
+        self.assertContains(response, "24 / 25 records")
+        self.assertContains(response, 'name="selected_ids"', count=24)
+        self.assertContains(response, 'href="?page=2"')
+
+    def test_second_page_shows_remaining_records(self):
+        self._extra_estates(24)
+        response = self.client.get(reverse("core:estate-list"), {"page": "2"})
+
+        self.assertContains(response, "1 / 25 records")
+        self.assertContains(response, 'name="selected_ids"', count=1)
+
+    def test_list_search_filters_records_across_text_fields(self):
+        Estate.objects.create(
+            name="Porto Castle",
+            slug="porto-castle",
+            country="PT",
+            region="Douro",
+            city="Porto",
+            description="Riverside estate",
+            capacity=50,
+            price_from="3000.00",
+            is_published=True,
+        )
+        response = self.client.get(reverse("core:estate-list"), {"q": "Porto"})
+
+        self.assertContains(response, "Porto Castle")
+        self.assertNotContains(response, "Test Estate")
+
+    def test_list_search_input_is_live_ready(self):
+        response = self.client.get(reverse("core:estate-list"))
+
+        self.assertContains(response, 'id="dashboardSearch"')
+        self.assertContains(response, "data-live-filter")
+        self.assertContains(response, 'id="dashboardResults"')
+        self.assertContains(response, "data-dashboard-page")
+
+    def test_list_search_returns_results_partial_for_ajax(self):
+        Estate.objects.create(
+            name="Porto Castle",
+            slug="porto-castle",
+            country="PT",
+            region="Douro",
+            city="Porto",
+            description="Riverside estate",
+            capacity=50,
+            price_from="3000.00",
+            is_published=True,
+        )
+        response = self.client.get(
+            reverse("core:estate-list"),
+            {"q": "Porto"},
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Porto Castle")
+        self.assertNotContains(response, "<html")
+        self.assertNotContains(response, 'id="dashboardSearch"')
+        self.assertNotContains(response, 'id="bulkActionForm"')
+
+    def test_list_filter_narrows_by_boolean_field(self):
+        Estate.objects.create(
+            name="Hidden Estate",
+            slug="hidden-estate",
+            country="PT",
+            region="Douro",
+            city="Lisbon",
+            description="Hidden estate",
+            capacity=40,
+            price_from="2000.00",
+            is_published=False,
+        )
+        response = self.client.get(
+            reverse("core:estate-list"), {"filter_is_published": "false"}
+        )
+
+        self.assertContains(response, "Hidden Estate")
+        self.assertNotContains(response, "Test Estate")
 
     def test_statistics_page_has_structured_chart_payload(self):
         self._booking()
@@ -224,7 +407,8 @@ class DashboardImportExportTests(TestCase):
         self.assertContains(response, reverse("core:dashboard-import", args=["core.booking"]))
         self.assertContains(response, f'href="{export_url}?format=csv"')
         self.assertContains(response, f'href="{export_url}?format=xlsx"')
-        self.assertContains(response, 'class="dashboard-outline-button"', count=2)
+        self.assertContains(response, 'class="dashboard-outline-button"', count=3)
+        self.assertContains(response, 'id="bulkActionApply"')
         self.assertContains(response, 'data-popover-menu="exportFormatMenu"')
         self.assertContains(response, 'aria-haspopup="true"')
         self.assertContains(response, "CSV")
@@ -232,7 +416,6 @@ class DashboardImportExportTests(TestCase):
         self.assertContains(response, "Import")
         self.assertContains(response, "Export")
         self.assertNotContains(response, 'name="format"')
-        self.assertNotContains(response, "dashboard-format-select")
 
     def test_import_page_has_single_file_input_and_no_format_selector(self):
         response = self.client.get(reverse("core:dashboard-import", args=["core.booking"]))
@@ -328,6 +511,18 @@ class DashboardImportExportTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "was not completed")
         self.assertEqual(Booking.objects.count(), 0)
+
+    def test_every_dashboard_list_renders_bulk_action_controls(self):
+        for model_key, dataset in DATASETS.items():
+            with self.subTest(model_key=model_key):
+                response = self.client.get(reverse(dataset["list_url_name"]))
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(
+                    response,
+                    f'action="{reverse("core:dashboard-bulk", args=[model_key])}"',
+                )
+                self.assertContains(response, 'id="bulkActionApply"')
+                self.assertContains(response, 'id="dashboardSearch"')
 
     def test_every_dashboard_dataset_exposes_both_export_formats(self):
         for model_key in DATASETS:

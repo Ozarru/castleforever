@@ -19,6 +19,7 @@ urlpatterns = [
     path("dashboard/detail/<str:model_key>/<int:pk>/", views.DashboardDetailView.as_view(), name="dashboard-detail"),
     path("dashboard/notifications/read/", views.DashboardNotificationsMarkReadView.as_view(), name="notifications-mark-read"),
 
+    path("dashboard/data/<str:model_key>/bulk/", views.DashboardBulkActionView.as_view(), name="dashboard-bulk"),
     path("dashboard/data/<str:model_key>/export/", views.DashboardExportView.as_view(), name="dashboard-export"),
     path("dashboard/data/<str:model_key>/import/", views.DashboardImportView.as_view(), name="dashboard-import"),
 

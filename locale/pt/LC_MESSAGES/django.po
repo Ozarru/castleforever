@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CastleForever 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-21 18:55+0000\n"
+"POT-Creation-Date: 2026-11-21 20:29+0000\n"
 "PO-Revision-Date: 2026-11-21 15:47+0000\n"
 "Last-Translator: CastleForever <translations@castleforever.example>\n"
 "Language-Team: Portuguese <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: .\accounts\forms.py:17 .\accounts\templates\accounts\login.html:21
 #: .\core\models.py:75 .\core\models.py:91 .\core\models.py:192
-#: .\core\templates\core\contact.html:190 .\core\views.py:161
+#: .\core\templates\core\contact.html:190 .\core\views.py:162
 msgid "Email"
 msgstr "Email"
 
@@ -31,7 +31,7 @@ msgstr "Palavra-passe"
 #: .\accounts\templates\accounts\activity.html:6
 #: .\base\templates\shared\navbar.html:26
 #: .\base\templates\shared\navbar.html:58
-#: .\core\templates\core\dashboard_layout.html:257
+#: .\core\templates\core\dashboard_layout.html:262
 msgid "Activity"
 msgstr "Atividade"
 
@@ -40,19 +40,19 @@ msgid "Your activity."
 msgstr "A sua atividade."
 
 #: .\accounts\templates\accounts\activity.html:10
-#: .\core\templates\core\dashboard_layout.html:60
-#: .\core\templates\core\dashboard_layout.html:62 .\core\views.py:808
-#: .\core\views.py:865 .\core\views.py:970
+#: .\core\templates\core\dashboard_layout.html:65
+#: .\core\templates\core\dashboard_layout.html:67 .\core\views.py:983
+#: .\core\views.py:1040 .\core\views.py:1145
 msgid "Bookings"
 msgstr "Reservas"
 
-#: .\accounts\templates\accounts\activity.html:11 .\core\views.py:815
-#: .\core\views.py:886
+#: .\accounts\templates\accounts\activity.html:11 .\core\views.py:990
+#: .\core\views.py:1061
 msgid "Service requests"
 msgstr "Pedidos de serviço"
 
-#: .\accounts\templates\accounts\activity.html:12 .\core\views.py:822
-#: .\core\views.py:877
+#: .\accounts\templates\accounts\activity.html:12 .\core\views.py:997
+#: .\core\views.py:1052
 msgid "Inquiries"
 msgstr "Consultas"
 
@@ -98,10 +98,10 @@ msgstr "Criar uma conta"
 #: .\accounts\templates\accounts\notifications.html:6
 #: .\base\templates\shared\navbar.html:25
 #: .\base\templates\shared\navbar.html:57
-#: .\core\templates\core\dashboard_layout.html:196
-#: .\core\templates\core\dashboard_layout.html:197
-#: .\core\templates\core\dashboard_layout.html:206
-#: .\core\templates\core\dashboard_layout.html:254
+#: .\core\templates\core\dashboard_layout.html:201
+#: .\core\templates\core\dashboard_layout.html:202
+#: .\core\templates\core\dashboard_layout.html:211
+#: .\core\templates\core\dashboard_layout.html:259
 msgid "Notifications"
 msgstr "Notificações"
 
@@ -110,7 +110,7 @@ msgid "Your notifications."
 msgstr "As suas notificações."
 
 #: .\accounts\templates\accounts\notifications.html:8
-#: .\core\templates\core\dashboard_layout.html:222
+#: .\core\templates\core\dashboard_layout.html:227
 msgid "No new notifications."
 msgstr "Não há novas notificações."
 
@@ -118,7 +118,7 @@ msgstr "Não há novas notificações."
 #: .\accounts\templates\accounts\profile.html:6
 #: .\base\templates\shared\navbar.html:24
 #: .\base\templates\shared\navbar.html:56
-#: .\core\templates\core\dashboard_layout.html:251
+#: .\core\templates\core\dashboard_layout.html:256
 msgid "Profile"
 msgstr "Perfil"
 
@@ -230,7 +230,7 @@ msgstr "meses"
 
 #: .\base\templates\base\approach.html:42
 #: .\base\templates\base\approach.html:127 .\base\templates\base\home.html:745
-#: .\core\views.py:177
+#: .\core\views.py:178
 msgid "Estimated monthly installment"
 msgstr "Prestação mensal estimada"
 
@@ -416,9 +416,9 @@ msgstr "Ver todas as propriedades"
 #: .\base\templates\shared\navbar.html:10
 #: .\base\templates\shared\navbar.html:50 .\catalog\models.py:78
 #: .\catalog\templates\catalog\estate_detail.html:9
-#: .\core\templates\core\dashboard_layout.html:92
-#: .\core\templates\core\dashboard_layout.html:94 .\core\views.py:829
-#: .\core\views.py:959
+#: .\core\templates\core\dashboard_layout.html:97
+#: .\core\templates\core\dashboard_layout.html:99 .\core\views.py:1004
+#: .\core\views.py:1134
 msgid "Estates"
 msgstr "Propriedades"
 
@@ -438,7 +438,7 @@ msgstr ""
 #: .\base\templates\base\destination.html:101 .\catalog\models.py:31
 #: .\catalog\templates\catalog\estate_detail.html:140
 #: .\catalog\templates\catalog\estate_detail.html:215
-#: .\catalog\templates\catalog\estates.html:37 .\core\views.py:203
+#: .\catalog\templates\catalog\estates.html:37 .\core\views.py:204
 msgid "Estate type"
 msgstr "Tipo de propriedade"
 
@@ -452,7 +452,6 @@ msgstr ""
 "              %(type_label)s para uma celebração inesquecível."
 
 #: .\base\templates\base\destination.html:112
-#| msgid "View records"
 msgid "View more"
 msgstr "Ver mais"
 
@@ -537,8 +536,8 @@ msgid "Guests welcomed"
 msgstr "Convidados recebidos"
 
 #: .\base\templates\base\home.html:146
-msgid "Average couple rating"
-msgstr "Classificação média dos casais"
+msgid "Average guest rating"
+msgstr "Classificação média dos convidados"
 
 #: .\base\templates\base\home.html:156 .\core\templates\core\results.html:43
 #: .\core\templates\core\reviews.html:45
@@ -938,10 +937,10 @@ msgstr "Contacto"
 #: .\base\templates\shared\navbar.html:60
 #: .\core\templates\core\dashboard.html:3
 #: .\core\templates\core\dashboard.html:6
-#: .\core\templates\core\dashboard_layout.html:52
-#: .\core\templates\core\dashboard_layout.html:54
-#: .\core\templates\core\dashboard_layout.html:130
-#: .\core\templates\core\dashboard_layout.html:261
+#: .\core\templates\core\dashboard_layout.html:57
+#: .\core\templates\core\dashboard_layout.html:59
+#: .\core\templates\core\dashboard_layout.html:135
+#: .\core\templates\core\dashboard_layout.html:266
 #: .\core\templates\core\dashboard_list.html:6
 msgid "Dashboard"
 msgstr "Painel"
@@ -985,19 +984,19 @@ msgstr "Financiamento"
 
 #: .\base\templates\shared\navbar.html:30
 #: .\base\templates\shared\navbar.html:62
-#: .\core\templates\core\dashboard_layout.html:266
+#: .\core\templates\core\dashboard_layout.html:271
 msgid "Log out?"
 msgstr "Terminar sessão?"
 
 #: .\base\templates\shared\navbar.html:32
 #: .\base\templates\shared\navbar.html:64
-#: .\core\templates\core\dashboard_layout.html:267
+#: .\core\templates\core\dashboard_layout.html:272
 msgid "Log out"
 msgstr "Terminar sessão"
 
 #: .\base\templates\shared\navbar.html:37
 #: .\base\templates\shared\navbar.html:67
-#: .\core\templates\core\dashboard_layout.html:273
+#: .\core\templates\core\dashboard_layout.html:278
 msgid "Log in"
 msgstr "Iniciar sessão"
 
@@ -1049,16 +1048,16 @@ msgstr "Slug"
 
 #: .\catalog\models.py:36 .\catalog\templates\catalog\estate_detail.html:157
 #: .\catalog\templates\catalog\estates.html:49 .\core\models.py:160
-#: .\core\views.py:197 .\core\views.py:202
+#: .\core\views.py:198 .\core\views.py:203
 msgid "Country"
 msgstr "País"
 
 #: .\catalog\models.py:37 .\catalog\templates\catalog\estates.html:61
-#: .\core\views.py:204
+#: .\core\views.py:205
 msgid "Region"
 msgstr "Região"
 
-#: .\catalog\models.py:39 .\core\views.py:205
+#: .\catalog\models.py:39 .\core\views.py:206
 msgid "City"
 msgstr "Cidade"
 
@@ -1090,11 +1089,11 @@ msgstr "Descrição (alemã)"
 msgid "Description (Portuguese)"
 msgstr "Descrição (portuguesa)"
 
-#: .\catalog\models.py:50 .\core\views.py:206
+#: .\catalog\models.py:50 .\core\views.py:207
 msgid "Capacity"
 msgstr "Capacidade"
 
-#: .\catalog\models.py:52 .\core\views.py:207
+#: .\catalog\models.py:52 .\core\views.py:208
 msgid "Price from"
 msgstr "Preço a partir de"
 
@@ -1114,17 +1113,17 @@ msgstr "URL da imagem de capa"
 msgid "Optional remote image for initial catalog"
 msgstr "Imagem remota opcional para o catálogo inicial"
 
-#: .\catalog\models.py:68 .\core\models.py:122 .\core\views.py:191
-#: .\core\views.py:208
+#: .\catalog\models.py:68 .\core\models.py:122 .\core\views.py:192
+#: .\core\views.py:209
 msgid "Published"
 msgstr "Publicado"
 
-#: .\catalog\models.py:69 .\core\views.py:163
+#: .\catalog\models.py:69 .\core\views.py:164
 msgid "Created at"
 msgstr "Criado em"
 
 #: .\catalog\models.py:77 .\core\models.py:110 .\core\models.py:158
-#: .\core\views.py:146 .\core\views.py:189 .\core\views.py:196
+#: .\core\views.py:147 .\core\views.py:190 .\core\views.py:197
 msgid "Estate"
 msgstr "Propriedade"
 
@@ -1146,7 +1145,7 @@ msgstr ""
 msgid "per day"
 msgstr "por dia"
 
-#: .\catalog\templates\catalog\car_rentals.html:27 .\core\views.py:215
+#: .\catalog\templates\catalog\car_rentals.html:27 .\core\views.py:216
 msgid "Available for rental"
 msgstr "Disponível para aluguer"
 
@@ -1337,6 +1336,8 @@ msgstr "Pesquisar na coleção"
 
 #: .\catalog\templates\catalog\estates.html:23
 #: .\catalog\templates\catalog\estates.html:73
+#: .\core\templates\core\dashboard_list.html:41
+#: .\core\templates\core\dashboard_list.html:66
 msgid "Search"
 msgstr "Pesquisar"
 
@@ -1446,7 +1447,7 @@ msgid "Corporate event"
 msgstr "Evento corporativo"
 
 #: .\core\models.py:74 .\core\models.py:90 .\core\models.py:191
-#: .\core\views.py:153 .\core\views.py:160 .\core\views.py:181
+#: .\core\views.py:154 .\core\views.py:161 .\core\views.py:182
 msgid "Full name"
 msgstr "Nome completo"
 
@@ -1455,20 +1456,20 @@ msgstr "Nome completo"
 msgid "Phone"
 msgstr "Telefone"
 
-#: .\core\models.py:77 .\core\views.py:156
+#: .\core\models.py:77 .\core\views.py:157
 msgid "Destination"
 msgstr "Destino"
 
-#: .\core\models.py:78 .\core\views.py:154
+#: .\core\models.py:78 .\core\views.py:155
 msgid "Event type"
 msgstr "Tipo de evento"
 
-#: .\core\models.py:79 .\core\models.py:113 .\core\views.py:155
+#: .\core\models.py:79 .\core\models.py:113 .\core\views.py:156
 msgid "Event date"
 msgstr "Data do evento"
 
-#: .\core\models.py:80 .\core\models.py:163 .\core\views.py:148
-#: .\core\views.py:157 .\core\views.py:199
+#: .\core\models.py:80 .\core\models.py:163 .\core\views.py:149
+#: .\core\views.py:158 .\core\views.py:200
 msgid "Guest count"
 msgstr "Número de convidados"
 
@@ -1480,7 +1481,7 @@ msgstr "Orçamento"
 msgid "Describe your needs and expectations"
 msgstr "Descreva as suas necessidades e expectativas"
 
-#: .\core\models.py:92 .\core\views.py:162
+#: .\core\models.py:92 .\core\views.py:163
 msgid "Subject"
 msgstr "Assunto"
 
@@ -1492,11 +1493,11 @@ msgstr "Mensagem"
 msgid "Inquiry"
 msgstr "Consulta"
 
-#: .\core\models.py:103 .\core\models.py:162 .\core\views.py:188
+#: .\core\models.py:103 .\core\models.py:162 .\core\views.py:189
 msgid "Couple names"
 msgstr "Nomes do casal"
 
-#: .\core\models.py:115 .\core\views.py:190
+#: .\core\models.py:115 .\core\views.py:191
 msgid "Rating"
 msgstr "Classificação"
 
@@ -1512,20 +1513,20 @@ msgstr "Fotografia"
 msgid "Photo URL"
 msgstr "URL da fotografia"
 
-#: .\core\models.py:123 .\core\views.py:192
+#: .\core\models.py:123 .\core\views.py:193
 msgid "Display order"
 msgstr "Ordem de exibição"
 
-#: .\core\models.py:128 .\core\templates\core\dashboard_layout.html:76
-#: .\core\templates\core\dashboard_layout.html:78
+#: .\core\models.py:128 .\core\templates\core\dashboard_layout.html:81
+#: .\core\templates\core\dashboard_layout.html:83
 msgid "Testimonials"
 msgstr "Testemunhos"
 
-#: .\core\models.py:151 .\core\views.py:195
+#: .\core\models.py:151 .\core\views.py:196
 msgid "Reference"
 msgstr "Referência"
 
-#: .\core\models.py:161 .\core\views.py:147 .\core\views.py:198
+#: .\core\models.py:161 .\core\views.py:148 .\core\views.py:199
 msgid "Wedding date"
 msgstr "Data do casamento"
 
@@ -1569,15 +1570,15 @@ msgstr "Concluído"
 msgid "Cancelled"
 msgstr "Cancelado"
 
-#: .\core\models.py:195 .\core\views.py:182
+#: .\core\models.py:195 .\core\views.py:183
 msgid "Appointment type"
 msgstr "Tipo de encontro"
 
-#: .\core\models.py:200 .\core\views.py:183
+#: .\core\models.py:200 .\core\views.py:184
 msgid "Preferred date"
 msgstr "Data preferida"
 
-#: .\core\models.py:201 .\core\views.py:184
+#: .\core\models.py:201 .\core\views.py:185
 msgid "Preferred time"
 msgstr "Hora preferida"
 
@@ -1593,7 +1594,7 @@ msgstr "Número estimado de convidados"
 msgid "What would you like to discuss?"
 msgstr "Sobre o que gostaria de falar?"
 
-#: .\core\models.py:213 .\core\views.py:149 .\core\views.py:185
+#: .\core\models.py:213 .\core\views.py:150 .\core\views.py:186
 msgid "Status"
 msgstr "Estado"
 
@@ -1601,9 +1602,9 @@ msgstr "Estado"
 msgid "Appointment"
 msgstr "Encontro"
 
-#: .\core\models.py:223 .\core\templates\core\dashboard_layout.html:72
-#: .\core\templates\core\dashboard_layout.html:74 .\core\views.py:843
-#: .\core\views.py:1001
+#: .\core\models.py:223 .\core\templates\core\dashboard_layout.html:77
+#: .\core\templates\core\dashboard_layout.html:79 .\core\views.py:1018
+#: .\core\views.py:1176
 msgid "Appointments"
 msgstr "Encontros"
 
@@ -2017,8 +2018,8 @@ msgid "Open list"
 msgstr "Abrir lista"
 
 #: .\core\templates\core\dashboard.html:18
-#: .\core\templates\core\dashboard_layout.html:56
-#: .\core\templates\core\dashboard_layout.html:58
+#: .\core\templates\core\dashboard_layout.html:61
+#: .\core\templates\core\dashboard_layout.html:63
 #: .\core\templates\core\statistics.html:4
 #: .\core\templates\core\statistics.html:15
 msgid "Statistics"
@@ -2031,7 +2032,7 @@ msgstr "Ver gráficos"
 #: .\core\templates\core\dashboard_confirm_delete.html:3
 #: .\core\templates\core\dashboard_confirm_delete.html:10
 #: .\core\templates\core\dashboard_detail.html:15
-#: .\core\templates\core\dashboard_list.html:68
+#: .\core\templates\core\dashboard_list.html:191
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -2040,7 +2041,7 @@ msgid "Delete record?"
 msgstr "Eliminar registo?"
 
 #: .\core\templates\core\dashboard_confirm_delete.html:11
-#: .\core\templates\core\dashboard_import.html:48
+#: .\core\templates\core\dashboard_import.html:39
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -2049,7 +2050,7 @@ msgid "Record details"
 msgstr "Detalhes do registo"
 
 #: .\core\templates\core\dashboard_detail.html:14
-#: .\core\templates\core\dashboard_list.html:65
+#: .\core\templates\core\dashboard_list.html:188
 msgid "Edit"
 msgstr "Editar"
 
@@ -2075,7 +2076,7 @@ msgstr "Guardar"
 
 #: .\core\templates\core\dashboard_import.html:3
 #: .\core\templates\core\dashboard_import.html:8
-#: .\core\templates\core\dashboard_import.html:46
+#: .\core\templates\core\dashboard_import.html:37
 #: .\core\templates\core\dashboard_list.html:10
 msgid "Import"
 msgstr "Importar"
@@ -2085,15 +2086,10 @@ msgid "The import was not completed. No records were changed."
 msgstr "A importação não foi concluída. Nenhum registo foi alterado."
 
 #: .\core\templates\core\dashboard_import.html:21
-#: .\core\templates\core\dashboard_import.html:24
-msgid "File format"
-msgstr "Formato do ficheiro"
-
-#: .\core\templates\core\dashboard_import.html:30
 msgid "Data file"
 msgstr "Ficheiro de dados"
 
-#: .\core\templates\core\dashboard_import.html:37
+#: .\core\templates\core\dashboard_import.html:28
 msgid ""
 "Use a CSV or XLSX exported from this list view. Rows with an id update that "
 "record, or recreate it if missing; rows without one create a new record."
@@ -2102,143 +2098,209 @@ msgstr ""
 "atualizam esse registo, ou recriam-no se estiver em falta; as linhas sem id "
 "criam um novo registo."
 
-#: .\core\templates\core\dashboard_import.html:38
+#: .\core\templates\core\dashboard_import.html:29
 msgid "Auto-managed timestamps and uploaded images are not imported."
 msgstr ""
 "Os carimbos de data/hora gerados automaticamente e as imagens carregadas não"
 " são importados."
 
-#: .\core\templates\core\dashboard_import.html:41
+#: .\core\templates\core\dashboard_import.html:32
 msgid "Columns"
 msgstr "Colunas"
 
-#: .\core\templates\core\dashboard_layout.html:45
+#: .\core\templates\core\dashboard_layout.html:50
 msgid "CastleForever home"
 msgstr "Início CastleForever"
 
-#: .\core\templates\core\dashboard_layout.html:46
-#: .\core\templates\core\dashboard_layout.html:129
+#: .\core\templates\core\dashboard_layout.html:51
+#: .\core\templates\core\dashboard_layout.html:134
 msgid "CastleForever"
 msgstr "CastleForever"
 
-#: .\core\templates\core\dashboard_layout.html:64
-#: .\core\templates\core\dashboard_layout.html:66
+#: .\core\templates\core\dashboard_layout.html:69
+#: .\core\templates\core\dashboard_layout.html:71
 msgid "Service Requests"
 msgstr "Pedidos de serviço"
 
-#: .\core\templates\core\dashboard_layout.html:68
-#: .\core\templates\core\dashboard_layout.html:70
+#: .\core\templates\core\dashboard_layout.html:73
+#: .\core\templates\core\dashboard_layout.html:75
 msgid "Contact Inquiries"
 msgstr "Consultas de contacto"
 
-#: .\core\templates\core\dashboard_layout.html:80
-#: .\core\templates\core\dashboard_layout.html:82
+#: .\core\templates\core\dashboard_layout.html:85
+#: .\core\templates\core\dashboard_layout.html:87
 msgid "Wedding Records"
 msgstr "Registos de casamento"
 
-#: .\core\templates\core\dashboard_layout.html:84
-#: .\core\templates\core\dashboard_layout.html:86
+#: .\core\templates\core\dashboard_layout.html:89
+#: .\core\templates\core\dashboard_layout.html:91
 msgid "Vehicle Rentals"
 msgstr "Alugueres de veículos"
 
-#: .\core\templates\core\dashboard_layout.html:88
-#: .\core\templates\core\dashboard_layout.html:90
+#: .\core\templates\core\dashboard_layout.html:93
+#: .\core\templates\core\dashboard_layout.html:95
 msgid "Payment Schedules"
 msgstr "Calendários de pagamento"
 
-#: .\core\templates\core\dashboard_layout.html:96
-#: .\core\templates\core\dashboard_layout.html:98 .\core\views.py:836
-#: .\core\views.py:928
+#: .\core\templates\core\dashboard_layout.html:101
+#: .\core\templates\core\dashboard_layout.html:103 .\core\views.py:1011
+#: .\core\views.py:1103
 msgid "Vehicles"
 msgstr "Veículos"
 
-#: .\core\templates\core\dashboard_layout.html:100
-#: .\core\templates\core\dashboard_layout.html:102
+#: .\core\templates\core\dashboard_layout.html:105
+#: .\core\templates\core\dashboard_layout.html:107
 msgid "Back to site"
 msgstr "Voltar ao site"
 
-#: .\core\templates\core\dashboard_layout.html:119
-#: .\core\templates\core\dashboard_layout.html:120
-#: .\core\templates\core\dashboard_layout.html:123
+#: .\core\templates\core\dashboard_layout.html:124
+#: .\core\templates\core\dashboard_layout.html:125
+#: .\core\templates\core\dashboard_layout.html:128
 msgid "Collapse sidebar"
 msgstr "Recolher barra lateral"
 
-#: .\core\templates\core\dashboard_layout.html:121
+#: .\core\templates\core\dashboard_layout.html:126
 msgid "Open dashboard menu"
 msgstr "Abrir menu do painel"
 
-#: .\core\templates\core\dashboard_layout.html:122
+#: .\core\templates\core\dashboard_layout.html:127
 msgid "Close dashboard menu"
 msgstr "Fechar menu do painel"
 
-#: .\core\templates\core\dashboard_layout.html:124
+#: .\core\templates\core\dashboard_layout.html:129
 msgid "Expand sidebar"
 msgstr "Expandir barra lateral"
 
-#: .\core\templates\core\dashboard_layout.html:134
+#: .\core\templates\core\dashboard_layout.html:139
 msgid "Internal area"
 msgstr "Área interna"
 
-#: .\core\templates\core\dashboard_layout.html:136
+#: .\core\templates\core\dashboard_layout.html:141
 msgid "Display and language"
 msgstr "Apresentação e idioma"
 
-#: .\core\templates\core\dashboard_layout.html:145
-#: .\core\templates\core\dashboard_layout.html:146
+#: .\core\templates\core\dashboard_layout.html:150
+#: .\core\templates\core\dashboard_layout.html:151
 msgid "Choose language"
 msgstr "Escolher idioma"
 
-#: .\core\templates\core\dashboard_layout.html:176
-#: .\core\templates\core\dashboard_layout.html:177
+#: .\core\templates\core\dashboard_layout.html:181
+#: .\core\templates\core\dashboard_layout.html:182
 msgid "Toggle theme"
 msgstr "Alternar tema"
 
-#: .\core\templates\core\dashboard_layout.html:179
+#: .\core\templates\core\dashboard_layout.html:184
 msgid "Switch to dark theme"
 msgstr "Mudar para tema escuro"
 
-#: .\core\templates\core\dashboard_layout.html:180
+#: .\core\templates\core\dashboard_layout.html:185
 msgid "Switch to light theme"
 msgstr "Mudar para tema claro"
 
-#: .\core\templates\core\dashboard_layout.html:230
+#: .\core\templates\core\dashboard_layout.html:235
 msgid "Mark all as read"
 msgstr "Marcar todas como lidas"
 
-#: .\core\templates\core\dashboard_layout.html:244
+#: .\core\templates\core\dashboard_layout.html:249
 msgid "Account options"
 msgstr "Opções da conta"
 
-#: .\core\templates\core\dashboard_list.html:12
+#: .\core\templates\core\dashboard_list.html:20
 msgid "Export format"
 msgstr "Formato de exportação"
 
-#: .\core\templates\core\dashboard_list.html:16
+#: .\core\templates\core\dashboard_list.html:22
 msgid "Export"
 msgstr "Exportar"
 
-#: .\core\templates\core\dashboard_list.html:18
+#: .\core\templates\core\dashboard_list.html:35
 msgid "Create"
 msgstr "Criar"
 
-#: .\core\templates\core\dashboard_list.html:26
+#: .\core\templates\core\dashboard_list.html:49
+#| msgid "Select record"
+msgid "Search records..."
+msgstr "Pesquisar registos..."
+
+#: .\core\templates\core\dashboard_list.html:59
+msgid "All"
+msgstr "Todos"
+
+#: .\core\templates\core\dashboard_list.html:67
+msgid "Clear"
+msgstr "Limpar"
+
+#: .\core\templates\core\dashboard_list.html:80
+#: .\core\templates\core\dashboard_list.html:137
+msgid "Select all records"
+msgstr "Selecionar todos os registos"
+
+#: .\core\templates\core\dashboard_list.html:83
+msgid "Select all"
+msgstr "Selecionar tudo"
+
+#: .\core\templates\core\dashboard_list.html:91
+#: .\core\templates\core\dashboard_list.html:94
+msgid "selected"
+msgstr "selecionados"
+
+#: .\core\templates\core\dashboard_list.html:104
+msgid "Bulk action"
+msgstr "Ação em massa"
+
+#: .\core\templates\core\dashboard_list.html:107
+msgid "Choose an action..."
+msgstr "Escolha uma ação..."
+
+#: .\core\templates\core\dashboard_list.html:123
+msgid "Delete the selected records?"
+msgstr "Eliminar os registos selecionados?"
+
+#: .\core\templates\core\dashboard_list.html:126
+msgid "Apply"
+msgstr "Aplicar"
+
+#: .\core\templates\core\dashboard_list.html:139
 msgid "Record"
 msgstr "Registo"
 
-#: .\core\templates\core\dashboard_list.html:30
-#: .\core\templates\core\dashboard_list.html:58
-#: .\core\templates\core\dashboard_list.html:59
+#: .\core\templates\core\dashboard_list.html:143
+#: .\core\templates\core\dashboard_list.html:181
+#: .\core\templates\core\dashboard_list.html:182
 msgid "Actions"
 msgstr "Ações"
 
-#: .\core\templates\core\dashboard_list.html:45
-#: .\core\templates\core\dashboard_list.html:46
+#: .\core\templates\core\dashboard_list.html:156
+msgid "Select record"
+msgstr "Selecionar registo"
+
+#: .\core\templates\core\dashboard_list.html:168
+#: .\core\templates\core\dashboard_list.html:169
 msgid "Details"
 msgstr "Detalhes"
 
-#: .\core\templates\core\dashboard_list.html:76
+#: .\core\templates\core\dashboard_list.html:200
+#| msgid "Wedding records"
+msgid "No matching records."
+msgstr "Nenhum registo correspondente."
+
+#: .\core\templates\core\dashboard_list.html:200
 msgid "No records yet."
 msgstr "Ainda não há registos."
+
+#: .\core\templates\core\dashboard_list.html:210
+msgid "records"
+msgstr "registos"
+
+#: .\core\templates\core\dashboard_list.html:214
+#: .\core\templates\core\dashboard_list.html:216
+msgid "Previous"
+msgstr "Anterior"
+
+#: .\core\templates\core\dashboard_list.html:222
+#: .\core\templates\core\dashboard_list.html:224
+msgid "Next"
+msgstr "Seguinte"
 
 #: .\core\templates\core\needs.html:7
 msgid "Tell us about your celebration."
@@ -2323,7 +2385,7 @@ msgstr "Gráfico de barras dos casamentos celebrados por mês em 2025"
 msgid "Completed weddings · Jan - Dec"
 msgstr "Casamentos concluídos · Jan - Dez"
 
-#: .\core\templates\core\results.html:79 .\core\views.py:740
+#: .\core\templates\core\results.html:79 .\core\views.py:915
 msgid "Total"
 msgstr "Total"
 
@@ -2627,283 +2689,359 @@ msgstr "Obrigado. Recebemos a sua mensagem."
 msgid "Thank you. We have received your request."
 msgstr "Obrigado. Recebemos o seu pedido."
 
-#: .\core\views.py:150
+#: .\core\views.py:151
 msgid "Quoted total"
 msgstr "Total orçamentado"
 
-#: .\core\views.py:166
+#: .\core\views.py:167
 msgid "Vehicle"
 msgstr "Veículo"
 
-#: .\core\views.py:167 .\core\views.py:174
+#: .\core\views.py:168 .\core\views.py:175
 msgid "Booking"
 msgstr "Reserva"
 
-#: .\core\views.py:168
+#: .\core\views.py:169
 msgid "Start date"
 msgstr "Data de início"
 
-#: .\core\views.py:169
+#: .\core\views.py:170
 msgid "End date"
 msgstr "Data de fim"
 
-#: .\core\views.py:170
+#: .\core\views.py:171
 msgid "Amount due"
 msgstr "Valor devido"
 
-#: .\core\views.py:171
+#: .\core\views.py:172
 msgid "Paid"
 msgstr "Pago"
 
-#: .\core\views.py:175
+#: .\core\views.py:176
 msgid "Deposit"
 msgstr "Depósito"
 
-#: .\core\views.py:176
+#: .\core\views.py:177
 msgid "Installment months"
 msgstr "Meses de prestações"
 
-#: .\core\views.py:178 .\core\views.py:988
+#: .\core\views.py:179 .\core\views.py:1163
 msgid "Approved"
 msgstr "Aprovado"
 
-#: .\core\views.py:211
+#: .\core\views.py:212
 msgid "Brand"
 msgstr "Marca"
 
-#: .\core\views.py:212
+#: .\core\views.py:213
 msgid "Model"
 msgstr "Modelo"
 
-#: .\core\views.py:213
+#: .\core\views.py:214
 msgid "Vehicle type"
 msgstr "Tipo de veículo"
 
-#: .\core\views.py:214
+#: .\core\views.py:215
 msgid "Daily price"
 msgstr "Preço diário"
 
-#: .\core\views.py:235 .\core\views.py:319
+#: .\core\views.py:236 .\core\views.py:306 .\core\views.py:444
 msgid "Yes"
 msgstr "Sim"
 
-#: .\core\views.py:235 .\core\views.py:319
+#: .\core\views.py:236 .\core\views.py:307 .\core\views.py:444
 msgid "No"
 msgstr "Não"
 
-#: .\core\views.py:372
+#: .\core\views.py:244
+msgid "Publish"
+msgstr "Publicar"
+
+#: .\core\views.py:245
+msgid "Unpublish"
+msgstr "Despublicar"
+
+#: .\core\views.py:248
+msgid "Activate"
+msgstr "Ativar"
+
+#: .\core\views.py:249
+msgid "Deactivate"
+msgstr "Desativar"
+
+#: .\core\views.py:252
+msgid "Approve"
+msgstr "Aprovar"
+
+#: .\core\views.py:253
+msgid "Unapprove"
+msgstr "Retirar aprovação"
+
+#: .\core\views.py:256
+msgid "Mark as paid"
+msgstr "Marcar como pago"
+
+#: .\core\views.py:257
+msgid "Mark as unpaid"
+msgstr "Marcar como não pago"
+
+#: .\core\views.py:260
+msgid "Mark as available"
+msgstr "Marcar como disponível"
+
+#: .\core\views.py:261
+msgid "Mark as unavailable"
+msgstr "Marcar como indisponível"
+
+#: .\core\views.py:284
+msgid "Delete selected"
+msgstr "Eliminar selecionados"
+
+#: .\core\views.py:497
 #, python-format
 msgid "Marked %(count)s notification as read."
 msgid_plural "Marked %(count)s notifications as read."
 msgstr[0] "Marcada %(count)s notificação como lida."
 msgstr[1] "Marcadas %(count)s notificações como lidas."
 
-#: .\core\views.py:378
+#: .\core\views.py:503
 msgid "All notifications are already read."
 msgstr "Todas as notificações já foram lidas."
 
-#: .\core\views.py:430
+#: .\core\views.py:539
+msgid "Please select at least one record."
+msgstr "Selecione pelo menos um registo."
+
+#: .\core\views.py:545
+msgid "Please choose a valid action."
+msgstr "Escolha uma ação válida."
+
+#: .\core\views.py:551
+msgid "The selected records no longer exist."
+msgstr "Os registos selecionados já não existem."
+
+#: .\core\views.py:557
+#, python-format
+msgid "Deleted %(count)s record."
+msgid_plural "Deleted %(count)s records."
+msgstr[0] "Eliminado %(count)s registo."
+msgstr[1] "Eliminados %(count)s registos."
+
+#: .\core\views.py:565
+#, python-format
+msgid "Updated %(count)s record."
+msgid_plural "Updated %(count)s records."
+msgstr[0] "Atualizado %(count)s registo."
+msgstr[1] "Atualizados %(count)s registos."
+
+#: .\core\views.py:605
 msgid "Please choose a file."
 msgstr "Escolha um ficheiro."
 
-#: .\core\views.py:432
+#: .\core\views.py:607
 msgid "The file must be smaller than 5 MB."
 msgstr "O ficheiro deve ter menos de 5 MB."
 
-#: .\core\views.py:443
+#: .\core\views.py:618
 #, python-format
 msgid "Imported %(count)s record."
 msgid_plural "Imported %(count)s records."
 msgstr[0] "Importado %(count)s registo."
 msgstr[1] "Importados %(count)s registos."
 
-#: .\core\views.py:717 .\core\views.py:793
+#: .\core\views.py:892 .\core\views.py:968
 msgid "Not specified"
 msgstr "Não especificado"
 
-#: .\core\views.py:741
+#: .\core\views.py:916
 msgid "No data available yet."
 msgstr "Ainda não há dados disponíveis."
 
-#: .\core\views.py:810
+#: .\core\views.py:985
 msgid "Estate enquiries"
 msgstr "Consultas sobre propriedades"
 
-#: .\core\views.py:817
+#: .\core\views.py:992
 msgid "Event planning requests"
 msgstr "Pedidos de planeamento de eventos"
 
-#: .\core\views.py:824
+#: .\core\views.py:999
 msgid "Contact messages"
 msgstr "Mensagens de contacto"
 
-#: .\core\views.py:831 .\core\views.py:955
+#: .\core\views.py:1006 .\core\views.py:1130
 msgid "Properties in the collection"
 msgstr "Propriedades na coleção"
 
-#: .\core\views.py:838
+#: .\core\views.py:1013
 msgid "Available fleet"
 msgstr "Frota disponível"
 
-#: .\core\views.py:845 .\core\views.py:997
+#: .\core\views.py:1020 .\core\views.py:1172
 msgid "Calls and estate visits"
 msgstr "Chamadas e visitas a propriedades"
 
-#: .\core\views.py:854
+#: .\core\views.py:1029
 msgid "Bookings and inquiries"
 msgstr "Reservas e consultas"
 
-#: .\core\views.py:855
+#: .\core\views.py:1030
 msgid "Where demand comes from and how conversations trend."
 msgstr "De onde vem a procura e como evoluem as conversas."
 
-#: .\core\views.py:860
+#: .\core\views.py:1035
 msgid "Bookings by estate"
 msgstr "Reservas por propriedade"
 
-#: .\core\views.py:861
+#: .\core\views.py:1036
 msgid "Estates with the most bookings"
 msgstr "Propriedades com mais reservas"
 
-#: .\core\views.py:866 .\core\views.py:971
+#: .\core\views.py:1041 .\core\views.py:1146
 msgid "No bookings have been recorded yet."
 msgstr "Ainda não foram registadas reservas."
 
-#: .\core\views.py:872
+#: .\core\views.py:1047
 msgid "Inquiries over time"
 msgstr "Consultas ao longo do tempo"
 
-#: .\core\views.py:873
+#: .\core\views.py:1048
 msgid "Contact inquiries by month"
 msgstr "Consultas de contacto por mês"
 
-#: .\core\views.py:878
+#: .\core\views.py:1053
 msgid "No inquiries have been recorded yet."
 msgstr "Ainda não foram registadas consultas."
 
-#: .\core\views.py:887
+#: .\core\views.py:1062
 msgid "Event types and preferred destinations."
 msgstr "Tipos de evento e destinos preferidos."
 
-#: .\core\views.py:892
+#: .\core\views.py:1067
 msgid "Requests by event type"
 msgstr "Pedidos por tipo de evento"
 
-#: .\core\views.py:893
+#: .\core\views.py:1068
 msgid "Services requested by celebration type"
 msgstr "Serviços solicitados por tipo de celebração"
 
-#: .\core\views.py:897 .\core\views.py:908
+#: .\core\views.py:1072 .\core\views.py:1083
 msgid "Requests"
 msgstr "Pedidos"
 
-#: .\core\views.py:898 .\core\views.py:909
+#: .\core\views.py:1073 .\core\views.py:1084
 msgid "No service requests have been recorded yet."
 msgstr "Ainda não foram registados pedidos de serviço."
 
-#: .\core\views.py:903
+#: .\core\views.py:1078
 msgid "Requests by destination"
 msgstr "Pedidos por destino"
 
-#: .\core\views.py:904
+#: .\core\views.py:1079
 msgid "Preferred countries"
 msgstr "Países preferidos"
 
-#: .\core\views.py:917
+#: .\core\views.py:1092
 msgid "Fleet and rentals"
 msgstr "Frota e alugueres"
 
-#: .\core\views.py:918
+#: .\core\views.py:1093
 msgid "Vehicle mix and rental demand."
 msgstr "Composição da frota e procura de aluguer."
 
-#: .\core\views.py:923
+#: .\core\views.py:1098
 msgid "Vehicles by category"
 msgstr "Veículos por categoria"
 
-#: .\core\views.py:924
+#: .\core\views.py:1099
 msgid "Current fleet composition"
 msgstr "Composição atual da frota"
 
-#: .\core\views.py:929
+#: .\core\views.py:1104
 msgid "No vehicles have been added yet."
 msgstr "Ainda não foram adicionados veículos."
 
-#: .\core\views.py:934
+#: .\core\views.py:1109
 msgid "Rentals by vehicle"
 msgstr "Alugueres por veículo"
 
-#: .\core\views.py:935
+#: .\core\views.py:1110
 msgid "Most rented vehicles"
 msgstr "Veículos mais alugados"
 
-#: .\core\views.py:939
+#: .\core\views.py:1114
 msgid "Rentals"
 msgstr "Alugueres"
 
-#: .\core\views.py:940
+#: .\core\views.py:1115
 msgid "No vehicle rentals have been recorded yet."
 msgstr "Ainda não foram registados alugueres de veículos."
 
-#: .\core\views.py:948
+#: .\core\views.py:1123
 msgid "Estates and booking status"
 msgstr "Propriedades e estado das reservas"
 
-#: .\core\views.py:949
+#: .\core\views.py:1124
 msgid "Catalog coverage and the current booking pipeline."
 msgstr "Cobertura do catálogo e estado atual das reservas."
 
-#: .\core\views.py:954
+#: .\core\views.py:1129
 msgid "Estates by country"
 msgstr "Propriedades por país"
 
-#: .\core\views.py:960
+#: .\core\views.py:1135
 msgid "No estates have been added yet."
 msgstr "Ainda não foram adicionadas propriedades."
 
-#: .\core\views.py:965
+#: .\core\views.py:1140
 msgid "Bookings by status"
 msgstr "Reservas por estado"
 
-#: .\core\views.py:966
+#: .\core\views.py:1141
 msgid "Current booking pipeline"
 msgstr "Estado atual das reservas"
 
-#: .\core\views.py:979
+#: .\core\views.py:1154
 msgid "Payments and appointments"
 msgstr "Pagamentos e encontros"
 
-#: .\core\views.py:980
+#: .\core\views.py:1155
 msgid "Approvals and consultation requests."
 msgstr "Aprovações e pedidos de consulta."
 
-#: .\core\views.py:985
+#: .\core\views.py:1160
 msgid "Payment schedules"
 msgstr "Calendários de pagamento"
 
-#: .\core\views.py:986
+#: .\core\views.py:1161
 msgid "Approved versus pending"
 msgstr "Aprovados versus pendentes"
 
-#: .\core\views.py:988
+#: .\core\views.py:1163
 msgid "Pending"
 msgstr "Pendente"
 
-#: .\core\views.py:990
+#: .\core\views.py:1165
 msgid "Schedules"
 msgstr "Calendários"
 
-#: .\core\views.py:991
+#: .\core\views.py:1166
 msgid "No payment schedules have been recorded yet."
 msgstr "Ainda não foram registados calendários de pagamento."
 
-#: .\core\views.py:996
+#: .\core\views.py:1171
 msgid "Appointments by type"
 msgstr "Encontros por tipo"
 
-#: .\core\views.py:1002
+#: .\core\views.py:1177
 msgid "No appointments have been recorded yet."
 msgstr "Ainda não foram registados encontros."
+
+#~ msgid "Bulk actions"
+#~ msgstr "Ações em massa"
+
+#~ msgid "File format"
+#~ msgstr "Formato do ficheiro"
 
 #~ msgid "Choose an enquiry or a service request."
 #~ msgstr "Escolha uma consulta ou um pedido de serviço."

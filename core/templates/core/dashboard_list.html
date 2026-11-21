@@ -36,64 +36,299 @@
     </div>
   </div>
 
-  <div class="mt-6 overflow-x-auto bg-white rounded-lg shadow">
-    <table class="dashboard-table w-full text-sm">
-      <thead>
-        <tr class="text-left">
-          <th class="py-3 px-4">{% trans "Record" %}</th>
-          {% for column in columns %}
-            <th class="py-3 px-4 whitespace-nowrap">{{ column }}</th>
+  <form id="dashboardFilterForm" method="get" class="mt-6 flex flex-wrap items-end gap-3">
+    <div class="min-w-[220px] flex-1">
+      <label for="dashboardSearch" class="mb-1 block text-xs font-bold uppercase tracking-widest text-gray-600">{% trans "Search" %}</label>
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+        <input
+          id="dashboardSearch"
+          name="q"
+          type="search"
+          value="{{ search_query }}"
+          placeholder="{% trans 'Search records...' %}"
+          class="dashboard-format-select w-full dashboard-search-input"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+    {% for filter in list_filters %}
+      <div class="min-w-[150px]">
+        <label for="filter_{{ filter.name }}" class="mb-1 block text-xs font-bold uppercase tracking-widest text-gray-600">{{ filter.label }}</label>
+        <select id="filter_{{ filter.name }}" name="{{ filter.name }}" data-live-filter class="dashboard-format-select w-full">
+          <option value="">{% trans "All" %}</option>
+          {% for option in filter.options %}
+            <option value="{{ option.value }}" {% if option.selected %}selected{% endif %}>{{ option.label }}</option>
           {% endfor %}
-          <th class="py-3 px-4">{% trans "Actions" %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for row in rows %}
-          <tr class="border-b">
-            <td class="py-3 px-4 font-medium">{{ row.object }}</td>
-            {% for cell in row.cells %}
-              <td class="py-3 px-4 whitespace-nowrap">{{ cell.value }}</td>
+        </select>
+      </div>
+    {% endfor %}
+    <button type="submit" class="dashboard-outline-button">{% trans "Search" %}</button>
+    <a
+      href="?"
+      data-dashboard-clear
+      class="dashboard-outline-button dashboard-clear-button{% if not has_filters %} hidden{% endif %}"
+    >{% trans "Clear" %}</a>
+  </form>
+
+  <form id="bulkActionForm" method="post" action="{{ bulk_action_url }}" class="mt-6">
+    {% csrf_token %}
+    <div class="flex flex-wrap items-center justify-between gap-4 border border-gray-200 bg-white px-5 py-4 shadow-sm">
+
+      <!-- Selection info -->
+      <div class="bulk-action-selection flex items-center gap-4">
+        <label class="inline-flex cursor-pointer items-center gap-2.5 text-sm font-medium text-gray-700">
+          <input
+            type="checkbox"
+            data-select-all
+            aria-label="{% trans 'Select all records' %}"
+            class="h-4 w-4 cursor-pointer rounded border-gray-300 text-primary-600 focus:ring-2 focus:ring-primary-500"
+          />
+          {% trans "Select all" %}
+        </label>
+
+        <span class="h-5 w-px bg-gray-200"></span>
+
+        <span
+          id="bulkSelectedCount"
+          class="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600"
+          data-label="{% trans 'selected' %}"
+          aria-live="polite"
+        >
+          0 {% trans "selected" %}
+        </span>
+      </div>
+
+      <!-- Bulk actions -->
+      <div class="flex items-center gap-3">
+        <div class="bulk-action-select">
+          <select
+            id="bulkActionSelect"
+            name="action"
+            aria-label="{% trans 'Bulk action' %}"
+            class="dashboard-format-select min-w-[180px] rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+          >
+            <option value="">{% trans "Choose an action..." %}</option>
+            {% for action in bulk_actions %}
+              <option
+                value="{{ action.value }}"
+                {% if action.danger %}data-danger="true"{% endif %}
+              >
+                {{ action.label }}
+              </option>
             {% endfor %}
-            <td class="py-3 px-4">
-              <div class="dashboard-row-actions flex items-center gap-2">
-                <a
-                  href="{% url 'core:dashboard-detail' model_key row.object.pk %}"
-                  class="dashboard-row-primary"
-                  aria-label="{% trans 'Details' %}"
-                  title="{% trans 'Details' %}"
-                >
-                  <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
-                </a>
-                <div class="dashboard-row-action-menu">
-                  <button
-                    type="button"
-                    class="dashboard-row-more"
-                    data-popover-toggle
-                    data-popover-menu="rowActionsMenu_{{ forloop.counter }}"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    aria-label="{% trans 'Actions' %}"
-                    title="{% trans 'Actions' %}"
-                  >
-                    <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
-                  </button>
-                  <div id="rowActionsMenu_{{ forloop.counter }}" class="ui-popover row-actions-popover" role="menu" hidden>
-                    <a class="ui-popover-link" role="menuitem" href="{% url update_url_name row.object.pk %}">
-                      <i class="fa-solid fa-pen" aria-hidden="true"></i>{% trans "Edit" %}
-                    </a>
-                    <a class="ui-popover-link danger" role="menuitem" href="{% url delete_url_name row.object.pk %}">
-                      <i class="fa-solid fa-trash" aria-hidden="true"></i>{% trans "Delete" %}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
-        {% empty %}
-          <tr><td colspan="{{ columns|length|add:2 }}" class="py-6 px-4 text-gray-500">{% trans "No records yet." %}</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+          </select>
+        </div>
+
+        <button
+          id="bulkActionApply"
+          type="submit"
+          class="btn btn-primary inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+          data-delete-confirm="{% trans 'Delete the selected records?' %}"
+          disabled
+        >
+          {% trans "Apply" %}
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="dashboardResults" data-dashboard-results>
+      {% include "core/dashboard_list_results.html" %}
+    </div>
+  </form>
 </main>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const filterForm = document.getElementById("dashboardFilterForm");
+    const results = document.getElementById("dashboardResults");
+    const form = document.getElementById("bulkActionForm");
+    const actionSelect = document.getElementById("bulkActionSelect");
+    const applyButton = document.getElementById("bulkActionApply");
+    const counter = document.getElementById("bulkSelectedCount");
+
+    function currentRowCheckboxes() {
+      return form ? Array.from(form.querySelectorAll("[data-row-select]")) : [];
+    }
+
+    function currentSelectAllInputs() {
+      return form ? Array.from(form.querySelectorAll("[data-select-all], [data-select-all-header]")) : [];
+    }
+
+    function refreshBulkControls() {
+      const rowCheckboxes = currentRowCheckboxes();
+      const selected = rowCheckboxes.filter(function (checkbox) {
+        return checkbox.checked;
+      }).length;
+
+      if (counter) {
+        counter.textContent = selected + " " + counter.dataset.label;
+      }
+      currentSelectAllInputs().forEach(function (input) {
+        input.checked = rowCheckboxes.length > 0 && selected === rowCheckboxes.length;
+        input.indeterminate = selected > 0 && selected < rowCheckboxes.length;
+      });
+      if (applyButton) {
+        applyButton.disabled = selected === 0 || !(actionSelect && actionSelect.value);
+      }
+    }
+
+    if (form) {
+      form.addEventListener("change", function (event) {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement)) return;
+
+        if (target.matches("[data-row-select]")) {
+          refreshBulkControls();
+          return;
+        }
+        if (target.matches("[data-select-all], [data-select-all-header]")) {
+          currentRowCheckboxes().forEach(function (checkbox) {
+            checkbox.checked = target.checked;
+          });
+          refreshBulkControls();
+        }
+      });
+
+      if (actionSelect) {
+        actionSelect.addEventListener("change", refreshBulkControls);
+      }
+      if (applyButton && actionSelect) {
+        applyButton.addEventListener("click", function (event) {
+          const option = actionSelect.options[actionSelect.selectedIndex];
+          if (option && option.dataset.danger === "true" && !window.confirm(applyButton.dataset.deleteConfirm)) {
+            event.preventDefault();
+          }
+        });
+      }
+      refreshBulkControls();
+    }
+
+    if (!filterForm || !results) return;
+
+    const searchInput = document.getElementById("dashboardSearch");
+    const clearLink = filterForm.querySelector("[data-dashboard-clear]");
+    let searchTimer;
+    let activeRequest = null;
+
+    function paramsFromForm() {
+      const params = new URLSearchParams(new FormData(filterForm));
+      Array.from(params.entries()).forEach(function (entry) {
+        if (!entry[1]) params.delete(entry[0]);
+      });
+      return params;
+    }
+
+    function urlWithParams(pathname, params) {
+      const query = params.toString();
+      return pathname + (query ? "?" + query : "");
+    }
+
+    function syncFormFromUrl(url) {
+      const params = new URLSearchParams(url.search);
+      Array.from(filterForm.elements).forEach(function (field) {
+        if (!field.name) return;
+        const value = params.get(field.name) || "";
+        if (field instanceof HTMLSelectElement) {
+          field.value = value;
+          if (window.jQuery) {
+            window.jQuery(field).trigger("change.select2");
+          }
+        } else {
+          field.value = value;
+        }
+      });
+      if (clearLink) {
+        const hasQuery = Array.from(params.values()).some(function (value) { return Boolean(value); });
+        clearLink.classList.toggle("hidden", !hasQuery);
+      }
+    }
+
+    function loadResults(url, mode) {
+      const target = new URL(url, window.location.href);
+      if (activeRequest) activeRequest.abort();
+      activeRequest = new AbortController();
+      const signal = activeRequest.signal;
+
+      results.classList.add("is-loading");
+      results.setAttribute("aria-busy", "true");
+
+      fetch(target.pathname + target.search, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "Accept": "text/html"
+        },
+        credentials: "same-origin",
+        signal: signal
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error("Request failed");
+          return response.text();
+        })
+        .then(function (html) {
+          results.innerHTML = html;
+          syncFormFromUrl(target);
+          const nextUrl = target.pathname + target.search + target.hash;
+          if (mode === "push") {
+            window.history.pushState({}, "", nextUrl);
+          } else if (mode === "replace") {
+            window.history.replaceState({}, "", nextUrl);
+          }
+          refreshBulkControls();
+        })
+        .catch(function (error) {
+          if (error && error.name === "AbortError") return;
+          window.location.assign(target.pathname + target.search + target.hash);
+        })
+        .finally(function () {
+          if (activeRequest && activeRequest.signal === signal) {
+            activeRequest = null;
+            results.classList.remove("is-loading");
+            results.removeAttribute("aria-busy");
+          }
+        });
+    }
+
+    function applyFilters() {
+      loadResults(urlWithParams(window.location.pathname, paramsFromForm()), "replace");
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener("input", function () {
+        window.clearTimeout(searchTimer);
+        searchTimer = window.setTimeout(applyFilters, 350);
+      });
+    }
+    filterForm.querySelectorAll("[data-live-filter]").forEach(function (input) {
+      input.addEventListener("change", applyFilters);
+    });
+    filterForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      window.clearTimeout(searchTimer);
+      applyFilters();
+    });
+    if (clearLink) {
+      clearLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        window.clearTimeout(searchTimer);
+        loadResults(clearLink.getAttribute("href") || window.location.pathname, "replace");
+      });
+    }
+
+    results.addEventListener("click", function (event) {
+      const target = event.target instanceof Element ? event.target : null;
+      const link = target ? target.closest("a[data-dashboard-page]") : null;
+      if (!link || !results.contains(link)) return;
+      event.preventDefault();
+      window.clearTimeout(searchTimer);
+      loadResults(link.getAttribute("href"), "push");
+    });
+
+    window.addEventListener("popstate", function () {
+      window.clearTimeout(searchTimer);
+      loadResults(window.location.href, "none");
+    });
+  });
+</script>
 {% endblock %}

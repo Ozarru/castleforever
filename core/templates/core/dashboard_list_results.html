@@ -1,0 +1,98 @@
+{% load i18n %}
+    <div class="mt-4 overflow-x-auto bg-white rounded-lg shadow">
+      <table class="dashboard-table w-full text-sm">
+        <thead>
+          <tr class="text-left">
+            <th class="py-3 px-4">
+              <input type="checkbox" data-select-all-header aria-label="{% trans 'Select all records' %}" />
+            </th>
+            <th class="py-3 px-4">{% trans "Record" %}</th>
+            {% for column in columns %}
+              <th class="py-3 px-4 whitespace-nowrap">{{ column }}</th>
+            {% endfor %}
+            <th class="py-3 px-4">{% trans "Actions" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr class="border-b">
+              <td class="py-3 px-4">
+                <input
+                  type="checkbox"
+                  name="selected_ids"
+                  value="{{ row.object.pk }}"
+                  data-row-select
+                  class="dashboard-row-checkbox"
+                  aria-label="{% trans 'Select record' %}"
+                />
+              </td>
+              <td class="py-3 px-4 font-medium">{{ row.object }}</td>
+              {% for cell in row.cells %}
+                <td class="py-3 px-4 whitespace-nowrap">{{ cell.value }}</td>
+              {% endfor %}
+              <td class="py-3 px-4">
+                <div class="dashboard-row-actions flex items-center gap-2">
+                  <a
+                    href="{% url 'core:dashboard-detail' model_key row.object.pk %}"
+                    class="dashboard-row-primary"
+                    aria-label="{% trans 'Details' %}"
+                    title="{% trans 'Details' %}"
+                  >
+                    <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                  </a>
+                  <div class="dashboard-row-action-menu">
+                    <button
+                      type="button"
+                      class="dashboard-row-more"
+                      data-popover-toggle
+                      data-popover-menu="rowActionsMenu_{{ forloop.counter }}"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      aria-label="{% trans 'Actions' %}"
+                      title="{% trans 'Actions' %}"
+                    >
+                      <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                    </button>
+                    <div id="rowActionsMenu_{{ forloop.counter }}" class="ui-popover row-actions-popover" role="menu" hidden>
+                      <a class="ui-popover-link" role="menuitem" href="{% url update_url_name row.object.pk %}">
+                        <i class="fa-solid fa-pen" aria-hidden="true"></i>{% trans "Edit" %}
+                      </a>
+                      <a class="ui-popover-link danger" role="menuitem" href="{% url delete_url_name row.object.pk %}">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>{% trans "Delete" %}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="{{ columns|length|add:3 }}" class="py-6 px-4 text-gray-500">
+              {% if has_filters %}{% trans "No matching records." %}{% else %}{% trans "No records yet." %}{% endif %}
+            </td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% if paginator %}
+      <div class="dashboard-pagination flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-4 text-xs text-gray-600">
+          <span class="dashboard-pagination-count">{{ objects_in_view }} / {{ total_count }} {% trans "records" %}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          {% if page_obj.has_previous %}
+            <a href="{% querystring page=page_obj.previous_page_number %}" data-dashboard-page class="dashboard-pagination-link">{% trans "Previous" %}</a>
+          {% else %}
+            <span class="dashboard-pagination-link is-disabled">{% trans "Previous" %}</span>
+          {% endif %}
+          {% for number in page_obj.paginator.page_range %}
+            <a href="{% querystring page=number %}" data-dashboard-page class="dashboard-pagination-link {% if number == page_obj.number %}is-active{% endif %}">{{ number }}</a>
+          {% endfor %}
+          {% if page_obj.has_next %}
+            <a href="{% querystring page=page_obj.next_page_number %}" data-dashboard-page class="dashboard-pagination-link">{% trans "Next" %}</a>
+          {% else %}
+            <span class="dashboard-pagination-link is-disabled">{% trans "Next" %}</span>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
