@@ -1,9 +1,13 @@
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_http_methods
 
+from accounts.forms import DashboardUserChangeForm, DashboardUserCreationForm
 from catalog.models import Estate
 from .forms import AppointmentForm, BookingEnquiryForm, ContactInquiryForm, ServiceRequestForm
 from .marketing import RESULTS_YEAR, results_snapshot, testimonial_rating
@@ -134,14 +138,14 @@ def reviews(request):
 
 
 def results(request):
-    """Public 2025 results: weddings per month, guests and estates."""
+    """Public yearly results: events per month, guests and estates."""
     year = RESULTS_YEAR
     requested_year = request.GET.get("year", "")
     if requested_year.isdigit():
         year = int(requested_year)
-    title = f"CastleForever {year} Results | Weddings, Guests & Estates"
+    title = f"CastleForever {year} Results | Events, Guests & Estates"
     description = (
-        f"Explore CastleForever's {year} wedding highlights: celebrations hosted, "
+        f"Explore CastleForever's {year} event highlights: celebrations hosted, "
         "guests welcomed and estates across Europe."
     )
     return render(request, "core/results.html", {
@@ -197,21 +201,38 @@ from .models import (
     Appointment,
     Booking,
     ContactInquiry,
+    EventRecord,
     PaymentSchedule,
     ServiceRequest,
     Testimonial,
     VehicleRental,
-    WeddingRecord,
 )
 from .notifications import mark_notifications_read
 
 
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     login_url = "accounts:login"
-    raise_exception = True
+    raise_exception = False
 
     def test_func(self):
         return self.request.user.is_staff
+
+    def handle_no_permission(self):
+        # Anonymous visitors should reach the login form; authenticated
+        # customers get a clear 403 instead of a misleading login redirect.
+        if self.request.user.is_authenticated:
+            raise PermissionDenied("Staff access required.")
+        return super().handle_no_permission()
+
+
+class SuperuserRequiredMixin(StaffRequiredMixin):
+    def test_func(self):
+        return self.request.user.is_staff and self.request.user.is_superuser
+
+    def handle_no_permission(self):
+        if self.request.user.is_authenticated:
+            raise PermissionDenied("Superuser access required.")
+        return super().handle_no_permission()
 
 
 # Extra columns shown by each dashboard list, after the record label and
@@ -266,11 +287,12 @@ LIST_COLUMNS = {
         ("is_published", gettext_lazy("Published")),
         ("position", gettext_lazy("Display order")),
     ],
-    "core.weddingrecord": [
+    "core.eventrecord": [
         ("reference", gettext_lazy("Reference")),
+        ("get_event_type_display", gettext_lazy("Event type")),
         ("estate", gettext_lazy("Estate")),
         ("get_country_display", gettext_lazy("Country")),
-        ("wedding_date", gettext_lazy("Wedding date")),
+        ("event_date", gettext_lazy("Event date")),
         ("guest_count", gettext_lazy("Guest count")),
     ],
     "catalog.estate": [
@@ -288,6 +310,13 @@ LIST_COLUMNS = {
         ("get_vehicle_type_display", gettext_lazy("Vehicle type")),
         ("daily_price", gettext_lazy("Daily price"), "€"),
         ("is_available", gettext_lazy("Available for rental")),
+    ],
+    "accounts.user": [
+        ("email", gettext_lazy("Email")),
+        ("is_staff", gettext_lazy("Staff")),
+        ("is_superuser", gettext_lazy("Superuser")),
+        ("is_active", gettext_lazy("Active")),
+        ("date_joined", gettext_lazy("Joined")),
     ],
 }
 
@@ -405,6 +434,10 @@ class DashboardListView(StaffRequiredMixin, ListView):
     create_url_name = ""
     update_url_name = ""
     delete_url_name = ""
+    detail_url_name = "core:dashboard-detail"
+    search_field_names = None
+    data_transfer_enabled = True
+    can_manage = True
     ordering = "pk"
     paginate_by = 24
 
@@ -418,7 +451,7 @@ class DashboardListView(StaffRequiredMixin, ListView):
         self.search_query = self.request.GET.get("q", "").strip()
         if self.search_query:
             conditions = Q()
-            for field_name in _search_fields(self.model):
+            for field_name in self.search_field_names or _search_fields(self.model):
                 conditions |= Q(**{f"{field_name}__icontains": self.search_query})
             if self.search_query.isdigit():
                 conditions |= Q(pk=int(self.search_query))
@@ -468,10 +501,12 @@ class DashboardListView(StaffRequiredMixin, ListView):
             "create_url_name": self.create_url_name,
             "update_url_name": self.update_url_name,
             "delete_url_name": self.delete_url_name,
-            "import_url": reverse("core:dashboard-import", args=[model_key]),
-            "export_url": reverse("core:dashboard-export", args=[model_key]),
-            "bulk_action_url": reverse("core:dashboard-bulk", args=[model_key]),
-            "bulk_actions": _bulk_actions(self.model),
+            "detail_url_name": self.detail_url_name,
+            "can_manage": self.can_manage,
+            "import_url": reverse("core:dashboard-import", args=[model_key]) if self.data_transfer_enabled else "",
+            "export_url": reverse("core:dashboard-export", args=[model_key]) if self.data_transfer_enabled else "",
+            "bulk_action_url": reverse("core:dashboard-bulk", args=[model_key]) if self.data_transfer_enabled else "",
+            "bulk_actions": _bulk_actions(self.model) if self.data_transfer_enabled else [],
             "search_query": getattr(self, "search_query", ""),
             "list_filters": list_filters,
             "has_filters": bool(getattr(self, "search_query", "") or getattr(self, "active_filters", {})),
@@ -563,6 +598,125 @@ class DashboardDetailView(StaffRequiredMixin, View):
             "update_url": reverse(f"{url_base}-update", args=[obj.pk]),
             "delete_url": reverse(f"{url_base}-delete", args=[obj.pk]),
         })
+
+
+# --- Dashboard user management -------------------------------------------
+# Accounts deliberately do not use the generic DATASETS import/export/bulk
+# endpoints: those would expose password hashes and privilege flags.
+
+USER_DETAIL_FIELDS = (
+    ("username", gettext_lazy("Username")),
+    ("email", gettext_lazy("Email")),
+    ("first_name", gettext_lazy("First name")),
+    ("last_name", gettext_lazy("Last name")),
+    ("phone", gettext_lazy("Phone")),
+    ("is_staff", gettext_lazy("Staff")),
+    ("is_superuser", gettext_lazy("Superuser")),
+    ("is_active", gettext_lazy("Active")),
+    ("date_joined", gettext_lazy("Joined")),
+)
+
+
+class DashboardUserListView(DashboardListView):
+    """User accounts, rendered with the shared dashboard list template."""
+
+    model = get_user_model()
+    model_name = gettext_lazy("Users")
+    create_url_name = "core:user-create"
+    update_url_name = "core:user-update"
+    delete_url_name = "core:user-delete"
+    detail_url_name = "core:user-detail"
+    search_field_names = ("username", "email", "first_name", "last_name", "phone")
+    data_transfer_enabled = False
+    ordering = ("-date_joined", "-pk")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["can_manage"] = self.request.user.is_superuser
+        return context
+
+
+class DashboardUserDetailView(StaffRequiredMixin, View):
+    """Read-only account details with an explicit, password-free field list."""
+
+    template_name = "core/dashboard_detail.html"
+
+    def get(self, request, pk):
+        obj = get_object_or_404(get_user_model(), pk=pk)
+        fields = []
+        for name, label in USER_DETAIL_FIELDS:
+            value = getattr(obj, name)
+            if name in {"is_staff", "is_superuser", "is_active"}:
+                value = _("Yes") if value else _("No")
+            fields.append({
+                "name": name,
+                "label": label,
+                "value": value if value is not None else "",
+                "image_url": "",
+                "wide": False,
+            })
+        can_manage = request.user.is_superuser
+        return render(request, self.template_name, {
+            "object": obj,
+            "model_name": _("Users"),
+            "fields": fields,
+            "list_url": reverse("core:user-list"),
+            "update_url": reverse("core:user-update", args=[obj.pk]) if can_manage else "",
+            "delete_url": reverse("core:user-delete", args=[obj.pk]) if can_manage else "",
+        })
+
+
+class DashboardUserCreateView(SuperuserRequiredMixin, CreateView):
+    model = get_user_model()
+    form_class = DashboardUserCreationForm
+    template_name = "core/dashboard_user_form.html"
+    success_url = reverse_lazy("core:user-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form_title"] = _("Create user")
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, _("User created successfully."))
+        return super().form_valid(form)
+
+
+class DashboardUserUpdateView(SuperuserRequiredMixin, UpdateView):
+    model = get_user_model()
+    form_class = DashboardUserChangeForm
+    template_name = "core/dashboard_user_form.html"
+    success_url = reverse_lazy("core:user-list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form_title"] = _("Edit user")
+        return context
+
+    def form_valid(self, form):
+        if self.object.pk == self.request.user.pk:
+            if not (form.cleaned_data["is_staff"] and form.cleaned_data["is_superuser"]
+                    and form.cleaned_data["is_active"]):
+                messages.error(self.request, _("You cannot remove your own dashboard access."))
+                return redirect("core:user-list")
+        messages.success(self.request, _("User updated successfully."))
+        return super().form_valid(form)
+
+
+class DashboardUserDeleteView(SuperuserRequiredMixin, DeleteView):
+    model = get_user_model()
+    template_name = "core/dashboard_confirm_delete.html"
+    success_url = reverse_lazy("core:user-list")
+
+    def post(self, request, *args, **kwargs):
+        # Django 5.2's BaseDeleteView deletes from post() via form_valid(), so
+        # guard the request here rather than in delete().
+        self.object = self.get_object()
+        if self.object.pk == request.user.pk:
+            messages.error(request, _("You cannot delete your own account."))
+            return redirect("core:user-list")
+        messages.success(request, _("User deleted successfully."))
+        return super().post(request, *args, **kwargs)
 
 
 class DashboardNotificationsMarkReadView(StaffRequiredMixin, View):
@@ -871,27 +1025,27 @@ class TestimonialDeleteView(DashboardDeleteView):
     success_url_name = "core:testimonial-list"
 
 
-class WeddingRecordListView(DashboardListView):
-    model = WeddingRecord
-    model_name = "Wedding Record"
-    create_url_name = "core:wedding-record-create"
-    update_url_name = "core:wedding-record-update"
-    delete_url_name = "core:wedding-record-delete"
+class EventRecordListView(DashboardListView):
+    model = EventRecord
+    model_name = "Event Record"
+    create_url_name = "core:event-record-create"
+    update_url_name = "core:event-record-update"
+    delete_url_name = "core:event-record-delete"
 
 
-class WeddingRecordCreateView(DashboardCreateView):
-    model = WeddingRecord
-    success_url_name = "core:wedding-record-list"
+class EventRecordCreateView(DashboardCreateView):
+    model = EventRecord
+    success_url_name = "core:event-record-list"
 
 
-class WeddingRecordUpdateView(DashboardUpdateView):
-    model = WeddingRecord
-    success_url_name = "core:wedding-record-list"
+class EventRecordUpdateView(DashboardUpdateView):
+    model = EventRecord
+    success_url_name = "core:event-record-list"
 
 
-class WeddingRecordDeleteView(DashboardDeleteView):
-    model = WeddingRecord
-    success_url_name = "core:wedding-record-list"
+class EventRecordDeleteView(DashboardDeleteView):
+    model = EventRecord
+    success_url_name = "core:event-record-list"
 
 
 class EstateListView(DashboardListView):
@@ -938,25 +1092,22 @@ class VehicleDeleteView(DashboardDeleteView):
     success_url_name = "core:vehicle-list"
 
 
-from django.contrib.auth.decorators import login_required, user_passes_test
-
 @login_required(login_url="accounts:login")
 def dashboard(request):
     if not request.user.is_staff:
-        from django.core.exceptions import PermissionDenied
-        raise PermissionDenied
-    from django.shortcuts import render
+        raise PermissionDenied("Staff access required.")
     models = [
         {"name": "Booking", "url": "core:booking-list", "count": Booking.objects.count()},
         {"name": "Service Request", "url": "core:service-request-list", "count": ServiceRequest.objects.count()},
         {"name": "Contact Inquiry", "url": "core:contact-inquiry-list", "count": ContactInquiry.objects.count()},
         {"name": "Appointment", "url": "core:appointment-record-list", "count": Appointment.objects.count()},
         {"name": "Testimonial", "url": "core:testimonial-list", "count": Testimonial.objects.count()},
-        {"name": "Wedding Record", "url": "core:wedding-record-list", "count": WeddingRecord.objects.count()},
+        {"name": "Event Record", "url": "core:event-record-list", "count": EventRecord.objects.count()},
         {"name": "Vehicle Rental", "url": "core:vehicle-rental-list", "count": VehicleRental.objects.count()},
         {"name": "Payment Schedule", "url": "core:payment-schedule-list", "count": PaymentSchedule.objects.count()},
         {"name": "Estate", "url": "core:estate-list", "count": Estate.objects.count()},
         {"name": "Vehicle", "url": "core:vehicle-list", "count": Vehicle.objects.count()},
+        {"name": "User", "url": "core:user-list", "count": get_user_model().objects.count()},
     ]
     return render(request, "core/dashboard.html", {"models": models})
 
@@ -1269,9 +1420,9 @@ class StatisticsView(StaffRequiredMixin, ListView):
         return context
 
 
+@login_required(login_url="accounts:login")
 def statistics(request):
     if not request.user.is_staff:
-        from django.core.exceptions import PermissionDenied
-        raise PermissionDenied
+        raise PermissionDenied("Staff access required.")
     view = StatisticsView.as_view()
     return view(request)

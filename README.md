@@ -29,12 +29,12 @@ Open http://127.0.0.1:8000/admin/ and create published estates. The homepage dis
 ## Scope
 
 - Estate enquiry forms save records to the database; they do not confirm bookings.
-- The public `/reviews/`, `/results/` and `/appointment/` pages are marketing pages backed by the `Testimonial`, `WeddingRecord` and `Appointment` models. Run `python manage.py seed_marketing` to load the demo reviews and 2025 figures, then replace them with verified data in the admin.
+- The public `/reviews/`, `/results/` and `/appointment/` pages are marketing pages backed by the `Testimonial`, `EventRecord` and `Appointment` models. Run `python manage.py seed_marketing` to load the demo reviews and 2025 figures, then replace them with verified data in the admin.
 - Appointment requests are stored for staff follow-up; they are not synced to an external calendar.
 - Vehicle rental and payment schedule models exist for admin-managed workflows; online checkout, availability locking, financing approvals, and automatic installments are **not implemented**.
 - Installment examples are nonbinding, assume no interest or fees, and apply only to estate rentals. Vehicle rentals require full payment.
 - Estate prices and remote photos must be populated with verified, licensed real listings before launch.
-- The prototype homepage uses Tailwind CDN and remote images. Compile Tailwind locally for production and review image licensing.
+- Tailwind is compiled at build time into `static/tailwind.css` (no browser-side CDN). After changing any template class, run `npm install && npm run build:css` and commit the regenerated file. Review remote image licensing before launch.
 - For production, set `DJANGO_DEBUG=0`, a strong `DJANGO_SECRET_KEY`, and `DJANGO_ALLOWED_HOSTS`. Use a production database, HTTPS and appropriate static/media hosting.
 
 ## Deploying with Docker Compose

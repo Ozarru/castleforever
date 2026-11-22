@@ -13,10 +13,17 @@ from django.urls import reverse
 from django.utils import translation
 from openpyxl import load_workbook
 
-from catalog.models import Estate
+from catalog.models import Estate, EstateImage, Vehicle
 from core.data_transfer import DATASETS, XLSX_CONTENT_TYPE
 from core.marketing import marketing_snapshot, results_snapshot
-from core.models import Booking, ContactInquiry, NotificationRead, ServiceRequest, WeddingRecord
+from core.models import (
+    Booking,
+    ContactInquiry,
+    EventRecord,
+    NotificationRead,
+    ServiceRequest,
+    Testimonial,
+)
 from core.views import _bulk_actions
 
 
@@ -621,7 +628,7 @@ class PublicHomeTests(TestCase):
 
 
 class MarketingSnapshotTests(TestCase):
-    def test_empty_wedding_records_use_complete_default_snapshot(self):
+    def test_empty_event_records_use_complete_default_snapshot(self):
         snapshot = results_snapshot()
 
         self.assertEqual(snapshot["total"], 52)
@@ -687,18 +694,18 @@ class MarketingSnapshotTests(TestCase):
             price_from="5000.00",
             is_published=True,
         )
-        WeddingRecord.objects.create(
-            reference="WR-2025-001",
+        EventRecord.objects.create(
+            reference="ER-2025-001",
             estate=estate,
             country="FR",
-            wedding_date="2025-06-15",
+            event_date="2025-06-15",
             guest_count=100,
         )
-        WeddingRecord.objects.create(
-            reference="WR-2025-002",
+        EventRecord.objects.create(
+            reference="ER-2025-002",
             estate=estate,
             country="FR",
-            wedding_date="2025-08-20",
+            event_date="2025-08-20",
             guest_count=80,
         )
 
@@ -716,6 +723,46 @@ class MarketingSnapshotTests(TestCase):
             [month["count"] for month in snapshot["months"]],
             [1 if month in (6, 8) else 0 for month in range(1, 13)],
         )
+
+
+class EventRecordTests(TestCase):
+    def test_event_record_is_generic_with_a_wedding_default(self):
+        record = EventRecord.objects.create(
+            reference="ER-2025-100",
+            event_date="2025-05-01",
+            client_names="Alex & Sam",
+        )
+
+        self.assertEqual(EventRecord._meta.label_lower, "core.eventrecord")
+        self.assertEqual(record.event_type, "wedding")
+        self.assertEqual(record.get_event_type_display(), "Wedding")
+        self.assertEqual(record.client_names, "Alex & Sam")
+        self.assertEqual(
+            EventRecord._meta.get_field("estate").remote_field.related_name,
+            "event_records",
+        )
+
+    def test_event_record_dashboard_uses_generic_dataset_and_labels(self):
+        staff = get_user_model().objects.create_user(
+            username="staff", email="staff@example.com", password="pass", is_staff=True
+        )
+        self.client.force_login(staff)
+
+        response = self.client.get(reverse("core:event-record-list"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["model_key"], "core.eventrecord")
+        self.assertContains(response, "Event Records")
+        self.assertContains(response, "Event type")
+        self.assertNotContains(response, "Wedding Records")
+
+    def test_results_page_uses_event_language(self):
+        response = self.client.get(reverse("core:results"))
+
+        self.assertContains(response, "Events celebrated")
+        self.assertContains(response, "Events per month")
+        self.assertNotContains(response, "Weddings celebrated")
+        self.assertNotContains(response, "Weddings per month")
 
 
 class ContactPageTests(TestCase):
@@ -1053,4 +1100,340 @@ class PublicSeoTests(TestCase):
         self.assertContains(response, "googletagmanager.com/gtag/js?id=G-TEST")
         self.assertContains(response, 'gtag("config", "AW-TEST")')
         self.assertContains(response, "AW-TEST/CONVERSION")
+
+
+class PublicPerformanceTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.estate = Estate.objects.create(
+            name="Performance Estate",
+            slug="performance-estate",
+            country="FR",
+            region="Provence",
+            description="Description",
+            capacity=100,
+            price_from="5000.00",
+            is_published=True,
+        )
+        EstateImage.objects.create(
+            estate=cls.estate,
+            image_url="https://images.unsplash.com/photo-1",
+            alt_text="Performance Estate photo",
+        )
+        Vehicle.objects.create(
+            name="Performance Car",
+            daily_price="500.00",
+            image_url="https://images.unsplash.com/photo-2",
+        )
+        Testimonial.objects.create(
+            couple_names="Test Couple",
+            quote="A wonderful celebration.",
+            image_url="https://images.unsplash.com/photo-3",
+        )
+        cls.staff = get_user_model().objects.create_user(
+            username="perfstaff",
+            email="perfstaff@example.com",
+            password="pass",
+            is_staff=True,
+        )
+
+    def test_public_pages_use_compiled_tailwind_instead_of_browser_cdn(self):
+        for name in ["base:home", "base:destinations", "catalog:estates"]:
+            with self.subTest(name=name):
+                response = self.client.get(reverse(name))
+                self.assertEqual(response.status_code, 200)
+                self.assertNotContains(response, "cdn.tailwindcss.com")
+                self.assertContains(response, '/static/tailwind.css')
+                self.assertContains(response, '/static/app.js')
+
+    def test_hero_is_a_prioritised_webp_image_with_preload(self):
+        response = self.client.get(reverse("base:home"))
+
+        self.assertContains(response, 'rel="preload" as="image"')
+        self.assertContains(response, "images/castle-hero.webp")
+        self.assertContains(response, 'fetchpriority="high"')
+        self.assertContains(response, 'class="hero-media image-skeleton"')
+
+    def test_public_images_have_shimmer_wrappers(self):
+        for name in [
+            "base:home",
+            "base:destinations",
+            "catalog:estates",
+            "catalog:estate-detail",
+            "catalog:car-rentals",
+            "core:reviews",
+            "core:results",
+        ]:
+            with self.subTest(name=name):
+                args = (self.estate.slug,) if name == "catalog:estate-detail" else ()
+                response = self.client.get(reverse(name, args=args))
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response, "image-skeleton")
+
+    def test_brand_images_use_small_webp_assets(self):
+        response = self.client.get(reverse("base:home"))
+
+        self.assertContains(response, "images/brand/logo-alt.webp")
+        self.assertContains(response, "images/brand/icon.webp")
+        self.assertNotContains(response, "images/brand/logo-alt.png")
+        self.assertNotContains(response, "images/brand/icon.png")
+
+    def test_dashboard_also_uses_compiled_tailwind(self):
+        self.client.force_login(self.staff)
+        response = self.client.get(reverse("core:dashboard"))
+
+        self.assertNotContains(response, "cdn.tailwindcss.com")
+        self.assertContains(response, '/static/tailwind.css')
+        self.assertContains(response, '/static/app.js')
+
+
+def dashboard_test_routes():
+    routes = [
+        ("core:dashboard", ()),
+        ("core:statistics", ()),
+        ("core:user-list", ()),
+        ("core:user-create", ()),
+        ("core:user-detail", (1,)),
+        ("core:user-update", (1,)),
+        ("core:user-delete", (1,)),
+        ("core:dashboard-detail", ("core.booking", 1)),
+        ("core:notifications-mark-read", ()),
+        ("core:dashboard-bulk", ("core.booking",)),
+        ("core:dashboard-export", ("core.booking",)),
+        ("core:dashboard-import", ("core.booking",)),
+    ]
+    for base in [
+        "booking",
+        "service-request",
+        "contact-inquiry",
+        "vehicle-rental",
+        "payment-schedule",
+        "testimonial",
+        "event-record",
+        "estate",
+        "vehicle",
+    ]:
+        routes.extend([
+            (f"core:{base}-list", ()),
+            (f"core:{base}-create", ()),
+            (f"core:{base}-update", (1,)),
+            (f"core:{base}-delete", (1,)),
+        ])
+    for base in ["appointment-record"]:
+        routes.extend([
+            (f"core:{base}-list", ()),
+            (f"core:{base}-create", ()),
+            (f"core:{base}-update", (1,)),
+            (f"core:{base}-delete", (1,)),
+        ])
+    return routes
+
+
+class DashboardAccessControlTests(TestCase):
+    def test_non_staff_user_cannot_access_any_dashboard_route(self):
+        user = get_user_model().objects.create_user(
+            username="customer", email="customer@example.com", password="pass"
+        )
+        self.client.force_login(user)
+
+        for name, args in dashboard_test_routes():
+            with self.subTest(name=name):
+                response = self.client.get(reverse(name, args=args))
+                self.assertEqual(response.status_code, 403)
+
+    def test_anonymous_user_is_redirected_to_login_for_every_dashboard_route(self):
+        for name, args in dashboard_test_routes():
+            with self.subTest(name=name):
+                response = self.client.get(reverse(name, args=args))
+                self.assertEqual(response.status_code, 302)
+                self.assertTrue(
+                    response["Location"].startswith(reverse("accounts:login"))
+                )
+
+    def test_public_pages_do_not_advertise_dashboard_to_customers(self):
+        response = self.client.get(reverse("base:home"))
+
+        self.assertNotContains(response, reverse("core:dashboard"))
+
+
+class DashboardUserManagementTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        user_model = get_user_model()
+        cls.staff = user_model.objects.create_user(
+            username="staff", email="staff@example.com", password="pass", is_staff=True
+        )
+        cls.superuser = user_model.objects.create_superuser(
+            username="root", email="root@example.com", password="pass"
+        )
+        cls.customer = user_model.objects.create_user(
+            username="customer", email="customer@example.com", password="pass"
+        )
+
+    def test_user_list_uses_the_generic_dashboard_list_template(self):
+        self.client.force_login(self.staff)
+        response = self.client.get(reverse("core:user-list"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "core/dashboard_list.html")
+        self.assertTemplateUsed(response, "core/dashboard_list_results.html")
+        self.assertEqual(response.context["total_count"], 3)
+        self.assertEqual(response.context["model_key"], "accounts.user")
+        self.assertContains(response, 'id="dashboardFilterForm"')
+        self.assertContains(response, 'id="dashboardResults"')
+        self.assertContains(response, self.customer.email)
+        self.assertContains(response, self.superuser.email)
+        self.assertContains(response, reverse("core:user-list"))
+
+    def test_user_list_hides_data_transfer_and_bulk_controls(self):
+        self.client.force_login(self.staff)
+        response = self.client.get(reverse("core:user-list"))
+
+        self.assertEqual(response.context["import_url"], "")
+        self.assertEqual(response.context["export_url"], "")
+        self.assertEqual(response.context["bulk_action_url"], "")
+        self.assertNotContains(response, reverse("core:dashboard-import", args=["accounts.user"]))
+        self.assertNotContains(response, 'id="bulkActionApply"')
+        self.assertNotContains(response, 'name="selected_ids"')
+
+    def test_staff_sees_details_but_not_create_edit_or_delete_controls(self):
+        self.client.force_login(self.staff)
+        response = self.client.get(reverse("core:user-list"))
+
+        self.assertContains(response, reverse("core:user-detail", args=[self.customer.pk]))
+        self.assertNotContains(response, reverse("core:user-create"))
+        self.assertNotContains(response, reverse("core:user-update", args=[self.customer.pk]))
+        self.assertNotContains(response, reverse("core:user-delete", args=[self.customer.pk]))
+
+    def test_superuser_sees_all_user_controls(self):
+        self.client.force_login(self.superuser)
+        response = self.client.get(reverse("core:user-list"))
+
+        self.assertContains(response, reverse("core:user-create"))
+        self.assertContains(response, reverse("core:user-update", args=[self.customer.pk]))
+        self.assertContains(response, reverse("core:user-delete", args=[self.customer.pk]))
+
+    def test_user_detail_does_not_expose_password_hash(self):
+        self.client.force_login(self.staff)
+        response = self.client.get(reverse("core:user-detail", args=[self.customer.pk]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.customer.email)
+        self.assertNotContains(response, self.customer.password)
+        self.assertNotContains(response, reverse("core:user-update", args=[self.customer.pk]))
+
+    def test_non_superuser_staff_cannot_edit_or_delete_users(self):
+        self.client.force_login(self.staff)
+        for name in ["core:user-update", "core:user-delete"]:
+            with self.subTest(name=name):
+                url = reverse(name, args=[self.customer.pk])
+                self.assertEqual(self.client.get(url).status_code, 403)
+                self.assertEqual(self.client.post(url, {}).status_code, 403)
+
+    def test_superuser_can_update_user_flags(self):
+        self.client.force_login(self.superuser)
+        response = self.client.post(
+            reverse("core:user-update", args=[self.customer.pk]),
+            {
+                "email": self.customer.email,
+                "first_name": "Updated",
+                "last_name": "Customer",
+                "phone": "123",
+                "is_staff": "on",
+            },
+        )
+
+        self.assertRedirects(response, reverse("core:user-list"))
+        self.customer.refresh_from_db()
+        self.assertTrue(self.customer.is_staff)
+        self.assertFalse(self.customer.is_superuser)
+        self.assertEqual(self.customer.first_name, "Updated")
+
+    def test_superuser_can_delete_user(self):
+        self.client.force_login(self.superuser)
+        response = self.client.post(
+            reverse("core:user-delete", args=[self.customer.pk])
+        )
+
+        self.assertRedirects(response, reverse("core:user-list"))
+        self.assertFalse(get_user_model().objects.filter(pk=self.customer.pk).exists())
+
+    def test_superuser_cannot_delete_own_account(self):
+        self.client.force_login(self.superuser)
+        response = self.client.post(
+            reverse("core:user-delete", args=[self.superuser.pk])
+        )
+
+        self.assertRedirects(response, reverse("core:user-list"))
+        self.assertTrue(get_user_model().objects.filter(pk=self.superuser.pk).exists())
+
+    def test_dashboard_tile_links_to_user_list(self):
+        self.client.force_login(self.staff)
+        response = self.client.get(reverse("core:dashboard"))
+
+        self.assertContains(response, reverse("core:user-list"))
+
+    def test_non_superuser_staff_cannot_create_users(self):
+        self.client.force_login(self.staff)
+        create_url = reverse("core:user-create")
+
+        self.assertEqual(self.client.get(create_url).status_code, 403)
+        self.assertEqual(self.client.post(create_url, {}).status_code, 403)
+
+    def test_superuser_can_create_user_with_staff_and_superuser_flags(self):
+        self.client.force_login(self.superuser)
+        response = self.client.post(
+            reverse("core:user-create"),
+            {
+                "email": "new.user@example.com",
+                "first_name": "New",
+                "last_name": "User",
+                "phone": "+33 0 11 22 33 44",
+                "password1": "ComplexPass123!",
+                "password2": "ComplexPass123!",
+                "is_staff": "on",
+                "is_superuser": "on",
+            },
+        )
+
+        self.assertRedirects(response, reverse("core:user-list"))
+        created = get_user_model().objects.get(email="new.user@example.com")
+        self.assertEqual(created.username, "new.user@example.com")
+        self.assertEqual(created.get_full_name(), "New User")
+        self.assertTrue(created.is_staff)
+        self.assertTrue(created.is_superuser)
+        self.assertTrue(created.check_password("ComplexPass123!"))
+        self.assertNotIn("ComplexPass123!", created.password)
+
+    def test_superuser_flag_always_enables_staff_access(self):
+        self.client.force_login(self.superuser)
+        response = self.client.post(
+            reverse("core:user-create"),
+            {
+                "email": "admin2@example.com",
+                "password1": "ComplexPass123!",
+                "password2": "ComplexPass123!",
+                "is_superuser": "on",
+            },
+        )
+
+        self.assertRedirects(response, reverse("core:user-list"))
+        created = get_user_model().objects.get(email="admin2@example.com")
+        self.assertTrue(created.is_staff)
+        self.assertTrue(created.is_superuser)
+
+    def test_duplicate_email_is_rejected(self):
+        self.client.force_login(self.superuser)
+        response = self.client.post(
+            reverse("core:user-create"),
+            {
+                "email": "customer@example.com",
+                "password1": "ComplexPass123!",
+                "password2": "ComplexPass123!",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "An account with this email already exists.")
+        self.assertEqual(get_user_model().objects.filter(email="customer@example.com").count(), 1)
 

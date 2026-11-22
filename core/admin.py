@@ -5,9 +5,9 @@ from .models import (
     ContactInquiry,
     PaymentSchedule,
     ServiceRequest,
+    EventRecord,
     Testimonial,
     VehicleRental,
-    WeddingRecord,
 )
 
 class VehicleRentalInline(admin.TabularInline):
@@ -46,12 +46,20 @@ class TestimonialAdmin(admin.ModelAdmin):
     list_editable = ("is_published", "position")
 
 
-@admin.register(WeddingRecord)
-class WeddingRecordAdmin(admin.ModelAdmin):
-    list_display = ("reference", "couple_names", "estate", "wedding_date", "guest_count", "country")
-    list_filter = ("country", "wedding_date")
-    search_fields = ("reference", "couple_names", "estate__name")
-    date_hierarchy = "wedding_date"
+@admin.register(EventRecord)
+class EventRecordAdmin(admin.ModelAdmin):
+    list_display = (
+        "reference",
+        "event_type",
+        "client_names",
+        "estate",
+        "event_date",
+        "guest_count",
+        "country",
+    )
+    list_filter = ("event_type", "country", "event_date")
+    search_fields = ("reference", "client_names", "estate__name")
+    date_hierarchy = "event_date"
 
 
 @admin.register(Appointment)

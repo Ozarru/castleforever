@@ -18,7 +18,7 @@
     <div class="grid md:grid-cols-3 gap-7">
       {% for vehicle in group.list %}
       <article class="bg-white group">
-        <div class="overflow-hidden h-64">
+        <div class="image-skeleton overflow-hidden h-64 bg-[#E8E2D5]">
           {% if vehicle.image_src %}<img decoding="async" class="h-full w-full object-cover" src="{{ vehicle.image_src }}" alt="{{ vehicle.name }}" loading="lazy">{% endif %}
         </div>
         <div class="p-7">

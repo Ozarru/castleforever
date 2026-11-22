@@ -5,7 +5,7 @@ from django.db.models.functions import ExtractMonth
 
 from catalog.models import Estate
 
-from .models import Testimonial, WeddingRecord
+from .models import EventRecord, Testimonial
 
 RESULTS_YEAR = 2025
 
@@ -72,11 +72,11 @@ def _default_monthly_counts():
     return _months_from_totals(totals)
 
 
-def monthly_wedding_counts(year=RESULTS_YEAR):
-    """Return the number of recorded weddings for each month of ``year``."""
+def monthly_event_counts(year=RESULTS_YEAR):
+    """Return the number of recorded events for each month of ``year``."""
     rows = (
-        WeddingRecord.objects.filter(wedding_date__year=year)
-        .annotate(month=ExtractMonth("wedding_date"))
+        EventRecord.objects.filter(event_date__year=year)
+        .annotate(month=ExtractMonth("event_date"))
         .values("month")
         .annotate(total=Count("id"))
     )
@@ -85,18 +85,18 @@ def monthly_wedding_counts(year=RESULTS_YEAR):
 
 
 def results_snapshot(year=RESULTS_YEAR):
-    """Aggregate the public 2025 results shown as social proof.
+    """Aggregate the public yearly results shown as social proof.
 
     Until real records exist for ``year``, return a complete, internally
     consistent set of default figures so the public pages are not empty.
     """
-    records = WeddingRecord.objects.filter(wedding_date__year=year)
+    records = EventRecord.objects.filter(event_date__year=year)
     record_count = records.count()
     has_records = record_count > 0
 
     total = record_count or DEFAULT_TOTAL
     guests = records.aggregate(total=Sum("guest_count"))["total"] or DEFAULT_GUESTS
-    months = monthly_wedding_counts(year) if has_records else _default_monthly_counts()
+    months = monthly_event_counts(year) if has_records else _default_monthly_counts()
     peak_month = max(months, key=lambda month: month["count"], default=None)
 
     country_labels = dict(Estate.COUNTRY_CHOICES)

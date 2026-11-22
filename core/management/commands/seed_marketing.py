@@ -1,11 +1,11 @@
-"""Seed demo reviews and 2025 wedding results used by the public marketing pages."""
+"""Seed demo reviews and 2025 event results used by the public marketing pages."""
 
 from datetime import date
 
 from django.core.management.base import BaseCommand
 
 from catalog.models import Estate
-from core.models import Testimonial, WeddingRecord
+from core.models import EventRecord, Testimonial
 
 TESTIMONIALS = [
     {
@@ -127,7 +127,7 @@ TESTIMONIALS = [
 ]
 
 # A realistic 2025 season: busiest between May and September.
-WEDDINGS_PER_MONTH = {
+EVENTS_PER_MONTH = {
     1: 2,
     2: 3,
     3: 5,
@@ -156,7 +156,7 @@ SECOND_NAMES = [
 
 
 class Command(BaseCommand):
-    help = "Populate demo reviews and 2025 wedding records for the marketing pages."
+    help = "Populate demo reviews and 2025 event records for the marketing pages."
 
     def handle(self, *args, **options):
         estates = {estate.slug: estate for estate in Estate.objects.all()}
@@ -184,8 +184,8 @@ class Command(BaseCommand):
             )
 
         counter = 0
-        wedding_count = 0
-        for month, month_total in WEDDINGS_PER_MONTH.items():
+        event_count = 0
+        for month, month_total in EVENTS_PER_MONTH.items():
             for slot in range(month_total):
                 counter += 1
                 reference = f"CF-2025-{counter:03d}"
@@ -197,23 +197,24 @@ class Command(BaseCommand):
                 if second == first:
                     second = FIRST_NAMES[(counter + 1) % len(FIRST_NAMES)]
 
-                _, created = WeddingRecord.objects.update_or_create(
+                _, created = EventRecord.objects.update_or_create(
                     reference=reference,
                     defaults={
                         "estate": estate,
                         "country": country,
-                        "wedding_date": date(2025, month, day),
-                        "couple_names": f"{first} & {second} {SECOND_NAMES[counter % len(SECOND_NAMES)]}",
+                        "event_type": "wedding",
+                        "event_date": date(2025, month, day),
+                        "client_names": f"{first} & {second} {SECOND_NAMES[counter % len(SECOND_NAMES)]}",
                         "guest_count": 80 + (counter * 13) % 121,
                         "notes": "Seeded demo record.",
                     },
                 )
-                wedding_count += 1
+                event_count += 1
                 if created:
-                    self.stdout.write(f"Created wedding record: {reference}")
+                    self.stdout.write(f"Created event record: {reference}")
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"Done. {testimonial_count} testimonials and {wedding_count} wedding records populated."
+                f"Done. {testimonial_count} testimonials and {event_count} event records populated."
             )
         )

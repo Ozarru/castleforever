@@ -1,11 +1,72 @@
 {% load i18n %}
+
+<style>
+    /* Empty states -------------------------------------------------- */
+  .empty-state {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+
+    padding: 2.5rem 1.5rem;
+    background: var(--color-bg-card);
+    border: 1px dashed rgb(var(--color-primary-rgb) / 0.25);
+    border-radius: var(--card-radius);
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .empty-state-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.25rem;
+    background: rgb(var(--color-primary-rgb) / 0.08);
+    color: var(--color-primary);
+    border-radius: 999px;
+    font-size: 1.25rem;
+  }
+  .empty-state-title {
+    margin: 0;
+    color: var(--text-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+  .empty-state-hint {
+    margin: 0;
+    color: var(--text-label);
+    font-size: 0.8125rem;
+  }
+
+</style>
+
+    <!-- Empty state -->
+    {% if not rows %}
+    <div class="empty-state">
+      <span class="empty-state-icon"><i class="fas fa-inbox"></i></span>
+      <p class="empty-state-title">
+        {% if has_filters %}{% trans "No matching records." %}{% else %}{% trans "No records yet." %}{% endif %}
+      </p>
+      <p class="empty-state-hint">{% trans "Try a different search or add a new record to get started." %}</p>
+    </div>
+
+    <!-- Table -->
+    {% else %}
     <div class="mt-4 overflow-x-auto bg-white rounded-lg shadow">
       <table class="dashboard-table w-full text-sm">
         <thead>
           <tr class="text-left">
-            <th class="py-3 px-4">
-              <input type="checkbox" data-select-all-header aria-label="{% trans 'Select all records' %}" />
-            </th>
+            {% if bulk_action_url %}
+              <th class="py-3 px-4">
+                <input type="checkbox" data-select-all-header aria-label="{% trans 'Select all records' %}" />
+              </th>
+            {% endif %}
             <th class="py-3 px-4">{% trans "Record" %}</th>
             {% for column in columns %}
               <th class="py-3 px-4 whitespace-nowrap">{{ column }}</th>
@@ -16,16 +77,18 @@
         <tbody>
           {% for row in rows %}
             <tr class="border-b">
-              <td class="py-3 px-4">
-                <input
-                  type="checkbox"
-                  name="selected_ids"
-                  value="{{ row.object.pk }}"
-                  data-row-select
-                  class="dashboard-row-checkbox"
-                  aria-label="{% trans 'Select record' %}"
-                />
-              </td>
+              {% if bulk_action_url %}
+                <td class="py-3 px-4">
+                  <input
+                    type="checkbox"
+                    name="selected_ids"
+                    value="{{ row.object.pk }}"
+                    data-row-select
+                    class="dashboard-row-checkbox"
+                    aria-label="{% trans 'Select record' %}"
+                  />
+                </td>
+              {% endif %}
               <td class="py-3 px-4 font-medium">{{ row.object }}</td>
               {% for cell in row.cells %}
                 <td class="py-3 px-4 whitespace-nowrap">{{ cell.value }}</td>
@@ -33,47 +96,47 @@
               <td class="py-3 px-4">
                 <div class="dashboard-row-actions flex items-center gap-2">
                   <a
-                    href="{% url 'core:dashboard-detail' model_key row.object.pk %}"
+                    href="{% if detail_url_name == 'core:dashboard-detail' %}{% url detail_url_name model_key row.object.pk %}{% else %}{% url detail_url_name row.object.pk %}{% endif %}"
                     class="dashboard-row-primary"
                     aria-label="{% trans 'Details' %}"
                     title="{% trans 'Details' %}"
                   >
                     <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
                   </a>
-                  <div class="dashboard-row-action-menu">
-                    <button
-                      type="button"
-                      class="dashboard-row-more"
-                      data-popover-toggle
-                      data-popover-menu="rowActionsMenu_{{ forloop.counter }}"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                      aria-label="{% trans 'Actions' %}"
-                      title="{% trans 'Actions' %}"
-                    >
-                      <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
-                    </button>
-                    <div id="rowActionsMenu_{{ forloop.counter }}" class="ui-popover row-actions-popover" role="menu" hidden>
-                      <a class="ui-popover-link" role="menuitem" href="{% url update_url_name row.object.pk %}">
-                        <i class="fa-solid fa-pen" aria-hidden="true"></i>{% trans "Edit" %}
-                      </a>
-                      <a class="ui-popover-link danger" role="menuitem" href="{% url delete_url_name row.object.pk %}">
-                        <i class="fa-solid fa-trash" aria-hidden="true"></i>{% trans "Delete" %}
-                      </a>
+                  {% if can_manage %}
+                    <div class="dashboard-row-action-menu">
+                      <button
+                        type="button"
+                        class="dashboard-row-more"
+                        data-popover-toggle
+                        data-popover-menu="rowActionsMenu_{{ forloop.counter }}"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-label="{% trans 'Actions' %}"
+                        title="{% trans 'Actions' %}"
+                      >
+                        <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
+                      </button>
+                      <div id="rowActionsMenu_{{ forloop.counter }}" class="ui-popover row-actions-popover" role="menu" hidden>
+                        <a class="ui-popover-link" role="menuitem" href="{% url update_url_name row.object.pk %}">
+                          <i class="fa-solid fa-pen" aria-hidden="true"></i>{% trans "Edit" %}
+                        </a>
+                        <a class="ui-popover-link danger" role="menuitem" href="{% url delete_url_name row.object.pk %}">
+                          <i class="fa-solid fa-trash" aria-hidden="true"></i>{% trans "Delete" %}
+                        </a>
+                      </div>
                     </div>
-                  </div>
+                  {% endif %}
                 </div>
               </td>
             </tr>
-          {% empty %}
-            <tr><td colspan="{{ columns|length|add:3 }}" class="py-6 px-4 text-gray-500">
-              {% if has_filters %}{% trans "No matching records." %}{% else %}{% trans "No records yet." %}{% endif %}
-            </td></tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
+    {% endif %}
 
+    <!-- Paginator -->
     {% if paginator %}
       <div class="dashboard-pagination flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-4 text-xs text-gray-600">

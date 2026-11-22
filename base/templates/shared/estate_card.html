@@ -1,12 +1,13 @@
 {% load i18n %}
 <a href="{{ estate.get_absolute_url }}" class="block bg-white group">
-  <div class="photo-wrap overflow-hidden h-72">
+  <div class="photo-wrap image-skeleton overflow-hidden h-72">
     {% if estate.cover_url %}
       <img
         class="photo h-full w-full object-cover"
         src="{{ estate.cover_url }}"
         alt="{{ estate.name }}"
         loading="lazy"
+        decoding="async"
       />
     {% endif %}
   </div>

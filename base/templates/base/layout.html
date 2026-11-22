@@ -35,11 +35,15 @@
 
     {% include "shared/tracking.html" %}
 
+    {% block head %}{% endblock %}
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    {# Compiled at deploy time with `npm run build:css` - no browser-side compiler. #}
+    <link rel="stylesheet" href="{% static 'tailwind.css' %}" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Italiana&display=swap"
@@ -55,33 +59,14 @@
     />
 
     <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              cream: "#F8F6F0",
-              forest: "#243B32",
-              gold: "#A58A5A",
-              ink: "rgb(var(--cf-ink) / <alpha-value>)",
-            },
-            fontFamily: {
-              display: ["Italiana", "serif"],
-              sans: ["DM Sans", "sans-serif"],
-            },
-          },
-        },
-      };
-    </script>
-
-    <script>
-      (function () {
-        try {
-          if (localStorage.getItem("theme") === "dark") {
-            document.documentElement.classList.add("dark");
-          }
-        } catch (e) {}
-      })();
+      // `js` lets CSS hide unloaded images only when the shimmer script can
+      // actually reveal them, so images stay visible without JavaScript.
+      document.documentElement.classList.add("js");
+      try {
+        if (localStorage.getItem("theme") === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {}
     </script>
   </head>
 
@@ -135,5 +120,7 @@
 
     {% include "shared/footer.html" %}
 
+    <script src="{% static 'app.js' %}" defer></script>
+    {% block scripts %}{% endblock %}
   </body>
 </html>

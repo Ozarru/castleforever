@@ -50,9 +50,9 @@ DATASETS = {
         "label": "Testimonials",
         "list_url_name": "core:testimonial-list",
     },
-    "core.weddingrecord": {
-        "label": "Wedding Records",
-        "list_url_name": "core:wedding-record-list",
+    "core.eventrecord": {
+        "label": "Event Records",
+        "list_url_name": "core:event-record-list",
     },
     "catalog.estate": {
         "label": "Estates",

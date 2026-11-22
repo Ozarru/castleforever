@@ -64,7 +64,7 @@
       <div id="carouselTrack" class="flex transition-transform duration-500 ease-out">
         {% for image in gallery %}
           <img decoding="async"
-            class="w-full h-[420px] md:h-[560px] object-cover flex-shrink-0"
+            class="image-skeleton w-full h-[420px] md:h-[560px] object-cover flex-shrink-0"
             src="{{ image.url }}"
             alt="{{ image.alt }}"
             {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
@@ -118,7 +118,7 @@
             class="carousel-thumb flex-shrink-0 w-24 h-16 overflow-hidden border-2 {% if forloop.first %}border-gold{% else %}border-transparent{% endif %} hover:border-gold transition"
             aria-label="{% trans 'Go to image' %} {{ forloop.counter }}"
           >
-            <img decoding="async" class="w-full h-full object-cover" src="{{ image.url }}" alt="" loading="lazy" />
+            <img decoding="async" class="image-skeleton w-full h-full object-cover" src="{{ image.url }}" alt="" loading="lazy" />
           </button>
         {% endfor %}
       </div>

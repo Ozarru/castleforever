@@ -64,11 +64,17 @@
         {% for section in estate_types %}
           <a
             href="{% url 'catalog:estates' %}?estate_type={{ section.key }}"
-            class="photo-wrap group relative h-[320px] overflow-hidden bg-[#E8E2D5]"
-            {% if section.estates.0.cover_url %}
-              style="background-image: url('{{ section.estates.0.cover_url }}'); background-size: cover; background-position: center"
-            {% endif %}
+            class="photo-wrap image-skeleton group relative h-[320px] overflow-hidden bg-[#E8E2D5]"
           >
+            {% if section.estates.0.cover_url %}
+              <img
+                class="photo absolute inset-0 h-full w-full object-cover"
+                src="{{ section.estates.0.cover_url }}"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            {% endif %}
             <div
               class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"
             ></div>

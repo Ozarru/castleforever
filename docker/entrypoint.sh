@@ -10,7 +10,7 @@ fi
 
 if [ "${RUN_COLLECTSTATIC:-1}" = "1" ]; then
     echo "Collecting static files..."
-    python manage.py collectstatic --noinput
+    python manage.py collectstatic --noinput --clear
 fi
 
 exec "$@"

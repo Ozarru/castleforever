@@ -7,19 +7,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}Dashboard | CastleForever{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'tailwind.css' %}" />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: { cream: "#F8F6F0", forest: "#243B32", gold: "#A58A5A", ink: "rgb(var(--cf-ink) / <alpha-value>)" },
-            fontFamily: { sans: ["DM Sans", "sans-serif"] },
-          },
-        },
-      };
-    </script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'styles.css' %}?v={{ STYLES_VERSION }}" />
@@ -30,6 +19,7 @@
     />
     <script>
       (function () {
+        document.documentElement.classList.add("js");
         try {
           var storedTheme = localStorage.getItem("theme") || localStorage.getItem("catalogue-theme");
           if (storedTheme === "dark") {
@@ -48,8 +38,8 @@
       <aside id="sidebar" class="dashboard-sidebar fixed inset-y-0 left-0 z-50 h-screen w-64 transform -translate-x-full overflow-y-auto bg-forest p-6 text-white transition-transform md:translate-x-0">
         <div class="mb-8 flex justify-center">
           <a href="{% url 'base:home' %}" class="sidebar-brand flex items-center gap-3" aria-label="{% trans 'CastleForever home' %}">
-            <img class="sidebar-logo-full h-14 w-auto" src="{% static 'images/brand/logo-alt.png' %}" alt="{% trans 'CastleForever' %}" />
-            <img class="sidebar-logo-icon hidden h-14 w-auto object-contain" src="{% static 'images/brand/icon.png' %}" alt="" />
+            <img class="sidebar-logo-full h-14 w-auto" src="{% static 'images/brand/logo-alt.webp' %}" width="672" height="224" alt="{% trans 'CastleForever' %}" />
+            <img class="sidebar-logo-icon hidden h-14 w-auto object-contain" src="{% static 'images/brand/icon.webp' %}" width="320" height="213" alt="" />
           </a>
         </div>
 
@@ -62,6 +52,12 @@
             <i class="fa-solid fa-chart-simple w-5 text-center"></i>
             <span class="sidebar-label">{% trans "Statistics" %}</span>
           </a>
+          {% if request.user.is_staff %}
+            <a href="{% url 'core:user-list' %}" title="{% trans 'Users' %}" aria-label="{% trans 'Users' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'user-list' or request.resolver_match.url_name == 'user-create' %}active_page{% endif %}">
+              <i class="fa-solid fa-users w-5 text-center"></i>
+              <span class="sidebar-label">{% trans "Users" %}</span>
+            </a>
+          {% endif %}
           <a href="{% url 'core:booking-list' %}" title="{% trans 'Bookings' %}" aria-label="{% trans 'Bookings' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'booking-list' %}active_page{% endif %}">
             <i class="fa-solid fa-calendar-check w-5 text-center"></i>
             <span class="sidebar-label">{% trans "Bookings" %}</span>
@@ -82,9 +78,9 @@
             <i class="fa-solid fa-quote-left w-5 text-center"></i>
             <span class="sidebar-label">{% trans "Testimonials" %}</span>
           </a>
-          <a href="{% url 'core:wedding-record-list' %}" title="{% trans 'Wedding Records' %}" aria-label="{% trans 'Wedding Records' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'wedding-record-list' %}active_page{% endif %}">
-            <i class="fa-solid fa-ring w-5 text-center"></i>
-            <span class="sidebar-label">{% trans "Wedding Records" %}</span>
+          <a href="{% url 'core:event-record-list' %}" title="{% trans 'Event Records' %}" aria-label="{% trans 'Event Records' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'event-record-list' %}active_page{% endif %}">
+            <i class="fa-solid fa-calendar-days w-5 text-center"></i>
+            <span class="sidebar-label">{% trans "Event Records" %}</span>
           </a>
           <a href="{% url 'core:vehicle-rental-list' %}" title="{% trans 'Vehicle Rentals' %}" aria-label="{% trans 'Vehicle Rentals' %}" class="sidebar-link flex items-center gap-3 whitespace-nowrap rounded px-3 py-2 hover:bg-white/10 {% if request.resolver_match.url_name == 'vehicle-rental-list' %}active_page{% endif %}">
             <i class="fa-solid fa-car-side w-5 text-center"></i>
@@ -551,5 +547,6 @@
         });
       })();
     </script>
+    <script src="{% static 'app.js' %}" defer></script>
   </body>
 </html>

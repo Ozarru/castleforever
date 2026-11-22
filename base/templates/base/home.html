@@ -2,6 +2,9 @@
 <!--  -->
 {% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
 {% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
+{% block head %}
+  <link rel="preload" as="image" href="{% static 'images/castle-hero.webp' %}" fetchpriority="high" />
+{% endblock %}
 <!--  -->
 {% block content %}
 
@@ -25,7 +28,19 @@
       <source src="{% static 'videos/castle-hero.mp4' %}" type="video/mp4" />
     </video> -->
 
-    <div class="max-w-7xl w-full mx-auto px-6 lg:px-10 pt-20">
+    <div class="hero-media image-skeleton" aria-hidden="true">
+      <img
+        src="{% static 'images/castle-hero.webp' %}"
+        alt=""
+        width="1920"
+        height="1280"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="relative z-10 max-w-7xl w-full mx-auto px-6 lg:px-10 pt-20">
       <div class="max-w-3xl">
         <p class="eyebrow text-[#e4d4b3] mb-7">
           {% trans "The art of royal celebration" %}
@@ -121,7 +136,7 @@
           <p class="font-display text-5xl md:text-6xl">{{ results.total }}</p>
 
           <p class="text-[10px] uppercase tracking-[.2em] text-white/55 mt-3">
-            {% trans "Weddings in 2025" %}
+            {% trans "Events in 2025" %}
           </p>
         </div>
 
@@ -195,7 +210,7 @@
     <div class="grid md:grid-cols-2 gap-5">
       <a
         href="{% url 'catalog:estates' %}?country=FR"
-        class="photo-wrap group relative h-[450px] overflow-hidden"
+        class="photo-wrap image-skeleton group relative h-[450px] overflow-hidden"
       >
         <img decoding="async"
           class="photo h-full w-full object-cover"
@@ -224,7 +239,7 @@
 
       <a
         href="{% url 'catalog:estates' %}?country=IT"
-        class="photo-wrap group relative h-[450px] overflow-hidden"
+        class="photo-wrap image-skeleton group relative h-[450px] overflow-hidden"
       >
         <img decoding="async"
           class="photo h-full w-full object-cover"
@@ -253,7 +268,7 @@
 
       <a
         href="{% url 'catalog:estates' %}?country=ES"
-        class="photo-wrap group relative h-[450px] overflow-hidden"
+        class="photo-wrap image-skeleton group relative h-[450px] overflow-hidden"
       >
         <img decoding="async"
           class="photo h-full w-full object-cover"
@@ -282,7 +297,7 @@
 
       <a
         href="{% url 'catalog:estates' %}?country=DE"
-        class="photo-wrap group relative h-[450px] overflow-hidden"
+        class="photo-wrap image-skeleton group relative h-[450px] overflow-hidden"
       >
         <img decoding="async"
           class="photo h-full w-full object-cover"
@@ -339,7 +354,7 @@
         {% for estate in estates %}
 
         <a href="{{ estate.get_absolute_url }}" class="block bg-white group">
-          <div class="photo-wrap overflow-hidden h-72">
+          <div class="photo-wrap image-skeleton overflow-hidden h-72">
             {% if estate.cover_url %}
 
             <img decoding="async"
@@ -419,7 +434,7 @@
       {% for testimonial in testimonials %}
 
       <a href="{% url 'core:reviews' %}" class="block bg-white group">
-        <div class="photo-wrap overflow-hidden h-64 bg-[#E8E2D5]">
+        <div class="photo-wrap image-skeleton overflow-hidden h-64 bg-[#E8E2D5]">
           {% if testimonial.image_src %}
 
           <img decoding="async"
@@ -483,19 +498,23 @@
   >
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
       <div class="grid grid-cols-2 gap-4">
-        <img decoding="async"
-          class="w-full h-[420px] object-cover mt-12"
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85"
-          alt="Luxury wedding celebration"
-          loading="lazy"
-        />
+        <div class="image-skeleton mt-12">
+          <img decoding="async"
+            class="w-full h-[420px] object-cover"
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85"
+            alt="Luxury wedding celebration"
+            loading="lazy"
+          />
+        </div>
 
-        <img decoding="async"
-          class="w-full h-[420px] object-cover"
-          src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=85"
-          alt="Prestige vehicle with chauffeur"
-          loading="lazy"
-        />
+        <div class="image-skeleton">
+          <img decoding="async"
+            class="w-full h-[420px] object-cover"
+            src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=85"
+            alt="Prestige vehicle with chauffeur"
+            loading="lazy"
+          />
+        </div>
       </div>
 
       <div>

@@ -150,6 +150,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# WhiteNoise gives manifest-hashed assets a 10-year immutable cache by default;
+# give the few unhashed fallbacks a useful cache lifetime as well.
+WHITENOISE_MAX_AGE = 86400
+
 # --- Uploaded media storage -------------------------------------------------
 # Static assets stay on local disk (WhiteNoise/Nginx). Uploaded media is served
 # from an S3-compatible bucket when USE_S3_MEDIA=1, and from local disk

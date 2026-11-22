@@ -11,7 +11,7 @@
       <p class="text-[10px] font-bold uppercase tracking-[.24em] text-[#e4d4b3] mb-6">{% trans "Our season in numbers" %} · {{ results.year }}</p>
       <h1 class="font-display text-6xl sm:text-7xl leading-[.98] max-w-4xl">{% trans "A year of celebrations, told in figures." %}</h1>
       <p class="mt-8 max-w-2xl text-white/70 text-sm md:text-base font-light leading-8">
-        {% trans "Behind every wedding is a date, a place and a team. Explore the celebrations we accompanied through 2025  -  month by month, estate by estate." %}
+        {% trans "Behind every event is a date, a place and a team. Explore the celebrations we accompanied through 2025  -  month by month, estate by estate." %}
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
         <a href="{% url 'core:reviews' %}" class="inline-flex items-center gap-3 px-6 py-4 text-[11px] font-bold uppercase tracking-[.15em] bg-[#d5c19b] text-forest hover:-translate-y-0.5 transition">
@@ -28,7 +28,7 @@
   <section class="bg-[#F0EDE5] border-b border-[#e8e4d9]">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-12 grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#d8d1c2]">
       <div class="bg-[#F0EDE5] p-7">
-        <p class="text-[10px] uppercase tracking-[.2em] text-ink/50">{% trans "Weddings celebrated" %}</p>
+        <p class="text-[10px] uppercase tracking-[.2em] text-ink/50">{% trans "Events celebrated" %}</p>
         <p class="font-display text-5xl md:text-6xl mt-3">{{ results.total }}</p>
       </div>
       <div class="bg-[#F0EDE5] p-7">
@@ -36,7 +36,7 @@
         <p class="font-display text-5xl md:text-6xl mt-3">{{ results.guests }}</p>
       </div>
       <div class="bg-[#F0EDE5] p-7">
-        <p class="text-[10px] uppercase tracking-[.2em] text-ink/50">{% trans "Average guests per wedding" %}</p>
+        <p class="text-[10px] uppercase tracking-[.2em] text-ink/50">{% trans "Average guests per event" %}</p>
         <p class="font-display text-5xl md:text-6xl mt-3">{{ results.average_guests }}</p>
       </div>
       <div class="bg-[#F0EDE5] p-7">
@@ -50,7 +50,7 @@
   <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 md:py-24">
     <div class="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-12">
       <div>
-        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Weddings per month" %}</p>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Events per month" %}</p>
         <h2 class="font-display text-5xl md:text-7xl">{% trans "The 2025 rhythm." %}</h2>
       </div>
       <p class="max-w-sm text-sm leading-7 text-ink/60">
@@ -63,7 +63,7 @@
     </div>
 
     <div class="bg-white p-6 md:p-10">
-      <div class="flex items-end gap-1.5 sm:gap-3 h-64 md:h-80" role="img" aria-label="{% trans 'Bar chart of weddings celebrated per month in 2025' %}">
+      <div class="flex items-end gap-1.5 sm:gap-3 h-64 md:h-80" role="img" aria-label="{% trans 'Bar chart of events celebrated per month in 2025' %}">
         {% for month in results.months %}
           <div class="flex-1 h-full flex flex-col items-center gap-2">
             <span class="text-[10px] md:text-xs font-semibold text-ink">{{ month.count }}</span>
@@ -75,7 +75,7 @@
         {% endfor %}
       </div>
       <div class="mt-8 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-4 text-[11px] uppercase tracking-[.16em] text-ink/50">
-        <span>{% trans "Completed weddings · Jan - Dec" %} {{ results.year }}</span>
+        <span>{% trans "Completed events · Jan - Dec" %} {{ results.year }}</span>
         <span>{% trans "Total" %} · {{ results.total }}</span>
       </div>
     </div>
@@ -85,14 +85,14 @@
   <section class="bg-[#F0EDE5] py-20 md:py-24">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-14">
       <div>
-        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Where couples celebrated" %}</p>
+        <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "Where clients celebrated" %}</p>
         <h3 class="font-display text-4xl md:text-5xl">{% trans "Three countries, one standard." %}</h3>
         <div class="mt-9 space-y-6">
           {% for row in results.by_country %}
             <div>
               <div class="flex items-baseline justify-between gap-4 text-sm">
                 <span class="uppercase tracking-[.14em]">{{ row.label }}</span>
-                <span class="font-semibold">{{ row.total }} <span class="text-ink/40 font-normal">{% trans "weddings" %}</span></span>
+                <span class="font-semibold">{{ row.total }} <span class="text-ink/40 font-normal">{% trans "events" %}</span></span>
               </div>
               <div class="mt-2 h-2 bg-ink/10">
                 <div class="h-full bg-forest" style="width: {% widthratio row.total results.total 100 %}%"></div>
@@ -114,7 +114,7 @@
                 <span class="font-display text-2xl text-gold w-7">{{ forloop.counter|stringformat:"02d" }}</span>
                 <span class="font-display text-2xl">{{ row.estate__name }}</span>
               </span>
-              <span class="text-sm text-ink/55 whitespace-nowrap">{{ row.total }} {% trans "weddings" %}</span>
+              <span class="text-sm text-ink/55 whitespace-nowrap">{{ row.total }} {% trans "events" %}</span>
             </li>
           {% empty %}
             <li class="py-5 text-sm text-ink/60">{% trans "Estate results will appear once the first 2025 records are published." %}</li>
@@ -139,7 +139,7 @@
     <div class="grid md:grid-cols-3 gap-7">
       {% for testimonial in testimonials|slice:":3" %}
         <article class="bg-white">
-          <div class="h-64 overflow-hidden bg-[#E8E2D5]">
+          <div class="image-skeleton h-64 overflow-hidden bg-[#E8E2D5]">
             {% if testimonial.image_src %}
               <img decoding="async" class="h-full w-full object-cover" src="{{ testimonial.image_src }}" alt="{{ testimonial.couple_names }}" loading="lazy">
             {% endif %}
@@ -244,7 +244,7 @@
   </section>
 
   <p class="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-xs text-ink/45">
-    {% trans "Figures shown are illustrative demo data for this prototype. Replace them with verified wedding records before launch." %}
+    {% trans "Figures shown are illustrative demo data for this prototype. Replace them with verified event records before launch." %}
   </p>
 
 </main>

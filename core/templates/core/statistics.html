@@ -4,13 +4,9 @@
 {% block title %}{% trans "Statistics" %} | Dashboard{% endblock %}
 
 {% block content %}
-<main class="w-full max-w-7xl mx-auto p-4 lg:p-6">
+<main class="w-full max-w-7xl mx-auto p-4 lg:px-6">
   <header class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
     <div>
-      <a href="{% url 'core:dashboard' %}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gray-500 hover:text-[#b18c43]">
-        <i class="fa-solid fa-arrow-left"></i>
-        {% trans "Back to dashboard" %}
-      </a>
       <p class="eyebrow text-[#b18c43] mt-6">{% trans "Insights" %}</p>
       <h1 class="font-display text-4xl md:text-5xl mt-3">{% trans "Statistics" %}</h1>
       <p class="text-sm text-gray-500 mt-3 max-w-2xl">

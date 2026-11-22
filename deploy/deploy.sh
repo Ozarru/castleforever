@@ -33,7 +33,7 @@ echo "==> Applying database migrations"
 run_as_app "$APP_DIR/.venv/bin/python" manage.py migrate --noinput
 
 echo "==> Collecting static files"
-run_as_app "$APP_DIR/.venv/bin/python" manage.py collectstatic --noinput
+run_as_app "$APP_DIR/.venv/bin/python" manage.py collectstatic --noinput --clear
 
 echo "==> Restarting application"
 sudo systemctl restart "$SERVICE_NAME"

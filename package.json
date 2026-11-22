@@ -1,0 +1,12 @@
+{
+  "name": "castleforever-assets",
+  "private": true,
+  "description": "Build tooling for CastleForever static assets.",
+  "scripts": {
+    "build:css": "tailwindcss -i static/tailwind.source.css -o static/tailwind.css --minify",
+    "watch:css": "tailwindcss -i static/tailwind.source.css -o static/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

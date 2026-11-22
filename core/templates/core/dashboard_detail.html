@@ -10,10 +10,12 @@
       <p class="text-xs uppercase tracking-[.25em] text-[#b18c43]">{% trans "Record details" %}</p>
       <h1 class="font-display text-4xl mt-2 break-words">{{ object }}</h1>
     </div>
-    <div class="flex flex-wrap items-center gap-3">
-      <a href="{{ update_url }}" class="bg-forest text-white py-3 px-6 uppercase tracking-widest text-xs">{% trans "Edit" %} <i class="fa-solid fa-pen"></i></a>
-      <a href="{{ delete_url }}" class="border border-red-700 text-red-700 py-3 px-6 uppercase tracking-widest text-xs hover:bg-red-700 hover:text-white">{% trans "Delete" %} <i class="fa-solid fa-trash"></i></a>
-    </div>
+    {% if update_url and delete_url %}
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="{{ update_url }}" class="bg-forest text-white py-3 px-6 uppercase tracking-widest text-xs">{% trans "Edit" %} <i class="fa-solid fa-pen"></i></a>
+        <a href="{{ delete_url }}" class="border border-red-700 text-red-700 py-3 px-6 uppercase tracking-widest text-xs hover:bg-red-700 hover:text-white">{% trans "Delete" %} <i class="fa-solid fa-trash"></i></a>
+      </div>
+    {% endif %}
   </div>
 
   <div class="mt-8 grid md:grid-cols-2 gap-4">

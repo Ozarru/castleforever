@@ -62,6 +62,7 @@ class ServiceRequest(models.Model):
         ("IT", _("Italy")),
         ("ES", _("Spain")),
         ("DE", _("Germany")),
+        ("PT", _("Portugal")),
         # ("other", _("Other")),
     ]
     EVENT_CHOICES = [
@@ -69,7 +70,7 @@ class ServiceRequest(models.Model):
         ("engagement", _("Engagement")),
         ("anniversary", _("Anniversary")),
         ("corporate", _("Corporate event")),
-        # ("other", _("Other")),
+        ("other", _("Other")),
     ]
     full_name = models.CharField(_("Full name"), max_length=180)
     email = models.EmailField(_("Email"))
@@ -145,8 +146,17 @@ class Testimonial(models.Model):
         return f"{self.couple_names}  -  {self.rating}/5"
 
 
-class WeddingRecord(models.Model):
-    """A completed wedding, used to publish verified yearly results."""
+EVENT_TYPE_CHOICES = [
+    ("wedding", _("Wedding")),
+    ("engagement", _("Engagement")),
+    ("anniversary", _("Anniversary")),
+    ("corporate", _("Corporate event")),
+    ("other", _("Other")),
+]
+
+
+class EventRecord(models.Model):
+    """A completed event, used to publish verified yearly results."""
 
     reference = models.CharField(_("Reference"), max_length=40, unique=True, null=True, blank=True)
     estate = models.ForeignKey(
@@ -154,24 +164,30 @@ class WeddingRecord(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name="wedding_records",
+        related_name="event_records",
         verbose_name=_("Estate"),
     )
     country = models.CharField(_("Country"), max_length=2, choices=Estate.COUNTRY_CHOICES, blank=True)
-    wedding_date = models.DateField(_("Wedding date"))
-    couple_names = models.CharField(_("Couple names"), max_length=180, blank=True)
+    event_type = models.CharField(
+        _("Event type"),
+        max_length=20,
+        choices=EVENT_TYPE_CHOICES,
+        default="wedding",
+    )
+    event_date = models.DateField(_("Event date"))
+    client_names = models.CharField(_("Client names"), max_length=180, blank=True)
     guest_count = models.PositiveIntegerField(_("Guest count"), null=True, blank=True)
     notes = models.TextField(_("Notes"), blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["-wedding_date"]
-        verbose_name = _("Wedding record")
-        verbose_name_plural = _("Wedding records")
+        ordering = ["-event_date"]
+        verbose_name = _("Event record")
+        verbose_name_plural = _("Event records")
 
     def __str__(self):
-        label = self.couple_names or _("Wedding")
-        return f"{label}  -  {self.wedding_date}"
+        label = self.client_names or _("Event")
+        return f"{label}  -  {self.event_date}"
 
 
 class Appointment(models.Model):

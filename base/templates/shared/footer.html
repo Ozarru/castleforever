@@ -3,7 +3,7 @@
   <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
     <div>
       <div class="flex items-base gap-">
-        <img class="h-8" src="{% static 'images/brand/icon.png' %}" alt="">
+        <img class="h-8 w-auto" src="{% static 'images/brand/icon.webp' %}" width="320" height="213" loading="lazy" decoding="async" alt="">
         <h3 class="font-display text-3xl text-white">Castle<span class="text-[#d5c19b]">Forever.</span></h3>
       </div>
       <p class="mt-4 text-sm leading-7 text-white/60">{% trans "Extraordinary estates, considered arrivals, and thoughtful payment approaches for celebrations to remember." %}</p>
@@ -31,7 +31,9 @@
         <li><a href="{% url 'base:cookies' %}" class="hover:text-white transition">{% trans "Cookie policy" %}</a></li>
         <li><a href="{% url 'core:appointment' %}" class="hover:text-white transition">{% trans "Book an appointment" %}</a></li>
         <li><a href="{% url 'core:contact' %}" class="hover:text-white transition">{% trans "Contact" %}</a></li>
-        <li><a href="{% url 'core:dashboard' %}" class="hover:text-white transition">{% trans "Dashboard" %}</a></li>
+        {% if request.user.is_staff %}
+          <li><a href="{% url 'core:dashboard' %}" class="hover:text-white transition">{% trans "Dashboard" %}</a></li>
+        {% endif %}
         <li><a href="/contact/?tab=request" class="hover:text-white transition">{% trans "Tell us your needs" %}</a></li>
         <li><a href="{% url 'sitemap_xml' %}" class="hover:text-white transition">{% trans "Sitemap" %}</a></li>
       </ul>

@@ -85,3 +85,154 @@ class SignupForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class DashboardUserCreationForm(UserCreationForm):
+    """Superuser-only form for creating dashboard accounts."""
+
+    email = forms.EmailField(
+        label=_("Email"),
+        widget=forms.EmailInput(attrs={
+            "class": INPUT_CLASSES,
+            "placeholder": "you@example.com",
+            "autocomplete": "email",
+        }),
+    )
+    first_name = forms.CharField(
+        label=_("First name"),
+        required=False,
+        widget=forms.TextInput(attrs={
+            "class": INPUT_CLASSES,
+            "placeholder": "First name",
+        }),
+    )
+    last_name = forms.CharField(
+        label=_("Last name"),
+        required=False,
+        widget=forms.TextInput(attrs={
+            "class": INPUT_CLASSES,
+            "placeholder": "Last name",
+        }),
+    )
+    phone = forms.CharField(
+        label=_("Phone"),
+        required=False,
+        widget=forms.TextInput(attrs={
+            "class": INPUT_CLASSES,
+            "placeholder": "+33 0 11 22 33 44",
+        }),
+    )
+    is_staff = forms.BooleanField(
+        label=_("Staff access"),
+        required=False,
+        help_text=_("Can sign in to the dashboard."),
+        widget=forms.CheckboxInput(attrs={"class": "h-4 w-4 accent-[#A58A5A]"}),
+    )
+    is_superuser = forms.BooleanField(
+        label=_("Superuser access"),
+        required=False,
+        help_text=_("Full administrative access, including creating other users."),
+        widget=forms.CheckboxInput(attrs={"class": "h-4 w-4 accent-[#A58A5A]"}),
+    )
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = (
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "is_staff",
+            "is_superuser",
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Email is the login identifier, so the separate username input is not
+        # shown. It is populated from the email address in save().
+        self.fields.pop("username", None)
+        for field_name in ("password1", "password2"):
+            field = self.fields[field_name]
+            field.widget.attrs.update({
+                "class": INPUT_CLASSES,
+                "placeholder": _("Password") if field_name == "password1" else _("Confirm password"),
+                "autocomplete": "new-password",
+            })
+            field.help_text = ""
+
+    def clean_email(self):
+        email = self.cleaned_data["email"].strip().lower()
+        if (
+            User.objects.filter(email__iexact=email).exists()
+            or User.objects.filter(username__iexact=email).exists()
+        ):
+            raise forms.ValidationError("An account with this email already exists.")
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data.get("is_superuser"):
+            # A superuser without staff access would be locked out of the
+            # dashboard itself, so keep the two flags consistent.
+            cleaned_data["is_staff"] = True
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        email = self.cleaned_data["email"].strip().lower()
+        user.email = email
+        user.username = email
+        if commit:
+            user.save()
+        return user
+
+
+class DashboardUserChangeForm(forms.ModelForm):
+    """Superuser-only editable fields for an existing dashboard account."""
+
+    class Meta:
+        model = User
+        fields = (
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "is_staff",
+            "is_superuser",
+            "is_active",
+        )
+        widgets = {
+            "email": forms.EmailInput(attrs={"class": INPUT_CLASSES}),
+            "first_name": forms.TextInput(attrs={"class": INPUT_CLASSES}),
+            "last_name": forms.TextInput(attrs={"class": INPUT_CLASSES}),
+            "phone": forms.TextInput(attrs={"class": INPUT_CLASSES}),
+            "is_staff": forms.CheckboxInput(attrs={"class": "h-4 w-4 accent-[#A58A5A]"}),
+            "is_superuser": forms.CheckboxInput(attrs={"class": "h-4 w-4 accent-[#A58A5A]"}),
+            "is_active": forms.CheckboxInput(attrs={"class": "h-4 w-4 accent-[#A58A5A]"}),
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data["email"].strip().lower()
+        queryset = User.objects.filter(email__iexact=email)
+        if self.instance.pk:
+            queryset = queryset.exclude(pk=self.instance.pk)
+        if queryset.exists() or User.objects.filter(
+            username__iexact=email
+        ).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("An account with this email already exists.")
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data.get("is_superuser"):
+            cleaned_data["is_staff"] = True
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        email = self.cleaned_data["email"].strip().lower()
+        user.email = email
+        user.username = email
+        if commit:
+            user.save()
+        return user

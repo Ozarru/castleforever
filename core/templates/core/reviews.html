@@ -38,7 +38,7 @@
           <dd class="font-display text-5xl mt-3">{{ testimonial_count }}</dd>
         </div>
         <div class="bg-forest p-7">
-          <dt class="text-[10px] uppercase tracking-[.2em] text-white/55">{% trans "Weddings in" %} {{ results.year }}</dt>
+          <dt class="text-[10px] uppercase tracking-[.2em] text-white/55">{% trans "Events in" %} {{ results.year }}</dt>
           <dd class="font-display text-5xl mt-3">{{ results.total }}</dd>
         </div>
         <div class="bg-forest p-7">
@@ -64,7 +64,7 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
       {% for testimonial in testimonials %}
         <article class="bg-white flex flex-col">
-          <div class="relative h-72 overflow-hidden bg-[#E8E2D5]">
+          <div class="image-skeleton relative h-72 overflow-hidden bg-[#E8E2D5]">
             {% if testimonial.image_src %}
               <img decoding="async" class="h-full w-full object-cover" src="{{ testimonial.image_src }}" alt="{{ testimonial.couple_names }}" loading="lazy">
             {% endif %}
@@ -109,7 +109,7 @@
         <p class="text-[10px] font-bold uppercase tracking-[.24em] text-gold mb-4">{% trans "See for yourself" %}</p>
         <h2 class="font-display text-4xl md:text-6xl leading-[1.1]">{% trans "Our 2025 season, month by month." %}</h2>
         <p class="mt-5 text-sm leading-7 text-ink/60 max-w-xl">
-          {% trans "Weddings celebrated, guests welcomed and estates brought to life. Explore the figures behind the stories." %}
+          {% trans "Events celebrated, guests welcomed and estates brought to life. Explore the figures behind the stories." %}
         </p>
       </div>
       <a href="{% url 'core:results' %}" class="inline-flex items-center gap-3 px-7 py-4 bg-forest text-white text-[11px] font-bold uppercase tracking-[.15em] hover:-translate-y-0.5 transition">

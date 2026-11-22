@@ -44,16 +44,85 @@ body {
 }
 
 /* Shared components ------------------------------------------------------ */
+/* The hero image is a real <img> in home.html so it can be preloaded and
+   prioritised. The old CSS background could silently fetch a 5 MB JPEG. */
 .hero {
-  background:
-    linear-gradient(90deg, rgba(16, 27, 23, 0.72), rgba(16, 27, 23, 0.18)),
-    url("images/castle-hero.jpg") center / cover no-repeat;
-  background:
-    linear-gradient(90deg, rgba(16, 27, 23, 0.72), rgba(16, 27, 23, 0.18)),
-    image-set(
-      url("images/castle-hero.webp") type("image/webp") 1x,
-      url("images/castle-hero.jpg") type("image/jpeg") 1x
-    ) center / cover no-repeat;
+  background-color: #101b17;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-media.image-skeleton {
+  background-color: #101b17;
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0) 80%
+  );
+}
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(16, 27, 23, 0.72), rgba(16, 27, 23, 0.18));
+}
+
+/* Image loading shimmer --------------------------------------------------- */
+/* Wrappers opt in with `image-skeleton`. app.js adds `is-loaded` once the
+   image is ready. `js` on <html> means no-JS visitors always see the image. */
+.image-skeleton {
+  position: relative;
+  background-color: #e8e2d5;
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  background-position: 200% 0;
+  background-size: 200% 100%;
+  animation: cf-shimmer 1.5s ease-in-out infinite;
+}
+
+.js .image-skeleton > img,
+.js img.image-skeleton {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.js .image-skeleton.is-loaded > img,
+.js img.image-skeleton.is-loaded {
+  opacity: 1;
+}
+
+.image-skeleton.is-loaded {
+  animation: none;
+  background-color: transparent;
+  background-image: none;
+}
+
+@keyframes cf-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-skeleton {
+    animation: none;
+  }
 }
 
 .photo {
