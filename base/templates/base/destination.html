@@ -5,8 +5,24 @@
 <!--  -->
 {% block content %}
 <main>
-  <section class="hero min-h-[520px] flex items-center relative text-white">
-    <div class="max-w-7xl w-full mx-auto px-6 lg:px-10 pt-16">
+  <section class="hero min-h-[740px] h-[95vh] max-h-[1000px] flex items-center relative text-white overflow-hidden">
+    <!-- Background video -->
+    <video
+      class="absolute inset-0 w-full h-full object-cover z-0"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      poster="{% static 'images/castle-hero.jpg' %}"
+    >
+      <source src="{% static 'videos/castle-2.mp4' %}" type="video/mp4" />
+    </video>
+
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+
+    <div class="relative z-10 max-w-7xl w-full mx-auto px-6 lg:px-10 pt-16">
       <div class="max-w-3xl">
         <p class="eyebrow text-[#e4d4b3] mb-7">
           {% trans "The destinations" %}

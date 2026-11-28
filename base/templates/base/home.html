@@ -2,9 +2,7 @@
 <!--  -->
 {% block title %}{{ seo.title|default:SITE_NAME }}{% endblock %}
 {% block meta_description %}{{ seo.description|default:'CastleForever: exceptional wedding estates, exclusive services and unforgettable celebrations across Europe.' }}{% endblock %}
-{% block head %}
-  <link rel="preload" as="image" href="{% static 'images/castle-hero.webp' %}" fetchpriority="high" />
-{% endblock %}
+{% block head %}{% endblock %}
 <!--  -->
 {% block content %}
 
@@ -16,7 +14,7 @@
     class="hero min-h-[740px] h-[95vh] max-h-[1000px] flex items-center relative text-white"
   >
     <!-- Background video -->
-    <!-- <video
+    <video
       class="absolute inset-0 w-full h-full object-cover z-0"
       autoplay
       muted
@@ -25,19 +23,9 @@
       preload="auto"
       poster="{% static 'images/castle-hero.jpg' %}"
     >
-      <source src="{% static 'videos/castle-hero.mp4' %}" type="video/mp4" />
-    </video> -->
+      <source src="{% static 'videos/castle-1.mp4' %}" type="video/mp4" />
+    </video>
 
-    <div class="hero-media image-skeleton" aria-hidden="true">
-      <img
-        src="{% static 'images/castle-hero.webp' %}"
-        alt=""
-        width="1920"
-        height="1280"
-        fetchpriority="high"
-        decoding="async"
-      />
-    </div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="relative z-10 max-w-7xl w-full mx-auto px-6 lg:px-10 pt-20">

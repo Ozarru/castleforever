@@ -15,11 +15,11 @@ class Estate(models.Model):
         PT = "PT", _("Portugal")
 
     class EstateType(models.TextChoices):
-        CASTLE = "castle", _("Castle")
-        PALACE = "palace", _("Palace")
-        VILLA = "villa", _("Villa")
-        MANOR = "manor", _("Manor")
-        GARDEN = "garden", _("Garden")
+        CASTLE = "castle", _("Castles")
+        PALACE = "palace", _("Palaces")
+        VILLA = "villa", _("Villas")
+        MANOR = "manor", _("Manors")
+        GARDEN = "garden", _("Gardens & Terraces")
 
     # Kept as module-level aliases because other apps read these directly.
     COUNTRY_CHOICES = Country.choices
